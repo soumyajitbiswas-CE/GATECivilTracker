@@ -57,28 +57,35 @@ const subjects = defaultState.subjects;
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {subjects.map(sub => (
-                <div class="surface-syllabus backdrop-blur-md border border-panel-border rounded-2xl p-5 transition-all hover:border-white/20 hover:-translate-y-0.5 flex flex-col gap-4 subject-card" data-id={sub.id}>
-                    <div class="flex items-start gap-3">
-                        <div class="bg-white/5 p-2.5 rounded-lg flex items-center justify-center text-primary-accent" set:html={sub.icon} />
-                        <div>
-                            <h3 class="text-[1.1rem] font-semibold leading-tight mb-1">{sub.name}</h3>
-                            <div class="text-xs text-text-muted">Tracker Weight: <span class="subject-weight-text" data-id={sub.id}>{sub.trackerWeight}%</span></div>
+                <div class="surface-syllabus backdrop-blur-md border border-panel-border rounded-2xl p-5 transition-all hover:border-white/20 hover:-translate-y-0.5 flex flex-col justify-between subject-card" data-id={sub.id}>
+                    <!-- Top section: Title and Weight -->
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-white/5 p-2 rounded-lg flex items-center justify-center text-primary-accent shrink-0" set:html={sub.icon} />
+                            <div class="flex flex-col">
+                                <h3 class="text-[1.1rem] font-semibold leading-tight mb-0.5">{sub.name}</h3>
+                                <div class="text-[11px] text-text-muted font-medium">Tracker Weight: <span class="subject-weight-text" data-id={sub.id}>{sub.trackerWeight}%</span></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-2">
+                    
+                    <!-- Middle section: Progress -->
+                    <div class="flex flex-col gap-2 mt-4 mb-3">
+                        <div>
+                            <span class="subject-progress-text text-2xl font-bold text-white tracking-tight" data-id={sub.id}>0% <span class="text-xs font-medium text-text-muted ml-1">Complete</span></span>
+                        </div>
                         <div class="w-full h-2 bg-panel-border rounded-full overflow-hidden">
                             <div class="h-full bg-primary-accent rounded-full transition-all duration-300 subject-progress-bar" style="width: 0%" data-id={sub.id}></div>
                         </div>
-                        <div class="flex justify-between text-sm text-text-muted">
-                            <span class="subject-progress-text" data-id={sub.id}>0% Complete</span>
-                        </div>
                     </div>
-                    <div class="flex justify-between items-center mt-auto pt-4 border-t border-panel-border">
-                        <div class="text-sm flex items-center gap-1.5 text-text-muted">
+                    
+                    <!-- Bottom section: Hours and Action -->
+                    <div class="flex justify-between items-end mt-auto pt-3 border-t border-panel-border">
+                        <div class="text-[13px] flex items-center gap-1.5 text-text-muted font-medium pb-0.5">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                             <span class="subject-hours-text" data-id={sub.id}>0h studied</span>
                         </div>
-                        <a href={`/subject/${sub.id}`} class="btn">OPEN →</a>
+                        <a href={`/subject/${sub.id}`} class="btn text-[12px] px-3 py-1.5">OPEN →</a>
                     </div>
                 </div>
             ))}
@@ -387,7 +394,7 @@ const subjects = defaultState.subjects;
                 const weightText = document.querySelector(`.subject-weight-text[data-id="${sub.id}"]`);
                 
                 if(bar) bar.style.width = `${sub.progress}%`;
-                if(text) text.textContent = `${window.formatPercent(sub.progress)} Complete`;
+                if(text) text.innerHTML = `${window.formatPercent(sub.progress)} <span class="text-xs font-medium text-text-muted ml-1">Complete</span>`;
                 if(hours) hours.textContent = `${window.formatHours(sub.hours)} studied`;
                 if(weightText) weightText.textContent = `${sub.trackerWeight}%`;
             });

@@ -26,9 +26,9 @@ const { subject } = Astro.props;
         <div class="glass-panel surface-summary">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
                 <div class="flex flex-col">
-                    <p class="text-text-muted text-base">Subject Detail</p>
-                    <h1 class="text-3xl font-bold mb-2">{subject.name}</h1>
-                    <div class="flex flex-wrap gap-4 mt-3">
+                    <p class="text-text-muted text-sm tracking-wide uppercase mb-1">Subject Detail</p>
+                    <h1 class="text-[1.75rem] leading-tight font-bold mb-1">{subject.name}</h1>
+                    <div class="flex flex-wrap gap-6 mt-3">
                         <div class="bg-black/30 border border-panel-border rounded-md px-4 py-2 flex items-center gap-2">
                             <span class="text-text-muted text-xs uppercase tracking-wide">Progress</span>
                             <span class="text-lg font-semibold text-primary-accent subject-progress-val">0%</span>
@@ -44,15 +44,15 @@ const { subject } = Astro.props;
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-primary" id="btn-log-hours">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    <button class="btn btn-primary text-sm px-4 py-2" id="btn-log-hours">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                         Log Study Hours
                     </button>
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 bg-black/20 border border-panel-border rounded-xl p-6">
-                <div class="flex flex-col w-full md:w-1/2 gap-2">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-8 bg-black/20 border border-panel-border rounded-xl p-5">
+                <div class="flex flex-col w-full md:w-[55%] gap-2">
                     <h2 class="text-lg font-semibold">PYQs Progress</h2>
                     <div class="flex items-center gap-3">
                         <div class="flex-grow h-2 bg-panel-border rounded-full overflow-hidden">
@@ -68,12 +68,12 @@ const { subject } = Astro.props;
                 </div>
             </div>
 
-            <div class="flex flex-col gap-3 mb-8" id="topics-container">
+            <div class="flex flex-col gap-0 mb-12" id="topics-container">
                 <!-- Topics Hydrated dynamically via JS -->
             </div>
             
-            <div class="flex justify-between items-center mt-10 border-t border-panel-border pt-6 mb-4">
-                <h2 class="text-xl font-semibold">Study History</h2>
+            <div class="flex justify-between items-center mt-12 border-t border-panel-border pt-6 mb-4">
+                <h2 class="text-lg font-semibold">Study History</h2>
             </div>
             <div class="flex flex-col gap-2" id="history-container">
                 <!-- Hydrated via JS -->
@@ -146,27 +146,22 @@ const { subject } = Astro.props;
 
             if (subjectData.topics && subjectData.topics.length > 0) {
                 subjectData.topics.forEach((topicData, index) => {
+                    const isCompleted = topicData.completed;
                     const item = document.createElement('div');
-                    item.className = 'topic-item flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all hover:bg-black/40';
+                    item.className = `topic-item grid grid-cols-[auto_1fr_auto] gap-4 items-center p-3.5 mb-2.5 rounded-xl cursor-pointer transition-all hover:border-white/20 border ${isCompleted ? 'bg-[#0d2719]/40 border-primary-accent/30' : 'bg-black/20 border-panel-border'}`;
                     item.dataset.topicId = topicData.id;
                     item.dataset.index = index;
 
-                    const isCompleted = topicData.completed;
-                    
-                    if (isCompleted) {
-                        item.classList.add('bg-black/20', 'border', 'border-primary-accent/30');
-                    } else {
-                        item.classList.add('bg-black/20', 'border', 'border-panel-border');
-                    }
-
                     item.innerHTML = `
-                        <div class="flex items-center gap-4">
-                            <div class="checkbox w-6 h-6 border-2 rounded-md flex items-center justify-center transition-all ${isCompleted ? 'bg-primary-accent border-primary-accent' : 'bg-transparent border-panel-border'}">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-bg-dark ${isCompleted ? '' : 'opacity-0'} w-4 h-4"><polyline points="20 6 9 17 4 12"/></svg>
-                            </div>
-                            <span class="topic-name text-base font-medium transition-all ${isCompleted ? 'text-text-muted line-through' : ''}">${topicData.name}</span>
+                        <div class="checkbox w-5 h-5 shrink-0 border-2 rounded flex items-center justify-center transition-all ${isCompleted ? 'bg-primary-accent border-primary-accent' : 'bg-transparent border-panel-border'}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-bg-dark ${isCompleted ? '' : 'hidden'} w-3.5 h-3.5"><polyline points="20 6 9 17 4 12"/></svg>
                         </div>
-                        <span class="text-sm text-text-muted bg-white/5 px-2 py-1 rounded">${(topicData.trackerWeight || 1).toFixed(1)}%</span>
+                        <div class="topic-name text-[14.5px] leading-snug font-medium transition-all line-clamp-2 pr-2 ${isCompleted ? 'text-primary-accent/80' : 'text-text-main'}">
+                            ${topicData.name}
+                        </div>
+                        <div class="w-[52px] text-right">
+                            <span class="text-[13px] font-semibold text-text-muted">${(topicData.trackerWeight || 1).toFixed(1)}%</span>
+                        </div>
                     `;
 
                     // Attach click listener for completion toggle
