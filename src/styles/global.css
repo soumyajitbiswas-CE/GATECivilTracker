@@ -29,16 +29,16 @@ body {
 /* Base button classes that can be used via @apply or just classes in HTML */
 @layer components {
   .btn {
-    @apply bg-panel-bg border border-panel-border text-text-main py-2 px-4 rounded-md cursor-pointer text-sm font-medium transition-colors inline-flex items-center gap-1.5;
+    @apply bg-white/5 border border-white/10 text-white py-2.5 px-5 rounded-lg cursor-pointer text-[15px] font-semibold transition-all duration-300 inline-flex items-center gap-2 backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.1)];
   }
   .btn:hover {
-    @apply bg-white/10;
+    @apply bg-white/10 border-white/20 transform -translate-y-[1px] shadow-[0_6px_16px_rgba(0,0,0,0.15)];
   }
   .btn-primary {
-    @apply bg-primary-accent/15 border-primary-accent/30 text-primary-accent;
+    @apply bg-primary-accent/15 border-primary-accent/30 text-primary-accent shadow-[0_0_15px_rgba(74,222,128,0.1)];
   }
   .btn-primary:hover {
-    @apply bg-primary-accent/25;
+    @apply bg-primary-accent/25 border-primary-accent/50 shadow-[0_0_20px_rgba(74,222,128,0.2)] text-[#6be796];
   }
   
   .glass-panel {

@@ -51,6 +51,23 @@ const { subject } = Astro.props;
                 </div>
             </div>
 
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 bg-black/20 border border-panel-border rounded-xl p-6">
+                <div class="flex flex-col w-full md:w-1/2 gap-2">
+                    <h2 class="text-lg font-semibold">PYQs Progress</h2>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-grow h-2 bg-panel-border rounded-full overflow-hidden">
+                            <div class="h-full bg-primary-accent rounded-full transition-all duration-300 pyq-progress-bar" style="width: 0%"></div>
+                        </div>
+                        <span class="text-sm font-medium pyq-progress-text w-12 text-right">0%</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <label class="text-sm text-text-muted">Questions Solved:</label>
+                    <input type="number" id="pyq-input" min="0" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent w-20 text-center text-lg font-semibold" value="0">
+                    <span class="text-text-muted text-lg font-medium pyq-total-text">/ 0</span>
+                </div>
+            </div>
+
             <div class="flex flex-col gap-3 mb-8" id="topics-container">
                 {subject.topics.map((topic, index) => (
                     <div class="topic-item flex items-center justify-between p-4 bg-black/20 border border-panel-border rounded-xl cursor-pointer transition-all hover:bg-black/40" data-topic-id={topic.id} data-index={index}>
@@ -115,6 +132,22 @@ const { subject } = Astro.props;
             document.querySelector('.subject-progress-val').textContent = window.formatPercent(subjectData.progress);
             document.querySelector('.subject-hours-val').textContent = window.formatHours(subjectData.hours);
 
+            // Update PYQs
+            const pyqData = state.pyqs[subjectId];
+            if (pyqData) {
+                const pyqPercent = pyqData.total === 0 ? 0 : (pyqData.solved / pyqData.total) * 100;
+                document.querySelector('.pyq-progress-bar').style.width = `${pyqPercent}%`;
+                document.querySelector('.pyq-progress-text').textContent = window.formatPercent(pyqPercent);
+                const pyqInput = document.getElementById('pyq-input');
+                if (pyqInput) {
+                    if (document.activeElement !== pyqInput) {
+                        pyqInput.value = pyqData.solved;
+                    }
+                    pyqInput.max = pyqData.total;
+                }
+                document.querySelector('.pyq-total-text').textContent = `/ ${pyqData.total}`;
+            }
+
             // Update Topics
             document.querySelectorAll('.topic-item').forEach(item => {
                 const topicId = item.dataset.topicId;
@@ -125,12 +158,16 @@ const { subject } = Astro.props;
 
                 if (topicData && topicData.completed) {
                     item.classList.add('border-primary-accent/30');
+                    item.classList.remove('border-panel-border');
                     checkbox.classList.add('bg-primary-accent', 'border-primary-accent');
+                    checkbox.classList.remove('bg-transparent', 'border-panel-border');
                     checkIcon.classList.remove('opacity-0');
                     name.classList.add('text-text-muted', 'line-through');
                 } else {
                     item.classList.remove('border-primary-accent/30');
+                    item.classList.add('border-panel-border');
                     checkbox.classList.remove('bg-primary-accent', 'border-primary-accent');
+                    checkbox.classList.add('bg-transparent', 'border-panel-border');
                     checkIcon.classList.add('opacity-0');
                     name.classList.remove('text-text-muted', 'line-through');
                 }
@@ -235,6 +272,21 @@ const { subject } = Astro.props;
             window.saveState(state);
             modal.style.display = 'none';
         });
+
+        // PYQ input logic
+        const pyqInputEl = document.getElementById('pyq-input');
+        if(pyqInputEl) {
+            pyqInputEl.addEventListener('change', (e) => {
+                const val = parseInt(e.target.value);
+                if (isNaN(val) || val < 0) return;
+                const state = window.getState();
+                if (state.pyqs[subjectId]) {
+                    const max = state.pyqs[subjectId].total;
+                    state.pyqs[subjectId].solved = Math.min(val, max);
+                    window.saveState(state);
+                }
+            });
+        }
 
         // Run on load and state changes
         document.addEventListener('DOMContentLoaded', hydrateDetail);

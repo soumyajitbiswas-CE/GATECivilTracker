@@ -21,22 +21,28 @@ const { title, description = "GATE 2027 Civil Engineering Preparation Tracker" }
 	<body class="p-5 flex justify-center">
         <div class="w-full max-w-[1200px] flex flex-col gap-6">
             <!-- Header -->
-            <header class="flex flex-col md:flex-row justify-between items-start md:items-center pb-3 border-b border-panel-border gap-4">
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center pb-4 border-b border-panel-border gap-4">
                 <div class="flex flex-col">
-                    <h1 class="text-2xl font-bold flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+                    <h1 class="text-2xl font-bold flex items-center gap-2 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
                         GATE CIVIL TRACKER
                     </h1>
-                    <p class="text-text-muted text-sm">GATE 2027 • Civil Engineering • Plan. Prepare. Track. Perform.</p>
+                    <p class="text-text-muted text-sm mt-1">GATE 2027 • Civil Engineering • Plan. Prepare. Track. Perform.</p>
                 </div>
-                <div class="flex gap-3">
-                    <a href="/" class="btn">Dashboard</a>
-                    <button class="btn" id="btn-reset">Reset</button>
-                    <button class="btn" id="btn-export">Export</button>
-                    <label class="btn cursor-pointer">
+                
+                <!-- Buttons Wrapper with margin-right to shift it left -->
+                <div class="flex gap-4 md:mr-16 flex-wrap">
+                    <a href="/" class="btn hover:text-white">Dashboard</a>
+                    <button class="btn text-red-400 hover:text-red-300 hover:border-red-400/30 hover:bg-red-400/10" id="btn-reset">Reset</button>
+                    <button class="btn hover:text-white" id="btn-export">Export</button>
+                    <label class="btn hover:text-white cursor-pointer">
                         Import
                         <input type="file" id="import-file" class="hidden" accept=".json">
                     </label>
+                    <button class="btn btn-primary open-settings-btn" title="Edit Settings & Targets">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                        Edit Targets
+                    </button>
                 </div>
             </header>
             
@@ -52,6 +58,8 @@ const { title, description = "GATE 2027 Civil Engineering Preparation Tracker" }
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     if(!parsed.pyqs) parsed.pyqs = defaultState.pyqs;
+                    if(!parsed.settings) parsed.settings = defaultState.settings;
+                    if(!parsed.settings.weights) parsed.settings.weights = defaultState.settings.weights;
                     return parsed;
                 }
                 return JSON.parse(JSON.stringify(defaultState));
@@ -100,11 +108,12 @@ const { title, description = "GATE 2027 Civil Engineering Preparation Tracker" }
                 state.mockProgress = (state.mocks.completed / state.mocks.total) * 100;
                 state.revisionProgress = ((state.revision['1st'] + state.revision['2nd'] + state.revision.final) / state.revision.total) * 100;
                 
-                state.gateReadiness = (state.overallSyllabusProgress * 0.5) + 
-                                      (state.pyqProgress * 0.2) + 
-                                      (state.testProgress * 0.15) + 
-                                      (state.mockProgress * 0.1) + 
-                                      (state.revisionProgress * 0.05);
+                const w = state.settings?.weights || defaultState.settings.weights;
+                state.gateReadiness = (state.overallSyllabusProgress * w.syllabus) + 
+                                      (state.pyqProgress * w.pyqs) + 
+                                      (state.testProgress * w.tests) + 
+                                      (state.mockProgress * w.mocks) + 
+                                      (state.revisionProgress * w.revision);
             };
 
             window.formatHours = (hours) => {

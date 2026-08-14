@@ -1,6 +1,13 @@
 export const defaultState = {
     settings: {
-        theme: 'dark'
+        theme: 'dark',
+        weights: {
+            syllabus: 0.60,
+            pyqs: 0.15,
+            tests: 0.10,
+            mocks: 0.10,
+            revision: 0.05
+        }
     },
     studyHistory: [],
     mocksHistory: [],
