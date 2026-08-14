@@ -45,6 +45,20 @@ body {
     @apply bg-panel-bg border border-panel-border rounded-2xl p-6 backdrop-blur-md;
   }
   
+  /* Layered Card Surfaces (Premium Two-Tone) */
+  .surface-hero {
+    background: linear-gradient(180deg, #0d291a 0%, #0d291a 15%, #06160f 65%, #06160f 100%);
+  }
+  .surface-syllabus {
+    background: linear-gradient(180deg, #0b2316 0%, #0b2316 15%, #06150e 65%, #06150e 100%);
+  }
+  .surface-practice {
+    background: linear-gradient(180deg, #091d12 0%, #091d12 10%, #05110b 60%, #05110b 100%);
+  }
+  .surface-summary {
+    background: linear-gradient(180deg, #081a10 0%, #081a10 5%, #05100a 50%, #05100a 100%);
+  }
+  
   /* Fix circular progress in Tailwind */
   .circular-progress {
     position: relative;
