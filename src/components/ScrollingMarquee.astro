@@ -1,0 +1,36 @@
+---
+const subjects = [
+    "Structural Engineering",
+    "Geotechnical Engineering",
+    "Water Resources",
+    "Environmental Engineering",
+    "Transportation Engineering",
+    "Geomatics Engineering",
+    "Construction Materials",
+    "Solid Mechanics",
+    "Fluid Mechanics"
+];
+
+// Duplicate the array so the infinite scroll loops seamlessly without a gap
+const marqueeItems = [...subjects, ...subjects];
+---
+
+<div class="w-full overflow-hidden py-3 sm:py-4 border-y border-panel-border/50 bg-black/10 relative backdrop-blur-sm animate-fade-up delay-1">
+    {/* Gradient masks to smoothly fade the text on the left and right edges */}
+    <div class="absolute inset-y-0 left-0 w-12 sm:w-24 bg-gradient-to-r from-[#030a07] to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-12 sm:w-24 bg-gradient-to-l from-[#030a07] to-transparent z-10 pointer-events-none"></div>
+
+    <div class="animate-marquee flex items-center gap-8 sm:gap-12 whitespace-nowrap">
+        {marqueeItems.map((subject, index) => (
+            <div class="flex items-center gap-8 sm:gap-12">
+                <span class="text-text-muted text-xs sm:text-sm font-semibold tracking-widest uppercase opacity-70 hover:opacity-100 hover:text-primary-accent transition-colors cursor-default">
+                    {subject}
+                </span>
+                {/* Separator dot, except for the very last item in the infinite loop */}
+                {index !== marqueeItems.length - 1 && (
+                    <span class="text-primary-accent/40 text-[10px]">●</span>
+                )}
+            </div>
+        ))}
+    </div>
+</div>

@@ -12,7 +12,7 @@ const subjects = defaultState.subjects;
         <!-- Hero Progress Area -->
         <div class="glass-panel surface-hero p-4 sm:p-6 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[220px_1fr] gap-5 sm:gap-6 items-center">
             <div class="flex flex-col items-center justify-center text-center">
-                <div class="circular-progress" id="hero-progress-circle" style="--progress: 0%;">
+                <div class="circular-progress animate-pulse-glow" id="hero-progress-circle" style="--progress: 0%;">
                     <span class="relative z-10 text-2xl sm:text-3xl font-bold" id="hero-progress-text">0%</span>
                 </div>
                 <p class="text-text-muted text-xs sm:text-sm font-semibold tracking-wide mt-1 sm:mt-2">Overall GATE Readiness</p>
@@ -56,8 +56,8 @@ const subjects = defaultState.subjects;
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-            {subjects.map(sub => (
-                <div class="surface-syllabus backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 transition-all hover:border-white/20 hover:-translate-y-0.5 flex flex-col justify-between subject-card min-w-0" data-id={sub.id}>
+            {subjects.map((sub, index) => (
+                <div class="surface-syllabus backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group" data-id={sub.id}>
                     <!-- Top section: Title and Weight -->
                     <div class="flex flex-col gap-1 min-w-0">
                         <div class="flex items-start gap-3 min-w-0">
@@ -102,7 +102,7 @@ const subjects = defaultState.subjects;
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             <!-- PYQs Card -->
-            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 transition-all hover:border-white/20 min-w-0">
+            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 min-w-0 glow-card">
                 <div class="flex items-center gap-3 mb-1">
                     <div class="bg-white/5 p-2 rounded-lg text-primary-accent shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check"><path d="M8 3H2v15h7c1.7 0 3 1.3 3 3V7c0-2.2-1.8-4-4-4Z"/><path d="m16 12 2 2 4-4"/><path d="M22 6V3h-6c-2.2 0-4 1.8-4 4v14c0-1.7 1.3-3 3-3h7v-2.3"/></svg>
@@ -125,7 +125,7 @@ const subjects = defaultState.subjects;
             </div>
 
             <!-- Tests Card -->
-            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 transition-all hover:border-white/20 min-w-0">
+            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 min-w-0 glow-card">
                 <div class="flex items-center gap-3 mb-1">
                     <div class="bg-white/5 p-2 rounded-lg text-primary-accent shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
@@ -153,7 +153,7 @@ const subjects = defaultState.subjects;
             </div>
 
             <!-- Mocks Card -->
-            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 transition-all hover:border-white/20 min-w-0">
+            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 min-w-0 glow-card">
                 <div class="flex items-center gap-3 mb-1">
                     <div class="bg-white/5 p-2 rounded-lg text-primary-accent shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
@@ -172,7 +172,7 @@ const subjects = defaultState.subjects;
             </div>
 
             <!-- Revision Card -->
-            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 transition-all hover:border-white/20 min-w-0">
+            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 min-w-0 glow-card">
                 <div class="flex items-center gap-3 mb-1">
                     <div class="bg-white/5 p-2 rounded-lg text-primary-accent shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>

@@ -187,3 +187,75 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background: var(--color-bg-dark);
   }
 }
+
+/* Button Active Scale (Micro-interaction) */
+.btn:active, button:active, a:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* -------------------------------------------------------------
+ * PREMIUM UI ANIMATIONS
+ * Hardware accelerated & Highly Optimized
+ * ------------------------------------------------------------- */
+
+/* Cinematic Fade-Up Entrance */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(25px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* Staggered Delays for Waterfall Effect */
+.delay-0 { animation-delay: 0s; }
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.1s; }
+.delay-3 { animation-delay: 0.15s; }
+.delay-4 { animation-delay: 0.2s; }
+.delay-5 { animation-delay: 0.25s; }
+.delay-6 { animation-delay: 0.3s; }
+.delay-7 { animation-delay: 0.35s; }
+.delay-8 { animation-delay: 0.4s; }
+.delay-9 { animation-delay: 0.45s; }
+
+/* Continuous Marquee Scrolling */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Pulsing Glow for Progress Rings */
+@keyframes pulseGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.2)); }
+  50% { filter: drop-shadow(0 0 15px rgba(74, 222, 128, 0.6)); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Card Glow Effects (Pure CSS) */
+.glow-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(74, 222, 128, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
+              inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
+}
