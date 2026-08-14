@@ -111,11 +111,13 @@ const subjects = defaultState.subjects;
                 </div>
                 <div class="flex flex-col gap-2 overflow-y-auto max-h-[170px] pr-1 sm:pr-2 custom-scrollbar mt-1">
                     {subjects.map(sub => (
-                        <div class="flex justify-between items-center bg-black/20 p-2 rounded-xl border border-panel-border shrink-0 min-w-0 gap-2">
-                            <span class="text-xs font-medium text-text-muted truncate flex-1 min-w-0" title={sub.name}>{sub.name}</span>
-                            <div class="flex items-center gap-1 shrink-0">
-                                <input type="number" id={`input-pyq-${sub.id}`} data-subject={sub.id} min="0" class="input-pyq-dash bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-12 sm:w-14 text-center text-xs font-semibold" value="0">
-                                <span class="text-text-muted text-[10px] font-medium w-7 sm:w-8 text-right pyq-total-dash truncate" data-subject={sub.id}>/ 0</span>
+                        <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border shrink-0 min-w-0 gap-2">
+                            <span class="text-xs sm:text-sm font-medium text-text-muted truncate flex-1 min-w-0" title={sub.name}>{sub.name}</span>
+                            <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
+                                <input type="number" id={`input-pyq-${sub.id}`} data-subject={sub.id} min="0" class="input-pyq-dash bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold focus:outline-none" value="0">
+                                <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
+                                    <span class="text-text-muted text-[10px] sm:text-[11px] font-medium pyq-total-dash" data-subject={sub.id}>/ 0</span>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -132,16 +134,20 @@ const subjects = defaultState.subjects;
                 </div>
                 <div class="flex justify-between items-center bg-black/20 p-2.5 sm:p-3 rounded-xl border border-panel-border gap-2 mt-1 min-w-0">
                     <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Topic Tests</span>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <input type="number" id="input-tests-topic" min="0" max="40" class="bg-white/5 border border-panel-border text-text-main p-1 sm:p-1.5 rounded-md focus:outline-none focus:border-primary-accent w-14 sm:w-16 text-center text-xs sm:text-sm font-semibold" value="0">
-                        <span class="text-text-muted text-xs sm:text-sm font-medium w-7 sm:w-8 text-right">/ 40</span>
+                    <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
+                        <input type="number" id="input-tests-topic" min="0" max="40" class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold focus:outline-none" value="0">
+                        <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
+                            <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 40</span>
+                        </div>
                     </div>
                 </div>
                 <div class="flex justify-between items-center bg-black/20 p-2.5 sm:p-3 rounded-xl border border-panel-border gap-2 min-w-0">
                     <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Subject Tests</span>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <input type="number" id="input-tests-subject" min="0" max="10" class="bg-white/5 border border-panel-border text-text-main p-1 sm:p-1.5 rounded-md focus:outline-none focus:border-primary-accent w-14 sm:w-16 text-center text-xs sm:text-sm font-semibold" value="0">
-                        <span class="text-text-muted text-xs sm:text-sm font-medium w-7 sm:w-8 text-right">/ 10</span>
+                    <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
+                        <input type="number" id="input-tests-subject" min="0" max="10" class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold focus:outline-none" value="0">
+                        <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
+                            <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 10</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,11 +160,13 @@ const subjects = defaultState.subjects;
                     </div>
                     <h3 class="text-base sm:text-lg font-semibold">Full-Length Mocks</h3>
                 </div>
-                <div class="flex flex-col items-center justify-center flex-grow bg-black/20 p-3 sm:p-4 rounded-xl border border-panel-border gap-1.5 mt-1 min-w-0">
-                    <span class="text-xs sm:text-sm text-text-muted uppercase tracking-wider font-semibold">Completed</span>
-                    <div class="flex items-baseline gap-2">
-                        <input type="number" id="input-mocks" min="0" max="20" class="bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent w-20 sm:w-24 text-center text-2xl sm:text-3xl font-bold text-primary-accent" value="0">
-                        <span class="text-text-muted text-base sm:text-lg font-bold">/ 20</span>
+                <div class="flex justify-between items-center bg-black/20 p-2.5 sm:p-3 rounded-xl border border-panel-border gap-2 mt-1 min-w-0">
+                    <span class="text-xs sm:text-sm font-medium text-text-muted truncate uppercase tracking-wider">Completed</span>
+                    <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
+                        <input type="number" id="input-mocks" min="0" max="20" class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold focus:outline-none" value="0">
+                        <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
+                            <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 20</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -174,23 +182,29 @@ const subjects = defaultState.subjects;
                 <div class="flex flex-col gap-2 mt-1">
                     <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
                         <span class="text-xs sm:text-sm font-medium text-text-muted truncate">1st Revision</span>
-                        <div class="flex items-center gap-1.5 shrink-0">
-                            <input type="number" id="input-rev-1" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold" value="0">
-                            <span class="text-text-muted text-xs sm:text-sm font-medium w-5 sm:w-6 text-right">/ 9</span>
+                        <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
+                            <input type="number" id="input-rev-1" min="0" max="9" class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold focus:outline-none" value="0">
+                            <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
+                                <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 9</span>
+                            </div>
                         </div>
                     </div>
                     <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
                         <span class="text-xs sm:text-sm font-medium text-text-muted truncate">2nd Revision</span>
-                        <div class="flex items-center gap-1.5 shrink-0">
-                            <input type="number" id="input-rev-2" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold" value="0">
-                            <span class="text-text-muted text-xs sm:text-sm font-medium w-5 sm:w-6 text-right">/ 9</span>
+                        <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
+                            <input type="number" id="input-rev-2" min="0" max="9" class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold focus:outline-none" value="0">
+                            <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
+                                <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 9</span>
+                            </div>
                         </div>
                     </div>
                     <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
                         <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Final Revision</span>
-                        <div class="flex items-center gap-1.5 shrink-0">
-                            <input type="number" id="input-rev-f" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold" value="0">
-                            <span class="text-text-muted text-xs sm:text-sm font-medium w-5 sm:w-6 text-right">/ 9</span>
+                        <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
+                            <input type="number" id="input-rev-f" min="0" max="9" class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold focus:outline-none" value="0">
+                            <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
+                                <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 9</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -418,7 +432,7 @@ const subjects = defaultState.subjects;
                         el.value = item.value;
                     }
                     el.max = item.total;
-                    const totalSpan = el.nextElementSibling;
+                    const totalSpan = el.nextElementSibling?.querySelector('span') || el.nextElementSibling;
                     if (totalSpan) totalSpan.textContent = `/ ${item.total}`;
                 }
             });
