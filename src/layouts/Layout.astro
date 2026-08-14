@@ -1,0 +1,161 @@
+---
+import '../styles/global.css';
+interface Props {
+	title: string;
+    description?: string;
+}
+
+const { title, description = "GATE 2027 Civil Engineering Preparation Tracker" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="p-5 flex justify-center">
+        <div class="w-full max-w-[1200px] flex flex-col gap-6">
+            <!-- Header -->
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center pb-3 border-b border-panel-border gap-4">
+                <div class="flex flex-col">
+                    <h1 class="text-2xl font-bold flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+                        GATE CIVIL TRACKER
+                    </h1>
+                    <p class="text-text-muted text-sm">GATE 2027 • Civil Engineering • Plan. Prepare. Track. Perform.</p>
+                </div>
+                <div class="flex gap-3">
+                    <a href="/" class="btn">Dashboard</a>
+                    <button class="btn" id="btn-reset">Reset</button>
+                    <button class="btn" id="btn-export">Export</button>
+                    <label class="btn cursor-pointer">
+                        Import
+                        <input type="file" id="import-file" class="hidden" accept=".json">
+                    </label>
+                </div>
+            </header>
+            
+		    <slot />
+        </div>
+
+        <script>
+            import { defaultState } from '../data.js';
+            
+            // Global helper functions to attach to window for cross-page use
+            window.getState = () => {
+                const saved = localStorage.getItem('gateCivilTracker2027');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if(!parsed.pyqs) parsed.pyqs = defaultState.pyqs;
+                    return parsed;
+                }
+                return JSON.parse(JSON.stringify(defaultState));
+            };
+
+            window.saveState = (state) => {
+                localStorage.setItem('gateCivilTracker2027', JSON.stringify(state));
+                // Dispatch custom event so components know state changed
+                window.dispatchEvent(new Event('stateChanged'));
+            };
+
+            window.calculateAllMetrics = (state) => {
+                let overallSyllabusWeightCompleted = 0;
+                
+                state.subjects.forEach(subject => {
+                    let subjectTotalWeight = 0;
+                    let subjectCompletedWeight = 0;
+                    let subjectHours = 0;
+                    
+                    subject.topics.forEach(t => {
+                        subjectTotalWeight += t.trackerWeight;
+                        if (t.completed) {
+                            subjectCompletedWeight += t.trackerWeight;
+                        }
+                    });
+                    
+                    state.studyHistory.forEach(entry => {
+                        if (entry.subjectId === subject.id) {
+                            subjectHours += entry.hours;
+                        }
+                    });
+                    
+                    subject.progress = subjectTotalWeight === 0 ? 0 : (subjectCompletedWeight / subjectTotalWeight) * 100;
+                    subject.hours = subjectHours;
+                    overallSyllabusWeightCompleted += (subject.progress / 100) * subject.trackerWeight;
+                });
+                
+                state.overallSyllabusProgress = overallSyllabusWeightCompleted;
+                state.totalHours = state.studyHistory.reduce((acc, curr) => acc + curr.hours, 0);
+                
+                let pyqTotal = 0, pyqSolved = 0;
+                Object.values(state.pyqs).forEach(p => { pyqTotal += p.total; pyqSolved += p.solved; });
+                state.pyqProgress = pyqTotal === 0 ? 0 : (pyqSolved / pyqTotal) * 100;
+                
+                state.testProgress = ((state.tests.topic.completed + state.tests.subject.completed) / (state.tests.topic.total + state.tests.subject.total)) * 100;
+                state.mockProgress = (state.mocks.completed / state.mocks.total) * 100;
+                state.revisionProgress = ((state.revision['1st'] + state.revision['2nd'] + state.revision.final) / state.revision.total) * 100;
+                
+                state.gateReadiness = (state.overallSyllabusProgress * 0.5) + 
+                                      (state.pyqProgress * 0.2) + 
+                                      (state.testProgress * 0.15) + 
+                                      (state.mockProgress * 0.1) + 
+                                      (state.revisionProgress * 0.05);
+            };
+
+            window.formatHours = (hours) => {
+                const h = Math.floor(hours);
+                const m = Math.round((hours - h) * 60);
+                if (m === 0) return `${h}h`;
+                if (h === 0) return `${m}m`;
+                return `${h}h ${m}m`;
+            };
+
+            window.formatPercent = (value) => {
+                return value.toFixed(1) + '%';
+            };
+
+            // Global listeners
+            document.getElementById('btn-reset')?.addEventListener('click', () => {
+                if(confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                    window.saveState(JSON.parse(JSON.stringify(defaultState)));
+                    window.location.reload();
+                }
+            });
+
+            document.getElementById('btn-export')?.addEventListener('click', () => {
+                const state = window.getState();
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+                const dlAnchorElem = document.createElement('a');
+                dlAnchorElem.setAttribute("href", dataStr);
+                dlAnchorElem.setAttribute("download", "gate-civil-tracker-2027.json");
+                dlAnchorElem.click();
+            });
+
+            document.getElementById('import-file')?.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if(!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const importedState = JSON.parse(event.target.result);
+                        if(importedState && importedState.subjects) {
+                            window.saveState(importedState);
+                            alert('Progress imported successfully!');
+                            window.location.reload();
+                        } else {
+                            alert('Invalid file format.');
+                        }
+                    } catch(err) {
+                        alert('Error parsing file.');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        </script>
+	</body>
+</html>

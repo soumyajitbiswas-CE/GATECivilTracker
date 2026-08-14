@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { defaultState } from '../data.js';
+
+const subjects = defaultState.subjects;
+---
+
+<Layout title="GATE Civil Tracker 2027">
+    <!-- Main Dashboard View -->
+    <div id="dashboard-view" class="flex flex-col gap-6">
+        
+        <!-- Hero Progress Area -->
+        <div class="glass-panel grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-center">
+            <div class="flex flex-col items-center justify-center text-center">
+                <div class="circular-progress" id="hero-progress-circle" style="--progress: 0%;">
+                    <span class="circular-value" id="hero-progress-text">0%</span>
+                </div>
+                <p class="text-text-muted text-sm">Preparation Progress</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
+                    <span class="text-text-muted text-xs uppercase tracking-wide">Syllabus</span>
+                    <span class="text-xl font-semibold" id="metric-syllabus">0%</span>
+                </div>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
+                    <span class="text-text-muted text-xs uppercase tracking-wide">PYQs</span>
+                    <span class="text-xl font-semibold" id="metric-pyqs">0%</span>
+                </div>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
+                    <span class="text-text-muted text-xs uppercase tracking-wide">Tests</span>
+                    <span class="text-xl font-semibold" id="metric-tests">0%</span>
+                </div>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
+                    <span class="text-text-muted text-xs uppercase tracking-wide">Mocks</span>
+                    <span class="text-xl font-semibold" id="metric-mocks">0%</span>
+                </div>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
+                    <span class="text-text-muted text-xs uppercase tracking-wide">Revision</span>
+                    <span class="text-xl font-semibold" id="metric-revision">0%</span>
+                </div>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
+                    <span class="text-text-muted text-xs uppercase tracking-wide">Study Hours</span>
+                    <span class="text-xl font-semibold text-primary-accent" id="metric-hours">0h</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subject Grid -->
+        <div class="flex justify-between items-center mt-2">
+            <h2 class="text-xl font-semibold">1. SYLLABUS COMPLETION</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {subjects.map(sub => (
+                <div class="bg-panel-bg border border-panel-border rounded-2xl p-5 transition-all hover:border-white/20 hover:-translate-y-0.5 flex flex-col gap-4 subject-card" data-id={sub.id}>
+                    <div class="flex items-start gap-3">
+                        <div class="bg-white/5 p-2.5 rounded-lg flex items-center justify-center text-primary-accent" set:html={sub.icon} />
+                        <div>
+                            <h3 class="text-[1.1rem] font-semibold leading-tight mb-1">{sub.name}</h3>
+                            <div class="text-xs text-text-muted">Tracker Weight: {sub.trackerWeight}%</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div class="w-full h-2 bg-panel-border rounded-full overflow-hidden">
+                            <div class="h-full bg-primary-accent rounded-full transition-all duration-300 subject-progress-bar" style="width: 0%" data-id={sub.id}></div>
+                        </div>
+                        <div class="flex justify-between text-sm text-text-muted">
+                            <span class="subject-progress-text" data-id={sub.id}>0% Complete</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mt-auto pt-4 border-t border-panel-border">
+                        <div class="text-sm flex items-center gap-1.5 text-text-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <span class="subject-hours-text" data-id={sub.id}>0h studied</span>
+                        </div>
+                        <a href={`/subject/${sub.id}`} class="btn">OPEN →</a>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <!-- Quick Summary -->
+        <div class="glass-panel mt-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">QUICK SUMMARY</h2>
+            </div>
+            <div class="flex flex-wrap gap-6 items-center justify-between">
+                <div class="flex flex-wrap gap-4 text-text-muted text-sm">
+                    <span id="qs-syllabus">Syllabus — 0%</span> | 
+                    <span id="qs-pyqs">PYQs — 0%</span> | 
+                    <span id="qs-tests">Tests — 0%</span> | 
+                    <span id="qs-mocks">Mocks — 0%</span> | 
+                    <span id="qs-revision">Revision — 0%</span> | 
+                    <span id="qs-hours">Study Time — 0h</span>
+                </div>
+                <div class="bg-primary-accent/10 px-6 py-3 rounded-lg border border-primary-accent/30">
+                    <div class="text-xs text-primary-accent uppercase tracking-wider">Tracker Estimate</div>
+                    <div class="text-2xl font-bold text-white mt-1" id="metric-readiness">GATE READINESS: 0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hydration logic
+        function hydrateDashboard() {
+            const state = window.getState();
+            window.calculateAllMetrics(state);
+
+            // Update Hero
+            document.getElementById('hero-progress-text').textContent = window.formatPercent(state.overallSyllabusProgress);
+            document.getElementById('hero-progress-circle').style.setProperty('--progress', `${state.overallSyllabusProgress}%`);
+            
+            document.getElementById('metric-syllabus').textContent = window.formatPercent(state.overallSyllabusProgress);
+            document.getElementById('metric-pyqs').textContent = window.formatPercent(state.pyqProgress);
+            document.getElementById('metric-tests').textContent = window.formatPercent(state.testProgress);
+            document.getElementById('metric-mocks').textContent = window.formatPercent(state.mockProgress);
+            document.getElementById('metric-revision').textContent = window.formatPercent(state.revisionProgress);
+            document.getElementById('metric-hours').textContent = window.formatHours(state.totalHours);
+            document.getElementById('metric-readiness').textContent = window.formatPercent(state.gateReadiness);
+            
+            // Quick summary
+            document.getElementById('qs-syllabus').textContent = `Syllabus — ${window.formatPercent(state.overallSyllabusProgress)}`;
+            document.getElementById('qs-pyqs').textContent = `PYQs — ${window.formatPercent(state.pyqProgress)}`;
+            document.getElementById('qs-tests').textContent = `Tests — ${window.formatPercent(state.testProgress)}`;
+            document.getElementById('qs-mocks').textContent = `Mocks — ${window.formatPercent(state.mockProgress)}`;
+            document.getElementById('qs-revision').textContent = `Revision — ${window.formatPercent(state.revisionProgress)}`;
+            document.getElementById('qs-hours').textContent = `Study Time — ${window.formatHours(state.totalHours)}`;
+            
+            // Render Subjects Progress
+            state.subjects.forEach(sub => {
+                const bar = document.querySelector(`.subject-progress-bar[data-id="${sub.id}"]`);
+                const text = document.querySelector(`.subject-progress-text[data-id="${sub.id}"]`);
+                const hours = document.querySelector(`.subject-hours-text[data-id="${sub.id}"]`);
+                
+                if(bar) bar.style.width = `${sub.progress}%`;
+                if(text) text.textContent = `${window.formatPercent(sub.progress)} Complete`;
+                if(hours) hours.textContent = `${window.formatHours(sub.hours)} studied`;
+            });
+        }
+
+        // Run on load and state changes
+        document.addEventListener('DOMContentLoaded', hydrateDashboard);
+        window.addEventListener('stateChanged', hydrateDashboard);
+    </script>
+</Layout>

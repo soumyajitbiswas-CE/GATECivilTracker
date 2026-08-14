@@ -1,0 +1,243 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { defaultState } from '../../data.js';
+
+export function getStaticPaths() {
+  return defaultState.subjects.map(subject => ({
+    params: { id: subject.id },
+    props: { subject },
+  }));
+}
+
+const { id } = Astro.params;
+const { subject } = Astro.props;
+---
+
+<Layout title={`${subject.name} - GATE 2027 Tracker`} description={`Track your preparation for ${subject.name} in the GATE 2027 Civil Engineering syllabus.`}>
+    <!-- Detail View -->
+    <div id="detail-view" class="flex flex-col">
+        <div class="mb-6">
+            <a href="/" class="btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="glass-panel">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+                <div class="flex flex-col">
+                    <p class="text-text-muted text-base">Subject Detail</p>
+                    <h1 class="text-3xl font-bold mb-2">{subject.name}</h1>
+                    <div class="flex flex-wrap gap-4 mt-3">
+                        <div class="bg-black/30 border border-panel-border rounded-md px-4 py-2 flex items-center gap-2">
+                            <span class="text-text-muted text-xs uppercase tracking-wide">Progress</span>
+                            <span class="text-lg font-semibold text-primary-accent subject-progress-val">0%</span>
+                        </div>
+                        <div class="bg-black/30 border border-panel-border rounded-md px-4 py-2 flex items-center gap-2">
+                            <span class="text-text-muted text-xs uppercase tracking-wide">Tracker Weight</span>
+                            <span class="text-lg font-semibold">{subject.trackerWeight}%</span>
+                        </div>
+                        <div class="bg-black/30 border border-panel-border rounded-md px-4 py-2 flex items-center gap-2">
+                            <span class="text-text-muted text-xs uppercase tracking-wide">Total Study Time</span>
+                            <span class="text-lg font-semibold subject-hours-val">0h 0m</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary" id="btn-log-hours">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                        Log Study Hours
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3 mb-8" id="topics-container">
+                {subject.topics.map((topic, index) => (
+                    <div class="topic-item flex items-center justify-between p-4 bg-black/20 border border-panel-border rounded-xl cursor-pointer transition-all hover:bg-black/40" data-topic-id={topic.id} data-index={index}>
+                        <div class="flex items-center gap-4">
+                            <div class="checkbox w-6 h-6 border-2 border-panel-border rounded-md flex items-center justify-center transition-all bg-transparent">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-bg-dark opacity-0 w-4 h-4"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <span class="topic-name text-base font-medium transition-all">{topic.name}</span>
+                        </div>
+                        <span class="text-sm text-text-muted bg-white/5 px-2 py-1 rounded">{topic.trackerWeight.toFixed(1)}%</span>
+                    </div>
+                ))}
+            </div>
+            
+            <div class="flex justify-between items-center mt-10 border-t border-panel-border pt-6 mb-4">
+                <h2 class="text-xl font-semibold">Study History</h2>
+            </div>
+            <div class="flex flex-col gap-2" id="history-container">
+                <!-- Hydrated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Logging Hours -->
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4" id="log-modal">
+        <div class="bg-bg-dark border border-panel-border rounded-2xl p-8 w-full max-w-[400px] shadow-2xl">
+            <h3 class="text-xl font-semibold mb-5">Log Study Hours</h3>
+            <div class="flex flex-col gap-2 mb-4">
+                <label class="text-sm text-text-muted">Date</label>
+                <input type="date" id="log-date" class="bg-white/5 border border-panel-border text-text-main p-3 rounded-md focus:outline-none focus:border-primary-accent">
+            </div>
+            <div class="flex flex-col gap-2 mb-4">
+                <label class="text-sm text-text-muted">Hours (e.g., 1.5, 2)</label>
+                <input type="number" id="log-amount" step="0.5" min="0" class="bg-white/5 border border-panel-border text-text-main p-3 rounded-md focus:outline-none focus:border-primary-accent">
+            </div>
+            <div class="flex gap-2 mb-4">
+                <button class="quick-btn flex-1 bg-white/5 border border-panel-border text-text-main p-2 rounded-md text-xs hover:bg-white/10" data-hours="0.5">+30 min</button>
+                <button class="quick-btn flex-1 bg-white/5 border border-panel-border text-text-main p-2 rounded-md text-xs hover:bg-white/10" data-hours="1">+1 hour</button>
+                <button class="quick-btn flex-1 bg-white/5 border border-panel-border text-text-main p-2 rounded-md text-xs hover:bg-white/10" data-hours="2">+2 hours</button>
+                <button class="quick-btn flex-1 bg-white/5 border border-panel-border text-text-main p-2 rounded-md text-xs hover:bg-white/10" data-hours="3">+3 hours</button>
+            </div>
+            <div class="flex flex-col gap-2 mb-4">
+                <label class="text-sm text-text-muted">Note (Optional)</label>
+                <textarea id="log-note" rows="2" placeholder="What did you study?" class="bg-white/5 border border-panel-border text-text-main p-3 rounded-md focus:outline-none focus:border-primary-accent"></textarea>
+            </div>
+            <div class="flex justify-end gap-3 mt-6">
+                <button class="btn" id="btn-modal-cancel">Cancel</button>
+                <button class="btn btn-primary" id="btn-modal-save">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script define:vars={{ subjectId: subject.id }}>
+        function hydrateDetail() {
+            const state = window.getState();
+            window.calculateAllMetrics(state);
+            
+            const subjectData = state.subjects.find(s => s.id === subjectId);
+            if(!subjectData) return;
+
+            // Update Header Stats
+            document.querySelector('.subject-progress-val').textContent = window.formatPercent(subjectData.progress);
+            document.querySelector('.subject-hours-val').textContent = window.formatHours(subjectData.hours);
+
+            // Update Topics
+            document.querySelectorAll('.topic-item').forEach(item => {
+                const topicId = item.dataset.topicId;
+                const topicData = subjectData.topics.find(t => t.id === topicId);
+                const checkbox = item.querySelector('.checkbox');
+                const checkIcon = checkbox.querySelector('svg');
+                const name = item.querySelector('.topic-name');
+
+                if (topicData && topicData.completed) {
+                    item.classList.add('border-primary-accent/30');
+                    checkbox.classList.add('bg-primary-accent', 'border-primary-accent');
+                    checkIcon.classList.remove('opacity-0');
+                    name.classList.add('text-text-muted', 'line-through');
+                } else {
+                    item.classList.remove('border-primary-accent/30');
+                    checkbox.classList.remove('bg-primary-accent', 'border-primary-accent');
+                    checkIcon.classList.add('opacity-0');
+                    name.classList.remove('text-text-muted', 'line-through');
+                }
+            });
+
+            // Update History
+            const historyContainer = document.getElementById('history-container');
+            historyContainer.innerHTML = '';
+            const subjectHistory = state.studyHistory.filter(h => h.subjectId === subjectId).sort((a,b) => new Date(b.date) - new Date(a.date));
+            
+            if(subjectHistory.length === 0) {
+                historyContainer.innerHTML = '<div class="text-text-muted text-sm py-4">No study hours logged yet.</div>';
+            } else {
+                subjectHistory.forEach(entry => {
+                    const dateObj = new Date(entry.date);
+                    const dateStr = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+                    
+                    const el = document.createElement('div');
+                    el.className = 'flex justify-between items-center p-3 bg-black/20 rounded-lg';
+                    el.innerHTML = `
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs text-text-muted">${dateStr}</span>
+                            ${entry.note ? `<span class="text-sm">${entry.note}</span>` : ''}
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="font-semibold text-primary-accent">${window.formatHours(entry.hours)}</div>
+                            <button class="btn-delete-history px-2 py-1 border border-red-500/30 text-red-300 text-xs rounded hover:bg-red-500/10 transition-colors" data-id="${entry.id}">Delete</button>
+                        </div>
+                    `;
+                    historyContainer.appendChild(el);
+                });
+
+                document.querySelectorAll('.btn-delete-history').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.dataset.id;
+                        state.studyHistory = state.studyHistory.filter(h => h.id !== id);
+                        window.saveState(state);
+                    });
+                });
+            }
+        }
+
+        // Initialize topic clicks
+        document.querySelectorAll('.topic-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const topicId = item.dataset.topicId;
+                const state = window.getState();
+                const subjectData = state.subjects.find(s => s.id === subjectId);
+                const topicData = subjectData.topics.find(t => t.id === topicId);
+                topicData.completed = !topicData.completed;
+                window.saveState(state);
+            });
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('log-modal');
+        document.getElementById('btn-log-hours').addEventListener('click', () => {
+            modal.style.display = 'flex';
+            document.getElementById('log-date').valueAsDate = new Date();
+            document.getElementById('log-amount').value = '';
+            document.getElementById('log-note').value = '';
+        });
+
+        document.getElementById('btn-modal-cancel').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) modal.style.display = 'none';
+        });
+
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const val = parseFloat(e.target.dataset.hours);
+                const input = document.getElementById('log-amount');
+                const current = parseFloat(input.value) || 0;
+                input.value = current + val;
+            });
+        });
+
+        document.getElementById('btn-modal-save').addEventListener('click', () => {
+            const date = document.getElementById('log-date').value;
+            const hours = parseFloat(document.getElementById('log-amount').value);
+            const note = document.getElementById('log-note').value.trim();
+            
+            if (!date || isNaN(hours) || hours <= 0) {
+                alert('Please enter a valid date and positive number of hours.');
+                return;
+            }
+            
+            const newEntry = {
+                id: Date.now().toString(),
+                date: date,
+                subjectId: subjectId,
+                hours: hours,
+                note: note
+            };
+            
+            const state = window.getState();
+            state.studyHistory.push(newEntry);
+            window.saveState(state);
+            modal.style.display = 'none';
+        });
+
+        // Run on load and state changes
+        document.addEventListener('DOMContentLoaded', hydrateDetail);
+        window.addEventListener('stateChanged', hydrateDetail);
+    </script>
+</Layout>

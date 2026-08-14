@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-dark: #06140e;
+  --color-panel-bg: rgba(255, 255, 255, 0.03);
+  --color-panel-border: rgba(255, 255, 255, 0.08);
+  --color-primary-accent: #4ade80;
+  --color-primary-accent-hover: #22c55e;
+  --color-text-main: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-dark);
+  background-image: radial-gradient(circle at top left, #0d2b1d, #06140e 70%);
+  color: var(--color-text-main);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base button classes that can be used via @apply or just classes in HTML */
+@layer components {
+  .btn {
+    @apply bg-panel-bg border border-panel-border text-text-main py-2 px-4 rounded-md cursor-pointer text-sm font-medium transition-colors inline-flex items-center gap-1.5;
+  }
+  .btn:hover {
+    @apply bg-white/10;
+  }
+  .btn-primary {
+    @apply bg-primary-accent/15 border-primary-accent/30 text-primary-accent;
+  }
+  .btn-primary:hover {
+    @apply bg-primary-accent/25;
+  }
+  
+  .glass-panel {
+    @apply bg-panel-bg border border-panel-border rounded-2xl p-6 backdrop-blur-md;
+  }
+  
+  /* Fix circular progress in Tailwind */
+  .circular-progress {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(var(--color-primary-accent) var(--progress, 0%), var(--color-panel-border) 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  
+  .circular-progress::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: var(--color-bg-dark);
+  }
+}
