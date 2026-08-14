@@ -1,28 +1,37 @@
 ---
-// Generate an array of leaves with random properties at build time
-const numLeaves = 75; // Increased quantity significantly for better density
+// Optimized for Universal Device Performance & Smooth Realistic Physics
+const numLeaves = 80; // Reverted back to high density
 const leaves = Array.from({ length: numLeaves }).map((_, i) => {
-    const isBlurred = Math.random() > 0.6;
+    // Physics Logic: Tiny leaves fall slower and flutter faster
+    const isTiny = Math.random() > 0.6; // 40% of leaves are tiny background leaves
+    const isBlurred = Math.random() > 0.8; // 20% are blurred for depth of field
+    
+    // Increased minimum sizes so they don't look like dust
+    const sizeScale = isTiny ? (0.35 + Math.random() * 0.3) : (0.65 + Math.random() * 0.65);
+    const fallDuration = isTiny ? (20 + Math.random() * 20) : (12 + Math.random() * 15);
+    const swayDuration = isTiny ? (3 + Math.random() * 3) : (4 + Math.random() * 5);
     
     return {
         id: i,
         left: Math.random() * 100, // random horizontal start
-        fallDelay: Math.random() * -40, // spread negative delays over 40s so the screen is full instantly
-        fallDuration: 15 + Math.random() * 30, // 15s to 45s to fall (much more variation in speed)
+        fallDelay: Math.random() * -45, // huge negative delay spread so screen is instantly full
+        fallDuration: fallDuration,
         swayDelay: Math.random() * -5,
-        swayDuration: 3 + Math.random() * 5, // 3s to 8s pendulum cycle
-        opacity: 0.1 + Math.random() * 0.4,
-        scale: 0.25 + Math.random() * 1.2,
-        blur: isBlurred ? (Math.random() > 0.5 ? 'blur(3px)' : 'blur(1.5px)') : 'blur(0px)',
-        swayType: i % 3,
-        color: ['text-emerald-700', 'text-emerald-800', 'text-emerald-900', 'text-green-800', 'text-[#0a2f1b]'][Math.floor(Math.random() * 5)]
+        swayDuration: swayDuration,
+        // Bumped opacity so they are clearly visible on the dark background
+        opacity: isTiny ? (0.15 + Math.random() * 0.15) : (0.2 + Math.random() * 0.3),
+        scale: sizeScale,
+        blur: isBlurred ? 'blur(2px)' : 'none',
+        swayType: i % 4,
+        // Brightened the colors slightly for better contrast
+        color: ['text-emerald-600', 'text-emerald-700', 'text-emerald-800', 'text-green-700', 'text-[#0c4a26]'][Math.floor(Math.random() * 5)]
     };
 });
 ---
 
 <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]" aria-hidden="true">
     {leaves.map((leaf) => (
-        /* 1. Outer Container: Handles the linear falling motion (Gravity) */
+        /* 1. Outer Container: Hardware-accelerated Linear Gravity */
         <div 
             class="absolute top-[-10vh] leaf-fall"
             style={`
@@ -31,26 +40,27 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
                 animation-duration: ${leaf.fallDuration}s;
             `}
         >
-            {/* 2. Middle Container: Handles static properties like Scale, Opacity, and Blur to prevent CSS transform collision */}
+            {/* 2. Middle Container: Static visual properties (No dynamic filters to save battery) */}
             <div 
                 class={`${leaf.color}`}
                 style={`
                     opacity: ${leaf.opacity};
                     filter: ${leaf.blur};
-                    transform: scale(${leaf.scale});
+                    transform: scale(${leaf.scale}) translateZ(0);
                 `}
             >
-                {/* 3. Inner Element: Handles the organic pendulum swaying and rotation */}
+                {/* 3. Inner Element: Organic Pendulum Physics & 3D Tumble */}
+                {/* Removed drop-shadow to guarantee 60fps on all devices; shadows make no sense for dark silhouettes anyway! */}
                 <svg 
                     viewBox="0 0 24 24" 
                     fill="currentColor" 
-                    class={`w-8 h-8 drop-shadow-md leaf-sway sway-${leaf.swayType}`}
+                    class={`w-8 h-8 leaf-sway sway-${leaf.swayType}`}
                     style={`
                         animation-delay: ${leaf.swayDelay}s;
                         animation-duration: ${leaf.swayDuration}s;
                     `}
                 >
-                    <!-- A beautiful smooth leaf silhouette -->
+                    <!-- Beautiful smooth leaf silhouette -->
                     <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z"/>
                 </svg>
             </div>
@@ -59,46 +69,59 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
 </div>
 
 <style>
-    /* FALLING ANIMATION: Must be linear for smooth gravity */
+    /* 
+      GPU HARDWARE ACCELERATION:
+      will-change and backface-visibility force the browser to composite these smoothly on the GPU.
+    */
     .leaf-fall {
         will-change: transform;
+        backface-visibility: hidden;
         animation-name: fallDown;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
     }
 
     @keyframes fallDown {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(120vh); } /* Falls past the bottom of the screen */
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(0, 120vh, 0); } 
     }
 
-    /* SWAYING ANIMATION: Must be ease-in-out and alternate direction for organic pendulum physics */
     .leaf-sway {
         will-change: transform;
+        backface-visibility: hidden;
         animation-timing-function: ease-in-out;
         animation-iteration-count: infinite;
-        animation-direction: alternate; /* Automatically reverses the animation smoothly! */
+        animation-direction: alternate;
         transform-origin: center center;
     }
 
-    /* Different sway patterns so they don't all look identical */
+    /* 4 DISTINCT PHYSICS PATTERNS for maximum realism */
     .sway-0 { animation-name: sway0; }
     .sway-1 { animation-name: sway1; }
     .sway-2 { animation-name: sway2; }
+    .sway-3 { animation-name: sway3; }
 
-    /* The animation-direction: alternate handles the return trip smoothly */
+    /* Sway 0: Gentle, wide drift */
     @keyframes sway0 {
-        0% { transform: translateX(-35px) rotate(-25deg); }
-        100% { transform: translateX(35px) rotate(35deg); }
+        0% { transform: translate3d(-35px, 0, 0) rotateZ(-25deg); }
+        100% { transform: translate3d(35px, 0, 0) rotateZ(35deg); }
     }
     
+    /* Sway 1: Tighter, faster fluttering with 3D Y-axis flip */
     @keyframes sway1 {
-        0% { transform: translateX(45px) rotate(15deg); }
-        100% { transform: translateX(-45px) rotate(-40deg); }
+        0% { transform: translate3d(25px, 0, 0) rotateZ(15deg) rotateY(0deg); }
+        100% { transform: translate3d(-25px, 0, 0) rotateZ(-40deg) rotateY(60deg); }
     }
 
+    /* Sway 2: Aggressive sideways sweeping */
     @keyframes sway2 {
-        0% { transform: translateX(-25px) rotate(-60deg); }
-        100% { transform: translateX(25px) rotate(20deg); }
+        0% { transform: translate3d(-50px, 0, 0) rotateZ(-60deg); }
+        100% { transform: translate3d(30px, 0, 0) rotateZ(20deg); }
+    }
+
+    /* Sway 3: Chaotic tumbling in 3D space */
+    @keyframes sway3 {
+        0% { transform: translate3d(15px, 0, 0) rotateZ(45deg) rotateX(-20deg); }
+        100% { transform: translate3d(-40px, 0, 0) rotateZ(-55deg) rotateX(40deg); }
     }
 </style>
