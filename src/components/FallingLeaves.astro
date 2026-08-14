@@ -1,0 +1,104 @@
+---
+// Generate an array of leaves with random properties at build time
+const numLeaves = 75; // Increased quantity significantly for better density
+const leaves = Array.from({ length: numLeaves }).map((_, i) => {
+    const isBlurred = Math.random() > 0.6;
+    
+    return {
+        id: i,
+        left: Math.random() * 100, // random horizontal start
+        fallDelay: Math.random() * -40, // spread negative delays over 40s so the screen is full instantly
+        fallDuration: 15 + Math.random() * 30, // 15s to 45s to fall (much more variation in speed)
+        swayDelay: Math.random() * -5,
+        swayDuration: 3 + Math.random() * 5, // 3s to 8s pendulum cycle
+        opacity: 0.1 + Math.random() * 0.4,
+        scale: 0.25 + Math.random() * 1.2,
+        blur: isBlurred ? (Math.random() > 0.5 ? 'blur(3px)' : 'blur(1.5px)') : 'blur(0px)',
+        swayType: i % 3,
+        color: ['text-emerald-700', 'text-emerald-800', 'text-emerald-900', 'text-green-800', 'text-[#0a2f1b]'][Math.floor(Math.random() * 5)]
+    };
+});
+---
+
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]" aria-hidden="true">
+    {leaves.map((leaf) => (
+        /* 1. Outer Container: Handles the linear falling motion (Gravity) */
+        <div 
+            class="absolute top-[-10vh] leaf-fall"
+            style={`
+                left: ${leaf.left}%;
+                animation-delay: ${leaf.fallDelay}s;
+                animation-duration: ${leaf.fallDuration}s;
+            `}
+        >
+            {/* 2. Middle Container: Handles static properties like Scale, Opacity, and Blur to prevent CSS transform collision */}
+            <div 
+                class={`${leaf.color}`}
+                style={`
+                    opacity: ${leaf.opacity};
+                    filter: ${leaf.blur};
+                    transform: scale(${leaf.scale});
+                `}
+            >
+                {/* 3. Inner Element: Handles the organic pendulum swaying and rotation */}
+                <svg 
+                    viewBox="0 0 24 24" 
+                    fill="currentColor" 
+                    class={`w-8 h-8 drop-shadow-md leaf-sway sway-${leaf.swayType}`}
+                    style={`
+                        animation-delay: ${leaf.swayDelay}s;
+                        animation-duration: ${leaf.swayDuration}s;
+                    `}
+                >
+                    <!-- A beautiful smooth leaf silhouette -->
+                    <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z"/>
+                </svg>
+            </div>
+        </div>
+    ))}
+</div>
+
+<style>
+    /* FALLING ANIMATION: Must be linear for smooth gravity */
+    .leaf-fall {
+        will-change: transform;
+        animation-name: fallDown;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes fallDown {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(120vh); } /* Falls past the bottom of the screen */
+    }
+
+    /* SWAYING ANIMATION: Must be ease-in-out and alternate direction for organic pendulum physics */
+    .leaf-sway {
+        will-change: transform;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-direction: alternate; /* Automatically reverses the animation smoothly! */
+        transform-origin: center center;
+    }
+
+    /* Different sway patterns so they don't all look identical */
+    .sway-0 { animation-name: sway0; }
+    .sway-1 { animation-name: sway1; }
+    .sway-2 { animation-name: sway2; }
+
+    /* The animation-direction: alternate handles the return trip smoothly */
+    @keyframes sway0 {
+        0% { transform: translateX(-35px) rotate(-25deg); }
+        100% { transform: translateX(35px) rotate(35deg); }
+    }
+    
+    @keyframes sway1 {
+        0% { transform: translateX(45px) rotate(15deg); }
+        100% { transform: translateX(-45px) rotate(-40deg); }
+    }
+
+    @keyframes sway2 {
+        0% { transform: translateX(-25px) rotate(-60deg); }
+        100% { transform: translateX(25px) rotate(20deg); }
+    }
+</style>

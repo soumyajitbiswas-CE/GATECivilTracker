@@ -1,4 +1,829 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="description" content="Track your preparation for Construction Materials and Management in the GATE 2027 Civil Engineering syllabus."><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"><meta name="theme-color" content="#030a07"><meta name="mobile-web-app-capable" content="yes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.16.19"><title>Construction Materials and Management - GATE 2027 Tracker</title><link rel="stylesheet" href="/_astro/index.D7CuF7ow.css"><script type="module" src="/_astro/hoisted.jjkodJjl.js"></script></head> <body class="min-h-screen"> <div class="site-bg" aria-hidden="true"></div> <div class="app-container flex flex-col gap-5 sm:gap-6 relative z-0"> <!-- Header --> <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-panel-border gap-3.5 sm:gap-4 min-w-0"> <div class="flex flex-col min-w-0 flex-1"> <h1 class="text-xl sm:text-2xl font-bold flex items-center gap-2 text-white tracking-tight break-words"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent shrink-0"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg> <span class="truncate">GATE CIVIL TRACKER</span> </h1> <p class="text-text-muted text-xs sm:text-sm mt-0.5 sm:mt-1 leading-normal break-words">GATE 2027 • Civil Engineering • Plan. Prepare. Track. Perform.</p> </div> <!-- Buttons Wrapper --> <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-2.5 md:gap-3 w-full sm:w-auto shrink-0"> <a href="/" class="btn hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center">Dashboard</a> <button class="btn text-red-400 hover:text-red-300 hover:border-red-400/30 hover:bg-red-400/10 text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center" id="btn-reset">Reset</button> <button class="btn hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center" id="btn-export">Export</button> <label class="btn hover:text-white cursor-pointer text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center">
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="description" content="Track your preparation for Construction Materials and Management in the GATE 2027 Civil Engineering syllabus."><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"><meta name="theme-color" content="#030a07"><meta name="mobile-web-app-capable" content="yes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.16.19"><title>Construction Materials and Management - GATE 2027 Tracker</title><link rel="stylesheet" href="/_astro/index.CT6bXM8W.css"><script type="module" src="/_astro/hoisted.jjkodJjl.js"></script></head> <body class="min-h-screen"> <div class="site-bg" aria-hidden="true"></div> <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]" aria-hidden="true" data-astro-cid-upzneym5> <div class="absolute top-[-10vh] leaf-fall" style="
+                left: 56.348835028777664%;
+                animation-delay: -30.431882646939332s;
+                animation-duration: 42.698517127962845s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.4499914041677322;
+                    filter: blur(0px);
+                    transform: scale(0.4090569624622328);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.7819836494440127s;
+                        animation-duration: 4.244536360834343s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 44.481119854467224%;
+                animation-delay: -22.174718110296794s;
+                animation-duration: 21.13407891834685s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.24580777326057368;
+                    filter: blur(0px);
+                    transform: scale(1.3725937390721128);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -1.430128180761097s;
+                        animation-duration: 6.564113255373131s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 73.84433994311445%;
+                animation-delay: -22.633059033739144s;
+                animation-duration: 15.345308247063222s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.10574245664946713;
+                    filter: blur(3px);
+                    transform: scale(0.347999421809138);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -2.5586373013406813s;
+                        animation-duration: 5.7306229114432305s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 55.997495539301724%;
+                animation-delay: -2.9143703501065987s;
+                animation-duration: 34.78247597628122s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.11878611017084198;
+                    filter: blur(0px);
+                    transform: scale(1.1472821524075048);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -0.7846537657802993s;
+                        animation-duration: 5.132087903538211s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 48.76255128340142%;
+                animation-delay: -30.2486418180272s;
+                animation-duration: 43.66558058938211s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.29876824927442114;
+                    filter: blur(0px);
+                    transform: scale(1.1925444672433538);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -4.852717401210155s;
+                        animation-duration: 7.216828260247601s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 40.05711101456298%;
+                animation-delay: -14.560964147335525s;
+                animation-duration: 20.691569007433404s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.21884556416200757;
+                    filter: blur(1.5px);
+                    transform: scale(1.3248096422017313);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.1991067621157265s;
+                        animation-duration: 4.589000440861702s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 22.534246692926807%;
+                animation-delay: -0.6928916967969911s;
+                animation-duration: 15.477809521374677s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.3262405873763885;
+                    filter: blur(1.5px);
+                    transform: scale(0.6955358196692121);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.2855680326061891s;
+                        animation-duration: 7.098680960268025s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 89.48723506187218%;
+                animation-delay: -35.84390146469944s;
+                animation-duration: 16.824789269158902s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.41945598034369747;
+                    filter: blur(1.5px);
+                    transform: scale(1.0063134799215159);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -3.558171607666416s;
+                        animation-duration: 3.0245867506409474s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 33.80844285288713%;
+                animation-delay: -32.348879435067516s;
+                animation-duration: 20.07835757198214s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.3880703477362252;
+                    filter: blur(0px);
+                    transform: scale(1.1108531752289188);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.9719484464029047s;
+                        animation-duration: 7.13545644870313s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 74.58969999029145%;
+                animation-delay: -34.825249879129984s;
+                animation-duration: 24.601186020110333s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.24530516066554586;
+                    filter: blur(0px);
+                    transform: scale(0.6985334089802693);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -2.5722950993485076s;
+                        animation-duration: 6.954083379786271s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 46.0604186873484%;
+                animation-delay: -12.347565545434044s;
+                animation-duration: 41.79668379399688s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.10919282101864335;
+                    filter: blur(0px);
+                    transform: scale(1.334921908470688);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -1.7973357244967718s;
+                        animation-duration: 4.092417573698976s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 38.23750438024989%;
+                animation-delay: -27.23493816811173s;
+                animation-duration: 17.91654410730726s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.4825419375692378;
+                    filter: blur(0px);
+                    transform: scale(0.4296824045549624);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.3516246983877556s;
+                        animation-duration: 6.369303907577692s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 77.1918806615914%;
+                animation-delay: -33.38509364541371s;
+                animation-duration: 27.210461385792716s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.4631587586229228;
+                    filter: blur(0px);
+                    transform: scale(1.0703302827031527);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -3.9659598250633326s;
+                        animation-duration: 3.156893532736962s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 84.23642914973313%;
+                animation-delay: -38.239004329529976s;
+                animation-duration: 21.87282836614602s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.18800173150349725;
+                    filter: blur(0px);
+                    transform: scale(0.8735126586987002);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -4.741296909909481s;
+                        animation-duration: 7.236804285392722s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 50.865363751700066%;
+                animation-delay: -21.139745761017465s;
+                animation-duration: 15.43219695051833s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.2684188879798983;
+                    filter: blur(0px);
+                    transform: scale(1.137640537842675);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -3.5610247837772158s;
+                        animation-duration: 7.032758762125477s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 16.840928979924165%;
+                animation-delay: -36.173048396270474s;
+                animation-duration: 37.609902793916056s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.3734972287555097;
+                    filter: blur(3px);
+                    transform: scale(1.127886362967045);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.7205467806197299s;
+                        animation-duration: 5.1348672864584515s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 25.93829331871126%;
+                animation-delay: -15.113856180892075s;
+                animation-duration: 21.454775637732112s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.3182862071762046;
+                    filter: blur(0px);
+                    transform: scale(1.1591632575076347);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -3.1008933703746373s;
+                        animation-duration: 6.013664604189154s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 30.751987684040493%;
+                animation-delay: -19.081526692777892s;
+                animation-duration: 24.534024232878636s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.35239027914306176;
+                    filter: blur(0px);
+                    transform: scale(1.3991830169116108);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -3.559332856609604s;
+                        animation-duration: 7.352111950756385s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 19.833667805828558%;
+                animation-delay: -27.089291520818357s;
+                animation-duration: 19.982921030982148s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.24888102640638246;
+                    filter: blur(3px);
+                    transform: scale(1.2857954348915293);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -2.5102442674349446s;
+                        animation-duration: 7.596074375612132s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 50.82066086971382%;
+                animation-delay: -37.4928395360224s;
+                animation-duration: 18.083179476247548s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.43751916554370995;
+                    filter: blur(0px);
+                    transform: scale(0.956842210125619);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -1.6860685588547093s;
+                        animation-duration: 4.883099182658864s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 25.192030635332774%;
+                animation-delay: -38.188606858137945s;
+                animation-duration: 38.15020123870491s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.3883724063039026;
+                    filter: blur(1.5px);
+                    transform: scale(0.8823320493010036);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.5368971212969906s;
+                        animation-duration: 4.749312176078497s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 84.82776794471445%;
+                animation-delay: -21.897457200770663s;
+                animation-duration: 31.433722430685112s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.16906020275080552;
+                    filter: blur(1.5px);
+                    transform: scale(0.8263104752861665);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -0.9094680439044456s;
+                        animation-duration: 5.16707217587985s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 91.56360886194118%;
+                animation-delay: -20.502023751264204s;
+                animation-duration: 40.906518831628105s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.2786357871963273;
+                    filter: blur(0px);
+                    transform: scale(0.6342140478748359);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -2.3222310300024454s;
+                        animation-duration: 7.9871065203024205s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 97.26335329742032%;
+                animation-delay: -7.300926273848352s;
+                animation-duration: 31.378198976464475s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.19629779005839323;
+                    filter: blur(1.5px);
+                    transform: scale(0.9685369945082275);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.104477415716738s;
+                        animation-duration: 3.0504313080043515s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 76.64492186970969%;
+                animation-delay: -24.380572489742782s;
+                animation-duration: 36.024073073827054s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.2822939762132024;
+                    filter: blur(1.5px);
+                    transform: scale(0.4722934759277684);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -4.637688850324457s;
+                        animation-duration: 4.821718819713617s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 86.92250270739001%;
+                animation-delay: -7.729581988488152s;
+                animation-duration: 31.61784894158187s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.2597164362512687;
+                    filter: blur(3px);
+                    transform: scale(1.0950080907001967);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -2.0836960293780313s;
+                        animation-duration: 4.942299315880892s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 77.91171068576745%;
+                animation-delay: -14.228724611925564s;
+                animation-duration: 41.46506127475061s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.47780171585692865;
+                    filter: blur(0px);
+                    transform: scale(1.0789636369579982);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.738430195875642s;
+                        animation-duration: 5.923858271460386s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 96.16791843374482%;
+                animation-delay: -6.57827296232488s;
+                animation-duration: 37.696141416964416s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.18940012972619524;
+                    filter: blur(0px);
+                    transform: scale(0.5782594540439583);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.1559544890273743s;
+                        animation-duration: 6.004310362314728s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 94.27862093689752%;
+                animation-delay: -22.650318278068838s;
+                animation-duration: 24.345274615208563s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.33384174169159897;
+                    filter: blur(0px);
+                    transform: scale(1.3733313605262054);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -2.2215006848688548s;
+                        animation-duration: 3.7681692236487043s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 75.14857629380455%;
+                animation-delay: -0.868192625046218s;
+                animation-duration: 28.390501919313007s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.28050830061861676;
+                    filter: blur(1.5px);
+                    transform: scale(1.4243193412414357);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -3.638352634199415s;
+                        animation-duration: 6.2430055318558715s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 46.62947917029218%;
+                animation-delay: -17.89584165376613s;
+                animation-duration: 31.110840616888197s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.3507513753926301;
+                    filter: blur(0px);
+                    transform: scale(1.0205492328561188);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.6225574372352574s;
+                        animation-duration: 5.6663299345634s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 42.30760185850278%;
+                animation-delay: -34.06673558937832s;
+                animation-duration: 29.75720570860297s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.17200142605040783;
+                    filter: blur(1.5px);
+                    transform: scale(0.5948980474799199);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -0.1669375212002555s;
+                        animation-duration: 5.463989284094212s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 6.633481968410426%;
+                animation-delay: -26.182814798504136s;
+                animation-duration: 41.571254737310035s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.12034152504390963;
+                    filter: blur(0px);
+                    transform: scale(1.2798095273725862);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.0430374375872238s;
+                        animation-duration: 5.722724296014826s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 97.93659888867853%;
+                animation-delay: -15.42371712144449s;
+                animation-duration: 35.395328561473136s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.27511188827401956;
+                    filter: blur(0px);
+                    transform: scale(0.861995623638668);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -2.690017384070958s;
+                        animation-duration: 5.77710477240235s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 97.75776877058071%;
+                animation-delay: -15.290377223195453s;
+                animation-duration: 17.128574387513805s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.2652766381861793;
+                    filter: blur(0px);
+                    transform: scale(1.2318701385712707);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -1.1799587672793688s;
+                        animation-duration: 3.145248270563305s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 8.554710580420455%;
+                animation-delay: -0.9718904386760752s;
+                animation-duration: 39.106635578255954s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.31765095850150527;
+                    filter: blur(0px);
+                    transform: scale(0.9434648570833557);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.4610198169283413s;
+                        animation-duration: 6.367024164439245s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 74.16627080053377%;
+                animation-delay: -32.263562173761756s;
+                animation-duration: 22.685588107505104s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.24070948981517618;
+                    filter: blur(0px);
+                    transform: scale(0.6272482781428157);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -0.8437983059627641s;
+                        animation-duration: 5.812775360990525s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 70.78831664854259%;
+                animation-delay: -20.43103150096867s;
+                animation-duration: 16.536806452683837s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.4029552354667023;
+                    filter: blur(3px);
+                    transform: scale(1.1310500800136776);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -0.18194587566132459s;
+                        animation-duration: 3.2965498235702766s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 43.35070401518529%;
+                animation-delay: -31.713753194372565s;
+                animation-duration: 43.518803147394586s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.4460656616884583;
+                    filter: blur(3px);
+                    transform: scale(0.2632356515466341);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -0.5049444000349795s;
+                        animation-duration: 4.067470228607023s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 70.9504818128113%;
+                animation-delay: -3.9044097500726638s;
+                animation-duration: 34.77036245987841s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.31224516534253743;
+                    filter: blur(3px);
+                    transform: scale(0.6109673516583092);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.7632996525053084s;
+                        animation-duration: 5.017248025467197s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 65.23684049034246%;
+                animation-delay: -1.9562942705678665s;
+                animation-duration: 42.29205702492813s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.39519349238998014;
+                    filter: blur(0px);
+                    transform: scale(0.4409587620809401);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -2.1418014396493428s;
+                        animation-duration: 7.600218196381645s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 41.768548566879474%;
+                animation-delay: -11.434272063475191s;
+                animation-duration: 33.01380060332072s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.22658854451560986;
+                    filter: blur(0px);
+                    transform: scale(0.3036821335543666);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -2.302390722287381s;
+                        animation-duration: 3.4205423450735415s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 21.533193039490584%;
+                animation-delay: -31.835804648958437s;
+                animation-duration: 32.76216179872351s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.1797221626233513;
+                    filter: blur(1.5px);
+                    transform: scale(1.2059001866523853);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -2.6323865980780097s;
+                        animation-duration: 4.724258235454012s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 40.961182020978825%;
+                animation-delay: -25.48843990477836s;
+                animation-duration: 25.69882237423006s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.2932177471703685;
+                    filter: blur(0px);
+                    transform: scale(1.1145939184959666);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -4.610060500883066s;
+                        animation-duration: 4.538183674002176s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 89.89587511233638%;
+                animation-delay: -33.279035184173594s;
+                animation-duration: 15.007425064305068s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.18969069688351908;
+                    filter: blur(1.5px);
+                    transform: scale(0.6832037559420545);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -4.302828928066696s;
+                        animation-duration: 7.28700150718933s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 91.67191322594587%;
+                animation-delay: -14.611393315104149s;
+                animation-duration: 29.20598675608668s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.2878849676593802;
+                    filter: blur(3px);
+                    transform: scale(1.0349729722039425);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -4.462011309354595s;
+                        animation-duration: 4.69834184396468s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 83.67590117192685%;
+                animation-delay: -38.264021082322635s;
+                animation-duration: 43.60040487971929s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.32910562654455494;
+                    filter: blur(1.5px);
+                    transform: scale(0.3622910535315481);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -2.3219665653524624s;
+                        animation-duration: 7.354155873902263s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 42.74846775380574%;
+                animation-delay: -28.17748337177267s;
+                animation-duration: 26.856936459803663s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.2286613664808831;
+                    filter: blur(0px);
+                    transform: scale(0.8621518575937477);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.5078309837120674s;
+                        animation-duration: 5.284742810044765s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 57.31644188876497%;
+                animation-delay: -9.11258120443609s;
+                animation-duration: 17.00949213191703s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.34409556198767033;
+                    filter: blur(0px);
+                    transform: scale(0.6965412818055172);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.9575430809185606s;
+                        animation-duration: 3.2693328094590273s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 81.84983864412138%;
+                animation-delay: -16.889714847184315s;
+                animation-duration: 20.02491328081151s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.21266366041549478;
+                    filter: blur(0px);
+                    transform: scale(0.856411431809757);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -3.053027304500098s;
+                        animation-duration: 7.401855673222005s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 46.508817873003224%;
+                animation-delay: -14.317246453639498s;
+                animation-duration: 22.545742124636554s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.17204274581018889;
+                    filter: blur(0px);
+                    transform: scale(1.4352099812920878);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.7212934882613156s;
+                        animation-duration: 5.896446911754305s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 24.943176724254513%;
+                animation-delay: -13.958801790738157s;
+                animation-duration: 30.22700752206559s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.30291371347694224;
+                    filter: blur(0px);
+                    transform: scale(0.5954150367113488);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.6455695335149823s;
+                        animation-duration: 7.169925451708923s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 18.793910637436184%;
+                animation-delay: -2.129492411747651s;
+                animation-duration: 44.413839978133986s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.492528219598818;
+                    filter: blur(3px);
+                    transform: scale(0.4751257843638246);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -0.49551661593654095s;
+                        animation-duration: 5.516033272646856s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 95.29911410675686%;
+                animation-delay: -35.604386896477756s;
+                animation-duration: 16.673258968126436s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.39228642279230574;
+                    filter: blur(0px);
+                    transform: scale(0.850181771333696);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -3.1985064185067924s;
+                        animation-duration: 5.956630128658668s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 17.570634553467734%;
+                animation-delay: -39.30227746353755s;
+                animation-duration: 31.333223675530387s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.47497730219273904;
+                    filter: blur(0px);
+                    transform: scale(0.689471784364067);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -4.138924859009249s;
+                        animation-duration: 6.789579036084899s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 61.19621509132968%;
+                animation-delay: -19.07396053467413s;
+                animation-duration: 26.170505498236004s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.43342692862272725;
+                    filter: blur(0px);
+                    transform: scale(0.8506173532310158);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -3.04798169365321s;
+                        animation-duration: 6.943398023787935s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 70.26958730388475%;
+                animation-delay: -9.597422393950946s;
+                animation-duration: 16.21113366705995s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.29996538228081027;
+                    filter: blur(3px);
+                    transform: scale(0.4850402947648763);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -2.792232469218281s;
+                        animation-duration: 7.736725367028388s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 57.116374225782366%;
+                animation-delay: -13.324990074603825s;
+                animation-duration: 36.98005373881666s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.4254946823231768;
+                    filter: blur(0px);
+                    transform: scale(1.4393751725236654);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -4.108302734236353s;
+                        animation-duration: 4.239537798670476s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 62.84289660044185%;
+                animation-delay: -8.71462814751868s;
+                animation-duration: 15.062168570651078s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.3261369791524836;
+                    filter: blur(0px);
+                    transform: scale(0.42417337572714764);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -0.9296078068411356s;
+                        animation-duration: 5.841398563228449s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 32.06317124510482%;
+                animation-delay: -8.679304130047583s;
+                animation-duration: 17.439620885358103s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.44085984443111215;
+                    filter: blur(0px);
+                    transform: scale(1.1137044828385387);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.2733367483095188s;
+                        animation-duration: 5.82040472930545s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 6.968665704918231%;
+                animation-delay: -8.034010489547029s;
+                animation-duration: 43.73282733714309s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.17783352161679167;
+                    filter: blur(0px);
+                    transform: scale(1.3277187561336015);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -2.5580938270665854s;
+                        animation-duration: 7.7352555525814175s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 46.25972531170329%;
+                animation-delay: -25.03919486263542s;
+                animation-duration: 38.8840202692472s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-900" style="
+                    opacity: 0.12202817994692633;
+                    filter: blur(0px);
+                    transform: scale(0.8180616164897072);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -2.966294876101887s;
+                        animation-duration: 7.75258093157694s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 27.871647092162178%;
+                animation-delay: -36.64035016024676s;
+                animation-duration: 33.50392767346608s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.31678565406762793;
+                    filter: blur(3px);
+                    transform: scale(0.7425382204067146);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -2.2190213343576644s;
+                        animation-duration: 4.663887932188759s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 35.098680519124414%;
+                animation-delay: -17.096528863599097s;
+                animation-duration: 22.247969043624526s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.22603886061972311;
+                    filter: blur(3px);
+                    transform: scale(1.1741395156407146);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -3.919775243875368s;
+                        animation-duration: 7.460497538174818s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 3.35491338432089%;
+                animation-delay: -35.20972483975469s;
+                animation-duration: 32.519883461145966s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.29677929099319467;
+                    filter: blur(0px);
+                    transform: scale(1.2971458265693177);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -4.550333982745139s;
+                        animation-duration: 4.311382200495545s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 75.18629832684455%;
+                animation-delay: -29.1028874748365s;
+                animation-duration: 24.24748494501414s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.1401026667935911;
+                    filter: blur(3px);
+                    transform: scale(0.8882821043154014);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -0.7599948771737602s;
+                        animation-duration: 7.368899296243095s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 7.640637841695542%;
+                animation-delay: -10.527891138134944s;
+                animation-duration: 34.50686455491554s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.46659550504033875;
+                    filter: blur(1.5px);
+                    transform: scale(1.0900112577903234);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -0.16129548974119667s;
+                        animation-duration: 3.422361930040185s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 74.5042552465689%;
+                animation-delay: -17.62706917134683s;
+                animation-duration: 29.539463629193364s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-700" style="
+                    opacity: 0.2818686703604821;
+                    filter: blur(0px);
+                    transform: scale(0.7923964331103729);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -4.515414787326448s;
+                        animation-duration: 7.49964969709995s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 80.73825061520877%;
+                animation-delay: -7.446825027550226s;
+                animation-duration: 24.690373069515687s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.17589590160119434;
+                    filter: blur(0px);
+                    transform: scale(1.2747204801877186);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -4.543975940313278s;
+                        animation-duration: 6.499525210887506s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 20.616631940938966%;
+                animation-delay: -32.7704835651809s;
+                animation-duration: 31.9239573146647s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.3010174157059833;
+                    filter: blur(0px);
+                    transform: scale(0.6194506800806019);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -4.981074181469735s;
+                        animation-duration: 6.7374680121737835s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 23.51123671360541%;
+                animation-delay: -16.261312189488144s;
+                animation-duration: 23.826499424643067s;
+            " data-astro-cid-upzneym5>  <div class="text-emerald-800" style="
+                    opacity: 0.15514717543813927;
+                    filter: blur(0px);
+                    transform: scale(0.3689701484963639);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -2.879152708146089s;
+                        animation-duration: 6.2731154553530075s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 91.26280481674833%;
+                animation-delay: -12.331809607856865s;
+                animation-duration: 28.589979997741928s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.3360031642196689;
+                    filter: blur(0px);
+                    transform: scale(0.6428439987857837);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -4.071868018668113s;
+                        animation-duration: 4.6290366297948955s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 65.68695861710596%;
+                animation-delay: -39.89869195904045s;
+                animation-duration: 39.91103594949612s;
+            " data-astro-cid-upzneym5>  <div class="text-green-800" style="
+                    opacity: 0.47503893179069323;
+                    filter: blur(0px);
+                    transform: scale(0.9543832106150396);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-0" style="
+                        animation-delay: -1.965990847386866s;
+                        animation-duration: 7.411254715825707s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 24.299376461919987%;
+                animation-delay: -19.192930402002048s;
+                animation-duration: 16.732341690683633s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.4913974384427645;
+                    filter: blur(3px);
+                    transform: scale(0.34341166102598397);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-1" style="
+                        animation-delay: -4.696063111604715s;
+                        animation-duration: 4.235439632957819s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div><div class="absolute top-[-10vh] leaf-fall" style="
+                left: 3.502674591984778%;
+                animation-delay: -12.88481744510272s;
+                animation-duration: 43.705825858616414s;
+            " data-astro-cid-upzneym5>  <div class="text-[#0a2f1b]" style="
+                    opacity: 0.17925892540784094;
+                    filter: blur(0px);
+                    transform: scale(0.6685590888924583);
+                " data-astro-cid-upzneym5>  <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 drop-shadow-md leaf-sway sway-2" style="
+                        animation-delay: -1.9343482086978814s;
+                        animation-duration: 5.228819071032681s;
+                    " data-astro-cid-upzneym5> <!-- A beautiful smooth leaf silhouette --> <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z" data-astro-cid-upzneym5></path> </svg> </div> </div> </div>  <div class="app-container flex flex-col gap-5 sm:gap-6 relative z-0"> <!-- Header --> <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-panel-border gap-3.5 sm:gap-4 min-w-0"> <div class="flex flex-col min-w-0 flex-1"> <h1 class="text-xl sm:text-2xl font-bold flex items-center gap-2 text-white tracking-tight break-words"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent shrink-0"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg> <span class="truncate">GATE CIVIL TRACKER</span> </h1> <p class="text-text-muted text-xs sm:text-sm mt-0.5 sm:mt-1 leading-normal break-words">GATE 2027 • Civil Engineering • Plan. Prepare. Track. Perform.</p> </div> <!-- Buttons Wrapper --> <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-2.5 md:gap-3 w-full sm:w-auto shrink-0"> <a href="/" class="btn hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center">Dashboard</a> <button class="btn text-red-400 hover:text-red-300 hover:border-red-400/30 hover:bg-red-400/10 text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center" id="btn-reset">Reset</button> <button class="btn hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center" id="btn-export">Export</button> <label class="btn hover:text-white cursor-pointer text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center">
 Import
 <input type="file" id="import-file" class="hidden" accept=".json"> </label> </div> </header>   <div id="detail-view" class="flex flex-col gap-4 sm:gap-5 min-w-0"> <div class="mb-1"> <a href="/" class="btn text-xs sm:text-sm px-3 sm:px-4 py-2"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
 Back to Dashboard

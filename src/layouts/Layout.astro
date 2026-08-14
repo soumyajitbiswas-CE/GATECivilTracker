@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import FallingLeaves from '../components/FallingLeaves.astro';
 interface Props {
 	title: string;
     description?: string;
@@ -22,6 +23,7 @@ const { title, description = "GATE 2027 Civil Engineering Preparation Tracker" }
 	</head>
 	<body class="min-h-screen">
         <div class="site-bg" aria-hidden="true"></div>
+        <FallingLeaves />
         <div class="app-container flex flex-col gap-5 sm:gap-6 relative z-0">
             <!-- Header -->
             <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-panel-border gap-3.5 sm:gap-4 min-w-0">
