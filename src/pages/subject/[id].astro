@@ -35,7 +35,7 @@ const { subject } = Astro.props;
                         </div>
                         <div class="bg-black/30 border border-panel-border rounded-md px-4 py-2 flex items-center gap-2">
                             <span class="text-text-muted text-xs uppercase tracking-wide">Tracker Weight</span>
-                            <span class="text-lg font-semibold">{subject.trackerWeight}%</span>
+                            <span class="text-lg font-semibold subject-weight-val">{subject.trackerWeight}%</span>
                         </div>
                         <div class="bg-black/30 border border-panel-border rounded-md px-4 py-2 flex items-center gap-2">
                             <span class="text-text-muted text-xs uppercase tracking-wide">Total Study Time</span>
@@ -120,6 +120,8 @@ const { subject } = Astro.props;
 
             // Update Header Stats
             document.querySelector('.subject-progress-val').textContent = window.formatPercent(subjectData.progress);
+            const weightValEl = document.querySelector('.subject-weight-val');
+            if (weightValEl) weightValEl.textContent = `${subjectData.trackerWeight}%`;
             document.querySelector('.subject-hours-val').textContent = window.formatHours(subjectData.hours);
 
             // Update PYQs

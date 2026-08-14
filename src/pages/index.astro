@@ -62,7 +62,7 @@ const subjects = defaultState.subjects;
                         <div class="bg-white/5 p-2.5 rounded-lg flex items-center justify-center text-primary-accent" set:html={sub.icon} />
                         <div>
                             <h3 class="text-[1.1rem] font-semibold leading-tight mb-1">{sub.name}</h3>
-                            <div class="text-xs text-text-muted">Tracker Weight: {sub.trackerWeight}%</div>
+                            <div class="text-xs text-text-muted">Tracker Weight: <span class="subject-weight-text" data-id={sub.id}>{sub.trackerWeight}%</span></div>
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
@@ -300,8 +300,30 @@ const subjects = defaultState.subjects;
                         </div>
                     </div>
                 </div>
+                <!-- Subject Tracker Weights Allocation -->
+                <div class="bg-black/20 p-4 rounded-xl border border-panel-border shrink-0">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="text-sm font-semibold text-primary-accent uppercase tracking-wider">Subject Tracker Weights (%)</h4>
+                        <span class="text-xs text-text-muted">Target: 100% Total</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
+                        {subjects.map(sub => (
+                            <div class="flex flex-col gap-1 bg-black/30 p-2 rounded-lg border border-panel-border">
+                                <label class="text-[11px] text-text-muted truncate font-medium" title={sub.name}>{sub.name}</label>
+                                <div class="flex items-center gap-1">
+                                    <input type="number" step="0.1" min="0" max="100" class="set-subject-weight-input bg-white/5 border border-panel-border text-text-main p-1.5 rounded-md focus:outline-none focus:border-primary-accent text-xs w-full font-semibold" data-subject-id={sub.id} id={`set-subject-weight-${sub.id}`} value={sub.trackerWeight}>
+                                    <span class="text-xs text-text-muted font-semibold">%</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
                 <div class="flex flex-col gap-2 shrink-0">
-                    <label class="text-sm font-semibold text-text-muted">Select Subject</label>
+                    <div class="flex justify-between items-center">
+                        <label class="text-sm font-semibold text-text-muted">Select Subject for Sub-Topics</label>
+                        <span class="text-xs text-primary-accent font-medium" id="selected-subject-weight-display">Weight: 15%</span>
+                    </div>
                     <select id="syllabus-subject-select" class="bg-white/5 border border-panel-border text-text-main p-3 rounded-lg focus:outline-none focus:border-primary-accent cursor-pointer">
                         {subjects.map(sub => (
                             <option value={sub.id} class="bg-bg-dark">{sub.name}</option>
@@ -362,10 +384,12 @@ const subjects = defaultState.subjects;
                 const bar = document.querySelector(`.subject-progress-bar[data-id="${sub.id}"]`);
                 const text = document.querySelector(`.subject-progress-text[data-id="${sub.id}"]`);
                 const hours = document.querySelector(`.subject-hours-text[data-id="${sub.id}"]`);
+                const weightText = document.querySelector(`.subject-weight-text[data-id="${sub.id}"]`);
                 
                 if(bar) bar.style.width = `${sub.progress}%`;
                 if(text) text.textContent = `${window.formatPercent(sub.progress)} Complete`;
                 if(hours) hours.textContent = `${window.formatHours(sub.hours)} studied`;
+                if(weightText) weightText.textContent = `${sub.trackerWeight}%`;
             });
 
             // Hydrate Practice & Revision inputs
@@ -530,12 +554,24 @@ const subjects = defaultState.subjects;
                     currentSubject.topics[idx].trackerWeight = isNaN(val) ? 0 : val;
                 }
             });
+
+            document.querySelectorAll('.set-subject-weight-input').forEach(inp => {
+                const subId = inp.dataset.subjectId;
+                const sub = workingSubjects.find(s => s.id === subId);
+                if (sub) {
+                    const val = parseFloat(inp.value);
+                    sub.trackerWeight = isNaN(val) ? 0 : val;
+                }
+            });
         }
 
         function renderWorkingTopics(subjectId) {
             topicsList.innerHTML = '';
             const subject = workingSubjects.find(s => s.id === subjectId);
             if (!subject) return;
+
+            const disp = document.getElementById('selected-subject-weight-display');
+            if (disp) disp.textContent = `Weight: ${subject.trackerWeight}%`;
 
             subject.topics.forEach((topic, idx) => {
                 const row = document.createElement('div');
@@ -579,9 +615,31 @@ const subjects = defaultState.subjects;
             });
         }
 
+        // Setup subject weight input listeners
+        document.querySelectorAll('.set-subject-weight-input').forEach(inp => {
+            const updateSubjectWeight = (e) => {
+                const subId = e.target.dataset.subjectId;
+                const sub = workingSubjects.find(s => s.id === subId);
+                if (sub) {
+                    const val = parseFloat(e.target.value);
+                    sub.trackerWeight = isNaN(val) ? 0 : val;
+                    if (syllabusSelect && syllabusSelect.value === subId) {
+                        const disp = document.getElementById('selected-subject-weight-display');
+                        if (disp) disp.textContent = `Weight: ${sub.trackerWeight}%`;
+                    }
+                }
+            };
+            inp.addEventListener('input', updateSubjectWeight);
+            inp.addEventListener('change', updateSubjectWeight);
+        });
+
         document.querySelectorAll('.open-syllabus-settings-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 workingSubjects = JSON.parse(JSON.stringify(window.getState().subjects));
+                workingSubjects.forEach(s => {
+                    const inp = document.getElementById(`set-subject-weight-${s.id}`);
+                    if (inp) inp.value = s.trackerWeight;
+                });
                 syllabusSelect.value = workingSubjects[0].id;
                 renderWorkingTopics(syllabusSelect.value);
                 syllabusModal.style.display = 'flex';
@@ -616,7 +674,7 @@ const subjects = defaultState.subjects;
             syncCurrentVisibleTopics();
             const state = window.getState();
             
-            // GATE Readiness Weights save logic
+            // 1. GATE Readiness Weights save logic
             const oldW = state.settings?.weights || { syllabus: 0.60, pyqs: 0.15, tests: 0.10, mocks: 0.10, revision: 0.05 };
             const inputs = {
                 syllabus: parseFloat(document.getElementById('set-weight-syllabus').value) || 0,
@@ -707,7 +765,62 @@ const subjects = defaultState.subjects;
                 revision: inputs.revision / 100
             };
             
-            // Smart Auto-Balance for Subtopics on Save
+            // 2. Smart Auto-Balance for Subject Tracker Weights (Must total 100%)
+            let changedSubIndices = [];
+            let unchangedSubIndices = [];
+            let changedSubSum = 0;
+
+            workingSubjects.forEach((s, i) => {
+                const origS = state.subjects.find(os => os.id === s.id);
+                if (!origS || Math.abs(origS.trackerWeight - s.trackerWeight) > 0.01) {
+                    changedSubIndices.push(i);
+                    changedSubSum += s.trackerWeight;
+                } else {
+                    unchangedSubIndices.push(i);
+                }
+            });
+
+            let currentTotalSub = workingSubjects.reduce((a, b) => a + b.trackerWeight, 0);
+
+            if (changedSubIndices.length > 0 && unchangedSubIndices.length > 0) {
+                let remainingSub = 100 - changedSubSum;
+                if (remainingSub <= 0) {
+                    if (currentTotalSub > 0) {
+                        workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / currentTotalSub) * 100);
+                    } else {
+                        workingSubjects.forEach(s => s.trackerWeight = 100 / workingSubjects.length);
+                    }
+                } else {
+                    let unchangedSubSum = unchangedSubIndices.reduce((sum, i) => sum + workingSubjects[i].trackerWeight, 0);
+                    unchangedSubIndices.forEach(i => {
+                        const oldVal = workingSubjects[i].trackerWeight;
+                        const propVal = unchangedSubSum === 0 ? (remainingSub / unchangedSubIndices.length) : (oldVal / unchangedSubSum) * remainingSub;
+                        workingSubjects[i].trackerWeight = propVal;
+                    });
+                }
+            } else if (changedSubIndices.length > 0 && unchangedSubIndices.length === 0) {
+                if (changedSubSum > 0 && Math.abs(changedSubSum - 100) > 0.01) {
+                    workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / changedSubSum) * 100);
+                }
+            } else if (Math.abs(currentTotalSub - 100) > 0.01) {
+                if (currentTotalSub > 0) {
+                    workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / currentTotalSub) * 100);
+                }
+            }
+
+            let newSubSum = 0;
+            workingSubjects.forEach(s => {
+                s.trackerWeight = Math.round(s.trackerWeight * 10) / 10;
+                newSubSum += s.trackerWeight;
+            });
+
+            let subDiff = Math.round((100 - newSubSum) * 10) / 10;
+            if (subDiff !== 0 && workingSubjects.length > 0) {
+                let targetIdx = unchangedSubIndices.length > 0 ? unchangedSubIndices[0] : 0;
+                workingSubjects[targetIdx].trackerWeight = Math.max(0, Math.round((workingSubjects[targetIdx].trackerWeight + subDiff) * 10) / 10);
+            }
+
+            // 3. Smart Auto-Balance for Subtopics on Save (Must total each subject's trackerWeight)
             workingSubjects.forEach(workingSub => {
                 const origSub = state.subjects.find(s => s.id === workingSub.id);
                 if (!origSub || !workingSub.topics || workingSub.topics.length === 0) return;
@@ -765,7 +878,7 @@ const subjects = defaultState.subjects;
                         workingSub.topics.forEach(t => t.trackerWeight = eq);
                     }
                 } else if (Math.abs(currentTotalSum - totalTarget) > 0.01) {
-                    // Triggers if topics were deleted or current sum is off
+                    // Triggers if topics were deleted or subject's trackerWeight changed
                     if (currentTotalSum > 0) {
                         workingSub.topics.forEach(t => {
                             t.trackerWeight = (t.trackerWeight / currentTotalSum) * totalTarget;
