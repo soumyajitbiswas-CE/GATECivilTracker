@@ -7,63 +7,63 @@ const subjects = defaultState.subjects;
 
 <Layout title="GATE Civil Tracker 2027">
     <!-- Main Dashboard View -->
-    <div id="dashboard-view" class="flex flex-col gap-6">
+    <div id="dashboard-view" class="flex flex-col gap-5 sm:gap-6 min-w-0">
         
         <!-- Hero Progress Area -->
-        <div class="glass-panel surface-hero grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-center">
+        <div class="glass-panel surface-hero p-4 sm:p-6 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[220px_1fr] gap-5 sm:gap-6 items-center">
             <div class="flex flex-col items-center justify-center text-center">
                 <div class="circular-progress" id="hero-progress-circle" style="--progress: 0%;">
-                    <span class="relative z-10 text-3xl font-bold" id="hero-progress-text">0%</span>
+                    <span class="relative z-10 text-2xl sm:text-3xl font-bold" id="hero-progress-text">0%</span>
                 </div>
-                <p class="text-text-muted text-sm font-semibold tracking-wide mt-2">Overall GATE Readiness</p>
+                <p class="text-text-muted text-xs sm:text-sm font-semibold tracking-wide mt-1 sm:mt-2">Overall GATE Readiness</p>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
-                    <span class="text-text-muted text-xs uppercase tracking-wide">Syllabus</span>
-                    <span class="text-xl font-semibold" id="metric-syllabus">0%</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5 md:gap-4">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Syllabus</span>
+                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-syllabus">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
-                    <span class="text-text-muted text-xs uppercase tracking-wide">PYQs</span>
-                    <span class="text-xl font-semibold" id="metric-pyqs">0%</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">PYQs</span>
+                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-pyqs">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
-                    <span class="text-text-muted text-xs uppercase tracking-wide">Tests</span>
-                    <span class="text-xl font-semibold" id="metric-tests">0%</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Tests</span>
+                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-tests">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
-                    <span class="text-text-muted text-xs uppercase tracking-wide">Mocks</span>
-                    <span class="text-xl font-semibold" id="metric-mocks">0%</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Mocks</span>
+                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-mocks">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
-                    <span class="text-text-muted text-xs uppercase tracking-wide">Revision</span>
-                    <span class="text-xl font-semibold" id="metric-revision">0%</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Revision</span>
+                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-revision">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-4 flex flex-col gap-1">
-                    <span class="text-text-muted text-xs uppercase tracking-wide">Study Hours</span>
-                    <span class="text-xl font-semibold text-primary-accent" id="metric-hours">0h</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Study Hours</span>
+                    <span class="text-lg sm:text-xl font-semibold text-primary-accent" id="metric-hours">0h</span>
                 </div>
             </div>
         </div>
 
         <!-- Subject Grid -->
-        <div class="flex justify-between items-center mt-2">
-            <h2 class="text-xl font-semibold">1. SYLLABUS COMPLETION</h2>
-            <button class="btn btn-primary text-sm flex items-center gap-1 open-syllabus-settings-btn">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 sm:gap-4 mt-2">
+            <h2 class="text-lg sm:text-xl font-semibold tracking-tight">1. SYLLABUS COMPLETION</h2>
+            <button class="btn btn-primary text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 flex items-center gap-1.5 open-syllabus-settings-btn shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                 Edit Syllabus
             </button>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {subjects.map(sub => (
-                <div class="surface-syllabus backdrop-blur-md border border-panel-border rounded-2xl p-5 transition-all hover:border-white/20 hover:-translate-y-0.5 flex flex-col justify-between subject-card" data-id={sub.id}>
+                <div class="surface-syllabus backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 transition-all hover:border-white/20 hover:-translate-y-0.5 flex flex-col justify-between subject-card min-w-0" data-id={sub.id}>
                     <!-- Top section: Title and Weight -->
-                    <div class="flex flex-col gap-1">
-                        <div class="flex items-start gap-3">
+                    <div class="flex flex-col gap-1 min-w-0">
+                        <div class="flex items-start gap-3 min-w-0">
                             <div class="bg-white/5 p-2 rounded-lg flex items-center justify-center text-primary-accent shrink-0" set:html={sub.icon} />
-                            <div class="flex flex-col">
-                                <h3 class="text-[1.1rem] font-semibold leading-tight mb-0.5">{sub.name}</h3>
+                            <div class="flex flex-col min-w-0 flex-1">
+                                <h3 class="text-[1.05rem] sm:text-[1.1rem] font-semibold leading-snug mb-0.5 break-words hyphens-auto">{sub.name}</h3>
                                 <div class="text-[11px] text-text-muted font-medium">Tracker Weight: <span class="subject-weight-text" data-id={sub.id}>{sub.trackerWeight}%</span></div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@ const subjects = defaultState.subjects;
                     <!-- Middle section: Progress -->
                     <div class="flex flex-col gap-2 mt-4 mb-3">
                         <div>
-                            <span class="subject-progress-text text-2xl font-bold text-white tracking-tight" data-id={sub.id}>0% <span class="text-xs font-medium text-text-muted ml-1">Complete</span></span>
+                            <span class="subject-progress-text text-xl sm:text-2xl font-bold text-white tracking-tight" data-id={sub.id}>0% <span class="text-xs font-medium text-text-muted ml-1">Complete</span></span>
                         </div>
                         <div class="w-full h-2 bg-panel-border rounded-full overflow-hidden">
                             <div class="h-full bg-primary-accent rounded-full transition-all duration-300 subject-progress-bar" style="width: 0%" data-id={sub.id}></div>
@@ -80,42 +80,42 @@ const subjects = defaultState.subjects;
                     </div>
                     
                     <!-- Bottom section: Hours and Action -->
-                    <div class="flex justify-between items-end mt-auto pt-3 border-t border-panel-border">
-                        <div class="text-[13px] flex items-center gap-1.5 text-text-muted font-medium pb-0.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            <span class="subject-hours-text" data-id={sub.id}>0h studied</span>
+                    <div class="flex justify-between items-center gap-2 mt-auto pt-3 border-t border-panel-border">
+                        <div class="text-[12px] sm:text-[13px] flex items-center gap-1.5 text-text-muted font-medium pb-0.5 truncate">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <span class="subject-hours-text truncate" data-id={sub.id}>0h studied</span>
                         </div>
-                        <a href={`/subject/${sub.id}`} class="btn text-[12px] px-3 py-1.5">OPEN →</a>
+                        <a href={`/subject/${sub.id}`} class="btn text-[11px] sm:text-[12px] px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0">OPEN →</a>
                     </div>
                 </div>
             ))}
         </div>
 
         <!-- Practice and Revision -->
-        <div class="flex justify-between items-center mt-6 mb-4">
-            <h2 class="text-xl font-semibold">2. PRACTICE & REVISION</h2>
-            <button class="btn btn-primary text-sm flex items-center gap-1 open-settings-btn">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 sm:gap-4 mt-6 mb-3 sm:mb-4">
+            <h2 class="text-lg sm:text-xl font-semibold tracking-tight">2. PRACTICE & REVISION</h2>
+            <button class="btn btn-primary text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 flex items-center gap-1.5 open-settings-btn shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                 Edit Targets
             </button>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             <!-- PYQs Card -->
-            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-5 flex flex-col gap-4 transition-all hover:border-white/20">
-                <div class="flex items-center gap-3 mb-2">
-                    <div class="bg-white/5 p-2 rounded-lg text-primary-accent">
+            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 transition-all hover:border-white/20 min-w-0">
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="bg-white/5 p-2 rounded-lg text-primary-accent shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check"><path d="M8 3H2v15h7c1.7 0 3 1.3 3 3V7c0-2.2-1.8-4-4-4Z"/><path d="m16 12 2 2 4-4"/><path d="M22 6V3h-6c-2.2 0-4 1.8-4 4v14c0-1.7 1.3-3 3-3h7v-2.3"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold">PYQs</h3>
+                    <h3 class="text-base sm:text-lg font-semibold">PYQs</h3>
                 </div>
-                <div class="flex flex-col gap-2 overflow-y-auto max-h-[170px] pr-2 mt-2">
+                <div class="flex flex-col gap-2 overflow-y-auto max-h-[170px] pr-1 sm:pr-2 custom-scrollbar mt-1">
                     {subjects.map(sub => (
-                        <div class="flex justify-between items-center bg-black/20 p-2 rounded-xl border border-panel-border shrink-0">
-                            <span class="text-xs font-medium text-text-muted truncate w-24" title={sub.name}>{sub.name}</span>
-                            <div class="flex items-center gap-1.5">
-                                <input type="number" id={`input-pyq-${sub.id}`} data-subject={sub.id} min="0" class="input-pyq-dash bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-14 text-center text-xs font-semibold" value="0">
-                                <span class="text-text-muted text-[10px] font-medium w-8 text-right pyq-total-dash" data-subject={sub.id}>/ 0</span>
+                        <div class="flex justify-between items-center bg-black/20 p-2 rounded-xl border border-panel-border shrink-0 min-w-0 gap-2">
+                            <span class="text-xs font-medium text-text-muted truncate flex-1 min-w-0" title={sub.name}>{sub.name}</span>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <input type="number" id={`input-pyq-${sub.id}`} data-subject={sub.id} min="0" class="input-pyq-dash bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-12 sm:w-14 text-center text-xs font-semibold" value="0">
+                                <span class="text-text-muted text-[10px] font-medium w-7 sm:w-8 text-right pyq-total-dash truncate" data-subject={sub.id}>/ 0</span>
                             </div>
                         </div>
                     ))}
@@ -123,74 +123,74 @@ const subjects = defaultState.subjects;
             </div>
 
             <!-- Tests Card -->
-            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-5 flex flex-col gap-4 transition-all hover:border-white/20">
-                <div class="flex items-center gap-3 mb-2">
-                    <div class="bg-white/5 p-2 rounded-lg text-primary-accent">
+            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 transition-all hover:border-white/20 min-w-0">
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="bg-white/5 p-2 rounded-lg text-primary-accent shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold">Tests</h3>
+                    <h3 class="text-base sm:text-lg font-semibold">Tests</h3>
                 </div>
-                <div class="flex justify-between items-center bg-black/20 p-3 rounded-xl border border-panel-border mt-2">
-                    <span class="text-sm font-medium text-text-muted">Topic Tests</span>
-                    <div class="flex items-center gap-2">
-                        <input type="number" id="input-tests-topic" min="0" max="40" class="bg-white/5 border border-panel-border text-text-main p-1.5 rounded-md focus:outline-none focus:border-primary-accent w-16 text-center text-sm font-semibold" value="0">
-                        <span class="text-text-muted text-sm font-medium w-8 text-right">/ 40</span>
+                <div class="flex justify-between items-center bg-black/20 p-2.5 sm:p-3 rounded-xl border border-panel-border gap-2 mt-1 min-w-0">
+                    <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Topic Tests</span>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <input type="number" id="input-tests-topic" min="0" max="40" class="bg-white/5 border border-panel-border text-text-main p-1 sm:p-1.5 rounded-md focus:outline-none focus:border-primary-accent w-14 sm:w-16 text-center text-xs sm:text-sm font-semibold" value="0">
+                        <span class="text-text-muted text-xs sm:text-sm font-medium w-7 sm:w-8 text-right">/ 40</span>
                     </div>
                 </div>
-                <div class="flex justify-between items-center bg-black/20 p-3 rounded-xl border border-panel-border">
-                    <span class="text-sm font-medium text-text-muted">Subject Tests</span>
-                    <div class="flex items-center gap-2">
-                        <input type="number" id="input-tests-subject" min="0" max="10" class="bg-white/5 border border-panel-border text-text-main p-1.5 rounded-md focus:outline-none focus:border-primary-accent w-16 text-center text-sm font-semibold" value="0">
-                        <span class="text-text-muted text-sm font-medium w-8 text-right">/ 10</span>
+                <div class="flex justify-between items-center bg-black/20 p-2.5 sm:p-3 rounded-xl border border-panel-border gap-2 min-w-0">
+                    <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Subject Tests</span>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <input type="number" id="input-tests-subject" min="0" max="10" class="bg-white/5 border border-panel-border text-text-main p-1 sm:p-1.5 rounded-md focus:outline-none focus:border-primary-accent w-14 sm:w-16 text-center text-xs sm:text-sm font-semibold" value="0">
+                        <span class="text-text-muted text-xs sm:text-sm font-medium w-7 sm:w-8 text-right">/ 10</span>
                     </div>
                 </div>
             </div>
 
             <!-- Mocks Card -->
-            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-5 flex flex-col gap-4 transition-all hover:border-white/20">
-                <div class="flex items-center gap-3 mb-2">
-                    <div class="bg-white/5 p-2 rounded-lg text-primary-accent">
+            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 transition-all hover:border-white/20 min-w-0">
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="bg-white/5 p-2 rounded-lg text-primary-accent shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold">Full-Length Mocks</h3>
+                    <h3 class="text-base sm:text-lg font-semibold">Full-Length Mocks</h3>
                 </div>
-                <div class="flex flex-col items-center justify-center flex-grow bg-black/20 p-4 rounded-xl border border-panel-border gap-2 mt-2">
-                    <span class="text-sm text-text-muted uppercase tracking-wider font-semibold">Completed</span>
+                <div class="flex flex-col items-center justify-center flex-grow bg-black/20 p-3 sm:p-4 rounded-xl border border-panel-border gap-1.5 mt-1 min-w-0">
+                    <span class="text-xs sm:text-sm text-text-muted uppercase tracking-wider font-semibold">Completed</span>
                     <div class="flex items-baseline gap-2">
-                        <input type="number" id="input-mocks" min="0" max="20" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent w-24 text-center text-3xl font-bold text-primary-accent" value="0">
-                        <span class="text-text-muted text-lg font-bold">/ 20</span>
+                        <input type="number" id="input-mocks" min="0" max="20" class="bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent w-20 sm:w-24 text-center text-2xl sm:text-3xl font-bold text-primary-accent" value="0">
+                        <span class="text-text-muted text-base sm:text-lg font-bold">/ 20</span>
                     </div>
                 </div>
             </div>
 
             <!-- Revision Card -->
-            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-5 flex flex-col gap-4 transition-all hover:border-white/20">
-                <div class="flex items-center gap-3 mb-2">
-                    <div class="bg-white/5 p-2 rounded-lg text-primary-accent">
+            <div class="surface-practice backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 transition-all hover:border-white/20 min-w-0">
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="bg-white/5 p-2 rounded-lg text-primary-accent shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                     </div>
-                    <h3 class="text-lg font-semibold">Revision (Subjects)</h3>
+                    <h3 class="text-base sm:text-lg font-semibold">Revision (Subjects)</h3>
                 </div>
-                <div class="flex flex-col gap-2 mt-2">
-                    <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-xl border border-panel-border">
-                        <span class="text-sm font-medium text-text-muted">1st Revision</span>
-                        <div class="flex items-center gap-2">
-                            <input type="number" id="input-rev-1" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-14 text-center text-sm font-semibold" value="0">
-                            <span class="text-text-muted text-sm font-medium w-6 text-right">/ 9</span>
+                <div class="flex flex-col gap-2 mt-1">
+                    <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
+                        <span class="text-xs sm:text-sm font-medium text-text-muted truncate">1st Revision</span>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <input type="number" id="input-rev-1" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold" value="0">
+                            <span class="text-text-muted text-xs sm:text-sm font-medium w-5 sm:w-6 text-right">/ 9</span>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-xl border border-panel-border">
-                        <span class="text-sm font-medium text-text-muted">2nd Revision</span>
-                        <div class="flex items-center gap-2">
-                            <input type="number" id="input-rev-2" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-14 text-center text-sm font-semibold" value="0">
-                            <span class="text-text-muted text-sm font-medium w-6 text-right">/ 9</span>
+                    <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
+                        <span class="text-xs sm:text-sm font-medium text-text-muted truncate">2nd Revision</span>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <input type="number" id="input-rev-2" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold" value="0">
+                            <span class="text-text-muted text-xs sm:text-sm font-medium w-5 sm:w-6 text-right">/ 9</span>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-xl border border-panel-border">
-                        <span class="text-sm font-medium text-text-muted">Final Revision</span>
-                        <div class="flex items-center gap-2">
-                            <input type="number" id="input-rev-f" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-14 text-center text-sm font-semibold" value="0">
-                            <span class="text-text-muted text-sm font-medium w-6 text-right">/ 9</span>
+                    <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
+                        <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Final Revision</span>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <input type="number" id="input-rev-f" min="0" max="9" class="bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold" value="0">
+                            <span class="text-text-muted text-xs sm:text-sm font-medium w-5 sm:w-6 text-right">/ 9</span>
                         </div>
                     </div>
                 </div>
@@ -198,166 +198,165 @@ const subjects = defaultState.subjects;
         </div>
 
         <!-- Quick Summary -->
-        <div class="glass-panel surface-summary mt-6">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold">QUICK SUMMARY</h2>
+        <div class="glass-panel surface-summary mt-6 p-4 sm:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 min-w-0">
+            <div class="flex flex-col gap-3 min-w-0 flex-1">
+                <h2 class="text-lg sm:text-xl font-semibold tracking-tight">QUICK SUMMARY</h2>
+                <div class="flex flex-wrap gap-2.5 sm:gap-4 text-xs sm:text-sm text-text-muted">
+                    <span id="qs-syllabus" class="bg-black/20 px-2.5 py-1 rounded border border-panel-border">Syllabus — 0%</span>
+                    <span id="qs-pyqs" class="bg-black/20 px-2.5 py-1 rounded border border-panel-border">PYQs — 0%</span>
+                    <span id="qs-tests" class="bg-black/20 px-2.5 py-1 rounded border border-panel-border">Tests — 0%</span>
+                    <span id="qs-mocks" class="bg-black/20 px-2.5 py-1 rounded border border-panel-border">Mocks — 0%</span>
+                    <span id="qs-revision" class="bg-black/20 px-2.5 py-1 rounded border border-panel-border">Revision — 0%</span>
+                    <span id="qs-hours" class="bg-black/20 px-2.5 py-1 rounded border border-panel-border text-primary-accent font-semibold">Study Time — 0h</span>
+                </div>
             </div>
-            <div class="flex flex-wrap gap-6 items-center justify-between">
-                <div class="flex flex-wrap gap-4 text-text-muted text-sm">
-                    <span id="qs-syllabus">Syllabus — 0%</span> | 
-                    <span id="qs-pyqs">PYQs — 0%</span> | 
-                    <span id="qs-tests">Tests — 0%</span> | 
-                    <span id="qs-mocks">Mocks — 0%</span> | 
-                    <span id="qs-revision">Revision — 0%</span> | 
-                    <span id="qs-hours">Study Time — 0h</span>
-                </div>
-                <div class="bg-primary-accent/10 px-6 py-3 rounded-lg border border-primary-accent/30">
-                    <div class="text-xs text-primary-accent uppercase tracking-wider">Tracker Estimate</div>
-                    <div class="text-2xl font-bold text-white mt-1" id="metric-readiness">GATE READINESS: 0%</div>
-                </div>
+            <div class="bg-primary-accent/10 px-4 sm:px-6 py-3 rounded-xl border border-primary-accent/30 w-full md:w-auto text-center shrink-0">
+                <div class="text-[11px] text-primary-accent uppercase tracking-wider font-semibold">Tracker Estimate</div>
+                <div class="text-xl sm:text-2xl font-bold text-white mt-0.5" id="metric-readiness">GATE READINESS: 0%</div>
             </div>
         </div>
     </div>
 
     <!-- Global Settings Modal -->
-    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4" id="settings-modal">
-        <div class="bg-bg-dark border border-panel-border rounded-2xl p-6 w-full max-w-[500px] shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <h3 class="text-xl font-semibold mb-5 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+    <div class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden items-center justify-center z-50 p-3 sm:p-4 md:p-6 overflow-y-auto" id="settings-modal">
+        <div class="bg-bg-dark border border-panel-border rounded-2xl p-4 sm:p-6 w-full max-w-[540px] shadow-2xl max-h-[90dvh] flex flex-col overflow-hidden my-auto">
+            <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-5 flex items-center gap-2 shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent shrink-0"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 Tracker Settings & Targets
             </h3>
             
-            <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-4 sm:gap-5 overflow-y-auto pr-1 sm:pr-2 custom-scrollbar flex-grow min-w-0">
                 <!-- Target Values -->
-                <div class="bg-black/20 p-4 rounded-xl border border-panel-border">
-                    <h4 class="text-sm font-semibold text-primary-accent mb-3 uppercase tracking-wider">Practice Targets</h4>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="flex flex-col gap-1">
+                <div class="bg-black/20 p-3.5 sm:p-4 rounded-xl border border-panel-border min-w-0">
+                    <h4 class="text-xs sm:text-sm font-semibold text-primary-accent mb-2.5 sm:mb-3 uppercase tracking-wider">Practice Targets</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 min-w-0">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">Max Topic Tests</label>
-                            <input type="number" id="set-target-topic-tests" min="1" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-target-topic-tests" min="1" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">Max Subject Tests</label>
-                            <input type="number" id="set-target-subject-tests" min="1" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-target-subject-tests" min="1" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">Max Mocks</label>
-                            <input type="number" id="set-target-mocks" min="1" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-target-mocks" min="1" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">Total Revision Subjects</label>
-                            <input type="number" id="set-target-revision" min="1" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-target-revision" min="1" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
                     </div>
                 </div>
                 
                 <!-- PYQ Targets -->
-                <div class="bg-black/20 p-4 rounded-xl border border-panel-border">
-                    <h4 class="text-sm font-semibold text-primary-accent mb-3 uppercase tracking-wider">PYQ Targets by Subject</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[200px] overflow-y-auto pr-2 custom-scrollbar">
+                <div class="bg-black/20 p-3.5 sm:p-4 rounded-xl border border-panel-border min-w-0">
+                    <h4 class="text-xs sm:text-sm font-semibold text-primary-accent mb-2.5 sm:mb-3 uppercase tracking-wider">PYQ Targets by Subject</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[180px] overflow-y-auto pr-1 custom-scrollbar min-w-0">
                         {subjects.map(sub => (
-                            <div class="flex flex-col gap-1">
+                            <div class="flex flex-col gap-1 min-w-0">
                                 <label class="text-xs text-text-muted truncate w-full" title={sub.name}>{sub.name}</label>
-                                <input type="number" id={`set-target-pyq-${sub.id}`} data-pyq-subject={sub.id} min="1" class="set-pyq-input bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                                <input type="number" id={`set-target-pyq-${sub.id}`} data-pyq-subject={sub.id} min="1" class="set-pyq-input bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 mt-6">
-                <button class="btn" id="btn-settings-cancel">Cancel</button>
-                <button class="btn btn-primary" id="btn-settings-save">Save & Apply</button>
+            <div class="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 mt-4 sm:mt-6 shrink-0 pt-3 border-t border-panel-border">
+                <button class="btn justify-center text-xs sm:text-sm py-2" id="btn-settings-cancel">Cancel</button>
+                <button class="btn btn-primary justify-center text-xs sm:text-sm py-2" id="btn-settings-save">Save & Apply</button>
             </div>
         </div>
     </div>
 
     <!-- Syllabus Settings Modal -->
-    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4" id="syllabus-settings-modal">
-        <div class="bg-bg-dark border border-panel-border rounded-2xl p-6 w-full max-w-[600px] shadow-2xl max-h-[90vh] flex flex-col">
-            <h3 class="text-xl font-semibold mb-5 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+    <div class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden items-center justify-center z-50 p-3 sm:p-4 md:p-6 overflow-y-auto" id="syllabus-settings-modal">
+        <div class="bg-bg-dark border border-panel-border rounded-2xl p-4 sm:p-6 w-full max-w-[650px] shadow-2xl max-h-[90dvh] flex flex-col overflow-hidden my-auto">
+            <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-5 flex items-center gap-2 shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent shrink-0"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                 Edit Syllabus Topics
             </h3>
             
-            <div class="flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-grow pr-2">
+            <div class="flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-grow pr-1 sm:pr-2 min-w-0">
                 <!-- Readiness Weights -->
-                <div class="bg-black/20 p-4 rounded-xl border border-panel-border shrink-0">
-                    <h4 class="text-sm font-semibold text-primary-accent mb-3 uppercase tracking-wider">GATE Readiness Weights (%)</h4>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <div class="flex flex-col gap-1">
+                <div class="bg-black/20 p-3.5 sm:p-4 rounded-xl border border-panel-border shrink-0 min-w-0">
+                    <h4 class="text-xs sm:text-sm font-semibold text-primary-accent mb-2.5 sm:mb-3 uppercase tracking-wider">GATE Readiness Weights (%)</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-2.5 min-w-0">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">Syllabus</label>
-                            <input type="number" id="set-weight-syllabus" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-weight-syllabus" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">PYQs</label>
-                            <input type="number" id="set-weight-pyqs" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-weight-pyqs" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">Tests</label>
-                            <input type="number" id="set-weight-tests" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-weight-tests" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">Mocks</label>
-                            <input type="number" id="set-weight-mocks" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-weight-mocks" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div class="flex flex-col gap-1 min-w-0">
                             <label class="text-xs text-text-muted">Revision</label>
-                            <input type="number" id="set-weight-revision" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                            <input type="number" id="set-weight-revision" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm w-full">
                         </div>
                     </div>
                 </div>
                 <!-- Subject Tracker Weights Allocation -->
-                <div class="bg-black/20 p-4 rounded-xl border border-panel-border shrink-0">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="text-sm font-semibold text-primary-accent uppercase tracking-wider">Subject Tracker Weights (%)</h4>
+                <div class="bg-black/20 p-3.5 sm:p-4 rounded-xl border border-panel-border shrink-0 min-w-0">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 mb-2.5 sm:mb-3 min-w-0">
+                        <h4 class="text-xs sm:text-sm font-semibold text-primary-accent uppercase tracking-wider">Subject Tracker Weights (%)</h4>
                         <span class="text-xs text-text-muted">Target: 100% Total</span>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar min-w-0">
                         {subjects.map(sub => (
-                            <div class="flex flex-col gap-1 bg-black/30 p-2 rounded-lg border border-panel-border">
+                            <div class="flex flex-col gap-1 bg-black/30 p-2 rounded-lg border border-panel-border min-w-0">
                                 <label class="text-[11px] text-text-muted truncate font-medium" title={sub.name}>{sub.name}</label>
-                                <div class="flex items-center gap-1">
-                                    <input type="number" step="0.1" min="0" max="100" class="set-subject-weight-input bg-white/5 border border-panel-border text-text-main p-1.5 rounded-md focus:outline-none focus:border-primary-accent text-xs w-full font-semibold" data-subject-id={sub.id} id={`set-subject-weight-${sub.id}`} value={sub.trackerWeight}>
-                                    <span class="text-xs text-text-muted font-semibold">%</span>
+                                <div class="flex items-center gap-1 min-w-0">
+                                    <input type="number" step="0.1" min="0" max="100" class="set-subject-weight-input bg-white/5 border border-panel-border text-text-main p-1 rounded-md focus:outline-none focus:border-primary-accent text-xs w-full font-semibold" data-subject-id={sub.id} id={`set-subject-weight-${sub.id}`} value={sub.trackerWeight}>
+                                    <span class="text-xs text-text-muted font-semibold shrink-0">%</span>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-2 shrink-0">
-                    <div class="flex justify-between items-center">
-                        <label class="text-sm font-semibold text-text-muted">Select Subject for Sub-Topics</label>
-                        <span class="text-xs text-primary-accent font-medium" id="selected-subject-weight-display">Weight: 15%</span>
+                <div class="flex flex-col gap-2 shrink-0 min-w-0">
+                    <div class="flex justify-between items-center gap-2">
+                        <label class="text-xs sm:text-sm font-semibold text-text-muted truncate">Select Subject for Sub-Topics</label>
+                        <span class="text-xs text-primary-accent font-medium shrink-0" id="selected-subject-weight-display">Weight: 15%</span>
                     </div>
-                    <select id="syllabus-subject-select" class="bg-white/5 border border-panel-border text-text-main p-3 rounded-lg focus:outline-none focus:border-primary-accent cursor-pointer">
+                    <select id="syllabus-subject-select" class="bg-white/5 border border-panel-border text-text-main p-2.5 sm:p-3 rounded-lg focus:outline-none focus:border-primary-accent cursor-pointer text-sm w-full">
                         {subjects.map(sub => (
                             <option value={sub.id} class="bg-bg-dark">{sub.name}</option>
                         ))}
                     </select>
                 </div>
                 
-                <div class="bg-black/20 p-4 rounded-xl border border-panel-border flex flex-col gap-3 min-h-[300px] flex-grow overflow-hidden">
-                    <div class="flex justify-between items-center mb-1 shrink-0">
-                        <h4 class="text-sm font-semibold text-primary-accent uppercase tracking-wider">Sub-Topics</h4>
-                        <button class="btn btn-primary btn-sm flex items-center gap-1" id="btn-add-topic" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
+                <div class="bg-black/20 p-3.5 sm:p-4 rounded-xl border border-panel-border flex flex-col gap-3 min-h-[220px] sm:min-h-[280px] flex-grow overflow-hidden min-w-0">
+                    <div class="flex justify-between items-center mb-1 shrink-0 gap-2">
+                        <h4 class="text-xs sm:text-sm font-semibold text-primary-accent uppercase tracking-wider">Sub-Topics</h4>
+                        <button class="btn btn-primary btn-sm flex items-center gap-1 shrink-0" id="btn-add-topic" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                             Add Topic
                         </button>
                     </div>
                     
-                    <div id="topics-edit-list" class="flex flex-col gap-3 overflow-y-auto pr-2 custom-scrollbar flex-grow">
+                    <div id="topics-edit-list" class="flex flex-col gap-2.5 overflow-y-auto pr-1 custom-scrollbar flex-grow min-w-0">
                         <!-- Populated by JS -->
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 mt-6 shrink-0">
-                <button class="btn" id="btn-syllabus-cancel">Cancel</button>
-                <button class="btn btn-primary" id="btn-syllabus-save">Save & Apply</button>
+            <div class="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 mt-4 sm:mt-6 shrink-0 pt-3 border-t border-panel-border">
+                <button class="btn justify-center text-xs sm:text-sm py-2" id="btn-syllabus-cancel">Cancel</button>
+                <button class="btn btn-primary justify-center text-xs sm:text-sm py-2" id="btn-syllabus-save">Save & Apply</button>
             </div>
         </div>
+    </div>
     </div>
 
     <script>
@@ -586,12 +585,12 @@ const subjects = defaultState.subjects;
 
             subject.topics.forEach((topic, idx) => {
                 const row = document.createElement('div');
-                row.className = "flex items-center gap-2 bg-black/30 p-2 rounded-lg border border-panel-border shrink-0";
+                row.className = "flex items-center gap-1.5 sm:gap-2 bg-black/30 p-2 rounded-lg border border-panel-border shrink-0 min-w-0";
                 row.innerHTML = `
-                    <input type="text" class="topic-name-input flex-grow bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm" value="${topic.name}" data-idx="${idx}">
-                    <input type="number" step="0.1" class="topic-weight-input w-20 bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm text-center" value="${topic.trackerWeight}" data-idx="${idx}" title="Weight">
-                    <button class="btn btn-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 btn-delete-topic" data-idx="${idx}" style="padding: 0.5rem;" title="Remove Topic">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                    <input type="text" class="topic-name-input flex-grow min-w-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm" value="${topic.name}" data-idx="${idx}">
+                    <input type="number" step="0.1" class="topic-weight-input w-16 sm:w-20 shrink-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm text-center" value="${topic.trackerWeight}" data-idx="${idx}" title="Weight">
+                    <button class="btn btn-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 btn-delete-topic shrink-0 p-1.5 sm:p-2" data-idx="${idx}" title="Remove Topic">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                     </button>
                 `;
                 topicsList.appendChild(row);
