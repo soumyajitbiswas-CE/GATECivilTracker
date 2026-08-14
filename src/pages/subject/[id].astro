@@ -69,17 +69,7 @@ const { subject } = Astro.props;
             </div>
 
             <div class="flex flex-col gap-3 mb-8" id="topics-container">
-                {subject.topics.map((topic, index) => (
-                    <div class="topic-item flex items-center justify-between p-4 bg-black/20 border border-panel-border rounded-xl cursor-pointer transition-all hover:bg-black/40" data-topic-id={topic.id} data-index={index}>
-                        <div class="flex items-center gap-4">
-                            <div class="checkbox w-6 h-6 border-2 border-panel-border rounded-md flex items-center justify-center transition-all bg-transparent">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-bg-dark opacity-0 w-4 h-4"><polyline points="20 6 9 17 4 12"/></svg>
-                            </div>
-                            <span class="topic-name text-base font-medium transition-all">{topic.name}</span>
-                        </div>
-                        <span class="text-sm text-text-muted bg-white/5 px-2 py-1 rounded">{topic.trackerWeight.toFixed(1)}%</span>
-                    </div>
-                ))}
+                <!-- Topics Hydrated dynamically via JS -->
             </div>
             
             <div class="flex justify-between items-center mt-10 border-t border-panel-border pt-6 mb-4">
@@ -148,30 +138,51 @@ const { subject } = Astro.props;
                 document.querySelector('.pyq-total-text').textContent = `/ ${pyqData.total}`;
             }
 
-            // Update Topics
-            document.querySelectorAll('.topic-item').forEach(item => {
-                const topicId = item.dataset.topicId;
-                const topicData = subjectData.topics.find(t => t.id === topicId);
-                const checkbox = item.querySelector('.checkbox');
-                const checkIcon = checkbox.querySelector('svg');
-                const name = item.querySelector('.topic-name');
+            // Update Topics Dynamically
+            const topicsContainer = document.getElementById('topics-container');
+            topicsContainer.innerHTML = ''; // Clear out old topics
 
-                if (topicData && topicData.completed) {
-                    item.classList.add('border-primary-accent/30');
-                    item.classList.remove('border-panel-border');
-                    checkbox.classList.add('bg-primary-accent', 'border-primary-accent');
-                    checkbox.classList.remove('bg-transparent', 'border-panel-border');
-                    checkIcon.classList.remove('opacity-0');
-                    name.classList.add('text-text-muted', 'line-through');
-                } else {
-                    item.classList.remove('border-primary-accent/30');
-                    item.classList.add('border-panel-border');
-                    checkbox.classList.remove('bg-primary-accent', 'border-primary-accent');
-                    checkbox.classList.add('bg-transparent', 'border-panel-border');
-                    checkIcon.classList.add('opacity-0');
-                    name.classList.remove('text-text-muted', 'line-through');
-                }
-            });
+            if (subjectData.topics && subjectData.topics.length > 0) {
+                subjectData.topics.forEach((topicData, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'topic-item flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all hover:bg-black/40';
+                    item.dataset.topicId = topicData.id;
+                    item.dataset.index = index;
+
+                    const isCompleted = topicData.completed;
+                    
+                    if (isCompleted) {
+                        item.classList.add('bg-black/20', 'border', 'border-primary-accent/30');
+                    } else {
+                        item.classList.add('bg-black/20', 'border', 'border-panel-border');
+                    }
+
+                    item.innerHTML = `
+                        <div class="flex items-center gap-4">
+                            <div class="checkbox w-6 h-6 border-2 rounded-md flex items-center justify-center transition-all ${isCompleted ? 'bg-primary-accent border-primary-accent' : 'bg-transparent border-panel-border'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-bg-dark ${isCompleted ? '' : 'opacity-0'} w-4 h-4"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <span class="topic-name text-base font-medium transition-all ${isCompleted ? 'text-text-muted line-through' : ''}">${topicData.name}</span>
+                        </div>
+                        <span class="text-sm text-text-muted bg-white/5 px-2 py-1 rounded">${(topicData.trackerWeight || 1).toFixed(1)}%</span>
+                    `;
+
+                    // Attach click listener for completion toggle
+                    item.addEventListener('click', () => {
+                        const s = window.getState();
+                        const subD = s.subjects.find(x => x.id === subjectId);
+                        const topD = subD.topics.find(t => t.id === topicData.id);
+                        if (topD) {
+                            topD.completed = !topD.completed;
+                            window.saveState(s);
+                        }
+                    });
+
+                    topicsContainer.appendChild(item);
+                });
+            } else {
+                topicsContainer.innerHTML = '<div class="text-text-muted text-sm py-4">No topics found for this subject. Add topics via Dashboard Settings.</div>';
+            }
 
             // Update History
             const historyContainer = document.getElementById('history-container');
@@ -210,17 +221,7 @@ const { subject } = Astro.props;
             }
         }
 
-        // Initialize topic clicks
-        document.querySelectorAll('.topic-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const topicId = item.dataset.topicId;
-                const state = window.getState();
-                const subjectData = state.subjects.find(s => s.id === subjectId);
-                const topicData = subjectData.topics.find(t => t.id === topicId);
-                topicData.completed = !topicData.completed;
-                window.saveState(state);
-            });
-        });
+        // Topic clicks are now initialized dynamically inside hydrateDetail()
 
         // Modal Logic
         const modal = document.getElementById('log-modal');

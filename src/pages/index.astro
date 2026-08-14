@@ -49,6 +49,10 @@ const subjects = defaultState.subjects;
         <!-- Subject Grid -->
         <div class="flex justify-between items-center mt-2">
             <h2 class="text-xl font-semibold">1. SYLLABUS COMPLETION</h2>
+            <button class="btn btn-primary text-sm flex items-center gap-1 open-syllabus-settings-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                Edit Syllabus
+            </button>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -81,8 +85,12 @@ const subjects = defaultState.subjects;
         </div>
 
         <!-- Practice and Revision -->
-        <div class="flex justify-between items-center mt-6">
+        <div class="flex justify-between items-center mt-6 mb-4">
             <h2 class="text-xl font-semibold">2. PRACTICE & REVISION</h2>
+            <button class="btn btn-primary text-sm flex items-center gap-1 open-settings-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                Edit Targets
+            </button>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -213,33 +221,6 @@ const subjects = defaultState.subjects;
             </h3>
             
             <div class="flex flex-col gap-6">
-                <!-- Readiness Weights -->
-                <div class="bg-black/20 p-4 rounded-xl border border-panel-border">
-                    <h4 class="text-sm font-semibold text-primary-accent mb-3 uppercase tracking-wider">GATE Readiness Weights (%)</h4>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="flex flex-col gap-1">
-                            <label class="text-xs text-text-muted">Syllabus</label>
-                            <input type="number" id="set-weight-syllabus" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
-                        </div>
-                        <div class="flex flex-col gap-1">
-                            <label class="text-xs text-text-muted">PYQs</label>
-                            <input type="number" id="set-weight-pyqs" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
-                        </div>
-                        <div class="flex flex-col gap-1">
-                            <label class="text-xs text-text-muted">Tests</label>
-                            <input type="number" id="set-weight-tests" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
-                        </div>
-                        <div class="flex flex-col gap-1">
-                            <label class="text-xs text-text-muted">Mocks</label>
-                            <input type="number" id="set-weight-mocks" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
-                        </div>
-                        <div class="flex flex-col gap-1">
-                            <label class="text-xs text-text-muted">Revision</label>
-                            <input type="number" id="set-weight-revision" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Target Values -->
                 <div class="bg-black/20 p-4 rounded-xl border border-panel-border">
                     <h4 class="text-sm font-semibold text-primary-accent mb-3 uppercase tracking-wider">Practice Targets</h4>
@@ -280,6 +261,72 @@ const subjects = defaultState.subjects;
             <div class="flex justify-end gap-3 mt-6">
                 <button class="btn" id="btn-settings-cancel">Cancel</button>
                 <button class="btn btn-primary" id="btn-settings-save">Save & Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Syllabus Settings Modal -->
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50 p-4" id="syllabus-settings-modal">
+        <div class="bg-bg-dark border border-panel-border rounded-2xl p-6 w-full max-w-[600px] shadow-2xl max-h-[90vh] flex flex-col">
+            <h3 class="text-xl font-semibold mb-5 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                Edit Syllabus Topics
+            </h3>
+            
+            <div class="flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-grow pr-2">
+                <!-- Readiness Weights -->
+                <div class="bg-black/20 p-4 rounded-xl border border-panel-border shrink-0">
+                    <h4 class="text-sm font-semibold text-primary-accent mb-3 uppercase tracking-wider">GATE Readiness Weights (%)</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <div class="flex flex-col gap-1">
+                            <label class="text-xs text-text-muted">Syllabus</label>
+                            <input type="number" id="set-weight-syllabus" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-xs text-text-muted">PYQs</label>
+                            <input type="number" id="set-weight-pyqs" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-xs text-text-muted">Tests</label>
+                            <input type="number" id="set-weight-tests" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-xs text-text-muted">Mocks</label>
+                            <input type="number" id="set-weight-mocks" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-xs text-text-muted">Revision</label>
+                            <input type="number" id="set-weight-revision" min="0" max="100" class="bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2 shrink-0">
+                    <label class="text-sm font-semibold text-text-muted">Select Subject</label>
+                    <select id="syllabus-subject-select" class="bg-white/5 border border-panel-border text-text-main p-3 rounded-lg focus:outline-none focus:border-primary-accent cursor-pointer">
+                        {subjects.map(sub => (
+                            <option value={sub.id} class="bg-bg-dark">{sub.name}</option>
+                        ))}
+                    </select>
+                </div>
+                
+                <div class="bg-black/20 p-4 rounded-xl border border-panel-border flex flex-col gap-3 min-h-[300px] flex-grow overflow-hidden">
+                    <div class="flex justify-between items-center mb-1 shrink-0">
+                        <h4 class="text-sm font-semibold text-primary-accent uppercase tracking-wider">Sub-Topics</h4>
+                        <button class="btn btn-primary btn-sm flex items-center gap-1" id="btn-add-topic" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            Add Topic
+                        </button>
+                    </div>
+                    
+                    <div id="topics-edit-list" class="flex flex-col gap-3 overflow-y-auto pr-2 custom-scrollbar flex-grow">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 mt-6 shrink-0">
+                <button class="btn" id="btn-syllabus-cancel">Cancel</button>
+                <button class="btn btn-primary" id="btn-syllabus-save">Save & Apply</button>
             </div>
         </div>
     </div>
@@ -427,76 +474,8 @@ const subjects = defaultState.subjects;
             settingsModal.style.display = 'none';
         });
 
-        // Auto-balance weights
-        const weightInputs = [
-            document.getElementById('set-weight-syllabus'),
-            document.getElementById('set-weight-pyqs'),
-            document.getElementById('set-weight-tests'),
-            document.getElementById('set-weight-mocks'),
-            document.getElementById('set-weight-revision')
-        ];
-
-        weightInputs.forEach(input => {
-            input.addEventListener('change', (e) => {
-                let newVal = parseInt(e.target.value) || 0;
-                newVal = Math.max(0, Math.min(100, newVal));
-                e.target.value = newVal;
-
-                const otherInputs = weightInputs.filter(inp => inp !== e.target);
-                let remaining = 100 - newVal;
-                
-                let otherSum = otherInputs.reduce((sum, inp) => sum + (parseInt(inp.value) || 0), 0);
-                
-                if (otherSum === 0) {
-                    const share = Math.floor(remaining / otherInputs.length);
-                    let rem = remaining % otherInputs.length;
-                    otherInputs.forEach(inp => {
-                        inp.value = share + (rem > 0 ? 1 : 0);
-                        if (rem > 0) rem--;
-                    });
-                } else {
-                    let currentNewSum = 0;
-                    let values = otherInputs.map(inp => {
-                        const oldVal = parseInt(inp.value) || 0;
-                        const propVal = Math.round((oldVal / otherSum) * remaining);
-                        currentNewSum += propVal;
-                        return { inp, val: propVal };
-                    });
-
-                    let diff = remaining - currentNewSum;
-                    if (diff !== 0) {
-                        values.sort((a, b) => b.val - a.val);
-                        values[0].val += diff;
-                    }
-
-                    values.forEach(v => v.inp.value = Math.max(0, v.val));
-                }
-            });
-        });
-
         document.getElementById('btn-settings-save')?.addEventListener('click', () => {
             const state = window.getState();
-            
-            // Validate weights sum to 100
-            const wSyl = parseFloat(document.getElementById('set-weight-syllabus').value) || 0;
-            const wPyq = parseFloat(document.getElementById('set-weight-pyqs').value) || 0;
-            const wTst = parseFloat(document.getElementById('set-weight-tests').value) || 0;
-            const wMck = parseFloat(document.getElementById('set-weight-mocks').value) || 0;
-            const wRev = parseFloat(document.getElementById('set-weight-revision').value) || 0;
-            
-            if (Math.round(wSyl + wPyq + wTst + wMck + wRev) !== 100) {
-                alert('GATE Readiness Weights must sum up exactly to 100%!');
-                return;
-            }
-            
-            if(!state.settings) state.settings = {};
-            state.settings.weights = {
-                syllabus: wSyl / 100,
-                pyqs: wPyq / 100,
-                tests: wTst / 100,
-                mocks: wMck / 100,
-                revision: wRev / 100
-            };
 
             // Targets
             state.tests.topic.total = Math.max(1, parseInt(document.getElementById('set-target-topic-tests').value) || 40);
@@ -524,6 +503,296 @@ const subjects = defaultState.subjects;
 
             window.saveState(state);
             settingsModal.style.display = 'none';
+        });
+
+        // Syllabus Modal Logic
+        const syllabusModal = document.getElementById('syllabus-settings-modal');
+        const syllabusSelect = document.getElementById('syllabus-subject-select');
+        const topicsList = document.getElementById('topics-edit-list');
+        const btnAddTopic = document.getElementById('btn-add-topic');
+        
+        let workingSubjects = [];
+
+        function syncCurrentVisibleTopics() {
+            if (!syllabusSelect || !workingSubjects.length) return;
+            const currentSubjectId = syllabusSelect.value;
+            const currentSubject = workingSubjects.find(s => s.id === currentSubjectId);
+            if (!currentSubject) return;
+
+            topicsList.querySelectorAll('.topic-name-input').forEach(inp => {
+                const idx = parseInt(inp.dataset.idx);
+                if (currentSubject.topics[idx]) currentSubject.topics[idx].name = inp.value;
+            });
+            topicsList.querySelectorAll('.topic-weight-input').forEach(inp => {
+                const idx = parseInt(inp.dataset.idx);
+                if (currentSubject.topics[idx]) {
+                    const val = parseFloat(inp.value);
+                    currentSubject.topics[idx].trackerWeight = isNaN(val) ? 0 : val;
+                }
+            });
+        }
+
+        function renderWorkingTopics(subjectId) {
+            topicsList.innerHTML = '';
+            const subject = workingSubjects.find(s => s.id === subjectId);
+            if (!subject) return;
+
+            subject.topics.forEach((topic, idx) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center gap-2 bg-black/30 p-2 rounded-lg border border-panel-border shrink-0";
+                row.innerHTML = `
+                    <input type="text" class="topic-name-input flex-grow bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm" value="${topic.name}" data-idx="${idx}">
+                    <input type="number" step="0.1" class="topic-weight-input w-20 bg-white/5 border border-panel-border text-text-main p-2 rounded-md focus:outline-none focus:border-primary-accent text-sm text-center" value="${topic.trackerWeight}" data-idx="${idx}" title="Weight">
+                    <button class="btn btn-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 btn-delete-topic" data-idx="${idx}" style="padding: 0.5rem;" title="Remove Topic">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                    </button>
+                `;
+                topicsList.appendChild(row);
+            });
+
+            topicsList.querySelectorAll('.topic-name-input').forEach(inp => {
+                const update = (e) => {
+                    const idx = parseInt(e.target.dataset.idx);
+                    if (subject.topics[idx]) subject.topics[idx].name = e.target.value;
+                };
+                inp.addEventListener('input', update);
+                inp.addEventListener('change', update);
+            });
+            topicsList.querySelectorAll('.topic-weight-input').forEach(inp => {
+                const update = (e) => {
+                    const idx = parseInt(e.target.dataset.idx);
+                    if (subject.topics[idx]) {
+                        let val = parseFloat(e.target.value);
+                        subject.topics[idx].trackerWeight = isNaN(val) ? 0 : val;
+                    }
+                };
+                inp.addEventListener('input', update);
+                inp.addEventListener('change', update);
+            });
+            topicsList.querySelectorAll('.btn-delete-topic').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    syncCurrentVisibleTopics();
+                    const idx = parseInt(e.currentTarget.dataset.idx);
+                    subject.topics.splice(idx, 1);
+                    renderWorkingTopics(subjectId);
+                });
+            });
+        }
+
+        document.querySelectorAll('.open-syllabus-settings-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                workingSubjects = JSON.parse(JSON.stringify(window.getState().subjects));
+                syllabusSelect.value = workingSubjects[0].id;
+                renderWorkingTopics(syllabusSelect.value);
+                syllabusModal.style.display = 'flex';
+            });
+        });
+
+        syllabusSelect?.addEventListener('change', (e) => {
+            syncCurrentVisibleTopics();
+            renderWorkingTopics(e.target.value);
+        });
+
+        btnAddTopic?.addEventListener('click', () => {
+            syncCurrentVisibleTopics();
+            const subjectId = syllabusSelect.value;
+            const subject = workingSubjects.find(s => s.id === subjectId);
+            if (!subject) return;
+            subject.topics.push({
+                id: `custom_${Date.now()}`,
+                name: "New Topic",
+                trackerWeight: 1.0,
+                completed: false
+            });
+            renderWorkingTopics(subjectId);
+            setTimeout(() => { topicsList.scrollTop = topicsList.scrollHeight; }, 10);
+        });
+
+        document.getElementById('btn-syllabus-cancel')?.addEventListener('click', () => {
+            syllabusModal.style.display = 'none';
+        });
+
+        document.getElementById('btn-syllabus-save')?.addEventListener('click', () => {
+            syncCurrentVisibleTopics();
+            const state = window.getState();
+            
+            // GATE Readiness Weights save logic
+            const oldW = state.settings?.weights || { syllabus: 0.60, pyqs: 0.15, tests: 0.10, mocks: 0.10, revision: 0.05 };
+            const inputs = {
+                syllabus: parseFloat(document.getElementById('set-weight-syllabus').value) || 0,
+                pyqs: parseFloat(document.getElementById('set-weight-pyqs').value) || 0,
+                tests: parseFloat(document.getElementById('set-weight-tests').value) || 0,
+                mocks: parseFloat(document.getElementById('set-weight-mocks').value) || 0,
+                revision: parseFloat(document.getElementById('set-weight-revision').value) || 0
+            };
+
+            let changedKeys = [];
+            let unchangedKeys = [];
+            let changedSum = 0;
+
+            Object.keys(inputs).forEach(k => {
+                if (Math.round(inputs[k]) !== Math.round(oldW[k] * 100)) {
+                    changedKeys.push(k);
+                    changedSum += inputs[k];
+                } else {
+                    unchangedKeys.push(k);
+                }
+            });
+
+            if (changedKeys.length > 0) {
+                let remaining = 100 - changedSum;
+                if (remaining < 0) {
+                    let total = Object.values(inputs).reduce((a,b)=>a+b, 0);
+                    let currentSum = 0;
+                    let values = Object.keys(inputs).map(k => {
+                        let prop = Math.round((inputs[k] / total) * 100);
+                        currentSum += prop;
+                        return { k, val: prop };
+                    });
+                    let diff = 100 - currentSum;
+                    if(diff !== 0) {
+                        values.sort((a,b) => b.val - a.val);
+                        values[0].val += diff;
+                    }
+                    values.forEach(v => inputs[v.k] = v.val);
+                } else if (unchangedKeys.length > 0) {
+                    let unchangedOriginalSum = unchangedKeys.reduce((sum, k) => sum + Math.round(oldW[k] * 100), 0);
+                    let currentNewSum = 0;
+                    let values = unchangedKeys.map(k => {
+                        const oldVal = Math.round(oldW[k] * 100);
+                        const propVal = unchangedOriginalSum === 0 
+                            ? Math.floor(remaining / unchangedKeys.length) 
+                            : Math.round((oldVal / unchangedOriginalSum) * remaining);
+                        currentNewSum += propVal;
+                        return { k, val: propVal };
+                    });
+                    
+                    let diff = remaining - currentNewSum;
+                    if (diff !== 0 && values.length > 0) {
+                        values.sort((a,b) => b.val - a.val);
+                        values[0].val += diff;
+                    }
+                    
+                    values.forEach(v => {
+                        inputs[v.k] = Math.max(0, v.val);
+                    });
+                } else if (changedSum !== 100) {
+                    let currentSum = 0;
+                    let values = Object.keys(inputs).map(k => {
+                        let prop = Math.round((inputs[k] / changedSum) * 100);
+                        currentSum += prop;
+                        return { k, val: prop };
+                    });
+                    let diff = 100 - currentSum;
+                    if(diff !== 0) {
+                        values.sort((a,b) => b.val - a.val);
+                        values[0].val += diff;
+                    }
+                    values.forEach(v => inputs[v.k] = v.val);
+                }
+            }
+
+            const finalSum = Object.values(inputs).reduce((a,b)=>a+b, 0);
+            if (Math.round(finalSum) !== 100) {
+                alert('GATE Readiness Weights must sum up exactly to 100%!');
+                return;
+            }
+            
+            if(!state.settings) state.settings = {};
+            state.settings.weights = {
+                syllabus: inputs.syllabus / 100,
+                pyqs: inputs.pyqs / 100,
+                tests: inputs.tests / 100,
+                mocks: inputs.mocks / 100,
+                revision: inputs.revision / 100
+            };
+            
+            // Smart Auto-Balance for Subtopics on Save
+            workingSubjects.forEach(workingSub => {
+                const origSub = state.subjects.find(s => s.id === workingSub.id);
+                if (!origSub || !workingSub.topics || workingSub.topics.length === 0) return;
+                
+                const totalTarget = workingSub.trackerWeight;
+                if (workingSub.topics.length === 1) {
+                    workingSub.topics[0].trackerWeight = totalTarget;
+                    return;
+                }
+
+                let changedIndices = [];
+                let unchangedIndices = [];
+                let changedSum = 0;
+
+                workingSub.topics.forEach((t, i) => {
+                    const origT = origSub?.topics?.find(ot => ot.id === t.id);
+                    if (!origT || Math.abs(origT.trackerWeight - t.trackerWeight) > 0.01) {
+                        changedIndices.push(i);
+                        changedSum += t.trackerWeight;
+                    } else {
+                        unchangedIndices.push(i);
+                    }
+                });
+
+                let currentTotalSum = workingSub.topics.reduce((a, b) => a + b.trackerWeight, 0);
+
+                if (changedIndices.length > 0 && unchangedIndices.length > 0) {
+                    let remaining = totalTarget - changedSum;
+                    if (remaining <= 0) {
+                        if (currentTotalSum > 0) {
+                            workingSub.topics.forEach(t => {
+                                t.trackerWeight = (t.trackerWeight / currentTotalSum) * totalTarget;
+                            });
+                        } else {
+                            const eq = totalTarget / workingSub.topics.length;
+                            workingSub.topics.forEach(t => t.trackerWeight = eq);
+                        }
+                    } else {
+                        let unchangedSum = unchangedIndices.reduce((sum, i) => sum + workingSub.topics[i].trackerWeight, 0);
+                        unchangedIndices.forEach(i => {
+                            const oldVal = workingSub.topics[i].trackerWeight;
+                            const propVal = unchangedSum === 0 
+                                ? remaining / unchangedIndices.length 
+                                : (oldVal / unchangedSum) * remaining;
+                            workingSub.topics[i].trackerWeight = propVal;
+                        });
+                    }
+                } else if (changedIndices.length > 0 && unchangedIndices.length === 0) {
+                    if (changedSum > 0 && Math.abs(changedSum - totalTarget) > 0.01) {
+                        workingSub.topics.forEach(t => {
+                            t.trackerWeight = (t.trackerWeight / changedSum) * totalTarget;
+                        });
+                    } else if (changedSum === 0) {
+                        const eq = totalTarget / workingSub.topics.length;
+                        workingSub.topics.forEach(t => t.trackerWeight = eq);
+                    }
+                } else if (Math.abs(currentTotalSum - totalTarget) > 0.01) {
+                    // Triggers if topics were deleted or current sum is off
+                    if (currentTotalSum > 0) {
+                        workingSub.topics.forEach(t => {
+                            t.trackerWeight = (t.trackerWeight / currentTotalSum) * totalTarget;
+                        });
+                    } else {
+                        const eq = totalTarget / workingSub.topics.length;
+                        workingSub.topics.forEach(t => t.trackerWeight = eq);
+                    }
+                }
+
+                // Rounding and diff adjustment to hit exact totalTarget
+                let newSum = 0;
+                workingSub.topics.forEach(t => {
+                    t.trackerWeight = Math.round(t.trackerWeight * 10) / 10;
+                    newSum += t.trackerWeight;
+                });
+
+                let diff = Math.round((totalTarget - newSum) * 10) / 10;
+                if (diff !== 0 && workingSub.topics.length > 0) {
+                    let targetIdx = unchangedIndices.length > 0 ? unchangedIndices[0] : 0;
+                    workingSub.topics[targetIdx].trackerWeight = Math.max(0, Math.round((workingSub.topics[targetIdx].trackerWeight + diff) * 10) / 10);
+                }
+            });
+
+            state.subjects = workingSubjects;
+            window.saveState(state);
+            syllabusModal.style.display = 'none';
         });
 
         // Run on load and state changes
