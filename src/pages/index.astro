@@ -218,8 +218,9 @@ const subjects = defaultState.subjects;
     </div>
 
     <!-- Global Settings Modal -->
-    <div class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden items-center justify-center z-50 p-3 sm:p-4 md:p-6 overflow-y-auto" id="settings-modal">
-        <div class="bg-bg-dark border border-panel-border rounded-2xl p-4 sm:p-6 w-full max-w-[540px] shadow-2xl max-h-[90dvh] flex flex-col overflow-hidden my-auto">
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 overflow-y-auto" id="settings-modal">
+        <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
+            <div class="bg-[#06140e] border border-panel-border rounded-2xl p-4 sm:p-6 w-[calc(100%-2rem)] sm:w-full max-w-[540px] mx-auto shadow-2xl flex flex-col overflow-hidden relative">
             <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-5 flex items-center gap-2 shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent shrink-0"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 Tracker Settings & Targets
@@ -268,11 +269,13 @@ const subjects = defaultState.subjects;
                 <button class="btn btn-primary justify-center text-xs sm:text-sm py-2" id="btn-settings-save">Save & Apply</button>
             </div>
         </div>
+        </div>
     </div>
 
     <!-- Syllabus Settings Modal -->
-    <div class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden items-center justify-center z-50 p-3 sm:p-4 md:p-6 overflow-y-auto" id="syllabus-settings-modal">
-        <div class="bg-bg-dark border border-panel-border rounded-2xl p-4 sm:p-6 w-full max-w-[650px] shadow-2xl max-h-[90dvh] flex flex-col overflow-hidden my-auto">
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 overflow-y-auto" id="syllabus-settings-modal">
+        <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
+            <div class="bg-[#06140e] border border-panel-border rounded-2xl p-4 sm:p-6 w-[calc(100%-2rem)] sm:w-full max-w-[650px] mx-auto shadow-2xl flex flex-col overflow-hidden relative">
             <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-5 flex items-center gap-2 shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent shrink-0"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                 Edit Syllabus Topics
@@ -356,7 +359,7 @@ const subjects = defaultState.subjects;
                 <button class="btn btn-primary justify-center text-xs sm:text-sm py-2" id="btn-syllabus-save">Save & Apply</button>
             </div>
         </div>
-    </div>
+        </div>
     </div>
 
     <script>
@@ -500,12 +503,12 @@ const subjects = defaultState.subjects;
         document.querySelectorAll('.open-settings-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 hydrateDashboard(); // ensure it has the latest before showing
-                settingsModal.style.display = 'flex';
+                settingsModal.classList.remove('hidden');
             });
         });
 
         document.getElementById('btn-settings-cancel')?.addEventListener('click', () => {
-            settingsModal.style.display = 'none';
+            settingsModal.classList.add('hidden');
         });
 
         document.getElementById('btn-settings-save')?.addEventListener('click', () => {
@@ -536,7 +539,7 @@ const subjects = defaultState.subjects;
             });
 
             window.saveState(state);
-            settingsModal.style.display = 'none';
+            settingsModal.classList.add('hidden');
         });
 
         // Syllabus Modal Logic
@@ -652,7 +655,7 @@ const subjects = defaultState.subjects;
                 });
                 syllabusSelect.value = workingSubjects[0].id;
                 renderWorkingTopics(syllabusSelect.value);
-                syllabusModal.style.display = 'flex';
+                syllabusModal.classList.remove('hidden');
             });
         });
 
@@ -677,7 +680,7 @@ const subjects = defaultState.subjects;
         });
 
         document.getElementById('btn-syllabus-cancel')?.addEventListener('click', () => {
-            syllabusModal.style.display = 'none';
+            syllabusModal.classList.add('hidden');
         });
 
         document.getElementById('btn-syllabus-save')?.addEventListener('click', () => {
@@ -915,7 +918,7 @@ const subjects = defaultState.subjects;
 
             state.subjects = workingSubjects;
             window.saveState(state);
-            syllabusModal.style.display = 'none';
+            syllabusModal.classList.add('hidden');
         });
 
         // Run on load and state changes
