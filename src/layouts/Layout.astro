@@ -74,6 +74,7 @@ const { title, description = "GATE 2027 Civil Engineering Preparation Tracker" }
 
             window.calculateAllMetrics = (state) => {
                 let overallSyllabusWeightCompleted = 0;
+                let totalSubjectTrackerWeight = 0;
                 
                 state.subjects.forEach(subject => {
                     let subjectTotalWeight = 0;
@@ -81,9 +82,9 @@ const { title, description = "GATE 2027 Civil Engineering Preparation Tracker" }
                     let subjectHours = 0;
                     
                     subject.topics.forEach(t => {
-                        subjectTotalWeight += t.trackerWeight;
+                        subjectTotalWeight += (t.trackerWeight || 0);
                         if (t.completed) {
-                            subjectCompletedWeight += t.trackerWeight;
+                            subjectCompletedWeight += (t.trackerWeight || 0);
                         }
                     });
                     
@@ -95,26 +96,40 @@ const { title, description = "GATE 2027 Civil Engineering Preparation Tracker" }
                     
                     subject.progress = subjectTotalWeight === 0 ? 0 : (subjectCompletedWeight / subjectTotalWeight) * 100;
                     subject.hours = subjectHours;
-                    overallSyllabusWeightCompleted += (subject.progress / 100) * subject.trackerWeight;
+                    overallSyllabusWeightCompleted += (subject.progress / 100) * (subject.trackerWeight || 0);
+                    totalSubjectTrackerWeight += (subject.trackerWeight || 0);
                 });
                 
-                state.overallSyllabusProgress = overallSyllabusWeightCompleted;
+                // 1. Syllabus Progress: 0% to 100% based on all subject sub-topic completions
+                state.overallSyllabusProgress = totalSubjectTrackerWeight === 0 ? 0 : (overallSyllabusWeightCompleted / totalSubjectTrackerWeight) * 100;
                 state.totalHours = state.studyHistory.reduce((acc, curr) => acc + curr.hours, 0);
                 
+                // 2. PYQs Progress: 0% to 100% based on questions solved vs total across all subjects
                 let pyqTotal = 0, pyqSolved = 0;
-                Object.values(state.pyqs).forEach(p => { pyqTotal += p.total; pyqSolved += p.solved; });
+                Object.values(state.pyqs).forEach(p => { pyqTotal += (p.total || 0); pyqSolved += (p.solved || 0); });
                 state.pyqProgress = pyqTotal === 0 ? 0 : (pyqSolved / pyqTotal) * 100;
                 
-                state.testProgress = ((state.tests.topic.completed + state.tests.subject.completed) / (state.tests.topic.total + state.tests.subject.total)) * 100;
-                state.mockProgress = (state.mocks.completed / state.mocks.total) * 100;
-                state.revisionProgress = ((state.revision['1st'] + state.revision['2nd'] + state.revision.final) / state.revision.total) * 100;
+                // 3. Tests Progress: 0% to 100% based on topic + subject tests completed vs targets
+                const totalTests = ((state.tests?.topic?.total || 0) + (state.tests?.subject?.total || 0));
+                state.testProgress = totalTests === 0 ? 0 : (((state.tests?.topic?.completed || 0) + (state.tests?.subject?.completed || 0)) / totalTests) * 100;
                 
+                // 4. Mocks Progress: 0% to 100% based on full-length mocks completed vs target
+                const totalMocks = (state.mocks?.total || 0);
+                state.mockProgress = totalMocks === 0 ? 0 : ((state.mocks?.completed || 0) / totalMocks) * 100;
+                
+                // 5. Revision Progress: 0% to 100% based on 1st, 2nd, and final revision rounds (total subjects * 3)
+                const totalRevisionTarget = (state.revision?.total || 9) * 3;
+                const totalRevisionCompleted = (state.revision?.['1st'] || 0) + (state.revision?.['2nd'] || 0) + (state.revision?.final || 0);
+                state.revisionProgress = totalRevisionTarget === 0 ? 0 : (totalRevisionCompleted / totalRevisionTarget) * 100;
+                
+                // 6. Overall GATE Readiness: Weighted composition of all 5 independent 100% pillars
                 const w = state.settings?.weights || defaultState.settings.weights;
-                state.gateReadiness = (state.overallSyllabusProgress * w.syllabus) + 
+                const totalWeights = (w.syllabus + w.pyqs + w.tests + w.mocks + w.revision) || 1;
+                state.gateReadiness = ((state.overallSyllabusProgress * w.syllabus) + 
                                       (state.pyqProgress * w.pyqs) + 
                                       (state.testProgress * w.tests) + 
                                       (state.mockProgress * w.mocks) + 
-                                      (state.revisionProgress * w.revision);
+                                      (state.revisionProgress * w.revision)) / totalWeights;
             };
 
             window.formatHours = (hours) => {

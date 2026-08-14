@@ -354,10 +354,17 @@ const subjects = defaultState.subjects;
                         <h4 class="text-xs sm:text-sm font-semibold text-primary-accent uppercase tracking-wider">Sub-Topics</h4>
                         <button class="btn btn-primary btn-sm flex items-center gap-1 shrink-0" id="btn-add-topic" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                            Add Topic
+                            Add Topic (<span id="dashboard-topic-count">0</span>/40)
                         </button>
                     </div>
                     
+                    <div class="flex justify-between items-center px-1 text-xs text-text-muted font-medium mb-1">
+                        <span class="flex-grow">Topic Name</span>
+                        <span class="w-16 sm:w-20 text-center">Weight</span>
+                        <span class="w-12 sm:w-16 text-center" title="Normalized percentage within this subject">True %</span>
+                        <span class="w-8 sm:w-9"></span>
+                    </div>
+
                     <div id="topics-edit-list" class="flex flex-col gap-2.5 overflow-y-auto pr-1 custom-scrollbar flex-grow min-w-0">
                         <!-- Populated by JS -->
                     </div>
@@ -586,18 +593,30 @@ const subjects = defaultState.subjects;
             const disp = document.getElementById('selected-subject-weight-display');
             if (disp) disp.textContent = `Weight: ${subject.trackerWeight}%`;
 
+            const totalTopicWeight = subject.topics.reduce((sum, t) => sum + (parseFloat(t.trackerWeight) || 0), 0);
+
             subject.topics.forEach((topic, idx) => {
+                const truePct = totalTopicWeight === 0 ? 0 : ((parseFloat(topic.trackerWeight) || 0) / totalTopicWeight) * 100;
                 const row = document.createElement('div');
                 row.className = "flex items-center gap-1.5 sm:gap-2 bg-black/30 p-2 rounded-lg border border-panel-border shrink-0 min-w-0";
                 row.innerHTML = `
                     <input type="text" class="topic-name-input flex-grow min-w-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm" value="${topic.name}" data-idx="${idx}">
-                    <input type="number" step="0.1" class="topic-weight-input w-16 sm:w-20 shrink-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm text-center" value="${topic.trackerWeight}" data-idx="${idx}" title="Weight">
+                    <input type="number" step="0.1" class="topic-weight-input w-16 sm:w-20 shrink-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm text-center font-semibold" value="${topic.trackerWeight}" data-idx="${idx}" title="Relative Weight">
+                    <span class="topic-true-percent w-12 sm:w-16 text-center text-xs text-primary-accent font-semibold shrink-0" data-idx="${idx}">${truePct.toFixed(1)}%</span>
                     <button class="btn btn-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 btn-delete-topic shrink-0 p-1.5 sm:p-2" data-idx="${idx}" title="Remove Topic">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                     </button>
                 `;
                 topicsList.appendChild(row);
             });
+            
+            const countSpan = document.getElementById('dashboard-topic-count');
+            if (countSpan) countSpan.textContent = subject.topics.length;
+            if (btnAddTopic) {
+                btnAddTopic.disabled = subject.topics.length >= 40;
+                btnAddTopic.style.opacity = subject.topics.length >= 40 ? '0.5' : '1';
+                btnAddTopic.style.cursor = subject.topics.length >= 40 ? 'not-allowed' : 'pointer';
+            }
 
             topicsList.querySelectorAll('.topic-name-input').forEach(inp => {
                 const update = (e) => {
@@ -613,6 +632,17 @@ const subjects = defaultState.subjects;
                     if (subject.topics[idx]) {
                         let val = parseFloat(e.target.value);
                         subject.topics[idx].trackerWeight = isNaN(val) ? 0 : val;
+                        
+                        // Dynamically update true percentages without re-rendering everything
+                        const totalTopicWeight = subject.topics.reduce((sum, t) => sum + (parseFloat(t.trackerWeight) || 0), 0);
+                        topicsList.querySelectorAll('.topic-true-percent').forEach(span => {
+                            const i = parseInt(span.dataset.idx);
+                            if (subject.topics[i]) {
+                                const w = parseFloat(subject.topics[i].trackerWeight) || 0;
+                                const truePct = totalTopicWeight === 0 ? 0 : (w / totalTopicWeight) * 100;
+                                span.textContent = `${truePct.toFixed(1)}%`;
+                            }
+                        });
                     }
                 };
                 inp.addEventListener('input', update);
@@ -669,6 +699,12 @@ const subjects = defaultState.subjects;
             const subjectId = syllabusSelect.value;
             const subject = workingSubjects.find(s => s.id === subjectId);
             if (!subject) return;
+            
+            if (subject.topics.length >= 40) {
+                alert('Maximum of 40 topics allowed per subject.');
+                return;
+            }
+            
             subject.topics.push({
                 id: `custom_${Date.now()}`,
                 name: "New Topic",
