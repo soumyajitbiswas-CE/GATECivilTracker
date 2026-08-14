@@ -281,6 +281,7 @@ const { subject } = Astro.props;
                 if (state.pyqs[subjectId]) {
                     const max = state.pyqs[subjectId].total;
                     state.pyqs[subjectId].solved = Math.min(val, max);
+                    e.target.value = state.pyqs[subjectId].solved;
                     window.saveState(state);
                 }
             });

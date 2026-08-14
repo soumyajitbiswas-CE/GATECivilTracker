@@ -465,7 +465,10 @@ const subjects = defaultState.subjects;
                     const val = parseInt(e.target.value);
                     if (isNaN(val) || val < 0) return;
                     const state = window.getState();
-                    callback(state, val);
+                    const clamped = callback(state, val);
+                    if (clamped !== undefined) {
+                        e.target.value = clamped;
+                    }
                     window.saveState(state);
                 });
             }
@@ -487,6 +490,7 @@ const subjects = defaultState.subjects;
                 if (state.pyqs[subjectId]) {
                     const max = state.pyqs[subjectId].total;
                     state.pyqs[subjectId].solved = Math.min(val, max);
+                    e.target.value = state.pyqs[subjectId].solved;
                     window.saveState(state);
                 }
             });
