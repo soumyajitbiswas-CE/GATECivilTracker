@@ -15,7 +15,7 @@ const subjects = defaultState.subjects;
                 <div class="circular-progress" id="hero-progress-circle" style="--progress: 0%;">
                     <span class="relative z-10 text-3xl font-bold" id="hero-progress-text">0%</span>
                 </div>
-                <p class="text-text-muted text-sm">Preparation Progress</p>
+                <p class="text-text-muted text-sm font-semibold tracking-wide mt-2">Overall GATE Readiness</p>
             </div>
             
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -94,9 +94,6 @@ const subjects = defaultState.subjects;
                     </div>
                     <h3 class="text-lg font-semibold">PYQs</h3>
                 </div>
-                <button class="absolute top-4 right-4 text-text-muted hover:text-white transition-colors open-settings-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-                </button>
                 <div class="flex flex-col gap-2 overflow-y-auto max-h-[170px] pr-2 mt-2">
                     {subjects.map(sub => (
                         <div class="flex justify-between items-center bg-black/20 p-2 rounded-xl border border-panel-border shrink-0">
@@ -118,9 +115,6 @@ const subjects = defaultState.subjects;
                     </div>
                     <h3 class="text-lg font-semibold">Tests</h3>
                 </div>
-                <button class="absolute top-4 right-4 text-text-muted hover:text-white transition-colors open-settings-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-                </button>
                 <div class="flex justify-between items-center bg-black/20 p-3 rounded-xl border border-panel-border mt-2">
                     <span class="text-sm font-medium text-text-muted">Topic Tests</span>
                     <div class="flex items-center gap-2">
@@ -145,9 +139,6 @@ const subjects = defaultState.subjects;
                     </div>
                     <h3 class="text-lg font-semibold">Full-Length Mocks</h3>
                 </div>
-                <button class="absolute top-4 right-4 text-text-muted hover:text-white transition-colors open-settings-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-                </button>
                 <div class="flex flex-col items-center justify-center flex-grow bg-black/20 p-4 rounded-xl border border-panel-border gap-2 mt-2">
                     <span class="text-sm text-text-muted uppercase tracking-wider font-semibold">Completed</span>
                     <div class="flex items-baseline gap-2">
@@ -165,9 +156,6 @@ const subjects = defaultState.subjects;
                     </div>
                     <h3 class="text-lg font-semibold">Revision (Subjects)</h3>
                 </div>
-                <button class="absolute top-4 right-4 text-text-muted hover:text-white transition-colors open-settings-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-                </button>
                 <div class="flex flex-col gap-2 mt-2">
                     <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-xl border border-panel-border">
                         <span class="text-sm font-medium text-text-muted">1st Revision</span>
@@ -303,8 +291,8 @@ const subjects = defaultState.subjects;
             window.calculateAllMetrics(state);
 
             // Update Hero
-            document.getElementById('hero-progress-text').textContent = window.formatPercent(state.overallSyllabusProgress);
-            document.getElementById('hero-progress-circle').style.setProperty('--progress', `${state.overallSyllabusProgress}%`);
+            document.getElementById('hero-progress-text').textContent = window.formatPercent(state.gateReadiness);
+            document.getElementById('hero-progress-circle').style.setProperty('--progress', `${state.gateReadiness}%`);
             
             document.getElementById('metric-syllabus').textContent = window.formatPercent(state.overallSyllabusProgress);
             document.getElementById('metric-pyqs').textContent = window.formatPercent(state.pyqProgress);
@@ -437,6 +425,53 @@ const subjects = defaultState.subjects;
 
         document.getElementById('btn-settings-cancel')?.addEventListener('click', () => {
             settingsModal.style.display = 'none';
+        });
+
+        // Auto-balance weights
+        const weightInputs = [
+            document.getElementById('set-weight-syllabus'),
+            document.getElementById('set-weight-pyqs'),
+            document.getElementById('set-weight-tests'),
+            document.getElementById('set-weight-mocks'),
+            document.getElementById('set-weight-revision')
+        ];
+
+        weightInputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                let newVal = parseInt(e.target.value) || 0;
+                newVal = Math.max(0, Math.min(100, newVal));
+                e.target.value = newVal;
+
+                const otherInputs = weightInputs.filter(inp => inp !== e.target);
+                let remaining = 100 - newVal;
+                
+                let otherSum = otherInputs.reduce((sum, inp) => sum + (parseInt(inp.value) || 0), 0);
+                
+                if (otherSum === 0) {
+                    const share = Math.floor(remaining / otherInputs.length);
+                    let rem = remaining % otherInputs.length;
+                    otherInputs.forEach(inp => {
+                        inp.value = share + (rem > 0 ? 1 : 0);
+                        if (rem > 0) rem--;
+                    });
+                } else {
+                    let currentNewSum = 0;
+                    let values = otherInputs.map(inp => {
+                        const oldVal = parseInt(inp.value) || 0;
+                        const propVal = Math.round((oldVal / otherSum) * remaining);
+                        currentNewSum += propVal;
+                        return { inp, val: propVal };
+                    });
+
+                    let diff = remaining - currentNewSum;
+                    if (diff !== 0) {
+                        values.sort((a, b) => b.val - a.val);
+                        values[0].val += diff;
+                    }
+
+                    values.forEach(v => v.inp.value = Math.max(0, v.val));
+                }
+            });
         });
 
         document.getElementById('btn-settings-save')?.addEventListener('click', () => {
