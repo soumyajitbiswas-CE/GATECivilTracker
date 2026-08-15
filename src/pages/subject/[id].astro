@@ -23,8 +23,9 @@ const { subject } = Astro.props;
             </a>
         </div>
         
-        <div class="glass-panel surface-summary p-4 sm:p-6 md:p-8 min-w-0">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 sm:mb-8 gap-4 min-w-0">
+        <!-- Header Card -->
+        <div class="glass-panel surface-summary p-4 sm:p-6 md:p-8 min-w-0 mb-4 sm:mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 min-w-0">
                 <div class="flex flex-col min-w-0 flex-1">
                     <p class="text-text-muted text-xs sm:text-sm tracking-wide uppercase mb-1">Subject Detail</p>
                     <h1 class="text-xl sm:text-2xl md:text-[1.75rem] leading-tight font-bold mb-1 break-words hyphens-auto">{subject.name}</h1>
@@ -54,35 +55,48 @@ const { subject } = Astro.props;
                     </button>
                 </div>
             </div>
+        </div>
 
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-10 gap-4 sm:gap-8 bg-black/20 border border-panel-border rounded-xl p-4 sm:p-5 min-w-0">
-                <div class="flex flex-col w-full sm:w-[60%] gap-2 min-w-0">
-                    <h2 class="text-base sm:text-lg font-semibold">PYQs Progress</h2>
-                    <div class="flex items-center gap-3">
-                        <div class="flex-grow h-2 bg-panel-border rounded-full overflow-hidden">
-                            <div class="h-full bg-primary-accent rounded-full transition-all duration-300 pyq-progress-bar" style="width: 0%"></div>
+        <!-- Vertical Layout for Topics, PYQs, History -->
+        <div class="flex flex-col gap-4 sm:gap-6">
+            <!-- Topics Card -->
+            <div class="glass-panel surface-summary p-4 sm:p-6 md:p-8 min-w-0">
+                <h2 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Syllabus Topics</h2>
+                <div class="flex flex-col gap-0" id="topics-container">
+                    <!-- Topics Hydrated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- PYQ Card -->
+            <div class="glass-panel surface-summary p-4 sm:p-5 min-w-0">
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-2 min-w-0">
+                        <h2 class="text-base sm:text-lg font-semibold">PYQs Progress</h2>
+                        <div class="flex items-center gap-3">
+                            <div class="flex-grow h-2 bg-panel-border rounded-full overflow-hidden">
+                                <div class="h-full bg-primary-accent rounded-full transition-all duration-300 pyq-progress-bar" style="width: 0%"></div>
+                            </div>
+                            <span class="text-xs sm:text-sm font-medium pyq-progress-text w-12 text-right shrink-0">0%</span>
                         </div>
-                        <span class="text-xs sm:text-sm font-medium pyq-progress-text w-12 text-right shrink-0">0%</span>
                     </div>
-                </div>
-                <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-panel-border pt-3 sm:pt-0 shrink-0">
-                    <label class="text-xs sm:text-sm text-text-muted">Questions Solved:</label>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <input type="number" id="pyq-input" min="0" class="bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent w-16 sm:w-20 text-center text-base sm:text-lg font-semibold" value="0">
-                        <span class="text-text-muted text-base sm:text-lg font-medium pyq-total-text">/ 0</span>
+                    <div class="flex items-center gap-2 sm:gap-3 w-full justify-between border-t border-panel-border pt-3 shrink-0">
+                        <label class="text-xs sm:text-sm text-text-muted">Questions Solved:</label>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <input type="number" id="pyq-input" min="0" class="bg-white/5 border border-panel-border text-text-main px-2.5 py-1 rounded-md focus:outline-none focus:border-primary-accent w-14 sm:w-16 text-center text-xs sm:text-sm font-semibold" value="0">
+                            <span class="text-text-muted text-xs sm:text-sm font-medium pyq-total-text">/ 0</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col gap-0 mb-8 sm:mb-12" id="topics-container">
-                <!-- Topics Hydrated dynamically via JS -->
-            </div>
-            
-            <div class="flex justify-between items-center mt-8 sm:mt-12 border-t border-panel-border pt-6 mb-4">
-                <h2 class="text-base sm:text-lg font-semibold">Study History</h2>
-            </div>
-            <div class="flex flex-col gap-2" id="history-container">
-                <!-- Hydrated via JS -->
+            <!-- History Card -->
+            <div class="glass-panel surface-summary p-4 sm:p-5 min-w-0">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-base sm:text-lg font-semibold">Study History</h2>
+                </div>
+                <div class="flex flex-col gap-2" id="history-container">
+                    <!-- Hydrated via JS -->
+                </div>
             </div>
         </div>
     </div>
