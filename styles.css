@@ -211,6 +211,105 @@ header {
     gap: 16px;
 }
 
+.surface-ga,
+.subject-card[data-id="general_aptitude"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/general-aptitude-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.surface-em,
+.subject-card[data-id="engineering_mathematics"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/engineering-mathematics-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.surface-se,
+.subject-card[data-id="structural_engineering"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/structural-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.surface-ge,
+.subject-card[data-id="geotechnical_engineering"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/geotechnical-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.surface-wre,
+.subject-card[data-id="water_resources_engineering"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/water-resources-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.surface-ee,
+.subject-card[data-id="environmental_engineering"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/environmental-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.surface-te,
+.subject-card[data-id="transportation_engineering"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/transportation-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.surface-gm,
+.subject-card[data-id="geomatics_engineering"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/geomatics-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
+.surface-cm,
+.subject-card[data-id="construction_materials"] {
+    background-color: #06150e;
+    background-image: 
+        linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+        url('/construction-materials-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+}
+
 .subject-card:hover {
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);

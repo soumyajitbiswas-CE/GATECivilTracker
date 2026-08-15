@@ -3,6 +3,17 @@ import Layout from '../layouts/Layout.astro';
 import { defaultState } from '../data.js';
 
 const subjects = defaultState.subjects;
+const subjectBgClass = {
+    general_aptitude: 'surface-ga',
+    engineering_mathematics: 'surface-em',
+    structural_engineering: 'surface-se',
+    geotechnical_engineering: 'surface-ge',
+    water_resources_engineering: 'surface-wre',
+    environmental_engineering: 'surface-ee',
+    transportation_engineering: 'surface-te',
+    geomatics_engineering: 'surface-gm',
+    construction_materials: 'surface-cm',
+};
 ---
 
 <Layout title="GATE Civil Tracker">
@@ -57,7 +68,7 @@ const subjects = defaultState.subjects;
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {subjects.map((sub, index) => (
-                <div class="surface-syllabus backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group" data-id={sub.id}>
+                <div class={`${subjectBgClass[sub.id] || 'surface-syllabus'} backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group relative overflow-hidden`} data-id={sub.id}>
                     <!-- Top section: Title and Weight -->
                     <div class="flex flex-col gap-1 min-w-0">
                         <div class="flex items-start gap-3 min-w-0">

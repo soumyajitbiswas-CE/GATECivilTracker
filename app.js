@@ -129,9 +129,11 @@ function renderDashboard() {
     const container = document.getElementById('subjects-container');
     container.innerHTML = '';
     
+    const bgMap = { general_aptitude: 'surface-ga', engineering_mathematics: 'surface-em', structural_engineering: 'surface-se', geotechnical_engineering: 'surface-ge', water_resources_engineering: 'surface-wre', environmental_engineering: 'surface-ee', transportation_engineering: 'surface-te', geomatics_engineering: 'surface-gm', construction_materials: 'surface-cm' };
     state.subjects.forEach(sub => {
         const card = document.createElement('div');
-        card.className = 'subject-card';
+        card.className = `subject-card ${bgMap[sub.id] || ''}`;
+        card.dataset.id = sub.id;
         card.innerHTML = `
             <div class="subject-header">
                 <div class="subject-icon">${sub.icon}</div>

@@ -158,6 +158,185 @@ img, svg, video, canvas, audio, iframe, embed, object {
   .surface-summary {
     background: linear-gradient(180deg, #081a10 0%, #081a10 5%, #05100a 50%, #05100a 100%);
   }
+  .surface-ga {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/general-aptitude-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="general_aptitude"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/general-aptitude-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
+  .surface-em {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/engineering-mathematics-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="engineering_mathematics"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/engineering-mathematics-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
+  .surface-se {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/structural-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="structural_engineering"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/structural-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
+  .surface-ge {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/geotechnical-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="geotechnical_engineering"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/geotechnical-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
+  .surface-wre {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/water-resources-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="water_resources_engineering"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/water-resources-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
+  .surface-ee {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/environmental-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="environmental_engineering"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/environmental-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
+  .surface-te {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/transportation-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="transportation_engineering"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/transportation-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
+  .surface-gm {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/geomatics-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="geomatics_engineering"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/geomatics-engineering-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
+  .surface-cm {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/construction-materials-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+  
+  .subject-card[data-id="construction_materials"] {
+    background-color: #06150e;
+    background-image: 
+      linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
+      url('/construction-materials-bg.png');
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
   
   /* Fix circular progress in Tailwind */
   .circular-progress {
