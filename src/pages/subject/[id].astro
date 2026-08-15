@@ -11,18 +11,6 @@ export function getStaticPaths() {
 
 const { id } = Astro.params;
 const { subject } = Astro.props;
-
-const subjectBgClass = {
-  general_aptitude: 'surface-ga',
-  engineering_mathematics: 'surface-em',
-  structural_engineering: 'surface-se',
-  geotechnical_engineering: 'surface-ge',
-  water_resources_engineering: 'surface-wre',
-  environmental_engineering: 'surface-ee',
-  transportation_engineering: 'surface-te',
-  geomatics_engineering: 'surface-gm',
-  construction_materials: 'surface-cm',
-};
 ---
 
 <Layout title={`${subject.name} - GATE Civil Tracker`} description={`Track your preparation for ${subject.name} in the GATE Civil Engineering syllabus.`}>
@@ -36,7 +24,7 @@ const subjectBgClass = {
         </div>
         
         <!-- Header Card -->
-        <div class={`glass-panel p-4 sm:p-6 md:p-8 min-w-0 mb-4 sm:mb-6 ${subjectBgClass[subject.id] || 'surface-summary'}`}>
+        <div class="glass-panel p-4 sm:p-6 md:p-8 min-w-0 mb-4 sm:mb-6 surface-hero">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 min-w-0">
                 <div class="flex flex-col min-w-0 flex-1">
                     <p class="text-text-muted text-xs sm:text-sm tracking-wide uppercase mb-1">Subject Detail</p>
