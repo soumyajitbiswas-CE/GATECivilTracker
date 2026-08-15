@@ -247,11 +247,35 @@ function renderDetailView() {
     }
 }
 
+// Date helpers for study log limits (up to today, max past 1 year)
+function getLocalDateString(d = new Date()) {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+function getDateLimits() {
+    const now = new Date();
+    const todayStr = getLocalDateString(now);
+    
+    const oneYearAgo = new Date(now);
+    oneYearAgo.setFullYear(now.getFullYear() - 1);
+    const minDateStr = getLocalDateString(oneYearAgo);
+    
+    return { min: minDateStr, max: todayStr };
+}
+
 // Modal Logic
 const modal = document.getElementById('log-modal');
 
 function openModal() {
     modal.style.display = 'flex';
+    const { min, max } = getDateLimits();
+    const dateInput = document.getElementById('log-date');
+    dateInput.min = min;
+    dateInput.max = max;
+    dateInput.value = max;
     document.getElementById('log-amount').value = '';
     document.getElementById('log-note').value = '';
 }
@@ -264,9 +288,22 @@ function saveHours() {
     const date = document.getElementById('log-date').value;
     const hours = parseFloat(document.getElementById('log-amount').value);
     const note = document.getElementById('log-note').value.trim();
+    const { min, max } = getDateLimits();
     
     if (!date || isNaN(hours) || hours <= 0) {
         alert('Please enter a valid date and positive number of hours.');
+        return;
+    }
+    if (date > max) {
+        alert('You cannot log study hours for tomorrow or future dates.');
+        return;
+    }
+    if (date < min) {
+        alert('You can only log study hours within the last 1 year limit.');
+        return;
+    }
+    if (hours > 16) {
+        alert('You can log a maximum of 16 hours per entry.');
         return;
     }
     
@@ -297,13 +334,38 @@ function setupEventListeners() {
     document.getElementById('btn-modal-cancel').addEventListener('click', closeModal);
     document.getElementById('btn-modal-save').addEventListener('click', saveHours);
     
+    const logAmountInput = document.getElementById('log-amount');
+    if (logAmountInput) {
+        logAmountInput.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            if (val > 16) {
+                e.target.value = 16;
+            }
+        });
+    }
+
+    const logDateInput = document.getElementById('log-date');
+    if (logDateInput) {
+        logDateInput.addEventListener('change', (e) => {
+            const { min, max } = getDateLimits();
+            if (e.target.value > max) {
+                alert('You cannot select tomorrow or future dates.');
+                e.target.value = max;
+            } else if (e.target.value < min) {
+                alert('You can only log study hours within the last 1 year.');
+                e.target.value = min;
+            }
+        });
+    }
+
     document.querySelectorAll('.quick-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             const val = parseFloat(e.target.dataset.hours);
             const input = document.getElementById('log-amount');
             const current = parseFloat(input.value) || 0;
-            input.value = current + val;
+            const newValue = current + val;
+            input.value = newValue > 16 ? 16 : newValue;
         });
     });
     

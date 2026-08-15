@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GATE Civil Tracker 2027</title>
+    <title>GATE Civil Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,9 +15,9 @@
             <div class="header-left">
                 <h1>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
-                    GATE CIVIL TRACKER
+                    GATE CIVIL <span style="color: var(--primary-accent);">TRACKER</span>
                 </h1>
-                <p>GATE 2027 • Civil Engineering • Plan. Prepare. Track. Perform.</p>
+                <p>Civil Engineering • Plan. Prepare. Track. Perform.</p>
             </div>
             <div class="header-right">
                 <button class="btn" id="btn-reset">Reset</button>
@@ -154,12 +154,18 @@
         <div class="modal-content">
             <h3>Log Study Hours</h3>
             <div class="form-group">
-                <label>Date</label>
+                <label style="display: flex; justify-content: space-between;">
+                    <span>Date</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">Past 1 year up to today</span>
+                </label>
                 <input type="date" id="log-date">
             </div>
             <div class="form-group">
-                <label>Hours (e.g., 1.5, 2)</label>
-                <input type="number" id="log-amount" step="0.5" min="0">
+                <label style="display: flex; justify-content: space-between;">
+                    <span>Hours (e.g., 1.5, 2)</span>
+                    <span style="font-size: 0.75rem; color: var(--primary-accent);">Max 16 hours</span>
+                </label>
+                <input type="number" id="log-amount" step="0.5" min="0.5" max="16">
             </div>
             <div class="quick-hours">
                 <button class="quick-btn" data-hours="0.5">+30 min</button>
