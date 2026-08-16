@@ -11,6 +11,9 @@ export const defaultState = {
     },
     studyHistory: [],
     mocksHistory: [],
+    pyqHistory: [],
+    testHistory: [],
+    revisionHistory: [],
     exportedOnce: false,
     importedOnce: false,
     achievements: {

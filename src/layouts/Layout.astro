@@ -102,6 +102,78 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
             </div>
         </div>
 
+        <!-- Activity Logging Modal -->
+        <div id="log-activity-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
+            <div class="bg-[#06140e] border border-primary-accent/30 rounded-2xl w-[calc(100%-2rem)] sm:w-full max-w-md mx-auto shadow-2xl p-5 sm:p-6 flex flex-col gap-4 relative scale-95 transition-transform duration-200 transform" id="log-modal-content">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                        Log Activity
+                    </h3>
+                    <button type="button" class="btn-close-log text-text-muted hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                </div>
+                
+                <form id="form-log-activity" class="flex flex-col gap-4">
+                    <input type="hidden" id="log-type" value="pyq">
+                    
+                    <div id="log-field-subject" class="flex flex-col gap-1.5">
+                        <label class="text-xs text-text-muted font-medium ml-1">Subject</label>
+                        <select id="log-subject" class="bg-black/40 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-primary-accent/50 focus:ring-1 focus:ring-primary-accent/30 transition-all custom-scrollbar">
+                            <option value="general">General / All</option>
+                            <!-- Subject options will be injected here via JS -->
+                        </select>
+                    </div>
+
+                    <div id="log-field-subtype" class="flex flex-col gap-1.5 hidden">
+                        <label class="text-xs text-text-muted font-medium ml-1" id="log-label-subtype">Type</label>
+                        <select id="log-subtype" class="bg-black/40 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-primary-accent/50 focus:ring-1 focus:ring-primary-accent/30 transition-all custom-scrollbar">
+                            <!-- Options injected dynamically -->
+                        </select>
+                    </div>
+
+                    <div id="log-field-amount" class="flex flex-col gap-1.5 hidden">
+                        <label class="text-xs text-text-muted font-medium ml-1" id="log-label-amount">Amount</label>
+                        <input type="number" id="log-amount" min="1" value="1" class="bg-black/40 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-primary-accent/50 focus:ring-1 focus:ring-primary-accent/30 transition-all">
+                    </div>
+                    
+                    <div id="log-field-name" class="flex flex-col gap-1.5 hidden">
+                        <label class="text-xs text-text-muted font-medium ml-1">Mock Name</label>
+                        <input type="text" id="log-name" placeholder="e.g. Mock Test 1" class="bg-black/40 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-primary-accent/50 focus:ring-1 focus:ring-primary-accent/30 transition-all">
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2.5 mt-2">
+                        <button type="button" class="btn-close-log btn text-xs sm:text-sm px-4 py-2 hover:text-white bg-white/5 border border-white/10 rounded-xl transition-all cursor-pointer">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn text-xs sm:text-sm px-4 py-2 bg-primary-accent/20 hover:bg-primary-accent/30 text-primary-accent border border-primary-accent/40 rounded-xl font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+                            Save Record
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Activity History Modal -->
+        <div id="activity-history-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
+            <div class="bg-[#06140e] border border-panel-border rounded-2xl w-[calc(100%-2rem)] sm:w-full max-w-lg mx-auto shadow-2xl p-4 sm:p-6 flex flex-col gap-4 relative scale-95 transition-transform duration-200 transform max-h-[85vh]" id="history-modal-content">
+                <div class="flex items-center justify-between mb-1 pb-3 border-b border-white/5 shrink-0">
+                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                        Activity History
+                    </h3>
+                    <button type="button" class="btn-close-history text-text-muted hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                </div>
+                
+                <div id="history-list" class="flex flex-col gap-2 overflow-y-auto custom-scrollbar flex-1 -mx-2 px-2">
+                    <!-- History items injected here via JS -->
+                </div>
+            </div>
+        </div>
+
         <script>
             // @ts-nocheck
             import { defaultState } from '../data.js';
@@ -135,6 +207,82 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                         if(!parsed.studyHistory) parsed.studyHistory = [];
                         if(!parsed.mocksHistory) parsed.mocksHistory = [];
                         if(!parsed.subjects) parsed.subjects = JSON.parse(JSON.stringify(defaultState.subjects));
+                        
+                        // --- Data Migration Logic for Activity Records ---
+                        const today = new Date().toISOString().split('T')[0];
+                        
+                        if(!parsed.pyqHistory) {
+                            parsed.pyqHistory = [];
+                            Object.entries(parsed.pyqs || {}).forEach(([subId, data]) => {
+                                if (data.solved > 0) {
+                                    parsed.pyqHistory.push({
+                                        id: 'mig_pyq_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                                        subjectId: subId,
+                                        date: today,
+                                        solved: data.solved,
+                                        notes: 'Legacy migration'
+                                    });
+                                }
+                            });
+                        }
+                        
+                        if(!parsed.testHistory) {
+                            parsed.testHistory = [];
+                            if (parsed.tests?.topic?.completed > 0) {
+                                for (let i = 0; i < parsed.tests.topic.completed; i++) {
+                                    parsed.testHistory.push({
+                                        id: 'mig_tt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                                        testType: 'topic',
+                                        subjectId: 'general',
+                                        date: today,
+                                        notes: 'Legacy migration'
+                                    });
+                                }
+                            }
+                            if (parsed.tests?.subject?.completed > 0) {
+                                for (let i = 0; i < parsed.tests.subject.completed; i++) {
+                                    parsed.testHistory.push({
+                                        id: 'mig_st_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                                        testType: 'subject',
+                                        subjectId: 'general',
+                                        date: today,
+                                        notes: 'Legacy migration'
+                                    });
+                                }
+                            }
+                        }
+                        
+                        if(!parsed.mocksHistory || parsed.mocksHistory.length === 0) {
+                            parsed.mocksHistory = [];
+                            if (parsed.mocks?.completed > 0) {
+                                for (let i = 0; i < parsed.mocks.completed; i++) {
+                                    parsed.mocksHistory.push({
+                                        id: 'mig_mk_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                                        name: `Legacy Mock ${i+1}`,
+                                        date: today,
+                                        notes: 'Legacy migration'
+                                    });
+                                }
+                            }
+                        }
+                        
+                        if(!parsed.revisionHistory) {
+                            parsed.revisionHistory = [];
+                            ['1st', '2nd', 'final'].forEach(revType => {
+                                if (parsed.revision?.[revType] > 0) {
+                                    for (let i = 0; i < parsed.revision[revType]; i++) {
+                                        parsed.revisionHistory.push({
+                                            id: 'mig_rev_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                                            subjectId: 'general',
+                                            revisionType: revType,
+                                            date: today,
+                                            notes: 'Legacy migration'
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                        
                         return parsed;
                     } catch(e) {
                         console.error("Error parsing saved state", e);
@@ -160,6 +308,32 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
             };
 
             window.calculateAllMetrics = (state) => {
+                // --- Derive counts from histories ---
+                if (state.pyqHistory) {
+                    Object.keys(state.pyqs).forEach(k => { state.pyqs[k].solved = 0; });
+                    state.pyqHistory.forEach(h => {
+                        if (state.pyqs[h.subjectId]) {
+                            state.pyqs[h.subjectId].solved += h.solved;
+                        }
+                    });
+                }
+                
+                if (state.testHistory) {
+                    state.tests.topic.completed = state.testHistory.filter(t => t.testType === 'topic').length;
+                    state.tests.subject.completed = state.testHistory.filter(t => t.testType === 'subject').length;
+                }
+                
+                if (state.mocksHistory) {
+                    state.mocks.completed = state.mocksHistory.length;
+                }
+                
+                if (state.revisionHistory) {
+                    state.revision['1st'] = state.revisionHistory.filter(r => r.revisionType === '1st').length;
+                    state.revision['2nd'] = state.revisionHistory.filter(r => r.revisionType === '2nd').length;
+                    state.revision.final = state.revisionHistory.filter(r => r.revisionType === 'final').length;
+                }
+                // --- End derived counts ---
+                
                 let overallSyllabusWeightCompleted = 0;
                 let totalSubjectTrackerWeight = 0;
                 
@@ -283,6 +457,273 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 
             initResetModal();
             document.addEventListener('astro:page-load', initResetModal);
+
+            // Activity Logging Modal Logic
+            function initActivityLogging() {
+                const modal = document.getElementById('log-activity-modal');
+                const content = document.getElementById('log-modal-content');
+                const form = document.getElementById('form-log-activity');
+                
+                const typeInput = document.getElementById('log-type');
+                const subjectSelect = document.getElementById('log-subject');
+                const subtypeSelect = document.getElementById('log-subtype');
+                const amountInput = document.getElementById('log-amount');
+                const nameInput = document.getElementById('log-name');
+                
+                const fieldSubtype = document.getElementById('log-field-subtype');
+                const fieldAmount = document.getElementById('log-field-amount');
+                const fieldName = document.getElementById('log-field-name');
+                const labelSubtype = document.getElementById('log-label-subtype');
+                const labelAmount = document.getElementById('log-label-amount');
+
+                const openLogModal = (type) => {
+                    if (!modal) return;
+                    typeInput.value = type;
+                    
+                    // Populate Subjects
+                    const state = window.getState();
+                    subjectSelect.innerHTML = '<option value="general">General / All Subjects</option>';
+                    if (state.subjects) {
+                        state.subjects.forEach(sub => {
+                            subjectSelect.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
+                        });
+                    }
+                    
+                    // Reset fields
+                    fieldSubtype.classList.add('hidden');
+                    fieldAmount.classList.add('hidden');
+                    fieldName.classList.add('hidden');
+                    amountInput.value = 1;
+                    nameInput.value = '';
+                    subtypeSelect.innerHTML = '';
+                    
+                    if (type === 'pyq') {
+                        fieldAmount.classList.remove('hidden');
+                        labelAmount.textContent = 'Questions Solved';
+                    } else if (type === 'test') {
+                        fieldSubtype.classList.remove('hidden');
+                        labelSubtype.textContent = 'Test Type';
+                        subtypeSelect.innerHTML = '<option value="topic">Topic Test</option><option value="subject">Subject Test</option>';
+                    } else if (type === 'mock') {
+                        fieldName.classList.remove('hidden');
+                    } else if (type === 'revision') {
+                        fieldSubtype.classList.remove('hidden');
+                        labelSubtype.textContent = 'Revision Phase';
+                        subtypeSelect.innerHTML = '<option value="1st">1st Revision</option><option value="2nd">2nd Revision</option><option value="final">Final Revision</option>';
+                    }
+
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    void modal.offsetWidth;
+                    modal.classList.remove('opacity-0');
+                    if(content) {
+                        content.classList.remove('scale-95');
+                        content.classList.add('scale-100');
+                    }
+                };
+
+                const closeLogModal = () => {
+                    if (!modal) return;
+                    modal.classList.add('opacity-0');
+                    if (content) {
+                        content.classList.remove('scale-100');
+                        content.classList.add('scale-95');
+                    }
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                    }, 200);
+                };
+
+                document.querySelectorAll('.btn-log-activity').forEach(btn => {
+                    // Remove old listener to avoid duplicates on navigation
+                    btn.removeEventListener('click', btn._logHandler);
+                    btn._logHandler = (e) => {
+                        const type = e.currentTarget.dataset.type;
+                        openLogModal(type);
+                    };
+                    btn.addEventListener('click', btn._logHandler);
+                });
+
+                document.querySelectorAll('.btn-close-log').forEach(btn => {
+                    btn.onclick = closeLogModal;
+                });
+                
+                if (modal) {
+                    modal.onclick = (e) => {
+                        if (e.target === modal) closeLogModal();
+                    };
+                }
+
+                if (form) {
+                    form.onsubmit = (e) => {
+                        e.preventDefault();
+                        const state = window.getState();
+                        const type = typeInput.value;
+                        const today = new Date().toISOString().split('T')[0];
+                        const id = 'act_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                        const subjectId = subjectSelect.value;
+                        
+                        if (type === 'pyq') {
+                            const solved = parseInt(amountInput.value) || 0;
+                            if (solved > 0 && subjectId !== 'general') {
+                                if(!state.pyqHistory) state.pyqHistory = [];
+                                state.pyqHistory.push({ id, subjectId, date: today, solved });
+                            } else if (subjectId === 'general') {
+                                alert('Please select a specific subject for PYQs.');
+                                return;
+                            }
+                        } else if (type === 'test') {
+                            const testType = subtypeSelect.value;
+                            if(!state.testHistory) state.testHistory = [];
+                            state.testHistory.push({ id, testType, subjectId, date: today });
+                        } else if (type === 'mock') {
+                            const name = nameInput.value || 'Mock Test';
+                            if(!state.mocksHistory) state.mocksHistory = [];
+                            state.mocksHistory.push({ id, name, date: today });
+                        } else if (type === 'revision') {
+                            const revisionType = subtypeSelect.value;
+                            if(!state.revisionHistory) state.revisionHistory = [];
+                            state.revisionHistory.push({ id, subjectId, revisionType, date: today });
+                        }
+                        
+                        window.saveState(state);
+                        closeLogModal();
+                        
+                        if (window.location.pathname === '/') {
+                           window.location.reload();
+                        }
+                    };
+                }
+            }
+
+            // Activity History Modal Logic
+            function initActivityHistory() {
+                const modal = document.getElementById('activity-history-modal');
+                const content = document.getElementById('history-modal-content');
+                const listContainer = document.getElementById('history-list');
+
+                const openHistoryModal = (filterType = null) => {
+                    if (!modal) return;
+                    renderHistoryList(filterType);
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    void modal.offsetWidth;
+                    modal.classList.remove('opacity-0');
+                    if(content) {
+                        content.classList.remove('scale-95');
+                        content.classList.add('scale-100');
+                    }
+                };
+
+                const closeHistoryModal = () => {
+                    if (!modal) return;
+                    modal.classList.add('opacity-0');
+                    if(content) {
+                        content.classList.remove('scale-100');
+                        content.classList.add('scale-95');
+                    }
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                    }, 200);
+                };
+
+                document.querySelectorAll('.btn-activity-history').forEach(btn => {
+                    btn.removeEventListener('click', btn._histHandler);
+                    btn._histHandler = (e) => {
+                        const filter = e.currentTarget.dataset.filter || null;
+                        openHistoryModal(filter);
+                    };
+                    btn.addEventListener('click', btn._histHandler);
+                });
+
+                document.querySelectorAll('.btn-close-history').forEach(btn => {
+                    btn.onclick = closeHistoryModal;
+                });
+                
+                if (modal) {
+                    modal.onclick = (e) => {
+                        if (e.target === modal) closeHistoryModal();
+                    };
+                }
+
+                function renderHistoryList(filterType) {
+                    if(!listContainer) return;
+                    const state = window.getState();
+                    let allRecords = [];
+                    
+                    const subName = (id) => {
+                        if (id === 'general') return 'General';
+                        const s = state.subjects?.find(x => x.id === id);
+                        return s ? s.name : id;
+                    };
+                    
+                    if (state.pyqHistory && (!filterType || filterType === 'pyq')) {
+                        allRecords = allRecords.concat(state.pyqHistory.map(r => ({ ...r, _type: 'PYQ', _desc: `${r.solved} PYQs Solved (${subName(r.subjectId)})` })));
+                    }
+                    if (state.testHistory && (!filterType || filterType === 'test')) {
+                        allRecords = allRecords.concat(state.testHistory.map(r => ({ ...r, _type: 'Test', _desc: `${r.testType === 'topic' ? 'Topic' : 'Subject'} Test (${subName(r.subjectId)})` })));
+                    }
+                    if (state.mocksHistory && (!filterType || filterType === 'mock')) {
+                        allRecords = allRecords.concat(state.mocksHistory.map(r => ({ ...r, _type: 'Mock', _desc: `Full Mock: ${r.name}` })));
+                    }
+                    if (state.revisionHistory && (!filterType || filterType === 'revision')) {
+                        allRecords = allRecords.concat(state.revisionHistory.map(r => ({ ...r, _type: 'Revision', _desc: `${r.revisionType} Revision (${subName(r.subjectId)})` })));
+                    }
+                    
+                    allRecords.sort((a, b) => b.id.localeCompare(a.id));
+                    
+                    if (allRecords.length === 0) {
+                        listContainer.innerHTML = '<div class="text-center text-text-muted p-4 text-sm">No activity recorded yet.</div>';
+                        return;
+                    }
+                    
+                    listContainer.innerHTML = allRecords.map(r => `
+                        <div class="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-colors">
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-sm font-semibold text-white truncate">${r._desc}</span>
+                                <div class="flex items-center gap-2 text-xs text-text-muted mt-0.5">
+                                    <span class="px-1.5 py-0.5 rounded bg-black/40 text-[10px] uppercase font-bold tracking-wider border border-white/5">${r._type}</span>
+                                    <span>${r.date}</span>
+                                </div>
+                            </div>
+                            <button class="btn-delete-record p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors shrink-0" data-id="${r.id}" data-type="${r._type}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                            </button>
+                        </div>
+                    `).join('');
+
+                    listContainer.querySelectorAll('.btn-delete-record').forEach(btn => {
+                        btn.onclick = (e) => {
+                            const id = e.currentTarget.dataset.id;
+                            const type = e.currentTarget.dataset.type;
+                            deleteRecord(id, type);
+                        };
+                    });
+                }
+                
+                function deleteRecord(id, type) {
+                    if(!confirm('Delete this activity record?')) return;
+                    const state = window.getState();
+                    
+                    if (type === 'PYQ') state.pyqHistory = state.pyqHistory.filter(r => r.id !== id);
+                    if (type === 'Test') state.testHistory = state.testHistory.filter(r => r.id !== id);
+                    if (type === 'Mock') state.mocksHistory = state.mocksHistory.filter(r => r.id !== id);
+                    if (type === 'Revision') state.revisionHistory = state.revisionHistory.filter(r => r.id !== id);
+                    
+                    window.saveState(state);
+                    renderHistoryList();
+                    if (window.location.pathname === '/') {
+                        window.location.reload();
+                    }
+                }
+            }
+
+            initActivityLogging();
+            document.addEventListener('astro:page-load', initActivityLogging);
+            initActivityHistory();
+            document.addEventListener('astro:page-load', initActivityHistory);
 
             // Global listeners
 
