@@ -502,57 +502,113 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 const amountInput = document.getElementById('log-amount');
                 const nameInput = document.getElementById('log-name');
                 
+                const fieldSubject = document.getElementById('log-field-subject');
                 const fieldSubtype = document.getElementById('log-field-subtype');
                 const fieldAmount = document.getElementById('log-field-amount');
                 const fieldName = document.getElementById('log-field-name');
                 const labelSubtype = document.getElementById('log-label-subtype');
                 const labelAmount = document.getElementById('log-label-amount');
 
-                const updateSubjectsList = (state) => {
-                    let html = '';
-                    if (typeInput.value === 'revision') {
-                        html += '<option value="" disabled selected>Select a Subject</option>';
+                const updatePyqAmountLimit = (state) => {
+                    if (typeInput.value !== 'pyq') return;
+                    const subId = subjectSelect.value;
+                    const pyqInfo = state.pyqs?.[subId];
+                    if (pyqInfo) {
+                        const solved = state.pyqHistory 
+                            ? state.pyqHistory.filter(h => h.subjectId === subId).reduce((acc, c) => acc + c.solved, 0)
+                            : (pyqInfo.solved || 0);
+                        const remaining = Math.max(0, (pyqInfo.total || 0) - solved);
+                        amountInput.max = remaining;
+                        labelAmount.textContent = `Questions Solved (Max: ${remaining} left)`;
+                        if (parseInt(amountInput.value) > remaining) {
+                            amountInput.value = Math.max(1, remaining);
+                        }
                     } else {
-                        html += '<option value="general">General / All Subjects</option>';
+                        labelAmount.textContent = 'Questions Solved';
+                        amountInput.removeAttribute('max');
                     }
+                };
+
+                const updateSubjectsList = (state) => {
+                    const currentType = typeInput.value;
+                    const currentSubtype = subtypeSelect.value;
+                    let html = '<option value="" disabled selected>Select a Subject</option>';
                     
                     if (state.subjects) {
                         state.subjects.forEach(sub => {
                             let disabledStr = '';
-                            if (typeInput.value === 'revision') {
-                                const currentPhase = subtypeSelect.value;
-                                if (currentPhase && state.revisionHistory) {
-                                    const alreadyLogged = state.revisionHistory.some(r => r.subjectId === sub.id && r.revisionType === currentPhase);
+                            let labelStr = sub.name;
+
+                            if (currentType === 'pyq') {
+                                const pyqData = state.pyqs?.[sub.id];
+                                if (pyqData) {
+                                    const solved = state.pyqHistory 
+                                        ? state.pyqHistory.filter(h => h.subjectId === sub.id).reduce((acc, c) => acc + c.solved, 0)
+                                        : (pyqData.solved || 0);
+                                    const total = pyqData.total || 0;
+                                    const isComplete = total > 0 && solved >= total;
+                                    if (isComplete) {
+                                        disabledStr = ' disabled';
+                                        labelStr = `${sub.name} ✓ (${total}/${total})`;
+                                    } else {
+                                        const left = total - solved;
+                                        labelStr = `${sub.name} (${solved}/${total} — ${left} left)`;
+                                    }
+                                }
+                            } else if (currentType === 'test') {
+                                // Topic tests: no per-subject restriction (can do many topic tests per subject)
+                                // Subject tests: max 1 per subject
+                                if (currentSubtype === 'subject' && state.testHistory) {
+                                    const alreadyDone = state.testHistory.some(t => t.testType === 'subject' && t.subjectId === sub.id);
+                                    if (alreadyDone) {
+                                        disabledStr = ' disabled';
+                                        labelStr = `${sub.name} ✓ (Subject Test Done)`;
+                                    }
+                                }
+                                // For topic tests, all subjects are selectable - no extra label needed
+                            } else if (currentType === 'revision') {
+                                if (currentSubtype && state.revisionHistory) {
+                                    const alreadyLogged = state.revisionHistory.some(r => r.subjectId === sub.id && r.revisionType === currentSubtype);
                                     if (alreadyLogged) {
                                         disabledStr = ' disabled';
+                                        labelStr = `${sub.name} ✓ (${currentSubtype} done)`;
                                     }
                                 }
                             }
-                            html += `<option value="${sub.id}"${disabledStr}>${sub.name}</option>`;
+                            
+                            html += `<option value="${sub.id}"${disabledStr}>${labelStr}</option>`;
                         });
                     }
                     
                     const prevVal = subjectSelect.value;
                     subjectSelect.innerHTML = html;
                     
-                    if (typeInput.value === 'revision') {
-                        const option = subjectSelect.querySelector(`option[value="${prevVal}"]`);
-                        if (option && !option.disabled) {
+                    // Restore previous selection if it's still valid (not disabled)
+                    if (prevVal) {
+                        const prevOption = subjectSelect.querySelector(`option[value="${prevVal}"]`);
+                        if (prevOption && !prevOption.disabled) {
                             subjectSelect.value = prevVal;
                         } else {
-                            subjectSelect.value = "";
+                            subjectSelect.value = '';
                         }
+                    }
+
+                    if (currentType === 'pyq') {
+                        updatePyqAmountLimit(state);
                     }
                 };
 
-                if (subtypeSelect && !subtypeSelect._changeListenerAdded) {
-                    subtypeSelect.addEventListener('change', () => {
-                        if (typeInput.value === 'revision') {
-                            updateSubjectsList(window.getState());
-                        }
-                    });
-                    subtypeSelect._changeListenerAdded = true;
-                }
+                // Always (re-)attach listeners — safe because initActivityLogging
+                // is called on every astro:page-load, which creates fresh DOM elements.
+                subtypeSelect.removeEventListener('change', subtypeSelect._subtypeChangeHandler);
+                subtypeSelect._subtypeChangeHandler = () => updateSubjectsList(window.getState());
+                subtypeSelect.addEventListener('change', subtypeSelect._subtypeChangeHandler);
+
+                subjectSelect.removeEventListener('change', subjectSelect._subjectChangeHandler);
+                subjectSelect._subjectChangeHandler = () => {
+                    if (typeInput.value === 'pyq') updatePyqAmountLimit(window.getState());
+                };
+                subjectSelect.addEventListener('change', subjectSelect._subjectChangeHandler);
 
                 const openLogModal = (type) => {
                     if (!modal) return;
@@ -560,10 +616,13 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     const state = window.getState();
                     
                     // Reset fields
+                    fieldSubject.classList.remove('hidden');
                     fieldSubtype.classList.add('hidden');
                     fieldAmount.classList.add('hidden');
                     fieldName.classList.add('hidden');
                     amountInput.value = 1;
+                    amountInput.min = 1;
+                    amountInput.removeAttribute('max');
                     nameInput.value = '';
                     subtypeSelect.innerHTML = '';
                     
@@ -573,9 +632,44 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     } else if (type === 'test') {
                         fieldSubtype.classList.remove('hidden');
                         labelSubtype.textContent = 'Test Type';
-                        subtypeSelect.innerHTML = '<option value="topic">Topic Test</option><option value="subject">Subject Test</option>';
+                        
+                        const topicCompleted = state.testHistory ? state.testHistory.filter(t => t.testType === 'topic').length : (state.tests?.topic?.completed || 0);
+                        const topicTotal = state.tests?.topic?.total || 40;
+                        const subjectCompleted = state.testHistory ? state.testHistory.filter(t => t.testType === 'subject').length : (state.tests?.subject?.completed || 0);
+                        const subjectTotal = state.tests?.subject?.total || 10;
+
+                        const isTopicMax = topicCompleted >= topicTotal;
+                        const isSubjectMax = subjectCompleted >= subjectTotal;
+
+                        // Topic tests: unlimited per subject (like taking topic-wise practice tests)
+                        // Subject tests: 1 per subject only, max 10 total
+                        let testOptions = '';
+                        testOptions += `<option value="topic"${isTopicMax ? ' disabled' : ''}>Topic Test (${topicCompleted}/${topicTotal}${isTopicMax ? ' — All Done!' : ' remaining'})</option>`;
+                        testOptions += `<option value="subject"${isSubjectMax ? ' disabled' : ''}>Subject Test (${subjectCompleted}/${subjectTotal}${isSubjectMax ? ' — All Done!' : ' remaining'})</option>`;
+                        subtypeSelect.innerHTML = testOptions;
+
+                        // Auto-select the first available type
+                        if (!isTopicMax) {
+                            subtypeSelect.value = 'topic';
+                        } else if (!isSubjectMax) {
+                            subtypeSelect.value = 'subject';
+                        } else {
+                            subtypeSelect.value = 'topic'; // both maxed, show topic (UI will be greyed)
+                        }
                     } else if (type === 'mock') {
+                        fieldSubject.classList.add('hidden');
                         fieldName.classList.remove('hidden');
+                        
+                        const mocksCount = state.mocksHistory ? state.mocksHistory.length : (state.mocks?.completed || 0);
+                        const mocksTotal = state.mocks?.total || 20;
+                        
+                        if (mocksCount >= mocksTotal) {
+                            nameInput.value = '';
+                            nameInput.placeholder = `All ${mocksTotal} Mocks Completed`;
+                        } else {
+                            nameInput.value = `Mock Test ${mocksCount + 1}`;
+                            nameInput.placeholder = `e.g. Mock Test ${mocksCount + 1}`;
+                        }
                     } else if (type === 'revision') {
                         fieldSubtype.classList.remove('hidden');
                         labelSubtype.textContent = 'Revision Phase';
@@ -659,20 +753,92 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                         const subjectId = subjectSelect.value;
                         
                         if (type === 'pyq') {
-                            const solved = parseInt(amountInput.value) || 0;
-                            if (solved > 0 && subjectId !== 'general') {
-                                if(!state.pyqHistory) state.pyqHistory = [];
-                                state.pyqHistory.push({ id, subjectId, date: today, solved });
-                            } else if (subjectId === 'general') {
+                            if (!subjectId) {
                                 alert('Please select a specific subject for PYQs.');
                                 return;
                             }
+                            const pyqData = state.pyqs?.[subjectId];
+                            if (!pyqData) {
+                                alert('Invalid subject selected.');
+                                return;
+                            }
+                            const currentSolved = state.pyqHistory 
+                                ? state.pyqHistory.filter(h => h.subjectId === subjectId).reduce((acc, c) => acc + c.solved, 0)
+                                : (pyqData.solved || 0);
+                            const total = pyqData.total || 0;
+                            const remaining = Math.max(0, total - currentSolved);
+
+                            if (remaining <= 0) {
+                                alert('All PYQs for this subject are already completed! Great job.');
+                                return;
+                            }
+
+                            const solved = parseInt(amountInput.value) || 0;
+                            if (solved <= 0) {
+                                alert('Please enter at least 1 question solved.');
+                                return;
+                            }
+                            if (solved > remaining) {
+                                alert(`You can only log up to ${remaining} more question(s) for this subject (${currentSolved}/${total} already done).`);
+                                return;
+                            }
+
+                            if(!state.pyqHistory) state.pyqHistory = [];
+                            state.pyqHistory.push({ id, subjectId, date: today, solved });
                         } else if (type === 'test') {
                             const testType = subtypeSelect.value;
+                            if (!subjectId) {
+                                alert('Please select a subject for this test.');
+                                return;
+                            }
+                            
+                            const topicCompleted = state.testHistory ? state.testHistory.filter(t => t.testType === 'topic').length : 0;
+                            const topicTotal = state.tests?.topic?.total || 40;
+                            const subjectCompleted = state.testHistory ? state.testHistory.filter(t => t.testType === 'subject').length : 0;
+                            const subjectTotal = state.tests?.subject?.total || 10;
+
+                            if (testType === 'topic') {
+                                // Topic tests: multiple allowed per subject, only total cap matters
+                                if (topicCompleted >= topicTotal) {
+                                    alert(`You have reached the Topic Test target of ${topicTotal}. Well done!`);
+                                    return;
+                                }
+                                // No per-subject restriction for topic tests
+                            } else if (testType === 'subject') {
+                                // Subject tests: 1 per subject, plus total cap
+                                if (subjectCompleted >= subjectTotal) {
+                                    alert(`You have reached the Subject Test target of ${subjectTotal}. Well done!`);
+                                    return;
+                                }
+                                const alreadyDone = state.testHistory && state.testHistory.some(t => t.testType === 'subject' && t.subjectId === subjectId);
+                                if (alreadyDone) {
+                                    alert('A Subject Test for this subject is already logged. Each subject gets one subject test.');
+                                    return;
+                                }
+                            }
+
                             if(!state.testHistory) state.testHistory = [];
                             state.testHistory.push({ id, testType, subjectId, date: today });
                         } else if (type === 'mock') {
-                            const name = nameInput.value || 'Mock Test';
+                            const mocksCount = state.mocksHistory ? state.mocksHistory.length : 0;
+                            const mocksTotal = state.mocks?.total || 20;
+
+                            if (mocksCount >= mocksTotal) {
+                                alert(`All ${mocksTotal} Full-Length Mocks target has already been completed!`);
+                                return;
+                            }
+
+                            const name = (nameInput.value || '').trim();
+                            if (!name) {
+                                alert('Please enter a mock test name.');
+                                return;
+                            }
+
+                            if (state.mocksHistory && state.mocksHistory.some(m => m.name.toLowerCase() === name.toLowerCase())) {
+                                alert(`A mock with the name "${name}" has already been logged. Please use a distinct name.`);
+                                return;
+                            }
+
                             if(!state.mocksHistory) state.mocksHistory = [];
                             state.mocksHistory.push({ id, name, date: today });
                         } else if (type === 'revision') {
@@ -722,6 +888,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 
                 const openHistoryModal = (filterType = null) => {
                     if (!modal) return;
+                    _currentHistoryFilter = filterType;
                     renderHistoryList(filterType);
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
@@ -820,17 +987,21 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     });
                 }
                 
+                // Track current history filter so delete re-renders with the same filter
+                let _currentHistoryFilter = null;
+
                 function deleteRecord(id, type) {
-                    if(!confirm('Delete this activity record?')) return;
+                    if(!confirm('Delete this record? This cannot be undone.')) return;
                     const state = window.getState();
                     
-                    if (type === 'PYQ') state.pyqHistory = state.pyqHistory.filter(r => r.id !== id);
-                    if (type === 'Test') state.testHistory = state.testHistory.filter(r => r.id !== id);
-                    if (type === 'Mock') state.mocksHistory = state.mocksHistory.filter(r => r.id !== id);
-                    if (type === 'Revision') state.revisionHistory = state.revisionHistory.filter(r => r.id !== id);
+                    if (type === 'PYQ') state.pyqHistory = (state.pyqHistory || []).filter(r => r.id !== id);
+                    if (type === 'Test') state.testHistory = (state.testHistory || []).filter(r => r.id !== id);
+                    if (type === 'Mock') state.mocksHistory = (state.mocksHistory || []).filter(r => r.id !== id);
+                    if (type === 'Revision') state.revisionHistory = (state.revisionHistory || []).filter(r => r.id !== id);
                     
                     window.saveState(state);
-                    renderHistoryList();
+                    // Re-render with the same filter that was active when history was opened
+                    renderHistoryList(_currentHistoryFilter);
                     if (window.location.pathname === '/') {
                         window.location.reload();
                     }
