@@ -1,6 +1,8 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 import FallingLeaves from '../components/FallingLeaves.astro';
+import AchievementNotification from '../components/AchievementNotification.astro';
 interface Props {
 	title: string;
     description?: string;
@@ -23,25 +25,29 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
-        <link rel="preload" href="/scene.splinecode" as="fetch" crossorigin>
+        <ViewTransitions />
 	</head>
 	<body class="min-h-screen">
         <div class="site-bg" aria-hidden="true"></div>
         <FallingLeaves />
+        <AchievementNotification />
         <div class="app-container flex flex-col gap-5 sm:gap-6 relative z-0">
             <!-- Header -->
             <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-panel-border gap-3.5 sm:gap-4 min-w-0">
                 <div class="flex flex-col min-w-0 flex-1">
-                    <h1 class="text-2xl sm:text-[28px] font-[Outfit] font-semibold flex items-center gap-2.5 text-white tracking-tight break-words leading-none" style="letter-spacing: -0.01em;">
+                    <a href="/" class="text-2xl sm:text-[28px] font-[Outfit] font-semibold flex items-center gap-2.5 text-white tracking-tight break-words leading-none hover:opacity-90 transition-opacity w-fit" style="letter-spacing: -0.01em;">
                         <img src="/favicon.jpg" alt="Logo" class="w-7 h-7 sm:w-8 sm:h-8 rounded object-cover border border-primary-accent/30 shrink-0 drop-shadow-[0_0_8px_rgba(74,222,128,0.3)]" />
                         <span class="truncate mt-0.5 text-[0.95em]">GATE CIVIL <span class="text-primary-accent">TRACKER</span></span>
-                    </h1>
+                    </a>
                     <p class="text-text-muted text-xs sm:text-[13.5px] mt-2 leading-relaxed break-words max-w-3xl pr-4">Track your syllabus, PYQs, tests, full-length mocks & revisions — progress automatically saved to your browser.</p>
                 </div>
                 
                 <!-- Buttons Wrapper -->
                 <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-2.5 md:gap-3 w-full sm:w-auto shrink-0">
-                    <a href="/" class="btn hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center">Dashboard</a>
+                    <a href="/achievements" class="btn hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center flex items-center gap-1.5 border-primary-accent/30 bg-primary-accent/5 hover:bg-primary-accent/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                        Achievements
+                    </a>
                     <button class="btn text-red-400 hover:text-red-300 hover:border-red-400/30 hover:bg-red-400/10 text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center" id="btn-reset">Reset</button>
                     <button class="btn hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center" id="btn-export">Export</button>
                     <label class="btn hover:text-white cursor-pointer text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center">
@@ -57,6 +63,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         <script>
             // @ts-nocheck
             import { defaultState } from '../data.js';
+            import { evaluateAchievements } from '../utils/achievementEngine.js';
+            import achievementsData from '../data/achievements.json';
             
             // Global helper functions to attach to window for cross-page use
             window.getState = () => {
@@ -66,13 +74,25 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     if(!parsed.pyqs) parsed.pyqs = defaultState.pyqs;
                     if(!parsed.settings) parsed.settings = defaultState.settings;
                     if(!parsed.settings.weights) parsed.settings.weights = defaultState.settings.weights;
+                    if(!parsed.achievements) parsed.achievements = defaultState.achievements;
+                    if(!parsed.streaks) parsed.streaks = defaultState.streaks;
                     return parsed;
                 }
                 return JSON.parse(JSON.stringify(defaultState));
             };
 
             window.saveState = (state) => {
+                // Ensure metrics are calculated before evaluating achievements
+                window.calculateAllMetrics(state);
+                
+                const newUnlocks = evaluateAchievements(state, achievementsData.achievements);
+                
                 localStorage.setItem('gateCivilTracker2027', JSON.stringify(state));
+                
+                if (newUnlocks && newUnlocks.length > 0) {
+                    window.dispatchEvent(new CustomEvent('achievementsUnlocked', { detail: newUnlocks }));
+                }
+
                 // Dispatch custom event so components know state changed
                 window.dispatchEvent(new Event('stateChanged'));
             };

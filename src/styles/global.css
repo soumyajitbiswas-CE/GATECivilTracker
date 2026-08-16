@@ -38,7 +38,32 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+}
+
+/* Scrollbar Utilities */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Global Responsive App Container */
@@ -129,16 +154,25 @@ img, svg, video, canvas, audio, iframe, embed, object {
 /* Base button classes that can be used via @apply or just classes in HTML */
 @layer components {
   .btn {
-    @apply bg-white/5 border border-white/10 text-white py-2 px-4 rounded-lg cursor-pointer text-sm font-semibold transition-all duration-300 inline-flex items-center gap-2 backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.1)] shrink-0;
+    @apply bg-white/5 border border-white/10 text-white py-2 px-4 rounded-lg cursor-pointer text-sm font-semibold transition-all duration-200 inline-flex items-center gap-2 backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.1)] shrink-0 select-none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
-  .btn:hover {
-    @apply bg-white/10 border-white/20 transform -translate-y-[1px] shadow-[0_6px_16px_rgba(0,0,0,0.15)];
+  
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      @apply bg-white/10 border-white/20 transform -translate-y-[1px] shadow-[0_6px_16px_rgba(0,0,0,0.15)];
+    }
   }
+
   .btn-primary {
     @apply bg-primary-accent/15 border-primary-accent/30 text-primary-accent shadow-[0_0_15px_rgba(74,222,128,0.1)];
   }
-  .btn-primary:hover {
-    @apply bg-primary-accent/25 border-primary-accent/50 shadow-[0_0_20px_rgba(74,222,128,0.2)] text-[#6be796];
+  
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover {
+      @apply bg-primary-accent/25 border-primary-accent/50 shadow-[0_0_20px_rgba(74,222,128,0.2)] text-[#6be796];
+    }
   }
   
   .glass-panel {
@@ -457,6 +491,13 @@ img, svg, video, canvas, audio, iframe, embed, object {
 .surface-practice, .surface-summary {
   content-visibility: auto;
   contain-intrinsic-size: 0 220px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.ach-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 160px;
   transform: translateZ(0);
   backface-visibility: hidden;
 }

@@ -1,0 +1,399 @@
+---
+import Layout from '../layouts/Layout.astro';
+import achievementsData from '../data/achievements.json';
+
+const allAchievements = achievementsData.achievements;
+
+const rarityOrder = { 'Common': 1, 'Uncommon': 2, 'Rare': 3, 'Epic': 4, 'Legendary': 5 };
+// Sort achievements primarily by rarity, then by ID
+allAchievements.sort((a, b) => {
+    if (rarityOrder[a.rarity] !== rarityOrder[b.rarity]) {
+        return rarityOrder[a.rarity] - rarityOrder[b.rarity];
+    }
+    return a.id.localeCompare(b.id);
+});
+---
+
+<Layout title="Achievements | GATE Civil Tracker">
+    <div class="flex flex-col gap-4 sm:gap-5 min-w-0 pb-10">
+        
+        <!-- Back to Dashboard Button -->
+        <div class="mb-1">
+            <a href="/" id="btn-back-dashboard" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                <span class="pointer-events-none">Back to Dashboard</span>
+            </a>
+        </div>
+        
+        <!-- Header -->
+        <div class="surface-hero backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 relative overflow-hidden">
+            <div class="relative z-10 flex flex-col gap-1.5 sm:gap-2">
+                <h1 class="text-2xl sm:text-4xl font-[Outfit] font-bold tracking-tight text-white flex items-center gap-2 sm:gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent sm:w-[28px] sm:h-[28px]"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                    Achievements
+                </h1>
+                <p class="text-text-muted text-xs sm:text-base font-medium">Track milestones. Build consistency. Earn your rank.</p>
+            </div>
+            
+            <div class="relative z-10 flex flex-row sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-1 bg-black/30 p-3 sm:p-4 rounded-xl border border-primary-accent/20 min-w-[180px]">
+                <div class="flex flex-col">
+                    <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 sm:mb-1">Current Rank</div>
+                    <div class="text-xl sm:text-3xl font-bold text-white flex items-baseline gap-1" id="player-level-display">
+                        Level <span class="text-primary-accent" id="player-level-val">1</span>
+                    </div>
+                </div>
+                <div class="text-xs sm:text-sm font-medium text-text-muted text-right">
+                    <span id="player-xp-val" class="font-bold text-white sm:font-medium sm:text-text-muted">0</span> <span class="text-[10px] sm:text-xs">XP</span> <span class="hidden sm:inline mx-1 text-panel-border">|</span> <div class="sm:inline block text-[9px] sm:text-[10px]" id="player-xp-next">Next: 250 XP</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls & Filters -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-black/20 p-3 rounded-xl border border-panel-border">
+            <div class="flex items-center gap-2 overflow-x-auto w-full no-scrollbar pb-1 sm:pb-0" id="rarity-filters">
+                <button class="filter-btn active text-xs font-semibold px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white whitespace-nowrap transition-all" data-filter="All">All</button>
+                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-white whitespace-nowrap transition-all" data-filter="Common">Common</button>
+                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#86efac] whitespace-nowrap transition-all" data-filter="Uncommon">Uncommon</button>
+                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#60a5fa] whitespace-nowrap transition-all" data-filter="Rare">Rare</button>
+                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#c084fc] whitespace-nowrap transition-all" data-filter="Epic">Epic</button>
+                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#fbbf24] whitespace-nowrap transition-all" data-filter="Legendary">Legendary</button>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-3 shrink-0 text-xs font-medium text-text-muted px-2 min-w-0" id="stats-display">
+                <span class="text-white font-semibold flex items-center gap-1"><span id="stat-total">0</span> / 110 <span class="hidden sm:inline font-normal text-text-muted">Unlocked</span></span>
+                <span class="w-1 h-1 rounded-full bg-panel-border"></span>
+                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-white"></div> <span id="stat-Common">0</span>/50</span>
+                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#86efac]"></div> <span id="stat-Uncommon">0</span>/25</span>
+                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#60a5fa]"></div> <span id="stat-Rare">0</span>/18</span>
+                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#c084fc]"></div> <span id="stat-Epic">0</span>/14</span>
+                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#fbbf24]"></div> <span id="stat-Legendary">0</span>/3</span>
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4" id="achievements-grid" data-active-filter="All">
+            {allAchievements.map(ach => (
+                <div id={`card-${ach.id}`} 
+                     class="ach-card relative bg-[#06140e] border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col items-center text-center cursor-pointer hover:bg-black/40 transition-all duration-200 group overflow-hidden" 
+                     data-id={ach.id} data-rarity={ach.rarity} data-name={ach.name} data-desc={ach.description} data-cond={ach.unlock_condition} data-xp={ach.xp} data-unlocked="false">
+                    
+                    <!-- Lock Indicator Badge (Top Right) -->
+                    <div class="ach-lock-badge absolute top-2 right-2 z-20 bg-black/70 border border-white/10 p-1 rounded-md text-white/50">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+
+                    <!-- Unlocked Indicator Badge (Top Right - hidden by default) -->
+                    <div class="ach-unlocked-badge absolute top-2 right-2 z-20 bg-primary-accent/20 border border-primary-accent/40 p-1 rounded-md text-primary-accent hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+
+                    <!-- Glow Background (Active when unlocked) -->
+                    <div class="ach-glow-bg absolute inset-0 opacity-0 blur-xl scale-75 transition-all duration-300 z-0 pointer-events-none"></div>
+
+                    <!-- Icon Wrapper -->
+                    <div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 mb-3 ach-icon-wrap opacity-40 transition-all duration-200">
+                        <img src={`/achievements/icons/${ach.id}.png`} alt={ach.name} class="w-full h-full object-contain filter grayscale ach-icon-img transition-all duration-200" loading="lazy" decoding="async">
+                    </div>
+                    
+                    <!-- Text Content -->
+                    <div class="relative z-10 flex flex-col w-full">
+                        <h3 class="text-xs sm:text-sm font-bold text-text-muted group-hover:text-white transition-colors line-clamp-2 leading-tight mb-1.5 min-h-[34px] ach-title-text flex items-center justify-center">
+                            {ach.name}
+                        </h3>
+                        <div class="flex items-center justify-between w-full mt-auto">
+                            <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border border-white/20 text-text-muted bg-black/40 ach-rarity-badge transition-all">
+                                {ach.rarity}
+                            </span>
+                            <span class="text-[10px] sm:text-xs font-bold text-text-muted ach-xp-text opacity-70 transition-all">
+                                +{ach.xp}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="ach-detail-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[150] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
+        <div class="bg-[#06140e] border border-panel-border rounded-2xl w-[calc(100%-2rem)] sm:w-full max-w-[440px] mx-auto shadow-2xl flex flex-col relative scale-95 transition-transform duration-200 transform" id="ach-detail-content">
+            
+            <button id="btn-close-modal" class="absolute top-4 right-4 text-text-muted hover:text-white bg-black/40 p-1.5 rounded-lg z-20 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+            
+            <div class="p-6 sm:p-8 flex flex-col items-center text-center relative overflow-hidden">
+                <div id="modal-glow" class="absolute inset-0 opacity-20 blur-3xl rounded-full scale-150 z-0 pointer-events-none"></div>
+                
+                <div class="relative z-10 w-24 h-24 sm:w-32 sm:h-32 mb-5">
+                    <img id="modal-icon" src="" alt="Icon" class="w-full h-full object-contain drop-shadow-xl transition-all duration-200">
+                    <div id="modal-lock" class="absolute -bottom-1 -right-1 bg-black/80 border border-white/20 p-2 rounded-full flex items-center justify-center shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/70"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-2 mb-2 relative z-10">
+                    <span id="modal-rarity" class="uppercase text-[10px] sm:text-xs font-bold tracking-wider px-2.5 py-0.5 rounded border">RARITY</span>
+                    <span id="modal-xp" class="text-primary-accent font-bold text-xs sm:text-sm">+0 XP</span>
+                </div>
+                
+                <h2 id="modal-name" class="text-xl sm:text-2xl font-bold text-white mb-4 relative z-10">Achievement Name</h2>
+                
+                <div class="bg-black/40 border border-panel-border rounded-xl p-3.5 w-full mb-4 relative z-10">
+                    <h4 class="text-[10px] text-primary-accent uppercase tracking-widest font-semibold mb-1 text-left">Unlock Condition</h4>
+                    <p id="modal-cond" class="text-sm font-medium text-white text-left leading-snug">Condition text goes here...</p>
+                </div>
+                
+                <p id="modal-desc" class="text-xs sm:text-sm text-text-muted text-left w-full leading-relaxed relative z-10">Description text goes here.</p>
+                
+                <div id="modal-date" class="mt-4 text-[10px] text-text-muted uppercase tracking-wider font-semibold opacity-0 relative z-10 w-full text-left">
+                    Unlocked: <span id="modal-date-val" class="text-white"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #achievements-grid[data-active-filter="Common"] .ach-card:not([data-rarity="Common"]) { display: none !important; }
+        #achievements-grid[data-active-filter="Uncommon"] .ach-card:not([data-rarity="Uncommon"]) { display: none !important; }
+        #achievements-grid[data-active-filter="Rare"] .ach-card:not([data-rarity="Rare"]) { display: none !important; }
+        #achievements-grid[data-active-filter="Epic"] .ach-card:not([data-rarity="Epic"]) { display: none !important; }
+        #achievements-grid[data-active-filter="Legendary"] .ach-card:not([data-rarity="Legendary"]) { display: none !important; }
+    </style>
+
+    <script>
+        // @ts-nocheck
+        import { defaultState } from '../data.js';
+        import { evaluateAchievements } from '../utils/achievementEngine.js';
+        import achievementsData from '../data/achievements.json';
+
+        document.addEventListener('astro:page-load', () => {
+            const rarityColors = {
+                'Common': '#ffffff',
+                'Uncommon': '#86efac',
+                'Rare': '#60a5fa',
+                'Epic': '#c084fc',
+                'Legendary': '#fbbf24'
+            };
+
+            const iconGlowColors = {
+                'Common': '#ffffff',
+                'Uncommon': '#86efac',
+                'Rare': '#86efac',
+                'Epic': '#c084fc',
+                'Legendary': '#fbbf24'
+            };
+
+            function hydrateAchievementsPage() {
+                let state;
+                try {
+                    const saved = localStorage.getItem('gateCivilTracker2027');
+                    if (saved) {
+                        state = JSON.parse(saved);
+                        if (!state.achievements) state.achievements = defaultState.achievements;
+                        if (!state.streaks) state.streaks = defaultState.streaks;
+                    }
+                } catch(e) {
+                    console.error("Error loading state", e);
+                }
+                if (!state) state = JSON.parse(JSON.stringify(defaultState));
+
+                if (window.calculateAllMetrics) {
+                    window.calculateAllMetrics(state);
+                }
+                evaluateAchievements(state, achievementsData.achievements);
+                
+                localStorage.setItem('gateCivilTracker2027', JSON.stringify(state));
+
+                const unlockedMap = state.achievements?.unlocked || {};
+                
+                // Update Rank / XP
+                const level = state.achievements?.level || 1;
+                const xp = state.achievements?.xp || 0;
+                const levelEl = document.getElementById('player-level-val');
+                const xpEl = document.getElementById('player-xp-val');
+                const xpNextEl = document.getElementById('player-xp-next');
+                if (levelEl) levelEl.textContent = level;
+                if (xpEl) xpEl.textContent = xp;
+                if (xpNextEl) xpNextEl.textContent = `Next: ${level * 250} XP`;
+
+                const stats = { total: 0, Common: 0, Uncommon: 0, Rare: 0, Epic: 0, Legendary: 0 };
+                const unlockedIds = Object.keys(unlockedMap);
+
+                // Fast targeted update for only unlocked cards
+                unlockedIds.forEach(id => {
+                    const card = document.getElementById(`card-${id}`);
+                    if (!card) return;
+                    
+                    const rarity = card.dataset.rarity;
+                    const color = rarityColors[rarity] || '#ffffff';
+                    const iconColor = iconGlowColors[rarity] || '#ffffff';
+
+                    stats.total++;
+                    stats[rarity] = (stats[rarity] || 0) + 1;
+                    
+                    card.dataset.unlocked = "true";
+                    card.dataset.date = new Date(unlockedMap[id].timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                    
+                    card.style.borderColor = color + '60';
+                    card.style.boxShadow = `0 0 15px ${color}15`;
+
+                    const lockBadge = card.querySelector('.ach-lock-badge');
+                    const unlockedBadge = card.querySelector('.ach-unlocked-badge');
+                    const iconWrap = card.querySelector('.ach-icon-wrap');
+                    const iconImg = card.querySelector('.ach-icon-img');
+                    const glowBg = card.querySelector('.ach-glow-bg');
+                    const titleText = card.querySelector('.ach-title-text');
+                    const rarityBadge = card.querySelector('.ach-rarity-badge');
+                    const xpText = card.querySelector('.ach-xp-text');
+
+                    if (lockBadge) lockBadge.classList.add('hidden');
+                    if (unlockedBadge) unlockedBadge.classList.remove('hidden');
+
+                    if (iconWrap) iconWrap.style.opacity = '1';
+                    if (iconImg) {
+                        iconImg.classList.remove('grayscale');
+                        iconImg.style.filter = `drop-shadow(0 0 10px ${iconColor})`;
+                    }
+                    if (glowBg) {
+                        glowBg.style.backgroundColor = color;
+                        glowBg.style.opacity = '0.12';
+                    }
+                    if (titleText) titleText.style.color = '#ffffff';
+                    if (rarityBadge) {
+                        rarityBadge.style.backgroundColor = color;
+                        rarityBadge.style.color = '#000000';
+                        rarityBadge.style.borderColor = 'transparent';
+                        rarityBadge.style.opacity = '1';
+                    }
+                    if (xpText) {
+                        xpText.style.color = '#4ade80';
+                        xpText.style.opacity = '1';
+                    }
+                });
+
+                // Update stats counts
+                const statTotal = document.getElementById('stat-total');
+                if (statTotal) statTotal.textContent = stats.total;
+                ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'].forEach(r => {
+                    const el = document.getElementById(`stat-${r}`);
+                    if (el) el.textContent = stats[r] || 0;
+                });
+            }
+
+            // Run hydration immediately
+            hydrateAchievementsPage();
+
+            // Clear old listeners before adding new ones to prevent duplication across SPA navigations
+            window.removeEventListener('stateChanged', hydrateAchievementsPage);
+            window.removeEventListener('achievementsUnlocked', hydrateAchievementsPage);
+            window.addEventListener('stateChanged', hydrateAchievementsPage);
+            window.addEventListener('achievementsUnlocked', hydrateAchievementsPage);
+
+            // Fast Filter using grid data-attribute
+            const grid = document.getElementById('achievements-grid');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-white/10', 'text-white', 'border-white/20');
+                        b.classList.add('bg-transparent', 'text-text-muted', 'border-transparent');
+                    });
+                    
+                    const target = e.currentTarget;
+                    target.classList.remove('bg-transparent', 'text-text-muted', 'border-transparent');
+                    target.classList.add('active', 'bg-white/10', 'text-white', 'border-white/20');
+                    
+                    if (grid) {
+                        grid.dataset.activeFilter = target.dataset.filter;
+                    }
+                });
+            });
+
+            // Detail Modal using Event Delegation on Grid
+            const modal = document.getElementById('ach-detail-modal');
+            const modalContent = document.getElementById('ach-detail-content');
+            const btnClose = document.getElementById('btn-close-modal');
+
+            if (grid) {
+                grid.addEventListener('click', (e) => {
+                    const card = e.target.closest('.ach-card');
+                    if (!card) return;
+
+                    const isUnlocked = card.dataset.unlocked === "true";
+                    const rarity = card.dataset.rarity;
+                    const color = rarityColors[rarity] || '#ffffff';
+                    const iconColor = iconGlowColors[rarity] || '#ffffff';
+
+                    // Populate Modal
+                    const modalIcon = document.getElementById('modal-icon');
+                    modalIcon.src = `/achievements/icons/${card.dataset.id}.png`;
+                    modalIcon.style.filter = isUnlocked ? `drop-shadow(0 0 18px ${iconColor})` : 'grayscale(100%)';
+                    
+                    const modalName = document.getElementById('modal-name');
+                    modalName.textContent = card.dataset.name;
+                    modalName.style.color = isUnlocked ? color : '#ffffff';
+                    
+                    document.getElementById('modal-cond').textContent = card.dataset.cond;
+                    document.getElementById('modal-desc').textContent = card.dataset.desc;
+                    document.getElementById('modal-xp').textContent = `+${card.dataset.xp} XP`;
+                    
+                    const badge = document.getElementById('modal-rarity');
+                    badge.textContent = rarity;
+                    badge.style.backgroundColor = isUnlocked ? color : 'rgba(0,0,0,0.4)';
+                    badge.style.color = isUnlocked ? '#000000' : color;
+                    badge.style.borderColor = isUnlocked ? 'transparent' : color;
+
+                    const glow = document.getElementById('modal-glow');
+                    glow.style.backgroundColor = color;
+                    glow.style.opacity = isUnlocked ? '0.25' : '0.05';
+
+                    const lock = document.getElementById('modal-lock');
+                    const dateWrap = document.getElementById('modal-date');
+                    const dateVal = document.getElementById('modal-date-val');
+
+                    if (isUnlocked) {
+                        if (lock) lock.classList.add('hidden');
+                        if (dateWrap) dateWrap.classList.remove('opacity-0');
+                        if (dateVal) dateVal.textContent = card.dataset.date || 'Completed';
+                    } else {
+                        if (lock) lock.classList.remove('hidden');
+                        if (dateWrap) dateWrap.classList.add('opacity-0');
+                    }
+
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    void modal.offsetWidth;
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                });
+            }
+
+            const closeModal = () => {
+                if (!modal) return;
+                modal.classList.add('opacity-0');
+                modalContent.classList.remove('scale-100');
+                modalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 200);
+            };
+
+            if (btnClose) btnClose.addEventListener('click', closeModal);
+            if (modal) modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            // Instant Single-Tap Back Navigation
+            const backBtn = document.getElementById('btn-back-dashboard');
+            if (backBtn) {
+                backBtn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    window.location.href = '/';
+                }, { passive: false });
+            }
+        });
+    </script>
+</Layout>

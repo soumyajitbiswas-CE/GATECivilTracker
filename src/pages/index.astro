@@ -22,40 +22,40 @@ const subjectBgClass = {
     <div id="dashboard-view" class="flex flex-col gap-5 sm:gap-6 min-w-0">
         
         <!-- Hero Progress Area -->
-        <div class="glass-panel surface-hero p-4 sm:p-6 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[220px_1fr] gap-5 sm:gap-6 items-center relative overflow-hidden">
+        <div class="glass-panel surface-hero p-3.5 sm:p-6 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[220px_1fr] gap-4 sm:gap-6 items-center relative overflow-hidden">
             <HeroSpline />
             
-            <div class="flex flex-col items-center justify-center text-center relative z-10 pointer-events-none">
+            <div class="flex flex-col items-center justify-center text-center relative z-10 pointer-events-none py-2 sm:py-0">
                 <div class="circular-progress animate-pulse-glow pointer-events-auto" id="hero-progress-circle" style="--progress: 0%;">
                     <span class="relative z-10 text-2xl sm:text-3xl font-bold" id="hero-progress-text">0%</span>
                 </div>
-                <p class="text-text-muted text-xs sm:text-sm font-semibold tracking-wide mt-1 sm:mt-2 shadow-text">Overall GATE Readiness</p>
+                <p class="text-text-muted text-[11px] sm:text-sm font-semibold tracking-wide mt-1.5 sm:mt-2 shadow-text">Overall Readiness</p>
             </div>
             
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5 md:gap-4 relative z-10 pointer-events-none">
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
-                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Syllabus</span>
-                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-syllabus">0%</span>
+            <div class="grid grid-cols-3 gap-2 sm:gap-3.5 md:gap-4 relative z-10 pointer-events-none">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-2 sm:p-4 flex flex-col items-center sm:items-start gap-0.5 sm:gap-1 min-w-0 pointer-events-auto">
+                    <span class="text-text-muted text-[9px] sm:text-xs uppercase tracking-wide truncate max-w-full">Syllabus</span>
+                    <span class="text-base sm:text-xl font-semibold text-white" id="metric-syllabus">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
-                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">PYQs</span>
-                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-pyqs">0%</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-2 sm:p-4 flex flex-col items-center sm:items-start gap-0.5 sm:gap-1 min-w-0 pointer-events-auto">
+                    <span class="text-text-muted text-[9px] sm:text-xs uppercase tracking-wide truncate max-w-full">PYQs</span>
+                    <span class="text-base sm:text-xl font-semibold text-white" id="metric-pyqs">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
-                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Tests</span>
-                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-tests">0%</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-2 sm:p-4 flex flex-col items-center sm:items-start gap-0.5 sm:gap-1 min-w-0 pointer-events-auto">
+                    <span class="text-text-muted text-[9px] sm:text-xs uppercase tracking-wide truncate max-w-full">Tests</span>
+                    <span class="text-base sm:text-xl font-semibold text-white" id="metric-tests">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
-                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Mocks</span>
-                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-mocks">0%</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-2 sm:p-4 flex flex-col items-center sm:items-start gap-0.5 sm:gap-1 min-w-0 pointer-events-auto">
+                    <span class="text-text-muted text-[9px] sm:text-xs uppercase tracking-wide truncate max-w-full">Mocks</span>
+                    <span class="text-base sm:text-xl font-semibold text-white" id="metric-mocks">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
-                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Revision</span>
-                    <span class="text-lg sm:text-xl font-semibold text-white" id="metric-revision">0%</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-2 sm:p-4 flex flex-col items-center sm:items-start gap-0.5 sm:gap-1 min-w-0 pointer-events-auto">
+                    <span class="text-text-muted text-[9px] sm:text-xs uppercase tracking-wide truncate max-w-full">Revision</span>
+                    <span class="text-base sm:text-xl font-semibold text-white" id="metric-revision">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
-                    <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Study Hours</span>
-                    <span class="text-lg sm:text-xl font-semibold text-primary-accent" id="metric-hours">0h</span>
+                <div class="bg-black/20 border border-panel-border rounded-xl p-2 sm:p-4 flex flex-col items-center sm:items-start gap-0.5 sm:gap-1 min-w-0 pointer-events-auto">
+                    <span class="text-text-muted text-[9px] sm:text-xs uppercase tracking-wide truncate max-w-full">Hours</span>
+                    <span class="text-base sm:text-xl font-semibold text-primary-accent" id="metric-hours">0h</span>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@ const subjectBgClass = {
                             <span class="subject-progress-text text-xl sm:text-2xl font-bold text-white tracking-tight" data-id={sub.id}>0% <span class="text-xs font-medium text-text-muted ml-1">Complete</span></span>
                         </div>
                         <div class="w-full h-2 bg-panel-border rounded-full overflow-hidden">
-                            <div class="h-full bg-primary-accent rounded-full transition-all duration-300 subject-progress-bar" style="width: 0%" data-id={sub.id}></div>
+                            <div class="h-full bg-primary-accent rounded-full subject-progress-bar" style="width: 0%" data-id={sub.id}></div>
                         </div>
                     </div>
                     
@@ -972,8 +972,8 @@ const subjectBgClass = {
             syllabusModal.classList.add('hidden');
         });
 
-        // Run on load and state changes
-        document.addEventListener('DOMContentLoaded', hydrateDashboard);
+        // Run on load
+        document.addEventListener('astro:page-load', hydrateDashboard);
         window.addEventListener('stateChanged', hydrateDashboard);
     </script>
 </Layout>

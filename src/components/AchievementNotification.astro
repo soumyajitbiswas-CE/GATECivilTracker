@@ -1,0 +1,144 @@
+---
+// Achievement Notification Component
+---
+<div id="achievement-notification-overlay" class="fixed inset-0 pointer-events-none z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] notification-backdrop transition-opacity duration-300"></div>
+    
+    <div id="achievement-card" class="relative z-10 flex flex-col items-center scale-90 opacity-0 transition-all duration-500 ease-out">
+        <!-- Rarity specific background glow -->
+        <div id="ach-glow" class="absolute inset-0 rounded-full blur-3xl opacity-0 scale-50 transition-all duration-700"></div>
+        
+        <p id="ach-title" class="text-white font-bold tracking-widest uppercase text-sm sm:text-base mb-4 drop-shadow-md opacity-0 -translate-y-4 transition-all duration-500 delay-300">ACHIEVEMENT UNLOCKED</p>
+        
+        <div class="relative group">
+            <!-- Icon -->
+            <img id="ach-icon" src="" alt="Achievement" class="w-32 h-32 sm:w-40 sm:h-40 object-contain drop-shadow-2xl z-10 relative">
+            
+            <!-- Particles container -->
+            <div id="ach-particles" class="absolute inset-0 pointer-events-none"></div>
+        </div>
+        
+        <h2 id="ach-name" class="text-2xl sm:text-3xl font-bold text-white mt-4 drop-shadow-lg opacity-0 translate-y-2 transition-all duration-500 delay-400">Name</h2>
+        
+        <div class="flex items-center gap-3 mt-2 opacity-0 translate-y-2 transition-all duration-500 delay-500" id="ach-meta">
+            <span id="ach-rarity" class="uppercase text-xs sm:text-sm font-bold tracking-wider px-2 py-0.5 rounded border">RARITY</span>
+            <span id="ach-xp" class="text-primary-accent font-bold text-sm sm:text-base drop-shadow-[0_0_4px_rgba(74,222,128,0.5)]">+0 XP</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // @ts-nocheck
+    import { playAchievementSound } from '../utils/audioSystem.js';
+
+    let queue = [];
+    let isPlaying = false;
+
+    const overlay = document.getElementById('achievement-notification-overlay');
+    const card = document.getElementById('achievement-card');
+    const glow = document.getElementById('ach-glow');
+    const title = document.getElementById('ach-title');
+    const icon = document.getElementById('ach-icon');
+    const nameEl = document.getElementById('ach-name');
+    const meta = document.getElementById('ach-meta');
+    const rarityEl = document.getElementById('ach-rarity');
+    const xpEl = document.getElementById('ach-xp');
+
+    const rarityStyles = {
+        'Common': { color: 'white', bg: 'bg-white', border: 'border-white', glow: 'bg-white/20', shadow: 'drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' },
+        'Uncommon': { color: '#86efac', bg: 'bg-[#86efac]', border: 'border-[#86efac]', glow: 'bg-[#86efac]/30', shadow: 'drop-shadow-[0_0_12px_rgba(134,239,172,0.8)]' },
+        'Rare': { color: '#60a5fa', bg: 'bg-[#60a5fa]', border: 'border-[#60a5fa]', glow: 'bg-[#60a5fa]/40', shadow: 'drop-shadow-[0_0_16px_rgba(134,239,172,0.85)]' },
+        'Epic': { color: '#c084fc', bg: 'bg-[#c084fc]', border: 'border-[#c084fc]', glow: 'bg-[#c084fc]/50', shadow: 'drop-shadow-[0_0_20px_rgba(192,132,252,0.9)]' },
+        'Legendary': { color: '#fbbf24', bg: 'bg-[#fbbf24]', border: 'border-[#fbbf24]', glow: 'bg-[#fbbf24]/60', shadow: 'drop-shadow-[0_0_30px_rgba(251,191,36,1)]' },
+    };
+
+    window.addEventListener('achievementsUnlocked', (e) => {
+        const { detail: newAchievements } = e;
+        if (newAchievements && newAchievements.length > 0) {
+            queue.push(...newAchievements);
+            processQueue();
+        }
+    });
+
+    async function processQueue() {
+        if (isPlaying || queue.length === 0) return;
+        isPlaying = true;
+
+        const ach = queue.shift();
+        await showNotification(ach);
+
+        isPlaying = false;
+        if (queue.length > 0) {
+            setTimeout(processQueue, 500);
+        }
+    }
+
+    function showNotification(ach) {
+        return new Promise(resolve => {
+            const style = rarityStyles[ach.rarity] || rarityStyles['Common'];
+            
+            // Setup content
+            icon.src = `/achievements/icons/${ach.id}.png`;
+            nameEl.textContent = ach.name;
+            rarityEl.textContent = ach.rarity;
+            rarityEl.className = `uppercase text-xs sm:text-sm font-bold tracking-wider px-2 py-0.5 rounded border ${style.border} text-[${style.color}]`;
+            rarityEl.style.color = style.color;
+            xpEl.textContent = `+${ach.xp} XP`;
+            
+            glow.className = `absolute inset-0 rounded-full blur-3xl opacity-0 scale-50 transition-all duration-700 ${style.glow}`;
+            icon.className = `w-32 h-32 sm:w-40 sm:h-40 object-contain z-10 relative transition-transform duration-500 ${style.shadow}`;
+
+            // Reset animations
+            overlay.classList.remove('hidden');
+            // Force reflow
+            void overlay.offsetWidth;
+
+            // 0.0 - 0.3 sec: overlay fade in
+            overlay.classList.remove('opacity-0');
+            
+            setTimeout(() => {
+                // 0.3 sec: Card and icon scale in, play sound
+                playAchievementSound(ach.rarity);
+                card.classList.remove('scale-90', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+                icon.classList.add('scale-110');
+            }, 300);
+
+            setTimeout(() => {
+                // 0.7 sec: Text appears, glow expands
+                title.classList.remove('opacity-0', '-translate-y-4');
+                nameEl.classList.remove('opacity-0', 'translate-y-2');
+                meta.classList.remove('opacity-0', 'translate-y-2');
+                
+                glow.classList.remove('opacity-0', 'scale-50');
+                glow.classList.add('opacity-100', 'scale-150');
+            }, 700);
+
+            setTimeout(() => {
+                // 1.8 sec: Settle
+                icon.classList.remove('scale-110');
+                glow.classList.remove('scale-150');
+                glow.classList.add('scale-125');
+            }, 1800);
+
+            setTimeout(() => {
+                // 2.7 sec: Fade away smoothly
+                overlay.classList.add('opacity-0');
+                card.classList.remove('scale-100', 'opacity-100');
+                card.classList.add('scale-90', 'opacity-0');
+                
+                title.classList.add('opacity-0', '-translate-y-4');
+                nameEl.classList.add('opacity-0', 'translate-y-2');
+                meta.classList.add('opacity-0', 'translate-y-2');
+                glow.classList.add('opacity-0', 'scale-50');
+                glow.classList.remove('opacity-100', 'scale-125');
+            }, 2700);
+
+            setTimeout(() => {
+                // 3.0 sec: Cleanup
+                overlay.classList.add('hidden');
+                resolve();
+            }, 3000);
+        });
+    }
+</script>

@@ -1,0 +1,1043 @@
+{
+  "summary": {
+    "project": "GATE Civil Tracker",
+    "total_achievements": 110,
+    "rarity_counts": {
+      "Common": 50,
+      "Uncommon": 25,
+      "Rare": 18,
+      "Epic": 14,
+      "Legendary": 3
+    },
+    "visual_spec": {
+      "canvas": "512x512",
+      "format": "PNG RGBA / transparent",
+      "base": "near-black / deep-green",
+      "emblem": "high-detail green technical gaming-HUD style",
+      "borders": {
+        "Common": "white",
+        "Uncommon": "light green",
+        "Rare": "blue",
+        "Epic": "purple",
+        "Legendary": "gold"
+      }
+    },
+    "xp_economy": {
+      "Common": "10–25 XP",
+      "Uncommon": "30–55 XP",
+      "Rare": "60–90 XP",
+      "Epic": "100–150 XP",
+      "Legendary": "300–750 XP",
+      "stacking": "All earlier milestone achievements remain unlocked.",
+      "hours": [
+        "100h Common",
+        "250h Uncommon",
+        "500h Rare",
+        "750h Rare",
+        "1000h Epic",
+        "1300h Legendary"
+      ],
+      "streak": "Any positive-duration study entry makes a calendar day count."
+    },
+    "implementation_rules": [
+      "Read current user-configured targets for syllabus, PYQs, tests, mocks and revision.",
+      "Do not hardcode PYQ/test/mock/revision total targets into achievement logic.",
+      "Use the live Overall GATE Readiness calculation for The Endgame.",
+      "Evaluate achievements after relevant state changes and on data import/reset.",
+      "Persist unlocked IDs and cumulative XP.",
+      "Achievement thresholds stack; later milestones do not replace earlier ones."
+    ]
+  },
+  "achievements": [
+    {
+      "id": "ACH-001",
+      "name": "Boot Sequence",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Log your first study session.",
+      "description": "Unlock after the first valid study-hour entry is saved.",
+      "icon_concept": "Power-core boot ring with a tiny study clock and green ignition pulse."
+    },
+    {
+      "id": "ACH-002",
+      "name": "First Clear",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete your first syllabus topic.",
+      "description": "Unlock when any syllabus topic reaches 100% completion.",
+      "icon_concept": "Blueprint panel stamped by a sharp completed check."
+    },
+    {
+      "id": "ACH-003",
+      "name": "Daily Driver",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Study on 3 separate calendar days.",
+      "description": "Unlock after study is logged on 3 distinct dates.",
+      "icon_concept": "Three linked calendar nodes circling a forward arrow."
+    },
+    {
+      "id": "ACH-004",
+      "name": "Keep Rolling",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Reach a 7-day study streak.",
+      "description": "Unlock when study is logged on 7 consecutive calendar days; any positive duration counts.",
+      "icon_concept": "Seven bright streak segments wrapped around a flame core."
+    },
+    {
+      "id": "ACH-005",
+      "name": "Time Banked",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Accumulate 25 total study hours.",
+      "description": "Unlock at total study hours >= 25.",
+      "icon_concept": "Hourglass holding glowing stored-hour particles."
+    },
+    {
+      "id": "ACH-006",
+      "name": "Loadout Ready",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete any 3 syllabus topics.",
+      "description": "Unlock when three distinct syllabus topics reach 100%.",
+      "icon_concept": "Three technical blueprint modules locking into one chassis."
+    },
+    {
+      "id": "ACH-007",
+      "name": "Page Turner",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Study on 5 separate days using a syllabus area.",
+      "description": "Unlock when at least five distinct study dates include syllabus activity.",
+      "icon_concept": "Technical book with layered pages and data marks."
+    },
+    {
+      "id": "ACH-008",
+      "name": "XP Loaded",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Solve 25 tracked questions.",
+      "description": "Unlock when total recorded solved questions >= 25.",
+      "icon_concept": "XP cartridge filling from 0 to 25 with a glowing tick."
+    },
+    {
+      "id": "ACH-009",
+      "name": "Lock In",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Log study on 10 separate calendar days.",
+      "description": "Unlock when total distinct study dates >= 10.",
+      "icon_concept": "Mechanical target snapping into a focused reticle."
+    },
+    {
+      "id": "ACH-010",
+      "name": "Clean Record",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Finish 5 syllabus topics and keep them complete.",
+      "description": "Unlock after five topics hit 100% and remain complete.",
+      "icon_concept": "Sealed completion plate with five green check nodes."
+    },
+    {
+      "id": "ACH-011",
+      "name": "Hour Hunter",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Accumulate 50 total study hours.",
+      "description": "Unlock at total study hours >= 50.",
+      "icon_concept": "Deep hourglass with orbiting minute markers."
+    },
+    {
+      "id": "ACH-012",
+      "name": "Brain Online",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete your first subject.",
+      "description": "Unlock when any configured subject reaches 100% syllabus completion.",
+      "icon_concept": "Neural-core emblem built from circuit paths."
+    },
+    {
+      "id": "ACH-013",
+      "name": "Layer Up",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete 10 syllabus topics.",
+      "description": "Unlock when 10 distinct syllabus topics are complete.",
+      "icon_concept": "Ten stacked structural layers rising upward."
+    },
+    {
+      "id": "ACH-014",
+      "name": "Piece by Piece",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete 15 syllabus topics.",
+      "description": "Unlock when 15 distinct syllabus topics are complete.",
+      "icon_concept": "Interlocking geometric blocks forming a finished core."
+    },
+    {
+      "id": "ACH-015",
+      "name": "Star Player",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Earn 100 achievement XP.",
+      "description": "Unlock when cumulative achievement XP reaches 100.",
+      "icon_concept": "Bright star with small orbiting XP shards."
+    },
+    {
+      "id": "ACH-016",
+      "name": "Deep Dive",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Study one subject on 5 separate dates.",
+      "description": "Unlock when one subject has study history on at least five dates.",
+      "icon_concept": "Technical dive gauge descending into a data well."
+    },
+    {
+      "id": "ACH-017",
+      "name": "Task Cleared",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete 10 tracked checklist/test/revision items.",
+      "description": "Unlock after ten configured completion items are cleared.",
+      "icon_concept": "Mission panel with ten lit completion slots."
+    },
+    {
+      "id": "ACH-018",
+      "name": "Overclocked",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Log 3 or more study sessions in one day.",
+      "description": "Unlock when one date contains at least three saved study sessions.",
+      "icon_concept": "Power coil spinning around three session nodes."
+    },
+    {
+      "id": "ACH-019",
+      "name": "Small W",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete a target that began at 50% or less.",
+      "description": "Unlock when a configured target reaches 100% after starting at <=50%.",
+      "icon_concept": "Compact trophy rising from a half-filled bar."
+    },
+    {
+      "id": "ACH-020",
+      "name": "Comeback Code",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Return after a 7-day study gap.",
+      "description": "Unlock when a new study entry occurs after a gap of at least seven days.",
+      "icon_concept": "Broken circuit loop reconnecting with a green spark."
+    },
+    {
+      "id": "ACH-021",
+      "name": "Question Grinder",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Solve 100 total tracked questions.",
+      "description": "Unlock when total solved questions >= 100.",
+      "icon_concept": "Drill bit boring through stacked question panels."
+    },
+    {
+      "id": "ACH-022",
+      "name": "Topic Hunter",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete 20 syllabus topics.",
+      "description": "Unlock when 20 distinct syllabus topics are complete.",
+      "icon_concept": "Reticle scanning a cluster of completed topic nodes."
+    },
+    {
+      "id": "ACH-023",
+      "name": "No Zero Day",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Reach a 14-day study streak.",
+      "description": "Unlock at 14 consecutive calendar days with positive study time.",
+      "icon_concept": "Unbroken green line across fourteen calendar markers."
+    },
+    {
+      "id": "ACH-024",
+      "name": "Scoreboard",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Complete your first tracked test.",
+      "description": "Unlock when any configured test is completed.",
+      "icon_concept": "Competitive scoreboard with one result slot glowing."
+    },
+    {
+      "id": "ACH-025",
+      "name": "Warm Start",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Complete your first topic test.",
+      "description": "Unlock when one topic test is completed.",
+      "icon_concept": "Assessment console powering on."
+    },
+    {
+      "id": "ACH-026",
+      "name": "Subject Scout",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Begin activity in every configured GATE CE subject.",
+      "description": "Unlock when every configured subject has at least one tracked activity entry.",
+      "icon_concept": "Radar sweeping across all subject cores."
+    },
+    {
+      "id": "ACH-027",
+      "name": "Blueprint Reader",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Reach 25% completion in any subject.",
+      "description": "Unlock when any subject first reaches >=25% syllabus completion.",
+      "icon_concept": "Folded blueprint with its first quadrant lit."
+    },
+    {
+      "id": "ACH-028",
+      "name": "Green Line",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Bring any subject above 50% completion.",
+      "description": "Unlock when any subject crosses >50% syllabus completion.",
+      "icon_concept": "Progress beam cutting through a technical drawing."
+    },
+    {
+      "id": "ACH-029",
+      "name": "Halfway House",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Reach 50% overall GATE readiness.",
+      "description": "Unlock when overall readiness reaches >=50%.",
+      "icon_concept": "Half-filled readiness reactor ring."
+    },
+    {
+      "id": "ACH-030",
+      "name": "Question Burst",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Solve 25 questions in one day.",
+      "description": "Unlock when a single date records >=25 solved questions.",
+      "icon_concept": "Burst of question cards around a central target."
+    },
+    {
+      "id": "ACH-031",
+      "name": "Streak Sparks",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Reach a 21-day study streak.",
+      "description": "Unlock at 21 consecutive study days.",
+      "icon_concept": "Twenty-one sparks linked into a chain."
+    },
+    {
+      "id": "ACH-032",
+      "name": "Session Stack",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Log 20 total study sessions.",
+      "description": "Unlock when total saved study sessions >=20.",
+      "icon_concept": "Vertical stack of glowing session chips."
+    },
+    {
+      "id": "ACH-033",
+      "name": "Night Shift",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Study on 5 different dates after 8 PM.",
+      "description": "Unlock when five distinct dates contain a session starting at or after 20:00.",
+      "icon_concept": "Moon dial fused with a precision clock."
+    },
+    {
+      "id": "ACH-034",
+      "name": "Early Queue",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Study on 5 different dates before 7 AM.",
+      "description": "Unlock when five distinct dates contain a session before 07:00.",
+      "icon_concept": "Sunrise gauge fused with a morning clock."
+    },
+    {
+      "id": "ACH-035",
+      "name": "Two-Subject Day",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Study two different subjects on the same day.",
+      "description": "Unlock when one date contains study entries for at least two subjects.",
+      "icon_concept": "Two subject cores connected to one daily node."
+    },
+    {
+      "id": "ACH-036",
+      "name": "Three-Subject Day",
+      "rarity": "Common",
+      "xp": 25,
+      "unlock_condition": "Study three different subjects on the same day.",
+      "description": "Unlock when one date contains study entries for at least three subjects.",
+      "icon_concept": "Three subject modules feeding one bright hub."
+    },
+    {
+      "id": "ACH-037",
+      "name": "Revision Spark",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Complete your first revision unit.",
+      "description": "Unlock when any configured revision item is completed.",
+      "icon_concept": "Refresh arrow around a highlighted revision panel."
+    },
+    {
+      "id": "ACH-038",
+      "name": "PYQ Starter",
+      "rarity": "Common",
+      "xp": 10,
+      "unlock_condition": "Solve 25 questions from one subject.",
+      "description": "Unlock when one subject has >=25 solved questions.",
+      "icon_concept": "Starter emblem made from stacked question sheets."
+    },
+    {
+      "id": "ACH-039",
+      "name": "Test Tuner",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Complete 5 topic tests.",
+      "description": "Unlock when completed topic tests >=5.",
+      "icon_concept": "Five assessment dials around a test core."
+    },
+    {
+      "id": "ACH-040",
+      "name": "Mock Loading",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Complete or record your first full-length mock.",
+      "description": "Unlock after the first full-length mock is recorded according to the tracker definition.",
+      "icon_concept": "Loading ring surrounding a mock-paper core."
+    },
+    {
+      "id": "ACH-041",
+      "name": "Revision Ready",
+      "rarity": "Common",
+      "xp": 15,
+      "unlock_condition": "Reach 25% overall revision completion.",
+      "description": "Unlock when configured revision completion reaches >=25%.",
+      "icon_concept": "Quarter-filled circular revision ring."
+    },
+    {
+      "id": "ACH-042",
+      "name": "Score Chaser",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Set a new personal-best test/mock score.",
+      "description": "Unlock when a new score exceeds the user's previous personal best.",
+      "icon_concept": "Ascending score arrow breaking a benchmark."
+    },
+    {
+      "id": "ACH-043",
+      "name": "Data Stacked",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Export tracker data successfully once.",
+      "description": "Unlock after one successful export operation.",
+      "icon_concept": "Data cartridge rising from a database core."
+    },
+    {
+      "id": "ACH-044",
+      "name": "Backup Runner",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Import tracker data successfully once.",
+      "description": "Unlock after one successful import operation.",
+      "icon_concept": "Database core receiving a bright transfer arrow."
+    },
+    {
+      "id": "ACH-045",
+      "name": "Steady Hand",
+      "rarity": "Common",
+      "xp": 20,
+      "unlock_condition": "Complete 3 tracked items in one day.",
+      "description": "Unlock when three distinct tracker completion actions occur on one date.",
+      "icon_concept": "Precision cursor landing on three checkpoints."
+    },
+    {
+      "id": "ACH-046",
+      "name": "Final Push",
+      "rarity": "Common",
+      "xp": 25,
+      "unlock_condition": "Move a subject from below 50% to at least 75%.",
+      "description": "Unlock when a subject crosses from <50% to >=75% completion.",
+      "icon_concept": "Compressed spring launching a progress beam."
+    },
+    {
+      "id": "ACH-047",
+      "name": "Study Engine",
+      "rarity": "Common",
+      "xp": 25,
+      "unlock_condition": "Accumulate 100 total study hours.",
+      "description": "Unlock at total study hours >=100.",
+      "icon_concept": "Engine core stamped with a 100-hour dial."
+    },
+    {
+      "id": "ACH-048",
+      "name": "Quartermaster",
+      "rarity": "Uncommon",
+      "xp": 30,
+      "unlock_condition": "Complete 25 syllabus topics.",
+      "description": "Unlock when 25 distinct syllabus topics are complete.",
+      "icon_concept": "Blueprint supply crate filled with completed modules."
+    },
+    {
+      "id": "ACH-049",
+      "name": "Second Wind",
+      "rarity": "Uncommon",
+      "xp": 30,
+      "unlock_condition": "Return after a 14-day gap and log at least 2 hours that day.",
+      "description": "Unlock after a >=14-day gap followed by >=2 hours logged that day.",
+      "icon_concept": "Re-ignition core with a phoenix-like energy arc."
+    },
+    {
+      "id": "ACH-050",
+      "name": "Streak Runner",
+      "rarity": "Uncommon",
+      "xp": 35,
+      "unlock_condition": "Reach a 30-day study streak.",
+      "description": "Unlock at 30 consecutive study days.",
+      "icon_concept": "Thirty linked calendar markers forming a running track."
+    },
+    {
+      "id": "ACH-051",
+      "name": "Deep Work",
+      "rarity": "Uncommon",
+      "xp": 35,
+      "unlock_condition": "Accumulate 150 total study hours.",
+      "description": "Unlock at total study hours >=150.",
+      "icon_concept": "Deep reactor with layered 150-hour rings."
+    },
+    {
+      "id": "ACH-052",
+      "name": "PYQ Runner",
+      "rarity": "Uncommon",
+      "xp": 35,
+      "unlock_condition": "Solve 250 total tracked questions.",
+      "description": "Unlock when total solved questions >=250.",
+      "icon_concept": "Velocity arrow driving through a question stack."
+    },
+    {
+      "id": "ACH-053",
+      "name": "Test Veteran",
+      "rarity": "Uncommon",
+      "xp": 35,
+      "unlock_condition": "Complete 10 topic tests and 5 subject tests.",
+      "description": "Unlock when both test thresholds are satisfied.",
+      "icon_concept": "Veteran crest made from multiple test panels."
+    },
+    {
+      "id": "ACH-054",
+      "name": "Mock Veteran",
+      "rarity": "Uncommon",
+      "xp": 40,
+      "unlock_condition": "Complete 3 full-length mocks.",
+      "description": "Unlock when full-length mocks completed >=3.",
+      "icon_concept": "Three mock papers behind a hardened shield."
+    },
+    {
+      "id": "ACH-055",
+      "name": "Revision Cycle",
+      "rarity": "Uncommon",
+      "xp": 40,
+      "unlock_condition": "Complete the first revision pass for every subject.",
+      "description": "Unlock when every configured subject's first-revision target is complete.",
+      "icon_concept": "Full circular refresh ring segmented by subjects."
+    },
+    {
+      "id": "ACH-056",
+      "name": "Subject Combo",
+      "rarity": "Uncommon",
+      "xp": 35,
+      "unlock_condition": "Fully complete any 3 subjects.",
+      "description": "Unlock when three subjects reach 100% syllabus completion.",
+      "icon_concept": "Three completed subject cores orbiting one hub."
+    },
+    {
+      "id": "ACH-057",
+      "name": "Target Breaker",
+      "rarity": "Uncommon",
+      "xp": 35,
+      "unlock_condition": "Beat a personal completion-time baseline by 25% or more.",
+      "description": "Unlock when a tracked target is completed >=25% faster than a valid stored baseline exists.",
+      "icon_concept": "Speedometer smashing through a benchmark."
+    },
+    {
+      "id": "ACH-058",
+      "name": "Accuracy Arc",
+      "rarity": "Uncommon",
+      "xp": 35,
+      "unlock_condition": "Maintain at least 80% accuracy across 100 solved questions in one subject.",
+      "description": "Unlock when a subject has >=100 solved and >=80% accuracy.",
+      "icon_concept": "Precision arc wrapped around a target."
+    },
+    {
+      "id": "ACH-059",
+      "name": "Clean Sweep",
+      "rarity": "Uncommon",
+      "xp": 45,
+      "unlock_condition": "Complete syllabus, PYQs, and at least one test for one subject.",
+      "description": "Unlock when those three conditions hold for the same subject.",
+      "icon_concept": "Sweeping beam clearing three linked panels."
+    },
+    {
+      "id": "ACH-060",
+      "name": "Study Weekender",
+      "rarity": "Uncommon",
+      "xp": 35,
+      "unlock_condition": "Study both Saturday and Sunday across 4 consecutive weekends.",
+      "description": "Unlock when both weekend days contain study entries for four consecutive weekends.",
+      "icon_concept": "Weekend calendar ring with four linked loops."
+    },
+    {
+      "id": "ACH-061",
+      "name": "Triple Lock",
+      "rarity": "Uncommon",
+      "xp": 40,
+      "unlock_condition": "Complete syllabus, PYQs and tests for one subject to 100%.",
+      "description": "Unlock when all three configured subject systems reach 100%.",
+      "icon_concept": "Three mechanical locks opening around one subject core."
+    },
+    {
+      "id": "ACH-062",
+      "name": "Mock Climber",
+      "rarity": "Uncommon",
+      "xp": 45,
+      "unlock_condition": "Improve mock score three times consecutively.",
+      "description": "Unlock when each of three consecutive mocks beats the previous score.",
+      "icon_concept": "Climbing graph over three score plates."
+    },
+    {
+      "id": "ACH-063",
+      "name": "Hour Vault",
+      "rarity": "Uncommon",
+      "xp": 50,
+      "unlock_condition": "Accumulate 250 total study hours.",
+      "description": "Unlock at total study hours >=250.",
+      "icon_concept": "Heavy vault door with a 250-hour dial."
+    },
+    {
+      "id": "ACH-064",
+      "name": "Streak Forge",
+      "rarity": "Uncommon",
+      "xp": 45,
+      "unlock_condition": "Reach a 50-day study streak.",
+      "description": "Unlock at 50 consecutive study days.",
+      "icon_concept": "Forged chain wrapped around a hot green core."
+    },
+    {
+      "id": "ACH-065",
+      "name": "Topic Sweep",
+      "rarity": "Uncommon",
+      "xp": 40,
+      "unlock_condition": "Complete every topic in one subject.",
+      "description": "Unlock when every topic in one subject is complete.",
+      "icon_concept": "Sweep radar clearing every topic dot."
+    },
+    {
+      "id": "ACH-066",
+      "name": "Question Flood",
+      "rarity": "Uncommon",
+      "xp": 45,
+      "unlock_condition": "Solve 500 total tracked questions.",
+      "description": "Unlock when total solved questions >=500.",
+      "icon_concept": "Wave of question cards flowing through a channel."
+    },
+    {
+      "id": "ACH-067",
+      "name": "Focus Block",
+      "rarity": "Uncommon",
+      "xp": 40,
+      "unlock_condition": "Complete 20 study sessions of at least 60 minutes each.",
+      "description": "Unlock when 20 saved sessions meet the >=60-minute threshold.",
+      "icon_concept": "Twenty reinforced hour blocks aligned into one beam."
+    },
+    {
+      "id": "ACH-068",
+      "name": "Subject Marathon",
+      "rarity": "Uncommon",
+      "xp": 45,
+      "unlock_condition": "Study one subject on 14 separate dates.",
+      "description": "Unlock when one subject has study history on at least 14 dates.",
+      "icon_concept": "Marathon track wrapped around a subject emblem."
+    },
+    {
+      "id": "ACH-069",
+      "name": "Milestone Stack",
+      "rarity": "Uncommon",
+      "xp": 40,
+      "unlock_condition": "Unlock 10 Common achievements.",
+      "description": "Unlock when at least 10 Common achievements are unlocked.",
+      "icon_concept": "Ten common badge shards stacked into a tower."
+    },
+    {
+      "id": "ACH-070",
+      "name": "XP Surge",
+      "rarity": "Uncommon",
+      "xp": 40,
+      "unlock_condition": "Reach 1,000 total achievement XP.",
+      "description": "Unlock when cumulative achievement XP >=1,000.",
+      "icon_concept": "XP burst crossing a 1K crystal."
+    },
+    {
+      "id": "ACH-071",
+      "name": "Revision Driver",
+      "rarity": "Uncommon",
+      "xp": 45,
+      "unlock_condition": "Complete first revision for 5 subjects.",
+      "description": "Unlock when five subjects have their first-revision target complete.",
+      "icon_concept": "Five refresh rings synchronized into one drive wheel."
+    },
+    {
+      "id": "ACH-072",
+      "name": "Prep Multiplier",
+      "rarity": "Uncommon",
+      "xp": 50,
+      "unlock_condition": "Complete syllabus targets for 4 subjects and log at least 150 total study hours.",
+      "description": "Unlock when both thresholds are met.",
+      "icon_concept": "Four subject cores feeding a central engine."
+    },
+    {
+      "id": "ACH-073",
+      "name": "Half-K Grind",
+      "rarity": "Rare",
+      "xp": 60,
+      "unlock_condition": "Accumulate 500 total study hours.",
+      "description": "Unlock at total study hours >=500.",
+      "icon_concept": "Massive hourglass with a 500-hour core and orbiting study shards."
+    },
+    {
+      "id": "ACH-074",
+      "name": "750 Grind",
+      "rarity": "Rare",
+      "xp": 75,
+      "unlock_condition": "Accumulate 750 total study hours.",
+      "description": "Unlock at total study hours >=750.",
+      "icon_concept": "Industrial study engine with a 750-hour power ring."
+    },
+    {
+      "id": "ACH-075",
+      "name": "Streak Operator",
+      "rarity": "Rare",
+      "xp": 65,
+      "unlock_condition": "Reach a 75-day study streak.",
+      "description": "Unlock at 75 consecutive study days.",
+      "icon_concept": "Command-console badge surrounded by 75 streak nodes."
+    },
+    {
+      "id": "ACH-076",
+      "name": "Century Grind",
+      "rarity": "Rare",
+      "xp": 65,
+      "unlock_condition": "Reach a 100-day study streak.",
+      "description": "Unlock at 100 consecutive study days.",
+      "icon_concept": "Hundred-link chain fused into a circular emblem."
+    },
+    {
+      "id": "ACH-077",
+      "name": "Question Mountain",
+      "rarity": "Rare",
+      "xp": 65,
+      "unlock_condition": "Solve 1,000 tracked questions.",
+      "description": "Unlock when total solved questions >=1,000.",
+      "icon_concept": "Mountain of question sheets with a summit marker."
+    },
+    {
+      "id": "ACH-078",
+      "name": "PYQ Dominator",
+      "rarity": "Rare",
+      "xp": 80,
+      "unlock_condition": "Complete PYQ targets for 3 configured subjects.",
+      "description": "Unlock when three subjects' PYQ targets each reach 100%.",
+      "icon_concept": "Three cleared question-core towers under a dominator crest."
+    },
+    {
+      "id": "ACH-079",
+      "name": "Test Commander",
+      "rarity": "Rare",
+      "xp": 75,
+      "unlock_condition": "Complete every configured test for 3 configured subjects.",
+      "description": "Unlock when three subjects have all configured tests complete.",
+      "icon_concept": "Three command consoles fully lit."
+    },
+    {
+      "id": "ACH-080",
+      "name": "Mock Specialist",
+      "rarity": "Rare",
+      "xp": 80,
+      "unlock_condition": "Complete 10 full-length mocks.",
+      "description": "Unlock when completed full-length mocks >=10.",
+      "icon_concept": "Elite mock insignia built from ten papers."
+    },
+    {
+      "id": "ACH-081",
+      "name": "Revision Ace",
+      "rarity": "Rare",
+      "xp": 80,
+      "unlock_condition": "Complete second revision for every configured subject.",
+      "description": "Unlock when every subject's second-revision target is complete.",
+      "icon_concept": "Double-loop revision crest with all subject nodes lit."
+    },
+    {
+      "id": "ACH-082",
+      "name": "Subject Conqueror",
+      "rarity": "Rare",
+      "xp": 80,
+      "unlock_condition": "Fully complete 5 subjects, including syllabus and PYQ target.",
+      "description": "Unlock when five subjects have syllabus=100% and PYQ=100%.",
+      "icon_concept": "Five conquered subject pillars beneath a fortress crest."
+    },
+    {
+      "id": "ACH-083",
+      "name": "Accuracy Master",
+      "rarity": "Rare",
+      "xp": 70,
+      "unlock_condition": "Maintain >=85% accuracy over 500 solved questions in one subject.",
+      "description": "Unlock when one subject has >=500 solved and >=85% accuracy.",
+      "icon_concept": "Precision sight locked to an 85% ring."
+    },
+    {
+      "id": "ACH-084",
+      "name": "Comeback King",
+      "rarity": "Rare",
+      "xp": 75,
+      "unlock_condition": "After a 30+ day study gap, log 10 total hours within the next 7 days.",
+      "description": "Unlock when the recovery window condition is satisfied.",
+      "icon_concept": "Crowned comeback circuit rising from a broken calendar."
+    },
+    {
+      "id": "ACH-085",
+      "name": "Full Stack Prep",
+      "rarity": "Rare",
+      "xp": 85,
+      "unlock_condition": "Complete syllabus + PYQ + tests for 3 subjects.",
+      "description": "Unlock when all three systems hit 100% for the same three subjects.",
+      "icon_concept": "Three vertical preparation stacks fully charged."
+    },
+    {
+      "id": "ACH-086",
+      "name": "Four-Week Lock",
+      "rarity": "Rare",
+      "xp": 70,
+      "unlock_condition": "Study at least once on every day for 28 consecutive days.",
+      "description": "Unlock at a 28-day uninterrupted study run.",
+      "icon_concept": "Twenty-eight linked nodes forming a closed ring."
+    },
+    {
+      "id": "ACH-087",
+      "name": "Mega Session",
+      "rarity": "Rare",
+      "xp": 65,
+      "unlock_condition": "Log one study session of at least 4 hours.",
+      "description": "Unlock when a saved session duration >=240 minutes.",
+      "icon_concept": "Giant timer core with a four-hour power crystal."
+    },
+    {
+      "id": "ACH-088",
+      "name": "XP Hunter",
+      "rarity": "Rare",
+      "xp": 75,
+      "unlock_condition": "Reach 2,500 total achievement XP.",
+      "description": "Unlock when cumulative achievement XP >=2,500.",
+      "icon_concept": "Hunting reticle tracking a 2.5K XP crystal."
+    },
+    {
+      "id": "ACH-089",
+      "name": "Rare Collector",
+      "rarity": "Rare",
+      "xp": 90,
+      "unlock_condition": "Unlock 10 Rare-or-higher achievements.",
+      "description": "Unlock when at least ten Rare/Epic/Legendary achievements are unlocked.",
+      "icon_concept": "Collector crest assembled from high-tier insignias."
+    },
+    {
+      "id": "ACH-090",
+      "name": "Pressure Tested",
+      "rarity": "Rare",
+      "xp": 85,
+      "unlock_condition": "Complete 5 full-length mocks and achieve a personal-best score in one.",
+      "description": "Unlock when both mock count and personal-best condition are satisfied.",
+      "icon_concept": "Pressure chamber surrounding a mock trophy."
+    },
+    {
+      "id": "ACH-091",
+      "name": "Aptitude Ascended",
+      "rarity": "Epic",
+      "xp": 100,
+      "unlock_condition": "General Aptitude 100% complete.",
+      "description": "Unlock when the user's configured General Aptitude syllabus reaches 100%.",
+      "icon_concept": "High-detail aptitude core with logic symbols, percentage arcs and a completed blueprint."
+    },
+    {
+      "id": "ACH-092",
+      "name": "Maths Mainframe",
+      "rarity": "Epic",
+      "xp": 100,
+      "unlock_condition": "Engineering Mathematics 100% complete.",
+      "description": "Unlock when the user's configured Engineering Mathematics syllabus reaches 100%.",
+      "icon_concept": "Mathematical reactor combining sigma geometry, calculus curves and vector axes."
+    },
+    {
+      "id": "ACH-093",
+      "name": "Structural Overlord",
+      "rarity": "Epic",
+      "xp": 110,
+      "unlock_condition": "Structural Engineering 100% complete.",
+      "description": "Unlock when the user's configured Structural Engineering syllabus reaches 100%.",
+      "icon_concept": "Load-bearing steel frame with force arrows, joints and stress core."
+    },
+    {
+      "id": "ACH-094",
+      "name": "Groundbreaker",
+      "rarity": "Epic",
+      "xp": 110,
+      "unlock_condition": "Geotechnical Engineering 100% complete.",
+      "description": "Unlock when the user's configured Geotechnical Engineering syllabus reaches 100%.",
+      "icon_concept": "Layered soil strata, foundation block and stress contours converging on a core."
+    },
+    {
+      "id": "ACH-095",
+      "name": "Hydraulic Crown",
+      "rarity": "Epic",
+      "xp": 110,
+      "unlock_condition": "Water Resources Engineering 100% complete.",
+      "description": "Unlock when the user's configured Water Resources Engineering syllabus reaches 100%.",
+      "icon_concept": "Dam, hydraulic flow paths, contour lines and water-engineering crown."
+    },
+    {
+      "id": "ACH-096",
+      "name": "Eco Protocol Complete",
+      "rarity": "Epic",
+      "xp": 110,
+      "unlock_condition": "Environmental Engineering 100% complete.",
+      "description": "Unlock when the user's configured Environmental Engineering syllabus reaches 100%.",
+      "icon_concept": "Environmental core combining leaf structure, droplet, treatment geometry and circular flow."
+    },
+    {
+      "id": "ACH-097",
+      "name": "Transit Architect",
+      "rarity": "Epic",
+      "xp": 110,
+      "unlock_condition": "Transportation Engineering 100% complete.",
+      "description": "Unlock when the user's configured Transportation Engineering syllabus reaches 100%.",
+      "icon_concept": "Road/rail interchange, bridge span and precise route geometry."
+    },
+    {
+      "id": "ACH-098",
+      "name": "Surveyor Prime",
+      "rarity": "Epic",
+      "xp": 110,
+      "unlock_condition": "Geomatics Engineering 100% complete.",
+      "description": "Unlock when the user's configured Geomatics Engineering syllabus reaches 100%.",
+      "icon_concept": "Total-station inspired instrument fused with triangulation and coordinate grid."
+    },
+    {
+      "id": "ACH-099",
+      "name": "Buildmaster",
+      "rarity": "Epic",
+      "xp": 110,
+      "unlock_condition": "Construction Materials and Management 100% complete.",
+      "description": "Unlock when the user's configured Construction Materials and Management syllabus reaches 100%.",
+      "icon_concept": "Construction helmet, blueprint frame, material cube and project grid."
+    },
+    {
+      "id": "ACH-100",
+      "name": "PYQ Overrun",
+      "rarity": "Epic",
+      "xp": 125,
+      "unlock_condition": "Complete all configured PYQ targets.",
+      "description": "Unlock when every configured PYQ target across the tracker reaches 100%; never hardcode target totals.",
+      "icon_concept": "Monumental question-core with every target ring fully lit."
+    },
+    {
+      "id": "ACH-101",
+      "name": "Test Dominion",
+      "rarity": "Epic",
+      "xp": 125,
+      "unlock_condition": "Complete all configured test targets.",
+      "description": "Unlock when every configured topic/subject test target reaches 100%.",
+      "icon_concept": "Multiple assessment consoles merged into one completed command crest."
+    },
+    {
+      "id": "ACH-102",
+      "name": "Mock Finalist",
+      "rarity": "Epic",
+      "xp": 125,
+      "unlock_condition": "Complete all configured full-length mock targets.",
+      "description": "Unlock when completed full-length mocks equals the user's configured target.",
+      "icon_concept": "Elite tournament shield built from all mock slots."
+    },
+    {
+      "id": "ACH-103",
+      "name": "Revision Reborn",
+      "rarity": "Epic",
+      "xp": 125,
+      "unlock_condition": "Complete all configured revision targets.",
+      "description": "Unlock when first, second and final revision targets are fully complete according to configuration.",
+      "icon_concept": "Three concentric revision rings synchronized into one awakened core."
+    },
+    {
+      "id": "ACH-104",
+      "name": "The 1K Mark",
+      "rarity": "Epic",
+      "xp": 150,
+      "unlock_condition": "Accumulate 1,000 total study hours.",
+      "description": "Unlock at total study hours >=1000.",
+      "icon_concept": "Monumental 1,000-hour engine core with industrial rings and elite insignia detail."
+    },
+    {
+      "id": "ACH-105",
+      "name": "The Endgame",
+      "rarity": "Legendary",
+      "xp": 300,
+      "unlock_condition": "Overall GATE Readiness reaches 100%.",
+      "description": "Unlock only when the tracker calculates Overall GATE Readiness = 100% using the live configured syllabus, PYQ, test, mock, revision and study-hour components.",
+      "icon_concept": "Massive six-system completion reactor with every preparation component locked at full power around a central GATE/Civil core."
+    },
+    {
+      "id": "ACH-106",
+      "name": "1300 Club",
+      "rarity": "Legendary",
+      "xp": 500,
+      "unlock_condition": "Accumulate 1,300 total study hours.",
+      "description": "Unlock at total study hours >=1300.",
+      "icon_concept": "Prestige-grade time reactor with 1300 engraved into a monumental green-black core and elite orbiting study markers."
+    },
+    {
+      "id": "ACH-107",
+      "name": "365 No-Zero",
+      "rarity": "Legendary",
+      "xp": 750,
+      "unlock_condition": "Maintain a 365-day consecutive study streak.",
+      "description": "Unlock when every calendar day in a 365-day run contains at least one positive-duration study log.",
+      "icon_concept": "Year-long circular calendar forged into a crown-like halo around an unbroken flame."
+    },
+    {
+      "id": "ACH-108",
+      "name": "First Revision",
+      "rarity": "Common",
+      "xp": "10",
+      "unlock_condition": "Complete the first configured revision item for any subject.",
+      "description": "Unlock when the first configured revision item is marked complete.",
+      "icon_concept": "A single luminous refresh ring wrapped around a reopened knowledge panel."
+    },
+    {
+      "id": "ACH-109",
+      "name": "100 Questions",
+      "rarity": "Common",
+      "xp": "15",
+      "unlock_condition": "Solve 100 tracked questions from one configured subject.",
+      "description": "Unlock when one subject reaches at least 100 solved tracked questions.",
+      "icon_concept": "A question stack with a bold 100-count core and targeting reticle."
+    },
+    {
+      "id": "ACH-110",
+      "name": "Ready Room",
+      "rarity": "Common",
+      "xp": "20",
+      "unlock_condition": "Reach 75% overall GATE readiness.",
+      "description": "Unlock when overall GATE Readiness first reaches >=75%.",
+      "icon_concept": "A command-room readiness dial with three-quarters of its ring fully powered."
+    }
+  ]
+}

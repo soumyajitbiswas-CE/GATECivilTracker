@@ -4,13 +4,10 @@
 
 <div class="spline-hero-container absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden rounded-2xl" aria-hidden="true">
   
-  <!-- Spline Wrapper positioned to the right. 
-       Mobile: full width, Desktop: 55% width to leave space for text -->
-  <div class="absolute right-0 top-0 w-full md:w-[65%] lg:w-[55%] h-full opacity-80 sm:opacity-100 flex items-center justify-center pointer-events-none">
+  <!-- Spline Wrapper positioned to the right -->
+  <div class="absolute right-0 top-0 w-full md:w-[65%] lg:w-[55%] h-full opacity-40 sm:opacity-100 flex items-center justify-center pointer-events-none">
     
-    <!-- Spline viewer component with transparent background.
-         pointer-events-none prevents clicking/dragging from glitching physics.
-         events-target="global" ensures eye/head follows cursor/touch/scroll across the entire page. -->
+    <!-- events-target="global" enables full cursor tracking across the entire window smoothly -->
     <spline-viewer 
       id="hero-spline-viewer"
       class="w-full h-full pointer-events-none transition-opacity duration-500 opacity-0"
@@ -22,16 +19,15 @@
     ></spline-viewer>
   </div>
 
-  <!-- Smooth natural feather fade on the left edge only, matching the dark card background without harsh seam lines -->
+  <!-- Feather fade on the left edge & bottom for mobile readability -->
   <div class="absolute inset-0 z-10 pointer-events-none 
-              bg-gradient-to-t from-[#020503] from-0% via-[#020503]/80 via-15% to-transparent
+              bg-gradient-to-t from-[#020503] from-0% via-[#020503]/90 via-30% to-transparent
               md:bg-gradient-to-r md:from-[#020503] md:from-0% md:via-[#020503]/90 md:via-25% md:to-transparent md:to-60%">
   </div>
 </div>
 
 <style>
   .spline-hero-container {
-    transition: opacity 0.5s ease-in-out;
     transform: translateZ(0);
     backface-visibility: hidden;
     contain: layout paint;
@@ -47,16 +43,14 @@
 </style>
 
 <script>
-  // Import bundled viewer from npm — fast, local, zero CDN delay
+  // @ts-nocheck
   import '@splinetool/viewer';
 
   function initViewer() {
     const viewer = document.getElementById('hero-spline-viewer');
     if (!viewer) return;
 
-    // Inject stylesheet into shadowRoot that permanently hides #logo and ensures canvas is visible and transparent
     const applyShadowStyles = () => {
-      // @ts-ignore
       const shadow = viewer.shadowRoot;
       if (!shadow) return;
 
@@ -98,10 +92,7 @@
         shadow.appendChild(style);
       }
 
-      // Neutralize WebGL pipeline watermark pass and enforce transparent WebGL clear color
-      // @ts-ignore
       if (viewer._spline?._renderer) {
-        // @ts-ignore
         const r = viewer._spline._renderer;
         if (typeof r.setClearColor === 'function') {
           r.setClearColor(0x000000, 0);
@@ -113,13 +104,9 @@
           };
           r.pipeline.updateRenderToScreen();
         }
-        // @ts-ignore
         viewer._spline.setBackgroundColor?.('transparent');
-        // @ts-ignore
-        viewer._spline.requestRender?.();
       }
 
-      // Ensure canvas element inside shadowRoot is visible
       const canvas = shadow.querySelector('canvas');
       if (canvas) {
         canvas.style.visibility = 'visible';
@@ -129,41 +116,34 @@
       viewer.classList.add('opacity-100');
     };
 
-    // Apply styles across lifecycle
+    viewer.addEventListener('load-complete', applyShadowStyles);
+    viewer.addEventListener('loaded', applyShadowStyles);
+    
+    // Observer for shadowRoot to immediately apply styles as soon as shadow DOM mounts
     const observer = new MutationObserver(() => {
       applyShadowStyles();
     });
 
     const checkInterval = setInterval(() => {
-      // @ts-ignore
       if (viewer.shadowRoot) {
-        // @ts-ignore
         observer.observe(viewer.shadowRoot, { childList: true, subtree: true });
         applyShadowStyles();
       }
-    }, 20);
-
-    viewer.addEventListener('load-complete', applyShadowStyles);
-    viewer.addEventListener('loaded', applyShadowStyles);
-    viewer.addEventListener('load-start', applyShadowStyles);
+    }, 50);
 
     setTimeout(() => {
       clearInterval(checkInterval);
       applyShadowStyles();
-    }, 3000);
+    }, 2500);
 
     // Auto-pause 3D WebGL render loop when hero is scrolled off-screen
-    // This frees up 100% of mobile GPU/CPU during page scrolling!
     const heroContainer = viewer.closest('.spline-hero-container') || viewer;
     const intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        // @ts-ignore
         if (viewer._spline) {
           if (entry.isIntersecting) {
-            // @ts-ignore
             viewer._spline.play?.();
           } else {
-            // @ts-ignore
             viewer._spline.stop?.();
           }
         }
@@ -171,76 +151,19 @@
     }, { threshold: 0.05 });
 
     intersectionObserver.observe(heroContainer);
-
-    // Ultra-optimized requestAnimationFrame (rAF) pointer scheduler
-    // Throttles coordinate updates to 1 per animation frame to prevent scroll stutter
-    let rafId: number | null = null;
-    let pendingX: number | null = null;
-    let pendingY: number | null = null;
-
-    const schedulePointer = (x: number, y: number) => {
-      pendingX = x;
-      pendingY = y;
-      if (rafId === null) {
-        rafId = requestAnimationFrame(() => {
-          if (pendingX !== null && pendingY !== null) {
-            const moveEvent = new MouseEvent('mousemove', {
-              clientX: pendingX,
-              clientY: pendingY,
-              screenX: pendingX,
-              screenY: pendingY,
-              bubbles: true,
-              cancelable: true
-            });
-            window.dispatchEvent(moveEvent);
-          }
-          rafId = null;
-        });
-      }
-    };
-
-    // Mobile / Tablet touch tracking (active on touchstart and touchmove anywhere on screen)
-    window.addEventListener('touchstart', (e) => {
-      if (e.touches && e.touches.length > 0) {
-        schedulePointer(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches.length > 0) {
-        schedulePointer(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
-
-    // Smooth scroll-driven eye tracking on mobile, tablet & PC
-    let lastScrollY = window.scrollY;
-    let scrollTimeout: NodeJS.Timeout | null = null;
-
-    window.addEventListener('scroll', () => {
-      const currentScrollY = window.scrollY;
-      const viewW = window.innerWidth;
-      const viewH = window.innerHeight;
-      const scrollDelta = currentScrollY - lastScrollY;
-      lastScrollY = currentScrollY;
-
-      // Direct eye gaze towards center-bottom of visible viewport while scrolling
-      const targetX = viewW * 0.5;
-      const targetY = scrollDelta > 0 ? viewH * 0.7 : viewH * 0.35;
-      schedulePointer(targetX, targetY);
-
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        // Return eye to neutral center upon scroll stop
-        schedulePointer(viewW * 0.5, viewH * 0.5);
-      }, 150);
-    }, { passive: true });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initViewer);
-  } else {
-    initViewer();
-  }
+  const start = () => {
+    if (window.innerWidth < 640) {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => initViewer(), { timeout: 1000 });
+      } else {
+        setTimeout(initViewer, 150);
+      }
+    } else {
+      initViewer();
+    }
+  };
 
-  document.addEventListener('astro:page-load', initViewer);
+  document.addEventListener('astro:page-load', start);
 </script>

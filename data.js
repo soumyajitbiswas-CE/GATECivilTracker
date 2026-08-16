@@ -28,6 +28,17 @@ const defaultState = {
         'final': 0,
         total: 9
     },
+    achievements: {
+        unlocked: {},
+        xp: 0,
+        level: 1,
+        lastDailyXPDate: null
+    },
+    streaks: {
+        current: 0,
+        longest: 0,
+        claimedMilestones: []
+    },
     subjects: [
         {
             id: 'general_aptitude',

@@ -1,35 +1,41 @@
 ---
-// Optimized for Universal Device Performance & Smooth Realistic Physics
-const numLeaves = 80; // Reverted back to high density
+// High-Density Cinematic Falling Leaves with Depth-of-Field & 3D Tumble Physics
+const numLeaves = 75; // Full rich density
 const leaves = Array.from({ length: numLeaves }).map((_, i) => {
-    // Physics Logic: Tiny leaves fall slower and flutter faster
-    const isTiny = Math.random() > 0.6; // 40% of leaves are tiny background leaves
-    const isBlurred = Math.random() > 0.8; // 20% are blurred for depth of field
+    const isTiny = i % 3 === 0; // Background micro-leaves
+    const isBlurred = i % 4 === 0; // 25% depth-of-field blur
     
-    // Increased minimum sizes so they don't look like dust
-    const sizeScale = isTiny ? (0.35 + Math.random() * 0.3) : (0.65 + Math.random() * 0.65);
-    const fallDuration = isTiny ? (20 + Math.random() * 20) : (12 + Math.random() * 15);
-    const swayDuration = isTiny ? (3 + Math.random() * 3) : (4 + Math.random() * 5);
+    const sizeScale = isTiny 
+        ? (0.35 + Math.random() * 0.3) 
+        : (0.65 + Math.random() * 0.65);
+
+    const fallDuration = isTiny 
+        ? (22 + Math.random() * 18) 
+        : (12 + Math.random() * 14);
+
+    const swayDuration = isTiny 
+        ? (3.5 + Math.random() * 2.5) 
+        : (4.5 + Math.random() * 4.5);
     
     return {
         id: i,
-        left: Math.random() * 100, // random horizontal start
-        fallDelay: Math.random() * -45, // huge negative delay spread so screen is instantly full
+        left: Math.random() * 100, // natural horizontal spread
+        fallDelay: Math.random() * -50, // instant full-screen presence
         fallDuration: fallDuration,
-        swayDelay: Math.random() * -5,
+        swayDelay: Math.random() * -8,
         swayDuration: swayDuration,
-        // Bumped opacity so they are clearly visible on the dark background
-        opacity: isTiny ? (0.15 + Math.random() * 0.15) : (0.2 + Math.random() * 0.3),
+        opacity: isTiny 
+            ? (0.18 + Math.random() * 0.15) 
+            : (0.25 + Math.random() * 0.35),
         scale: sizeScale,
         blur: isBlurred ? 'blur(2px)' : 'none',
         swayType: i % 4,
-        // Brightened the colors slightly for better contrast
-        color: ['text-emerald-600', 'text-emerald-700', 'text-emerald-800', 'text-green-700', 'text-[#0c4a26]'][Math.floor(Math.random() * 5)]
+        color: ['text-emerald-600', 'text-emerald-700', 'text-emerald-800', 'text-green-700', 'text-[#0c4a26]'][i % 5]
     };
 });
 ---
 
-<div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]" aria-hidden="true">
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]" style="contain: layout style paint;" aria-hidden="true">
     {leaves.map((leaf) => (
         /* 1. Outer Container: Hardware-accelerated Linear Gravity */
         <div 
@@ -40,17 +46,17 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
                 animation-duration: ${leaf.fallDuration}s;
             `}
         >
-            {/* 2. Middle Container: Static visual properties (No dynamic filters to save battery) */}
+            {/* 2. Middle Container: Static visual scale, color, opacity & depth-of-field blur */}
             <div 
                 class={`${leaf.color}`}
                 style={`
                     opacity: ${leaf.opacity};
                     filter: ${leaf.blur};
                     transform: scale(${leaf.scale}) translateZ(0);
+                    will-change: transform;
                 `}
             >
-                {/* 3. Inner Element: Organic Pendulum Physics & 3D Tumble */}
-                {/* Removed drop-shadow to guarantee 60fps on all devices; shadows make no sense for dark silhouettes anyway! */}
+                {/* 3. Inner Element: Organic 3D Pendulum Physics & Multi-axis Tumble */}
                 <svg 
                     viewBox="0 0 24 24" 
                     fill="currentColor" 
@@ -60,7 +66,7 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
                         animation-duration: ${leaf.swayDuration}s;
                     `}
                 >
-                    <!-- Beautiful smooth leaf silhouette -->
+                    <!-- Realistic leaf silhouette -->
                     <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z"/>
                 </svg>
             </div>
@@ -70,8 +76,8 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
 
 <style>
     /* 
-      GPU HARDWARE ACCELERATION:
-      will-change and backface-visibility force the browser to composite these smoothly on the GPU.
+      GPU HARDWARE ACCELERATION & COMPOSITING:
+      will-change, translate3d and backface-visibility guarantee 60fps across PC, tablet and mobile.
     */
     .leaf-fall {
         will-change: transform;
@@ -83,7 +89,7 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
 
     @keyframes fallDown {
         0% { transform: translate3d(0, 0, 0); }
-        100% { transform: translate3d(0, 120vh, 0); } 
+        100% { transform: translate3d(0, 125vh, 0); } 
     }
 
     .leaf-sway {
@@ -95,33 +101,40 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
         transform-origin: center center;
     }
 
-    /* 4 DISTINCT PHYSICS PATTERNS for maximum realism */
+    /* 4 DISTINCT REALISTIC 3D PHYSICS PATTERNS */
     .sway-0 { animation-name: sway0; }
     .sway-1 { animation-name: sway1; }
     .sway-2 { animation-name: sway2; }
     .sway-3 { animation-name: sway3; }
 
-    /* Sway 0: Gentle, wide drift */
+    /* Sway 0: Gentle, wide natural drift */
     @keyframes sway0 {
         0% { transform: translate3d(-35px, 0, 0) rotateZ(-25deg); }
         100% { transform: translate3d(35px, 0, 0) rotateZ(35deg); }
     }
     
-    /* Sway 1: Tighter, faster fluttering with 3D Y-axis flip */
+    /* Sway 1: Fast fluttering with 3D Y-axis flip */
     @keyframes sway1 {
         0% { transform: translate3d(25px, 0, 0) rotateZ(15deg) rotateY(0deg); }
-        100% { transform: translate3d(-25px, 0, 0) rotateZ(-40deg) rotateY(60deg); }
+        100% { transform: translate3d(-25px, 0, 0) rotateZ(-40deg) rotateY(65deg); }
     }
 
-    /* Sway 2: Aggressive sideways sweeping */
+    /* Sway 2: Sweeping lateral glide */
     @keyframes sway2 {
         0% { transform: translate3d(-50px, 0, 0) rotateZ(-60deg); }
         100% { transform: translate3d(30px, 0, 0) rotateZ(20deg); }
     }
 
-    /* Sway 3: Chaotic tumbling in 3D space */
+    /* Sway 3: Chaotic 3D aerodynamic tumble */
     @keyframes sway3 {
         0% { transform: translate3d(15px, 0, 0) rotateZ(45deg) rotateX(-20deg); }
-        100% { transform: translate3d(-40px, 0, 0) rotateZ(-55deg) rotateX(40deg); }
+        100% { transform: translate3d(-40px, 0, 0) rotateZ(-55deg) rotateX(45deg); }
+    }
+
+    /* Mobile Performance: render 37 leaves on mobile, 75 on desktop/tablet */
+    @media (max-width: 640px) {
+        .leaf-fall:nth-child(even) {
+            display: none !important;
+        }
     }
 </style>
