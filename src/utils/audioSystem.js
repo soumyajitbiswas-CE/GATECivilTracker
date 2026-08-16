@@ -3,7 +3,7 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 export function resumeAudio() {
     if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        audioCtx.resume().catch(e => console.warn('AudioContext resume failed:', e));
     }
 }
 
@@ -27,7 +27,7 @@ function playTone(freq, type, duration, vol, startTime) {
 
 export function playAchievementSound(rarity) {
     if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        audioCtx.resume().catch(e => console.warn('AudioContext resume failed:', e));
     }
     
     const now = audioCtx.currentTime;

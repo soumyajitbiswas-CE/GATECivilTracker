@@ -928,12 +928,6 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                 return;
                             }
 
-                            const isDuplicate = state.pyqHistory && state.pyqHistory.some(h => h.subjectId === subjectId && parseInt(h.pyqYear) === yearVal);
-                            if (isDuplicate) {
-                                showError(`GATE ${yearVal} PYQs for ${subName(subjectId)} are already logged.`);
-                                return;
-                            }
-
                             const currentSolved = state.pyqHistory 
                                 ? state.pyqHistory.filter(h => h.subjectId === subjectId).length 
                                 : (pyqData.solved || 0);
@@ -1053,10 +1047,6 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                         
                         window.saveState(state);
                         closeLogModal();
-                        
-                        if (window.location.pathname === '/') {
-                           window.location.reload();
-                        }
                     };
                 }
             }

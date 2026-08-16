@@ -13,10 +13,16 @@ export function evaluateAchievements(state, achievementsData) {
     const todayStr = getLocalDateString(now);
 
     // --- Pre-calculate Derived Variables ---
-    const history = state.studyHistory || [];
+    const allHistories = [
+        ...(state.studyHistory || []),
+        ...(state.pyqHistory || []),
+        ...(state.testHistory || []),
+        ...(state.mocksHistory || []),
+        ...(state.revisionHistory || [])
+    ];
     
-    // Sort history by date ascending
-    const sortedHistory = [...history].sort((a, b) => new Date(a.date) - new Date(b.date));
+    // Sort all histories by date ascending
+    const sortedHistory = [...allHistories].sort((a, b) => new Date(a.date) - new Date(b.date));
     
     let totalHours = 0;
     const datesWithStudy = new Set();
@@ -26,25 +32,30 @@ export function evaluateAchievements(state, achievementsData) {
     const dailyStudy = {}; // { dateStr: { totalHours, count, subjects: Set } }
 
     sortedHistory.forEach(entry => {
-        totalHours += entry.hours;
-        datesWithStudy.add(entry.date);
-        
-        if (!subjectStudyDates[entry.subjectId]) subjectStudyDates[entry.subjectId] = new Set();
-        subjectStudyDates[entry.subjectId].add(entry.date);
-        
-        if (!subjectHours[entry.subjectId]) subjectHours[entry.subjectId] = 0;
-        subjectHours[entry.subjectId] += entry.hours;
-        
-        sessionLengths.push(entry.hours);
-        
-        if (!dailyStudy[entry.date]) dailyStudy[entry.date] = { totalHours: 0, count: 0, subjects: new Set() };
-        dailyStudy[entry.date].totalHours += entry.hours;
-        dailyStudy[entry.date].count += 1;
-        dailyStudy[entry.date].subjects.add(entry.subjectId);
+        const hrs = parseFloat(entry.hours) || 0;
+        totalHours += hrs;
+        if (entry.date) {
+            datesWithStudy.add(entry.date);
+            
+            if (entry.subjectId) {
+                if (!subjectStudyDates[entry.subjectId]) subjectStudyDates[entry.subjectId] = new Set();
+                subjectStudyDates[entry.subjectId].add(entry.date);
+                
+                if (!subjectHours[entry.subjectId]) subjectHours[entry.subjectId] = 0;
+                subjectHours[entry.subjectId] += hrs;
+            }
+            
+            if (hrs > 0) sessionLengths.push(hrs);
+            
+            if (!dailyStudy[entry.date]) dailyStudy[entry.date] = { totalHours: 0, count: 0, subjects: new Set() };
+            dailyStudy[entry.date].totalHours += hrs;
+            dailyStudy[entry.date].count += 1;
+            if (entry.subjectId) dailyStudy[entry.date].subjects.add(entry.subjectId);
+        }
     });
 
     const distinctDatesCount = datesWithStudy.size;
-    const totalSessions = history.length;
+    const totalSessions = allHistories.length;
 
     // Calculate Streaks
     let currentStreak = 0;
@@ -88,16 +99,22 @@ export function evaluateAchievements(state, achievementsData) {
     let allPyqTargetMet = true;
     let maxPyqSubjectSolved = 0;
     const subjectPyqPercent = {};
+    const pyqHistoryCount = state.pyqHistory ? state.pyqHistory.length : 0;
+
     if (state.pyqs) {
         Object.keys(state.pyqs).forEach(subId => {
             const p = state.pyqs[subId];
             totalPyqSolved += (p.solved || 0);
-            if (p.solved > maxPyqSubjectSolved) maxPyqSubjectSolved = p.solved;
+            if ((p.solved || 0) > maxPyqSubjectSolved) maxPyqSubjectSolved = (p.solved || 0);
             const pct = p.total > 0 ? ((p.solved || 0) / p.total) * 100 : 0;
             subjectPyqPercent[subId] = pct;
             if (pct >= 100) subjectsWith100PercentPYQ++;
             if (pct < 100) allPyqTargetMet = false;
         });
+    }
+    if (totalPyqSolved === 0 && pyqHistoryCount > 0) {
+        totalPyqSolved = pyqHistoryCount;
+        maxPyqSubjectSolved = pyqHistoryCount;
     }
 
     // Topics & Subjects Completion
@@ -197,7 +214,7 @@ export function evaluateAchievements(state, achievementsData) {
             case "ACH-005": conditionMet = totalHours >= 25; break;
             case "ACH-006": conditionMet = completedTopicsCount >= 3; break;
             case "ACH-007": conditionMet = distinctDatesCount >= 5; break;
-            case "ACH-008": conditionMet = totalPyqSolved >= 25; break;
+            case "ACH-008": conditionMet = totalPyqSolved >= 3 || pyqHistoryCount >= 3; break;
             case "ACH-009": conditionMet = distinctDatesCount >= 10; break;
             case "ACH-010": conditionMet = completedTopicsCount >= 5; break;
             case "ACH-011": conditionMet = totalHours >= 50; break;
@@ -208,7 +225,7 @@ export function evaluateAchievements(state, achievementsData) {
             case "ACH-016": 
                 conditionMet = Object.values(subjectStudyDates).some(dates => dates.size >= 5); 
                 break;
-            case "ACH-017": conditionMet = (topicTestsDone + subjectTestsDone + mocksDone + rev1) >= 10; break;
+            case "ACH-017": conditionMet = (topicTestsDone + subjectTestsDone + mocksDone + rev1 + totalPyqSolved) >= 10; break;
             case "ACH-018": conditionMet = Object.values(dailyStudy).some(d => d.count >= 3); break;
             case "ACH-019": conditionMet = totalSubjects100 >= 1; break; // simplified
             case "ACH-020": 
@@ -220,7 +237,7 @@ export function evaluateAchievements(state, achievementsData) {
                     }
                 }
                 break;
-            case "ACH-021": conditionMet = totalPyqSolved >= 100; break;
+            case "ACH-021": conditionMet = totalPyqSolved >= 10 || pyqHistoryCount >= 10; break;
             case "ACH-022": conditionMet = completedTopicsCount >= 20; break;
             case "ACH-023": conditionMet = longestStreak >= 14; break;
             case "ACH-024": conditionMet = (topicTestsDone > 0 || subjectTestsDone > 0); break;
@@ -229,7 +246,7 @@ export function evaluateAchievements(state, achievementsData) {
             case "ACH-027": conditionMet = totalSubjects25 >= 1; break;
             case "ACH-028": conditionMet = totalSubjects50 >= 1; break;
             case "ACH-029": conditionMet = readiness >= 50; break;
-            case "ACH-030": conditionMet = totalPyqSolved >= 25; break; // Daily not perfectly tracked, fallback to total >= 25
+            case "ACH-030": conditionMet = totalPyqSolved >= 3 || Object.values(dailyStudy).some(d => d.count >= 2); break;
             case "ACH-031": conditionMet = longestStreak >= 21; break;
             case "ACH-032": conditionMet = totalSessions >= 20; break;
             case "ACH-033": conditionMet = distinctDatesCount >= 5; break; // Night shift simplified
@@ -237,7 +254,7 @@ export function evaluateAchievements(state, achievementsData) {
             case "ACH-035": conditionMet = Object.values(dailyStudy).some(d => d.subjects.size >= 2); break;
             case "ACH-036": conditionMet = Object.values(dailyStudy).some(d => d.subjects.size >= 3); break;
             case "ACH-037": conditionMet = rev1 > 0; break;
-            case "ACH-038": conditionMet = maxPyqSubjectSolved >= 25; break;
+            case "ACH-038": conditionMet = totalPyqSolved >= 1 || maxPyqSubjectSolved >= 1 || pyqHistoryCount >= 1; break;
             case "ACH-039": conditionMet = topicTestsDone >= 5; break;
             case "ACH-040": conditionMet = mocksDone >= 1; break;
             case "ACH-041": conditionMet = revProgress >= 25; break;
@@ -251,21 +268,21 @@ export function evaluateAchievements(state, achievementsData) {
             case "ACH-049": conditionMet = longestStreak >= 1; break; // simplified
             case "ACH-050": conditionMet = longestStreak >= 30; break;
             case "ACH-051": conditionMet = totalHours >= 150; break;
-            case "ACH-052": conditionMet = totalPyqSolved >= 250; break;
+            case "ACH-052": conditionMet = totalPyqSolved >= 20 || pyqHistoryCount >= 20; break;
             case "ACH-053": conditionMet = topicTestsDone >= 10 && subjectTestsDone >= 5; break;
             case "ACH-054": conditionMet = mocksDone >= 3; break;
             case "ACH-055": conditionMet = rev1 >= revTotal; break;
             case "ACH-056": conditionMet = totalSubjects100 >= 3; break;
             case "ACH-057": conditionMet = totalSubjects100 >= 1; break;
-            case "ACH-058": conditionMet = maxPyqSubjectSolved >= 100; break; // accuracy dropped
-            case "ACH-059": conditionMet = totalSubjects100 >= 1 && subjectsWith100PercentPYQ >= 1 && subjectTestsDone > 0; break;
+            case "ACH-058": conditionMet = maxPyqSubjectSolved >= 5; break;
+            case "ACH-059": conditionMet = totalSubjects100 >= 1 && (subjectsWith100PercentPYQ >= 1 || totalPyqSolved >= 1) && subjectTestsDone > 0; break;
             case "ACH-060": conditionMet = longestStreak >= 10; break;
             case "ACH-061": conditionMet = totalSubjects100 >= 1 && subjectsWith100PercentPYQ >= 1; break;
             case "ACH-062": conditionMet = mocksDone >= 3; break;
             case "ACH-063": conditionMet = totalHours >= 250; break;
             case "ACH-064": conditionMet = longestStreak >= 50; break;
             case "ACH-065": conditionMet = Object.values(subjectCompletions).some(s => s.allTopicsComplete); break;
-            case "ACH-066": conditionMet = totalPyqSolved >= 500; break;
+            case "ACH-066": conditionMet = totalPyqSolved >= 35 || pyqHistoryCount >= 35; break;
             case "ACH-067": conditionMet = sessionLengths.filter(l => l >= 1).length >= 20; break; // 60 mins = 1 hr
             case "ACH-068": conditionMet = Object.values(subjectStudyDates).some(dates => dates.size >= 14); break;
             case "ACH-069": conditionMet = Object.keys(state.achievements.unlocked).length >= 10; break;
@@ -276,13 +293,13 @@ export function evaluateAchievements(state, achievementsData) {
             case "ACH-074": conditionMet = totalHours >= 750; break;
             case "ACH-075": conditionMet = longestStreak >= 75; break;
             case "ACH-076": conditionMet = longestStreak >= 100; break;
-            case "ACH-077": conditionMet = totalPyqSolved >= 1000; break;
+            case "ACH-077": conditionMet = totalPyqSolved >= 50 || pyqHistoryCount >= 50; break;
             case "ACH-078": conditionMet = subjectsWith100PercentPYQ >= 3; break;
             case "ACH-079": conditionMet = subjectTestsDone >= 3; break;
             case "ACH-080": conditionMet = mocksDone >= 10; break;
             case "ACH-081": conditionMet = rev2 >= revTotal; break;
             case "ACH-082": conditionMet = totalSubjects100 >= 5 && subjectsWith100PercentPYQ >= 5; break;
-            case "ACH-083": conditionMet = maxPyqSubjectSolved >= 500; break; // accuracy dropped
+            case "ACH-083": conditionMet = maxPyqSubjectSolved >= 15; break;
             case "ACH-084": conditionMet = totalHours >= 10; break; // simplified
             case "ACH-085": conditionMet = totalSubjects100 >= 3 && subjectsWith100PercentPYQ >= 3; break;
             case "ACH-086": conditionMet = longestStreak >= 28; break;
@@ -308,7 +325,7 @@ export function evaluateAchievements(state, achievementsData) {
             case "ACH-106": conditionMet = totalHours >= 1300; break;
             case "ACH-107": conditionMet = longestStreak >= 365; break;
             case "ACH-108": conditionMet = rev1 > 0; break;
-            case "ACH-109": conditionMet = maxPyqSubjectSolved >= 100; break;
+            case "ACH-109": conditionMet = maxPyqSubjectSolved >= 10; break;
             case "ACH-110": conditionMet = readiness >= 75; break;
             
             default:

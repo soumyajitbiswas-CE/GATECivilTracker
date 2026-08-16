@@ -12,10 +12,9 @@
         
         <div class="relative group">
             <!-- Icon -->
-            <picture class="w-32 h-32 sm:w-40 sm:h-40 relative z-10 flex items-center justify-center">
-                <source id="ach-icon-source" srcset="" type="image/svg+xml">
-                <img id="ach-icon" src="" alt="Achievement" class="w-full h-full object-contain drop-shadow-2xl">
-            </picture>
+            <div class="w-32 h-32 sm:w-40 sm:h-40 relative z-10 flex items-center justify-center">
+                <img id="ach-icon" src="" alt="Achievement" class="w-full h-full object-contain">
+            </div>
             
             <!-- Particles container -->
             <div id="ach-particles" class="absolute inset-0 pointer-events-none"></div>
@@ -87,17 +86,15 @@
             const style = rarityStyles[ach.rarity] || rarityStyles['Common'];
             
             // Setup content
-            const iconSource = document.getElementById('ach-icon-source');
-            if (iconSource) iconSource.srcset = `/achievements/icons_final/${ach.id}.svg`;
             icon.src = `/achievements/icons_final/${ach.id}.png`;
             nameEl.textContent = ach.name;
             rarityEl.textContent = ach.rarity;
-            rarityEl.className = `uppercase text-xs sm:text-sm font-bold tracking-wider px-2 py-0.5 rounded border ${style.border} text-[${style.color}]`;
+            rarityEl.className = `uppercase text-xs sm:text-sm font-bold tracking-wider px-2 py-0.5 rounded border ${style.border}`;
             rarityEl.style.color = style.color;
             xpEl.textContent = `+${ach.xp} XP`;
             
             glow.className = `absolute inset-0 rounded-full blur-3xl opacity-0 scale-50 transition-all duration-700 ${style.glow}`;
-            icon.className = `w-32 h-32 sm:w-40 sm:h-40 object-contain z-10 relative transition-transform duration-500 ${style.shadow}`;
+            icon.className = `w-full h-full object-contain z-10 relative transition-transform duration-500 ${style.shadow}`;
 
             // Reset animations
             overlay.classList.remove('hidden');
