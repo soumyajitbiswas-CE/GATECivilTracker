@@ -8446,13 +8446,20 @@ onmessage = function(messageEvent) {
 			color: rgba(0, 0, 0, 0.5);
 			animation: spin 1s infinite linear;
 		}
-	`,Vs([In({type:String})],os.prototype,"url",2),Vs([In({type:Number})],os.prototype,"width",2),Vs([In({type:Number})],os.prototype,"height",2),Vs([In({type:String})],os.prototype,"background",2),Vs([In({type:String})],os.prototype,"loading",2),Vs([In({type:Boolean})],os.prototype,"unloadable",2),Vs([In({type:String,attribute:"events-target"})],os.prototype,"eventsTarget",2),Vs([In({type:Boolean})],os.prototype,"hint",2),Vs([In({type:Boolean,attribute:"loading-anim"})],os.prototype,"loadingAnim",2),Vs([In({type:String,attribute:"loading-anim-type"})],os.prototype,"loadingAnimType",2),os=Vs([Ule("spline-viewer")],os);function Jb(){const e=document.getElementById("hero-spline-viewer");if(!e)return;const t=()=>{const a=e.shadowRoot;if(!a)return;if(!a.querySelector("#anti-logo-style")){const n=document.createElement("style");n.id="anti-logo-style",n.textContent=`
+	`,Vs([In({type:String})],os.prototype,"url",2),Vs([In({type:Number})],os.prototype,"width",2),Vs([In({type:Number})],os.prototype,"height",2),Vs([In({type:String})],os.prototype,"background",2),Vs([In({type:String})],os.prototype,"loading",2),Vs([In({type:Boolean})],os.prototype,"unloadable",2),Vs([In({type:String,attribute:"events-target"})],os.prototype,"eventsTarget",2),Vs([In({type:Boolean})],os.prototype,"hint",2),Vs([In({type:Boolean,attribute:"loading-anim"})],os.prototype,"loadingAnim",2),Vs([In({type:String,attribute:"loading-anim-type"})],os.prototype,"loadingAnimType",2),os=Vs([Ule("spline-viewer")],os);function Jb(){const e=document.getElementById("hero-spline-viewer");if(!e)return;const t=()=>{const d=e.shadowRoot;if(!d)return;if(!d.querySelector("#anti-logo-style")){const f=document.createElement("style");f.id="anti-logo-style",f.textContent=`
           #spline, canvas {
             visibility: visible !important;
             display: block !important;
             width: 100% !important;
             height: 100% !important;
             pointer-events: none !important;
+            background: transparent !important;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+          }
+          #container {
+            background: transparent !important;
+            transform: translateZ(0);
           }
           #logo, #hint-drag, a[href*="spline.design"] {
             display: none !important;
@@ -8470,4 +8477,4 @@ onmessage = function(messageEvent) {
             transform: scale(0) !important;
             z-index: -9999 !important;
           }
-        `,a.appendChild(n)}if(e._spline?._renderer?.pipeline){const n=e._spline._renderer.pipeline;n.logoOverlayPass.enabled=!1,n.setWatermark=()=>{n.logoOverlayPass.enabled=!1},n.updateRenderToScreen(),e._spline.requestRender?.()}const s=a.querySelector("canvas");s&&(s.style.visibility="visible"),e.classList.remove("opacity-0"),e.classList.add("opacity-100")},i=new MutationObserver(()=>{t()}),r=setInterval(()=>{e.shadowRoot&&(i.observe(e.shadowRoot,{childList:!0,subtree:!0}),t())},20);e.addEventListener("load-complete",t),e.addEventListener("loaded",t),e.addEventListener("load-start",t),setTimeout(()=>{clearInterval(r),t()},3e3),window.addEventListener("touchmove",a=>{if(a.touches&&a.touches.length>0){const s=a.touches[0],n=new MouseEvent("mousemove",{clientX:s.clientX,clientY:s.clientY,screenX:s.clientX,screenY:s.clientY,bubbles:!0,cancelable:!0});window.dispatchEvent(n)}},{passive:!0})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",Jb):Jb();document.addEventListener("astro:page-load",Jb)});export default jle();
+        `,d.appendChild(f)}if(e._spline?._renderer){const f=e._spline._renderer;typeof f.setClearColor=="function"&&f.setClearColor(0,0),f.pipeline&&(f.pipeline.logoOverlayPass.enabled=!1,f.pipeline.setWatermark=()=>{f.pipeline.logoOverlayPass.enabled=!1},f.pipeline.updateRenderToScreen()),e._spline.setBackgroundColor?.("transparent"),e._spline.requestRender?.()}const p=d.querySelector("canvas");p&&(p.style.visibility="visible"),e.classList.remove("opacity-0"),e.classList.add("opacity-100")},i=new MutationObserver(()=>{t()}),r=setInterval(()=>{e.shadowRoot&&(i.observe(e.shadowRoot,{childList:!0,subtree:!0}),t())},20);e.addEventListener("load-complete",t),e.addEventListener("loaded",t),e.addEventListener("load-start",t),setTimeout(()=>{clearInterval(r),t()},3e3);const a=e.closest(".spline-hero-container")||e;new IntersectionObserver(d=>{d.forEach(p=>{e._spline&&(p.isIntersecting?e._spline.play?.():e._spline.stop?.())})},{threshold:.05}).observe(a);let n=null,o=null,l=null;const h=(d,p)=>{o=d,l=p,n===null&&(n=requestAnimationFrame(()=>{if(o!==null&&l!==null){const f=new MouseEvent("mousemove",{clientX:o,clientY:l,screenX:o,screenY:l,bubbles:!0,cancelable:!0});window.dispatchEvent(f)}n=null}))};window.addEventListener("touchstart",d=>{d.touches&&d.touches.length>0&&h(d.touches[0].clientX,d.touches[0].clientY)},{passive:!0}),window.addEventListener("touchmove",d=>{d.touches&&d.touches.length>0&&h(d.touches[0].clientX,d.touches[0].clientY)},{passive:!0});let c=window.scrollY,u=null;window.addEventListener("scroll",()=>{const d=window.scrollY,p=window.innerWidth,f=window.innerHeight,g=d-c;c=d;const m=p*.5,y=g>0?f*.7:f*.35;h(m,y),u&&clearTimeout(u),u=setTimeout(()=>{h(p*.5,f*.5)},150)},{passive:!0})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",Jb):Jb();document.addEventListener("astro:page-load",Jb)});export default jle();

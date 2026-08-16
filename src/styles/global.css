@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-dark: #06140e;
+  --color-bg-dark: #030604;
   --color-panel-bg: rgba(255, 255, 255, 0.03);
   --color-panel-border: rgba(255, 255, 255, 0.08);
   --color-primary-accent: #4ade80;
@@ -27,7 +27,7 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: #030a07;
+  background-color: #020403;
   color: var(--color-text-main);
   min-height: 100vh;
   min-height: 100dvh;
@@ -79,9 +79,9 @@ body {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-color: #030a07;
+  background-color: #020403;
   background-image: 
-    radial-gradient(ellipse at 50% 50%, rgba(3, 10, 7, 0.05) 0%, rgba(3, 10, 7, 0.35) 75%, rgba(3, 10, 7, 0.7) 100%),
+    radial-gradient(ellipse at 50% 50%, rgba(2, 4, 3, 0.2) 0%, rgba(2, 4, 3, 0.6) 75%, rgba(2, 4, 3, 0.95) 100%),
     url('/bg.png');
   background-size: cover;
   background-position: center center;
@@ -145,18 +145,20 @@ img, svg, video, canvas, audio, iframe, embed, object {
     @apply bg-panel-bg border border-panel-border rounded-2xl p-4 sm:p-6 backdrop-blur-md w-full min-w-0;
   }
   
-  /* Layered Card Surfaces (Premium Two-Tone) */
+  /* Layered Card Surfaces (Premium Obsidian & Deep Accents) */
   .surface-hero {
-    background: linear-gradient(180deg, #0d291a 0%, #0d291a 15%, #06160f 65%, #06160f 100%);
+    background: #020503;
+    background-image: linear-gradient(135deg, rgba(74, 222, 128, 0.04) 0%, rgba(2, 5, 3, 0.95) 50%, rgba(2, 5, 3, 1) 100%);
+    border-color: rgba(74, 222, 128, 0.12);
   }
   .surface-syllabus {
-    background: linear-gradient(180deg, #0b2316 0%, #0b2316 15%, #06150e 65%, #06150e 100%);
+    background: linear-gradient(180deg, #060e09 0%, #030704 100%);
   }
   .surface-practice {
-    background: linear-gradient(180deg, #091d12 0%, #091d12 10%, #05110b 60%, #05110b 100%);
+    background: linear-gradient(180deg, #050b07 0%, #020503 100%);
   }
   .surface-summary {
-    background: linear-gradient(180deg, #081a10 0%, #081a10 5%, #05100a 50%, #05100a 100%);
+    background: linear-gradient(180deg, #040906 0%, #020403 100%);
   }
   .surface-ga {
     background-color: #06150e;
@@ -428,13 +430,34 @@ img, svg, video, canvas, audio, iframe, embed, object {
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
-/* Card Glow Effects (Pure CSS) */
+/* Card Glow Effects (Pure CSS) - Optimized for touch & desktop */
 .glow-card {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
-.glow-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(74, 222, 128, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
-              inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
+
+@media (hover: hover) and (pointer: fine) {
+  .glow-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(74, 222, 128, 0.4);
+    box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
+                inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
+  }
 }
+
+/* Off-screen Content Visibility Optimization for Ultra-Smooth Mobile/Tablet Scroll */
+.subject-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 180px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.surface-practice, .surface-summary {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 220px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
