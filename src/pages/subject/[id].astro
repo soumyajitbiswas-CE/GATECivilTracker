@@ -71,7 +71,13 @@ const { subject } = Astro.props;
             <div class="glass-panel surface-summary p-4 sm:p-5 min-w-0">
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col gap-2 min-w-0">
-                        <h2 class="text-base sm:text-lg font-semibold">PYQs Progress</h2>
+                        <div class="flex items-center justify-between gap-2">
+                            <h2 class="text-base sm:text-lg font-semibold">PYQs Progress</h2>
+                            <button class="btn-log-activity text-[10px] sm:text-xs font-semibold px-2.5 py-1 rounded-lg bg-primary-accent/15 text-primary-accent border border-primary-accent/30 hover:bg-primary-accent/25 transition-colors whitespace-nowrap flex items-center gap-1 cursor-pointer" data-type="pyq" data-subject-id={subject.id}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                                + Log PYQ Year
+                            </button>
+                        </div>
                         <div class="flex items-center gap-3">
                             <div class="flex-grow h-2 bg-panel-border rounded-full overflow-hidden">
                                 <div class="h-full bg-primary-accent rounded-full transition-all duration-300 pyq-progress-bar" style="width: 0%"></div>
@@ -79,11 +85,13 @@ const { subject } = Astro.props;
                             <span class="text-xs sm:text-sm font-medium pyq-progress-text w-12 text-right shrink-0">0%</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2 sm:gap-3 w-full justify-between border-t border-panel-border pt-3 shrink-0">
-                        <label class="text-xs sm:text-sm text-text-muted">Questions Solved:</label>
-                        <div class="flex items-center gap-1.5 shrink-0">
-                            <input type="number" id="pyq-input" min="0" class="bg-white/5 border border-panel-border text-text-main px-2.5 py-1 rounded-md focus:outline-none focus:border-primary-accent w-14 sm:w-16 text-center text-xs sm:text-sm font-semibold" value="0">
-                            <span class="text-text-muted text-xs sm:text-sm font-medium pyq-total-text">/ 0</span>
+                    <div class="flex flex-col gap-2 border-t border-panel-border pt-3">
+                        <div class="flex items-center justify-between text-xs sm:text-sm">
+                            <span class="text-text-muted">Completed PYQ Years:</span>
+                            <span class="font-semibold text-text-main pyq-count-display tabular-nums">0 / 0 years</span>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 max-h-[100px] overflow-y-auto custom-scrollbar" id="subject-pyq-years-list">
+                            <!-- Injected dynamically via JS: tags like [GATE 2024], [GATE 2023] -->
                         </div>
                     </div>
                 </div>
@@ -199,16 +207,30 @@ const { subject } = Astro.props;
             const pyqData = state.pyqs[subjectId];
             if (pyqData) {
                 const pyqPercent = pyqData.total === 0 ? 0 : (pyqData.solved / pyqData.total) * 100;
-                document.querySelector('.pyq-progress-bar').style.width = `${pyqPercent}%`;
-                document.querySelector('.pyq-progress-text').textContent = window.formatPercent(pyqPercent);
-                const pyqInput = document.getElementById('pyq-input');
-                if (pyqInput) {
-                    if (document.activeElement !== pyqInput) {
-                        pyqInput.value = pyqData.solved;
+                const progressBar = document.querySelector('.pyq-progress-bar');
+                const progressText = document.querySelector('.pyq-progress-text');
+                const countDisplay = document.querySelector('.pyq-count-display');
+                const yearsListEl = document.getElementById('subject-pyq-years-list');
+
+                if (progressBar) progressBar.style.width = `${pyqPercent}%`;
+                if (progressText) progressText.textContent = window.formatPercent(pyqPercent);
+                if (countDisplay) countDisplay.textContent = `${pyqData.solved} / ${pyqData.total} years`;
+
+                if (yearsListEl) {
+                    const loggedYears = state.pyqHistory 
+                        ? state.pyqHistory.filter(h => h.subjectId === subjectId && h.pyqYear).map(h => parseInt(h.pyqYear)).sort((a,b) => b - a)
+                        : [];
+                    if (loggedYears.length > 0) {
+                        yearsListEl.innerHTML = loggedYears.map(y => `
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-primary-accent/15 text-primary-accent border border-primary-accent/30 tracking-tight">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                GATE ${y}
+                            </span>
+                        `).join('');
+                    } else {
+                        yearsListEl.innerHTML = '<span class="text-xs text-text-muted italic py-1">No PYQ years logged yet for this subject.</span>';
                     }
-                    pyqInput.max = pyqData.total;
                 }
-                document.querySelector('.pyq-total-text').textContent = `/ ${pyqData.total}`;
             }
 
             // Update Topics Dynamically
@@ -407,21 +429,6 @@ const { subject } = Astro.props;
             modal.classList.add('hidden');
         });
 
-        // PYQ input logic
-        const pyqInputEl = document.getElementById('pyq-input');
-        if(pyqInputEl) {
-            pyqInputEl.addEventListener('change', (e) => {
-                const val = parseInt(e.target.value);
-                if (isNaN(val) || val < 0) return;
-                const state = window.getState();
-                if (state.pyqs[subjectId]) {
-                    const max = state.pyqs[subjectId].total;
-                    state.pyqs[subjectId].solved = Math.min(val, max);
-                    e.target.value = state.pyqs[subjectId].solved;
-                    window.saveState(state);
-                }
-            });
-        }
 
         // Edit Topics Modal Logic
         const editTopicsModal = document.getElementById('edit-topics-modal');

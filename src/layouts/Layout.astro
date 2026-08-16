@@ -126,6 +126,11 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                         </select>
                     </div>
 
+                    <div id="log-field-pyq-year" class="flex flex-col gap-1.5 hidden">
+                        <label class="text-xs text-text-muted font-medium ml-1">PYQ Year</label>
+                        <input type="number" id="log-pyq-year" min="2000" placeholder="e.g. 2024" class="bg-black/40 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-primary-accent/50 focus:ring-1 focus:ring-primary-accent/30 transition-all">
+                    </div>
+
                     <div id="log-field-subtype" class="flex flex-col gap-1.5 hidden">
                         <label class="text-xs text-text-muted font-medium ml-1" id="log-label-subtype">Type</label>
                         <select id="log-subtype" class="bg-black/40 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-primary-accent/50 focus:ring-1 focus:ring-primary-accent/30 transition-all custom-scrollbar">
@@ -356,12 +361,17 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 
             window.calculateAllMetrics = (state) => {
                 // --- Derive counts from histories ---
-                if (state.pyqHistory) {
-                    state.pyqHistory.forEach(h => {
-                        if (state.pyqs[h.subjectId]) {
-                            state.pyqs[h.subjectId].solved += (h.solved || 0);
-                        }
+                if (state.pyqs) {
+                    Object.keys(state.pyqs).forEach(k => {
+                        state.pyqs[k].solved = 0;
                     });
+                    if (state.pyqHistory) {
+                        state.pyqHistory.forEach(h => {
+                            if (state.pyqs[h.subjectId]) {
+                                state.pyqs[h.subjectId].solved += (h.solved !== undefined ? (h.solved || 1) : 1);
+                            }
+                        });
+                    }
                 }
                 
                 if (state.testHistory) {
@@ -547,6 +557,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 const subjectSelect = document.getElementById('log-subject');
                 const subtypeSelect = document.getElementById('log-subtype');
                 const amountInput = document.getElementById('log-amount');
+                const pyqYearInput = document.getElementById('log-pyq-year');
                 const nameInput = document.getElementById('log-name');
                 const mockMarksInput = document.getElementById('log-mock-marks');
                 const mockPercentileInput = document.getElementById('log-mock-percentile');
@@ -555,6 +566,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 const fieldMockExtra = document.getElementById('log-field-mock-extra');
                 
                 const fieldSubject = document.getElementById('log-field-subject');
+                const fieldPyqYear = document.getElementById('log-field-pyq-year');
                 const fieldSubtype = document.getElementById('log-field-subtype');
                 const fieldAmount = document.getElementById('log-field-amount');
                 const fieldName = document.getElementById('log-field-name');
@@ -565,6 +577,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 
                 const formError = document.getElementById('log-form-error');
                 const formErrorText = document.getElementById('log-form-error-text');
+
+                const currentYear = new Date().getFullYear();
 
                 const showError = (msg) => {
                     if(formError && formErrorText) {
@@ -578,26 +592,6 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     if(formError) {
                         formError.classList.add('hidden');
                         formError.classList.remove('flex');
-                    }
-                };
-
-                const updatePyqAmountLimit = (state) => {
-                    if (typeInput.value !== 'pyq') return;
-                    const subId = subjectSelect.value;
-                    const pyqInfo = state.pyqs?.[subId];
-                    if (pyqInfo) {
-                        const solved = state.pyqHistory 
-                            ? state.pyqHistory.filter(h => h.subjectId === subId).reduce((acc, c) => acc + (c.solved || 0), 0)
-                            : (pyqInfo.solved || 0);
-                        const remaining = Math.max(0, (pyqInfo.total || 0) - solved);
-                        amountInput.max = remaining;
-                        labelAmount.textContent = `Questions Solved (Max: ${remaining} left)`;
-                        if (parseInt(amountInput.value) > remaining) {
-                            amountInput.value = Math.max(1, remaining);
-                        }
-                    } else {
-                        labelAmount.textContent = 'Questions Solved';
-                        amountInput.removeAttribute('max');
                     }
                 };
 
@@ -641,16 +635,16 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                             if (currentType === 'pyq') {
                                 const pyqData = state.pyqs?.[sub.id];
                                 if (pyqData) {
-                                    const pyqSets = state.pyqHistory ? new Set(state.pyqHistory.filter(h => h.subjectId === sub.id).map(h => h.pyqYear)) : new Set();
+                                    const solvedCount = state.pyqHistory 
+                                        ? state.pyqHistory.filter(h => h.subjectId === sub.id).length 
+                                        : (pyqData.solved || 0);
                                     const total = pyqData.total || 0;
-                                    const solved = pyqSets.size;
-                                    const isComplete = total > 0 && solved >= total;
+                                    const isComplete = total > 0 && solvedCount >= total;
                                     if (isComplete) {
                                         disabledStr = ' disabled';
-                                        labelStr = `${sub.name} ✓ (${total}/${total})`;
+                                        labelStr = `${sub.name} ✓ (${solvedCount}/${total} Completed)`;
                                     } else {
-                                        const left = total - solved;
-                                        labelStr = `${sub.name} (${solved}/${total} — ${left} left)`;
+                                        labelStr = `${sub.name} (${solvedCount}${total > 0 ? `/${total} years logged` : ' years logged'})`;
                                     }
                                 }
                             } else if (currentType === 'test') {
@@ -686,10 +680,6 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                             subjectSelect.value = '';
                         }
                     }
-
-                    if (currentType === 'pyq') {
-                        updatePyqAmountLimit(state);
-                    }
                     
                     updateTopicList(state);
                 };
@@ -703,14 +693,13 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 
                 subjectSelect.removeEventListener('change', subjectSelect._subjectChangeHandler);
                 subjectSelect._subjectChangeHandler = () => {
-                    if (typeInput.value === 'pyq') updatePyqAmountLimit(window.getState());
                     updateTopicList(window.getState());
                 };
                 subjectSelect.addEventListener('change', subjectSelect._subjectChangeHandler);
 
-                [amountInput, mockMarksInput, mockPercentileInput, hoursInput].forEach(input => {
+                [amountInput, pyqYearInput, mockMarksInput, mockPercentileInput, hoursInput].forEach(input => {
                     if (input) {
-                        input.removeEventListener('input', input._clampHandler);
+                        input.removeEventListener('change', input._clampHandler);
                         input._clampHandler = (e) => {
                             const target = e.target;
                             if (target.value === '') return;
@@ -733,24 +722,27 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                 }
                             }
                         };
-                        input.addEventListener('input', input._clampHandler);
+                        input.addEventListener('change', input._clampHandler);
                     }
                 });
 
-                const openLogModal = (type) => {
+                const openLogModal = (type, preselectedSubject = null) => {
                     if (!modal) return;
                     typeInput.value = type;
                     const state = window.getState();
                     
                     fieldSubject.classList.remove('hidden');
+                    if (fieldPyqYear) fieldPyqYear.classList.add('hidden');
                     fieldSubtype.classList.add('hidden');
                     fieldAmount.classList.add('hidden');
                     fieldName.classList.add('hidden');
                     fieldTopic.classList.add('hidden');
                     if (fieldMockExtra) fieldMockExtra.classList.add('hidden');
+                    
                     amountInput.value = 1;
                     amountInput.min = 1;
                     amountInput.removeAttribute('max');
+                    if (pyqYearInput) pyqYearInput.value = '';
                     nameInput.value = '';
                     if (mockMarksInput) mockMarksInput.value = '';
                     if (mockPercentileInput) mockPercentileInput.value = '';
@@ -759,8 +751,12 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     subtypeSelect.innerHTML = '';
                     
                     if (type === 'pyq') {
-                        fieldAmount.classList.remove('hidden');
-                        labelAmount.textContent = 'Questions Solved';
+                        if (fieldPyqYear) fieldPyqYear.classList.remove('hidden');
+                        if (pyqYearInput) {
+                            pyqYearInput.min = currentYear - 49;
+                            pyqYearInput.max = currentYear;
+                            pyqYearInput.placeholder = `e.g. ${currentYear}`;
+                        }
                     } else if (type === 'test') {
                         fieldSubtype.classList.remove('hidden');
                         labelSubtype.textContent = 'Test Type';
@@ -828,6 +824,14 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     }
 
                     updateSubjectsList(state);
+                    if (preselectedSubject && subjectSelect) {
+                        const opt = subjectSelect.querySelector(`option[value="${preselectedSubject}"]`);
+                        if (opt && !opt.disabled) {
+                            subjectSelect.value = preselectedSubject;
+                            updateTopicList(state);
+                        }
+                    }
+
                     hideError();
 
                     modal.classList.remove('hidden');
@@ -857,7 +861,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     btn.removeEventListener('click', btn._logHandler);
                     btn._logHandler = (e) => {
                         const type = e.currentTarget.dataset.type;
-                        openLogModal(type);
+                        const preselectedSubject = e.currentTarget.dataset.subjectId || null;
+                        openLogModal(type, preselectedSubject);
                     };
                     btn.addEventListener('click', btn._logHandler);
                 });
@@ -884,8 +889,21 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                         const hours = hoursInput && hoursInput.value !== '' ? parseFloat(hoursInput.value) : null;
                         const notes = notesInput && notesInput.value ? notesInput.value.trim() : null;
                         
+                        if (notes) {
+                            const wordCount = notes.split(/\s+/).filter(word => word.length > 0).length;
+                            if (wordCount > 100) {
+                                showError('Notes cannot exceed 100 words.');
+                                return;
+                            }
+                        }
+
+                        const subName = (sid) => {
+                            const s = state.subjects?.find(x => x.id === sid);
+                            return s ? s.name : sid;
+                        };
+
                         if (type === 'pyq') {
-                            if (!subjectId) {
+                            if (!subjectId || subjectId === 'general') {
                                 showError('Please select a specific subject for PYQs.');
                                 return;
                             }
@@ -894,29 +912,40 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                 showError('Invalid subject selected.');
                                 return;
                             }
+                            
+                            const yearVal = pyqYearInput ? parseInt(pyqYearInput.value) : NaN;
+                            if (isNaN(yearVal)) {
+                                showError('Please enter or select a valid GATE PYQ year.');
+                                return;
+                            }
+                            const minYear = currentYear - 49;
+                            if (yearVal < minYear) {
+                                showError(`GATE PYQ year cannot be before year ${minYear}.`);
+                                return;
+                            }
+                            if (yearVal > currentYear) {
+                                showError(`You cannot log PYQs for future years (up to ${currentYear}).`);
+                                return;
+                            }
+
+                            const isDuplicate = state.pyqHistory && state.pyqHistory.some(h => h.subjectId === subjectId && parseInt(h.pyqYear) === yearVal);
+                            if (isDuplicate) {
+                                showError(`GATE ${yearVal} PYQs for ${subName(subjectId)} are already logged.`);
+                                return;
+                            }
+
                             const currentSolved = state.pyqHistory 
-                                ? state.pyqHistory.filter(h => h.subjectId === subjectId).reduce((acc, c) => acc + (c.solved || 0), 0)
+                                ? state.pyqHistory.filter(h => h.subjectId === subjectId).length 
                                 : (pyqData.solved || 0);
                             const total = pyqData.total || 0;
-                            const remaining = Math.max(0, total - currentSolved);
 
-                            if (remaining <= 0) {
-                                showError('All PYQs for this subject are already completed! Great job.');
-                                return;
-                            }
-
-                            const solved = parseInt(amountInput.value) || 0;
-                            if (solved <= 0) {
-                                showError('Please enter at least 1 question solved.');
-                                return;
-                            }
-                            if (solved > remaining) {
-                                showError(`You can only log up to ${remaining} more question(s) for this subject (${currentSolved}/${total} already done).`);
+                            if (total > 0 && currentSolved >= total) {
+                                showError(`All ${total} PYQ target years for ${subName(subjectId)} are already completed!`);
                                 return;
                             }
 
                             if(!state.pyqHistory) state.pyqHistory = [];
-                            state.pyqHistory.push({ id, subjectId, date: today, solved, hours, notes });
+                            state.pyqHistory.push({ id, subjectId, pyqYear: yearVal, date: today, hours, notes });
                         } else if (type === 'test') {
                             const testType = subtypeSelect.value;
                             if (!subjectId) {
@@ -1096,7 +1125,14 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     };
                     
                     if (state.pyqHistory && (!filterType || filterType === 'pyq')) {
-                        allRecords = allRecords.concat(state.pyqHistory.map(r => ({ ...r, _type: 'PYQ', _title: `${r.solved} PYQs Solved (${subName(r.subjectId)})`, _extras: r.hours ? `${r.hours} hrs` : null })));
+                        allRecords = allRecords.concat(state.pyqHistory.map(r => ({
+                            ...r,
+                            _type: 'PYQ',
+                            _title: r.pyqYear 
+                                ? `GATE ${r.pyqYear} PYQ (${subName(r.subjectId)})` 
+                                : `${r.solved || 1} PYQs Solved (${subName(r.subjectId)})`,
+                            _extras: r.hours ? `${r.hours} hrs` : null
+                        })));
                     }
                     if (state.testHistory && (!filterType || filterType === 'test')) {
                         allRecords = allRecords.concat(state.testHistory.map(r => ({ ...r, _type: 'Test', _title: `${r.testType === 'topic' ? 'Topic' : 'Subject'} Test${r.topicName ? `: ${r.topicName}` : ''} (${subName(r.subjectId)})`, _extras: r.hours ? `${r.hours} hrs` : null })));
