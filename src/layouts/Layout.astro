@@ -194,7 +194,16 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 if (saved) {
                     try {
                         const parsed = JSON.parse(saved);
-                        if(!parsed.pyqs) parsed.pyqs = JSON.parse(JSON.stringify(defaultState.pyqs));
+                        if(!parsed.pyqs) {
+                            parsed.pyqs = JSON.parse(JSON.stringify(defaultState.pyqs));
+                        } else {
+                            if (parsed.pyqs['geomatics_engineering'] && parsed.pyqs['geomatics_engineering'].total === 80) {
+                                parsed.pyqs['geomatics_engineering'].total = 100;
+                            }
+                            if (parsed.pyqs['construction_materials'] && parsed.pyqs['construction_materials'].total === 80) {
+                                parsed.pyqs['construction_materials'].total = 100;
+                            }
+                        }
                         if(!parsed.tests) parsed.tests = JSON.parse(JSON.stringify(defaultState.tests));
                         if(!parsed.tests.topic) parsed.tests.topic = { completed: 0, total: 40 };
                         if(!parsed.tests.subject) parsed.tests.subject = { completed: 0, total: 10 };
@@ -332,6 +341,29 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     state.revision['2nd'] = state.revisionHistory.filter(r => r.revisionType === '2nd').length;
                     state.revision.final = state.revisionHistory.filter(r => r.revisionType === 'final').length;
                 }
+
+                // --- Cap derived counts to their respective totals ---
+                if (state.pyqs) {
+                    Object.keys(state.pyqs).forEach(k => {
+                        state.pyqs[k].solved = Math.min(state.pyqs[k].solved, state.pyqs[k].total);
+                    });
+                }
+                if (state.tests?.topic) {
+                    state.tests.topic.completed = Math.min(state.tests.topic.completed, state.tests.topic.total);
+                }
+                if (state.tests?.subject) {
+                    state.tests.subject.completed = Math.min(state.tests.subject.completed, state.tests.subject.total);
+                }
+                if (state.mocks) {
+                    state.mocks.completed = Math.min(state.mocks.completed, state.mocks.total);
+                }
+                if (state.revision) {
+                    state.revision['1st'] = Math.min(state.revision['1st'], state.revision.total);
+                    state.revision['2nd'] = Math.min(state.revision['2nd'], state.revision.total);
+                    state.revision.final = Math.min(state.revision.final, state.revision.total);
+                }
+                // --- End capping ---
+                
                 // --- End derived counts ---
                 
                 let overallSyllabusWeightCompleted = 0;

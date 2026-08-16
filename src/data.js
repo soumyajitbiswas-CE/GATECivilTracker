@@ -35,8 +35,8 @@ export const defaultState = {
         'water_resources_engineering': { solved: 0, total: 150 },
         'environmental_engineering': { solved: 0, total: 150 },
         'transportation_engineering': { solved: 0, total: 150 },
-        'geomatics_engineering': { solved: 0, total: 80 },
-        'construction_materials': { solved: 0, total: 80 }
+        'geomatics_engineering': { solved: 0, total: 100 },
+        'construction_materials': { solved: 0, total: 100 }
     },
     tests: {
         topic: { completed: 0, total: 40 },

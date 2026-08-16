@@ -135,11 +135,9 @@ const subjectBgClass = {
                     {subjects.map(sub => (
                         <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border shrink-0 min-w-0 gap-2">
                             <span class="text-xs sm:text-sm font-medium text-text-muted truncate flex-1 min-w-0" title={sub.name}>{sub.name}</span>
-                            <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
-                                <div class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold flex items-center justify-center"><span id={`val-pyq-${sub.id}`}>0</span></div>
-                                <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
-                                    <span class="text-text-muted text-[10px] sm:text-[11px] font-medium pyq-total-dash" data-subject={sub.id}>/ 0</span>
-                                </div>
+                            <div class="flex items-center gap-1.5 bg-white/5 border border-panel-border rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0 transition-colors tabular-nums">
+                                <span id={`val-pyq-${sub.id}`} class="text-xs sm:text-sm font-semibold text-text-main text-right min-w-[20px]">0</span>
+                                <span class="text-[10px] sm:text-xs font-medium text-text-muted pyq-total-dash" data-subject={sub.id}>/ 0</span>
                             </div>
                         </div>
                     ))}
@@ -164,20 +162,16 @@ const subjectBgClass = {
                 </div>
                 <div class="flex justify-between items-center bg-black/20 p-2.5 sm:p-3 rounded-xl border border-panel-border gap-2 mt-1 min-w-0">
                     <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Topic Tests</span>
-                    <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
-                        <div class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold flex items-center justify-center"><span id="val-tests-topic">0</span></div>
-                        <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
-                            <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 40</span>
-                        </div>
+                    <div class="flex items-center gap-1.5 bg-white/5 border border-panel-border rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0 transition-colors tabular-nums">
+                        <span id="val-tests-topic" class="text-xs sm:text-sm font-semibold text-text-main text-right min-w-[20px]">0</span>
+                        <span id="total-tests-topic" class="text-[10px] sm:text-xs font-medium text-text-muted">/ 40</span>
                     </div>
                 </div>
                 <div class="flex justify-between items-center bg-black/20 p-2.5 sm:p-3 rounded-xl border border-panel-border gap-2 min-w-0">
                     <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Subject Tests</span>
-                    <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
-                        <div class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold flex items-center justify-center"><span id="val-tests-subject">0</span></div>
-                        <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
-                            <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 10</span>
-                        </div>
+                    <div class="flex items-center gap-1.5 bg-white/5 border border-panel-border rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0 transition-colors tabular-nums">
+                        <span id="val-tests-subject" class="text-xs sm:text-sm font-semibold text-text-main text-right min-w-[20px]">0</span>
+                        <span id="total-tests-subject" class="text-[10px] sm:text-xs font-medium text-text-muted">/ 10</span>
                     </div>
                 </div>
             </div>
@@ -200,11 +194,9 @@ const subjectBgClass = {
                 </div>
                 <div class="flex justify-between items-center bg-black/20 p-2.5 sm:p-3 rounded-xl border border-panel-border gap-2 mt-1 min-w-0">
                     <span class="text-xs sm:text-sm font-medium text-text-muted truncate uppercase tracking-wider">Completed</span>
-                    <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
-                        <div class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold flex items-center justify-center"><span id="val-mocks">0</span></div>
-                        <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
-                            <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 20</span>
-                        </div>
+                    <div class="flex items-center gap-1.5 bg-white/5 border border-panel-border rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0 transition-colors tabular-nums">
+                        <span id="val-mocks" class="text-xs sm:text-sm font-semibold text-text-main text-right min-w-[20px]">0</span>
+                        <span id="total-mocks" class="text-[10px] sm:text-xs font-medium text-text-muted">/ 20</span>
                     </div>
                 </div>
             </div>
@@ -228,30 +220,24 @@ const subjectBgClass = {
                 <div class="flex flex-col gap-2 mt-1">
                     <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
                         <span class="text-xs sm:text-sm font-medium text-text-muted truncate">1st Revision</span>
-                        <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
-                            <div class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold flex items-center justify-center"><span id="val-rev-1">0</span></div>
-                            <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
-                                <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 9</span>
-                            </div>
+                        <div class="flex items-center gap-1.5 bg-white/5 border border-panel-border rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0 transition-colors tabular-nums">
+                            <span id="val-rev-1" class="text-xs sm:text-sm font-semibold text-text-main text-right min-w-[20px]">0</span>
+                            <span id="total-rev-1" class="text-[10px] sm:text-xs font-medium text-text-muted">/ 9</span>
                         </div>
                     </div>
                     <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
                         <span class="text-xs sm:text-sm font-medium text-text-muted truncate">2nd Revision</span>
-                        <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
-                            <div class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold flex items-center justify-center"><span id="val-rev-2">0</span></div>
-                            <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
-                                <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 9</span>
+                            <div class="flex items-center gap-1.5 bg-white/5 border border-panel-border rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0 transition-colors tabular-nums">
+                                <span id="val-rev-2" class="text-xs sm:text-sm font-semibold text-text-main text-right min-w-[20px]">0</span>
+                                <span id="total-rev-2" class="text-[10px] sm:text-xs font-medium text-text-muted">/ 9</span>
                             </div>
-                        </div>
                     </div>
                     <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border gap-2 min-w-0">
                         <span class="text-xs sm:text-sm font-medium text-text-muted truncate">Final Revision</span>
-                        <div class="flex items-center bg-white/5 border border-panel-border rounded-lg focus-within:border-primary-accent focus-within:ring-1 focus-within:ring-primary-accent/30 overflow-hidden shrink-0 transition-colors">
-                            <div class="bg-transparent text-text-main p-1 sm:p-1.5 w-12 sm:w-14 text-center text-xs sm:text-sm font-semibold flex items-center justify-center"><span id="val-rev-f">0</span></div>
-                            <div class="bg-black/40 px-2 sm:px-2.5 py-1 sm:py-1.5 border-l border-panel-border h-full flex items-center justify-center">
-                                <span class="text-text-muted text-[10px] sm:text-[11px] font-medium">/ 9</span>
+                            <div class="flex items-center gap-1.5 bg-white/5 border border-panel-border rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0 transition-colors tabular-nums">
+                                <span id="val-rev-f" class="text-xs sm:text-sm font-semibold text-text-main text-right min-w-[20px]">0</span>
+                                <span id="total-rev-f" class="text-[10px] sm:text-xs font-medium text-text-muted">/ 9</span>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -494,8 +480,7 @@ const subjectBgClass = {
                 const el = document.getElementById(item.id);
                 if (el) {
                     el.textContent = item.value;
-                    const container = el.parentElement;
-                    const totalSpan = container?.nextElementSibling?.querySelector('span') || container?.nextElementSibling;
+                    const totalSpan = document.getElementById(item.id.replace('val-', 'total-'));
                     if (totalSpan) totalSpan.textContent = `/ ${item.total}`;
                 }
             });
