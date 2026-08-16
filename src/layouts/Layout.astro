@@ -508,18 +508,56 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 const labelSubtype = document.getElementById('log-label-subtype');
                 const labelAmount = document.getElementById('log-label-amount');
 
+                const updateSubjectsList = (state) => {
+                    let html = '';
+                    if (typeInput.value === 'revision') {
+                        html += '<option value="" disabled selected>Select a Subject</option>';
+                    } else {
+                        html += '<option value="general">General / All Subjects</option>';
+                    }
+                    
+                    if (state.subjects) {
+                        state.subjects.forEach(sub => {
+                            let disabledStr = '';
+                            if (typeInput.value === 'revision') {
+                                const currentPhase = subtypeSelect.value;
+                                if (currentPhase && state.revisionHistory) {
+                                    const alreadyLogged = state.revisionHistory.some(r => r.subjectId === sub.id && r.revisionType === currentPhase);
+                                    if (alreadyLogged) {
+                                        disabledStr = ' disabled';
+                                    }
+                                }
+                            }
+                            html += `<option value="${sub.id}"${disabledStr}>${sub.name}</option>`;
+                        });
+                    }
+                    
+                    const prevVal = subjectSelect.value;
+                    subjectSelect.innerHTML = html;
+                    
+                    if (typeInput.value === 'revision') {
+                        const option = subjectSelect.querySelector(`option[value="${prevVal}"]`);
+                        if (option && !option.disabled) {
+                            subjectSelect.value = prevVal;
+                        } else {
+                            subjectSelect.value = "";
+                        }
+                    }
+                };
+
+                if (subtypeSelect && !subtypeSelect._changeListenerAdded) {
+                    subtypeSelect.addEventListener('change', () => {
+                        if (typeInput.value === 'revision') {
+                            updateSubjectsList(window.getState());
+                        }
+                    });
+                    subtypeSelect._changeListenerAdded = true;
+                }
+
                 const openLogModal = (type) => {
                     if (!modal) return;
                     typeInput.value = type;
-                    
-                    // Populate Subjects
                     const state = window.getState();
-                    subjectSelect.innerHTML = '<option value="general">General / All Subjects</option>';
-                    if (state.subjects) {
-                        state.subjects.forEach(sub => {
-                            subjectSelect.innerHTML += `<option value="${sub.id}">${sub.name}</option>`;
-                        });
-                    }
                     
                     // Reset fields
                     fieldSubtype.classList.add('hidden');
@@ -541,8 +579,32 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     } else if (type === 'revision') {
                         fieldSubtype.classList.remove('hidden');
                         labelSubtype.textContent = 'Revision Phase';
-                        subtypeSelect.innerHTML = '<option value="1st">1st Revision</option><option value="2nd">2nd Revision</option><option value="final">Final Revision</option>';
+
+                        const revTotal = state.revision?.total || (state.subjects ? state.subjects.length : 9);
+                        const rev1Count = state.revisionHistory ? state.revisionHistory.filter(r => r.revisionType === '1st').length : (state.revision?.['1st'] || 0);
+                        const rev2Count = state.revisionHistory ? state.revisionHistory.filter(r => r.revisionType === '2nd').length : (state.revision?.['2nd'] || 0);
+                        const revFinalCount = state.revisionHistory ? state.revisionHistory.filter(r => r.revisionType === 'final').length : (state.revision?.final || 0);
+
+                        const is1stComplete = rev1Count >= revTotal;
+                        const is2ndComplete = rev2Count >= revTotal;
+
+                        let subtypeOptions = '';
+                        subtypeOptions += `<option value="1st">1st Revision (${rev1Count}/${revTotal})</option>`;
+                        subtypeOptions += `<option value="2nd"${!is1stComplete ? ' disabled' : ''}>2nd Revision (${rev2Count}/${revTotal}${!is1stComplete ? ' - Locked' : ''})</option>`;
+                        subtypeOptions += `<option value="final"${!is2ndComplete ? ' disabled' : ''}>Final Revision (${revFinalCount}/${revTotal}${!is2ndComplete ? ' - Locked' : ''})</option>`;
+                        subtypeSelect.innerHTML = subtypeOptions;
+
+                        if (!is1stComplete) {
+                            subtypeSelect.value = '1st';
+                        } else if (!is2ndComplete) {
+                            subtypeSelect.value = '2nd';
+                        } else {
+                            subtypeSelect.value = 'final';
+                        }
                     }
+
+                    // Populate Subjects
+                    updateSubjectsList(state);
 
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
@@ -615,6 +677,29 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                             state.mocksHistory.push({ id, name, date: today });
                         } else if (type === 'revision') {
                             const revisionType = subtypeSelect.value;
+                            if (!subjectId || subjectId === 'general') {
+                                alert('Please select a specific subject for revision.');
+                                return;
+                            }
+                            
+                            const revTotal = state.revision?.total || (state.subjects ? state.subjects.length : 9);
+                            const rev1Count = state.revisionHistory ? state.revisionHistory.filter(r => r.revisionType === '1st').length : (state.revision?.['1st'] || 0);
+                            const rev2Count = state.revisionHistory ? state.revisionHistory.filter(r => r.revisionType === '2nd').length : (state.revision?.['2nd'] || 0);
+
+                            if (revisionType === '2nd' && rev1Count < revTotal) {
+                                alert(`You must complete all ${revTotal} subjects in 1st Revision (${rev1Count}/${revTotal}) before starting 2nd Revision.`);
+                                return;
+                            }
+                            if (revisionType === 'final' && rev2Count < revTotal) {
+                                alert(`You must complete all ${revTotal} subjects in 2nd Revision (${rev2Count}/${revTotal}) before starting Final Revision.`);
+                                return;
+                            }
+
+                            if (state.revisionHistory && state.revisionHistory.some(r => r.subjectId === subjectId && r.revisionType === revisionType)) {
+                                alert(`This subject has already been logged for ${revisionType} Revision.`);
+                                return;
+                            }
+
                             if(!state.revisionHistory) state.revisionHistory = [];
                             state.revisionHistory.push({ id, subjectId, revisionType, date: today });
                         }
