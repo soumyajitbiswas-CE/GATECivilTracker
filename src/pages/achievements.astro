@@ -92,7 +92,10 @@ allAchievements.sort((a, b) => {
 
                     <!-- Icon Wrapper -->
                     <div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 mb-3 ach-icon-wrap opacity-40 transition-all duration-200">
-                        <img src={`/achievements/icons/${ach.id}.png`} alt={ach.name} class="w-full h-full object-contain filter grayscale ach-icon-img transition-all duration-200" loading="lazy" decoding="async">
+                        <picture class="w-full h-full object-contain flex items-center justify-center">
+                            <source srcset={`/achievements/icons/${ach.id}.svg`} type="image/svg+xml">
+                            <img src={`/achievements/icons/${ach.id}.png`} alt={ach.name} class="w-full h-full object-contain filter grayscale ach-icon-img transition-all duration-200" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                     
                     <!-- Text Content -->
@@ -126,7 +129,10 @@ allAchievements.sort((a, b) => {
                 <div id="modal-glow" class="absolute inset-0 opacity-20 blur-3xl rounded-full scale-150 z-0 pointer-events-none"></div>
                 
                 <div class="relative z-10 w-24 h-24 sm:w-32 sm:h-32 mb-5">
-                    <img id="modal-icon" src="" alt="Icon" class="w-full h-full object-contain drop-shadow-xl transition-all duration-200">
+                    <picture class="w-full h-full object-contain flex items-center justify-center">
+                        <source id="modal-icon-source" srcset="" type="image/svg+xml">
+                        <img id="modal-icon" src="" alt="Icon" class="w-full h-full object-contain drop-shadow-xl transition-all duration-200">
+                    </picture>
                     <div id="modal-lock" class="absolute -bottom-1 -right-1 bg-black/80 border border-white/20 p-2 rounded-full flex items-center justify-center shadow-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/70"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     </div>
@@ -327,6 +333,8 @@ allAchievements.sort((a, b) => {
 
                     // Populate Modal
                     const modalIcon = document.getElementById('modal-icon');
+                    const modalIconSource = document.getElementById('modal-icon-source');
+                    if (modalIconSource) modalIconSource.srcset = `/achievements/icons/${card.dataset.id}.svg`;
                     modalIcon.src = `/achievements/icons/${card.dataset.id}.png`;
                     modalIcon.style.filter = isUnlocked ? `drop-shadow(0 0 18px ${iconColor})` : 'grayscale(100%)';
                     

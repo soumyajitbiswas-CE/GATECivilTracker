@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="320" y1="200" x2="700" y2="760" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <linearGradient id="metal" x1="330" y1="300" x2="700" y2="700" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#B9FF9C"/><stop offset=".35" stop-color="#35EB68"/><stop offset=".72" stop-color="#087B38"/><stop offset="1" stop-color="#4AFF78"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+    <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".8"/>
+  </filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<!-- restrained outer technical aura -->
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<!-- dark medallion -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- central question prism -->
+<g filter="url(#shadow)">
+  <path d="M512 266
+           L690 368
+           L690 576
+           L512 680
+           L334 576
+           L334 368Z"
+        fill="#071B0E" stroke="#42FF72" stroke-width="9"/>
+  <path d="M512 296L660 382V562L512 648L364 562V382Z"
+        fill="#0A2A16" stroke="#168C43" stroke-width="4"/>
+</g>
+
+<!-- magnified question/search lens -->
+<g filter="url(#glow)">
+  <circle cx="470" cy="458" r="103" fill="#06150B" stroke="#79FF80" stroke-width="10"/>
+  <circle cx="470" cy="458" r="70" fill="#0B341A" stroke="#B9FF9A" stroke-width="5"/>
+  <circle cx="470" cy="458" r="42" fill="none" stroke="#38EF69" stroke-width="6"/>
+  <path d="M438 458C446 438 459 428 476 429C494 430 505 441 507 456"
+        stroke="#D5FFB5" stroke-width="7" stroke-linecap="round"/>
+  <path d="M470 429V463M470 489V493"
+        stroke="#D5FFB5" stroke-width="8" stroke-linecap="round"/>
+  <path d="M538 526L608 596" stroke="#8DFF7E" stroke-width="20" stroke-linecap="round"/>
+  <path d="M538 526L608 596" stroke="#0B6C34" stroke-width="32" stroke-linecap="round"/>
+  <path d="M538 526L608 596" stroke="#63FF7A" stroke-width="8" stroke-linecap="round"/>
+</g>
+
+<!-- question fragments being hunted / captured -->
+<g filter="url(#tight)">
+  <path d="M372 352H420" stroke="#AFFF91" stroke-width="8" stroke-linecap="round"/>
+  <path d="M604 352H652" stroke="#AFFF91" stroke-width="8" stroke-linecap="round"/>
+  <path d="M372 610H420" stroke="#55FF77" stroke-width="8" stroke-linecap="round"/>
+  <path d="M604 610H652" stroke="#55FF77" stroke-width="8" stroke-linecap="round"/>
+
+  <circle cx="395" cy="410" r="9" fill="#BFFF9F"/>
+  <circle cx="629" cy="410" r="9" fill="#BFFF9F"/>
+  <circle cx="395" cy="550" r="9" fill="#6EFF7F"/>
+  <circle cx="629" cy="550" r="9" fill="#6EFF7F"/>
+</g>
+
+<!-- targeting arcs -->
+<g fill="none" stroke="#3DFF70" stroke-linecap="round">
+  <path d="M298 446C285 400 299 355 335 325" stroke-width="8"/>
+  <path d="M726 446C739 400 725 355 689 325" stroke-width="8"/>
+  <path d="M298 538C285 584 299 629 335 659" stroke-width="8"/>
+  <path d="M726 538C739 584 725 629 689 659" stroke-width="8"/>
+</g>
+
+<!-- captured-question energy core -->
+<g filter="url(#tight)">
+  <circle cx="470" cy="458" r="18" fill="#E4FFC9"/>
+  <circle cx="470" cy="458" r="31" stroke="#65FF7A" stroke-width="4" opacity=".6"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corner markers -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<!-- particles -->
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="312" cy="405" r="4"/><circle cx="712" cy="405" r="4"/>
+  <circle cx="324" cy="606" r="3"/><circle cx="700" cy="606" r="4"/>
+  <circle cx="410" cy="755" r="4"/><circle cx="618" cy="755" r="3"/>
+</g>
+</svg>

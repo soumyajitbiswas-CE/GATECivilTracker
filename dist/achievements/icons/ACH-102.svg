@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="330" y1="180" x2="700" y2="790" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <linearGradient id="steel" x1="360" y1="300" x2="660" y2="700" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#C5FFA5"/><stop offset=".3" stop-color="#42EF6D"/><stop offset=".7" stop-color="#087B38"/><stop offset="1" stop-color="#54FF7B"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/></filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- forge anvil base -->
+<g filter="url(#shadow)">
+  <path d="M350 566H674L646 618H378Z" fill="#071A0E" stroke="#4CFF72" stroke-width="8"/>
+  <path d="M382 618H642L620 692H404Z" fill="#0A2815" stroke="#168C43" stroke-width="6"/>
+  <path d="M420 692H604" stroke="#83FF89" stroke-width="8" stroke-linecap="round"/>
+</g>
+
+<!-- forged knowledge ingot -->
+<g filter="url(#shadow)">
+  <path d="M392 382L512 316L632 382V532L512 598L392 532Z"
+        fill="#06150B" stroke="#55FF78" stroke-width="9"/>
+  <path d="M424 398L512 350L600 398V514L512 562L424 514Z"
+        fill="#0A321A" stroke="#20D85A" stroke-width="5"/>
+</g>
+
+<!-- central forged core -->
+<g filter="url(#glow)">
+  <path d="M512 370L552 414L540 474L512 514L484 474L472 414Z"
+        fill="url(#steel)" stroke="#D4FFB1" stroke-width="5"/>
+  <circle cx="512" cy="438" r="23" fill="#E2FFC8"/>
+  <path d="M512 461V510" stroke="#A4FF8D" stroke-width="8" stroke-linecap="round"/>
+</g>
+
+<!-- three study layers being forged -->
+<g filter="url(#tight)">
+  <path d="M420 450L458 430V480L420 500Z" fill="#1A6532" stroke="#8DFF7E" stroke-width="4"/>
+  <path d="M604 450L566 430V480L604 500Z" fill="#1A6532" stroke="#8DFF7E" stroke-width="4"/>
+  <path d="M438 522L512 482L586 522L512 562Z" fill="#0D4B27" stroke="#63FF79" stroke-width="5"/>
+</g>
+
+<!-- sparks from the forge -->
+<g filter="url(#glow)">
+  <path d="M386 340L400 312L414 340L400 367Z" fill="#BFFF9F"/>
+  <path d="M626 342L640 314L654 342L640 369Z" fill="#7CFF84"/>
+  <path d="M354 466L365 443L376 466L365 488Z" fill="#55FF78"/>
+  <path d="M648 456L659 433L670 456L659 478Z" fill="#55FF78"/>
+</g>
+
+<!-- forging energy hammer silhouette, abstract and non-character -->
+<g filter="url(#tight)">
+  <path d="M690 330L738 378L704 412L656 364Z" fill="#0B341B" stroke="#8FFF80" stroke-width="6"/>
+  <path d="M656 364L610 410" stroke="#C1FFA0" stroke-width="14" stroke-linecap="round"/>
+  <path d="M610 410L586 434" stroke="#4CF46F" stroke-width="8" stroke-linecap="round"/>
+</g>
+
+<!-- impact wave -->
+<g fill="none" stroke-linecap="round">
+  <path d="M344 532C370 550 390 560 414 564" stroke="#7DFF88" stroke-width="7"/>
+  <path d="M680 532C654 550 634 560 610 564" stroke="#7DFF88" stroke-width="7"/>
+  <path d="M365 512C385 525 400 531 418 534" stroke="#31E860" stroke-width="5"/>
+  <path d="M659 512C639 525 624 531 606 534" stroke="#31E860" stroke-width="5"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corner markers -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

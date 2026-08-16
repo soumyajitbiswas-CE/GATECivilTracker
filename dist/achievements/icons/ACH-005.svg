@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="350" y1="180" x2="680" y2="800" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".2" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <linearGradient id="glass" x1="380" y1="300" x2="650" y2="690" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#173E25"/><stop offset=".5" stop-color="#0A2414"/><stop offset="1" stop-color="#041009"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+    <feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/>
+  </filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<!-- restrained outer technical aura -->
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<!-- dark medallion -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- hourglass frame -->
+<g filter="url(#shadow)">
+  <!-- upper and lower chambers -->
+  <path d="M350 292H674L641 337C607 382 575 412 546 441C575 470 607 500 641 545L674 590H350L383 545C417 500 449 470 478 441C449 412 417 382 383 337Z"
+        fill="url(#glass)" stroke="#4CFF72" stroke-width="9"/>
+  <!-- glass neck -->
+  <path d="M478 441H546" stroke="#B8FF9A" stroke-width="8" stroke-linecap="round"/>
+  <!-- glass highlights -->
+  <path d="M397 326C431 371 458 403 489 435" stroke="#B9FF9B" stroke-opacity=".35" stroke-width="5"/>
+  <path d="M627 326C593 371 566 403 535 435" stroke="#B9FF9B" stroke-opacity=".35" stroke-width="5"/>
+  <path d="M397 556C431 511 458 479 489 447" stroke="#B9FF9B" stroke-opacity=".25" stroke-width="5"/>
+  <path d="M627 556C593 511 566 479 535 447" stroke="#B9FF9B" stroke-opacity=".25" stroke-width="5"/>
+</g>
+
+<!-- stored time reservoir: lower chamber is substantially filled -->
+<g filter="url(#tight)">
+  <path d="M392 560
+           C418 524 448 486 484 453
+           C492 446 503 441 512 441
+           C521 441 532 446 540 453
+           C576 486 606 524 632 560
+           Z"
+        fill="url(#green)" fill-opacity=".92"/>
+  <!-- layered stored-hour particles -->
+  <circle cx="438" cy="536" r="9" fill="#D9FFB7"/>
+  <circle cx="474" cy="507" r="8" fill="#B6FF96"/>
+  <circle cx="512" cy="478" r="10" fill="#E4FFC8"/>
+  <circle cx="550" cy="507" r="8" fill="#B6FF96"/>
+  <circle cx="586" cy="536" r="9" fill="#D9FFB7"/>
+</g>
+
+<!-- upper hour reservoir with falling stream -->
+<g filter="url(#tight)">
+  <path d="M392 322H632L601 365C579 394 551 415 512 431C473 415 445 394 423 365Z"
+        fill="#0A321A" stroke="#35EA67" stroke-width="4"/>
+  <path d="M423 350C450 369 478 382 512 391C546 382 574 369 601 350"
+        stroke="#55FF77" stroke-width="9" stroke-linecap="round"/>
+  <path d="M512 396V438" stroke="#A9FF8D" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="512" cy="447" r="8" fill="#DFFFBE"/>
+</g>
+
+<!-- reinforced hourglass top/bottom caps -->
+<g filter="url(#tight)">
+  <path d="M330 270H694L672 310H352Z" fill="#0A351B" stroke="#66FF7B" stroke-width="7"/>
+  <path d="M352 612H672L694 652H330Z" fill="#0A351B" stroke="#66FF7B" stroke-width="7"/>
+  <path d="M370 287H654" stroke="#B4FF99" stroke-width="4" opacity=".55"/>
+  <path d="M370 635H654" stroke="#B4FF99" stroke-width="4" opacity=".4"/>
+</g>
+
+<!-- hour storage rings -->
+<g filter="url(#glow)" opacity=".75">
+  <circle cx="512" cy="492" r="220" stroke="#36F36A" stroke-width="5" stroke-dasharray="8 18"/>
+  <circle cx="512" cy="492" r="245" stroke="#168C43" stroke-width="3" stroke-dasharray="2 22"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corner markers -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<!-- small stored-time particles -->
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="300" cy="425" r="4"/><circle cx="724" cy="420" r="4"/>
+  <circle cx="326" cy="610" r="3"/><circle cx="700" cy="616" r="4"/>
+  <circle cx="404" cy="758" r="4"/><circle cx="620" cy="758" r="3"/>
+</g>
+</svg>

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="300" y1="170" x2="720" y2="790" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/></filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- iron will chamber -->
+<g filter="url(#shadow)">
+  <path d="M512 264L698 371V597L512 704L326 597V371Z" fill="#06150B" stroke="#42F26D" stroke-width="10"/>
+  <path d="M512 302L660 387V581L512 666L364 581V387Z" fill="#0A2A16" stroke="#159A47" stroke-width="4"/>
+</g>
+
+<!-- unbroken shield -->
+<g filter="url(#shadow)">
+  <path d="M512 326L642 382V474C642 560 586 620 512 658C438 620 382 560 382 474V382Z"
+        fill="#071B0E" stroke="#70FF7F" stroke-width="11" stroke-linejoin="round"/>
+  <path d="M512 362L606 402V474C606 534 568 578 512 610C456 578 418 534 418 474V402Z"
+        fill="#0A351B" stroke="#BFFF9F" stroke-width="6" stroke-linejoin="round"/>
+</g>
+
+<!-- inner steel plate -->
+<g filter="url(#shadow)">
+  <path d="M512 402L548 438L600 456L566 492L548 544L512 514L476 544L458 492L424 456L476 438Z"
+        fill="url(#green)" stroke="#F0FFD9" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="512" cy="470" r="13" fill="#06150B"/>
+</g>
+
+<!-- unbreakable bars -->
+<g filter="url(#tight)" stroke-linecap="round">
+  <path d="M414 420H452M572 420H610" stroke="#DFFFBE" stroke-width="10"/>
+  <path d="M400 492H444M580 492H624" stroke="#CFFFAD" stroke-width="9"/>
+  <path d="M414 564H452M572 564H610" stroke="#70FF7F" stroke-width="10"/>
+</g>
+
+<!-- resolve rings -->
+<g fill="none" stroke-linecap="round" filter="url(#glow)">
+  <circle cx="512" cy="492" r="128" stroke="#CFFFAD" stroke-width="6" stroke-dasharray="7 15"/>
+  <circle cx="512" cy="492" r="172" stroke="#55FF78" stroke-width="5" stroke-dasharray="20 14"/>
+  <circle cx="512" cy="492" r="212" stroke="#2AD75A" stroke-width="4" stroke-dasharray="6 25"/>
+</g>
+
+<!-- pressure resistance -->
+<g filter="url(#glow)" stroke-linecap="round">
+  <path d="M344 408L390 432M680 408L634 432" stroke="#E3FFC8" stroke-width="9"/>
+  <path d="M330 492L386 492M694 492L638 492" stroke="#BFFF9F" stroke-width="10"/>
+  <path d="M344 576L390 552M680 576L634 552" stroke="#70FF7F" stroke-width="9"/>
+</g>
+
+<!-- iron anchors -->
+<g filter="url(#shadow)">
+  <path d="M358 354L388 338L410 360L394 390L364 384Z" fill="#0D3B1D" stroke="#AFFF92" stroke-width="7"/>
+  <path d="M666 354L636 338L614 360L630 390L660 384Z" fill="#0D3B1D" stroke="#AFFF92" stroke-width="7"/>
+  <path d="M358 630L388 646L410 624L394 594L364 600Z" fill="#0D3B1D" stroke="#70FF7F" stroke-width="7"/>
+  <path d="M666 630L636 646L614 624L630 594L660 600Z" fill="#0D3B1D" stroke="#70FF7F" stroke-width="7"/>
+</g>
+
+<!-- will beam -->
+<g filter="url(#glow)" stroke-linecap="round">
+  <path d="M512 210V284" stroke="#0A6B34" stroke-width="32"/>
+  <path d="M512 210V284" stroke="#E3FFC8" stroke-width="9"/>
+  <path d="M512 700V780" stroke="#0A6B34" stroke-width="32"/>
+  <path d="M512 700V780" stroke="#63FF79" stroke-width="9"/>
+</g>
+
+<!-- endurance particles -->
+<g filter="url(#tight)">
+  <circle cx="420" cy="332" r="5" fill="#E3FFC8"/>
+  <circle cx="604" cy="332" r="5" fill="#CFFFAD"/>
+  <circle cx="390" cy="622" r="4" fill="#8DFF7E"/>
+  <circle cx="634" cy="622" r="4" fill="#70FF7F"/>
+  <circle cx="424" cy="676" r="4" fill="#55FF78"/>
+  <circle cx="600" cy="676" r="4" fill="#45EF6D"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

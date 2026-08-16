@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="300" y1="170" x2="720" y2="790" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/></filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- skill tree housing -->
+<g filter="url(#shadow)">
+  <path d="M512 260L700 369V595L512 704L324 595V369Z"
+        fill="#06150B" stroke="#42F26D" stroke-width="10"/>
+  <path d="M512 300L662 387V577L512 664L362 577V387Z"
+        fill="#0A2A16" stroke="#159A47" stroke-width="4"/>
+</g>
+
+<!-- branching skill paths -->
+<g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+  <path d="M512 574V514M512 514L438 454M512 514L586 454M438 454L386 390M438 454L446 356M586 454L638 390M586 454L578 356"
+        stroke="#0A6B34" stroke-width="26"/>
+  <path d="M512 574V514M512 514L438 454M512 514L586 454M438 454L386 390M438 454L446 356M586 454L638 390M586 454L578 356"
+        stroke="#78FF83" stroke-width="8"/>
+</g>
+
+<!-- root core -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="574" r="66" fill="#06150B" stroke="#63FF79" stroke-width="8"/>
+  <circle cx="512" cy="574" r="39" fill="url(#green)" stroke="#E2FFC8" stroke-width="5"/>
+  <circle cx="512" cy="574" r="11" fill="#F0FFD9"/>
+</g>
+
+<!-- skill nodes -->
+<g filter="url(#shadow)">
+  <circle cx="438" cy="454" r="42" fill="#0A351B" stroke="#AFFF92" stroke-width="7"/>
+  <circle cx="586" cy="454" r="42" fill="#0A351B" stroke="#AFFF92" stroke-width="7"/>
+  <circle cx="386" cy="390" r="35" fill="#0A321A" stroke="#82FF83" stroke-width="6"/>
+  <circle cx="446" cy="356" r="35" fill="#0A321A" stroke="#9CFF89" stroke-width="6"/>
+  <circle cx="638" cy="390" r="35" fill="#0A321A" stroke="#82FF83" stroke-width="6"/>
+  <circle cx="578" cy="356" r="35" fill="#0A321A" stroke="#9CFF89" stroke-width="6"/>
+</g>
+
+<!-- node cores -->
+<g filter="url(#tight)">
+  <circle cx="438" cy="454" r="12" fill="#DFFFBE"/>
+  <circle cx="586" cy="454" r="12" fill="#CFFFAD"/>
+  <circle cx="386" cy="390" r="10" fill="#AFFF92"/>
+  <circle cx="446" cy="356" r="10" fill="#CFFFAD"/>
+  <circle cx="638" cy="390" r="10" fill="#8DFF80"/>
+  <circle cx="578" cy="356" r="10" fill="#AFFF92"/>
+</g>
+
+<!-- top mastery node -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="270" r="52" fill="#06150B" stroke="#CFFFAD" stroke-width="8"/>
+  <circle cx="512" cy="270" r="30" fill="url(#green)" stroke="#E8FFD2" stroke-width="5"/>
+  <circle cx="512" cy="270" r="9" fill="#F0FFD9"/>
+</g>
+
+<!-- final path to mastery -->
+<g filter="url(#glow)" stroke-linecap="round">
+  <path d="M446 356L486 310M578 356L538 310" stroke="#0A6B34" stroke-width="22"/>
+  <path d="M446 356L486 310M578 356L538 310" stroke="#BFFF9F" stroke-width="7"/>
+</g>
+
+<!-- branching energy accents -->
+<g filter="url(#tight)">
+  <path d="M350 334L366 360L350 386L334 360Z" fill="#DFFFBE"/>
+  <path d="M674 334L690 360L674 386L658 360Z" fill="#AFFF92"/>
+  <path d="M352 544L366 568L352 592L338 568Z" fill="#70FF7F"/>
+  <path d="M672 544L686 568L672 592L658 568Z" fill="#55FF78"/>
+</g>
+
+<!-- upward mastery beam -->
+<g filter="url(#glow)" stroke-linecap="round">
+  <path d="M512 190V218" stroke="#0A6B34" stroke-width="28"/>
+  <path d="M512 190V218" stroke="#E0FFC5" stroke-width="8"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

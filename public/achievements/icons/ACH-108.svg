@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="320" y1="190" x2="700" y2="780" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+    <feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/>
+  </filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<!-- outer technical aura -->
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<!-- dark medallion -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- first breakthrough: sealed chamber opening -->
+<g filter="url(#shadow)">
+  <path d="M512 270L690 372V574L512 676L334 574V372Z"
+        fill="#06150B" stroke="#42F26D" stroke-width="10"/>
+  <path d="M512 310L650 389V557L512 636L374 557V389Z"
+        fill="#0A2A16" stroke="#159A47" stroke-width="4"/>
+</g>
+
+<!-- cracked barrier, split by first breakthrough -->
+<g filter="url(#glow)">
+  <path d="M512 326L530 390L570 418L535 455L552 512L512 492L472 512L489 455L454 418L494 390Z"
+        fill="url(#green)" stroke="#D9FFB7" stroke-width="6"/>
+</g>
+
+<!-- two halves of a broken gate -->
+<g filter="url(#tight)">
+  <path d="M390 398L465 440L448 487L382 452Z" fill="#0D4C27" stroke="#78FF83" stroke-width="6"/>
+  <path d="M634 398L559 440L576 487L642 452Z" fill="#0D4C27" stroke="#78FF83" stroke-width="6"/>
+  <path d="M394 536L458 500L475 548L408 585Z" fill="#0A351B" stroke="#4DF36F" stroke-width="6"/>
+  <path d="M630 536L566 500L549 548L616 585Z" fill="#0A351B" stroke="#4DF36F" stroke-width="6"/>
+</g>
+
+<!-- breakthrough beam -->
+<g filter="url(#glow)">
+  <path d="M512 225V382" stroke="#0A6B34" stroke-width="34" stroke-linecap="round"/>
+  <path d="M512 225V382" stroke="#BFFF9F" stroke-width="9" stroke-linecap="round"/>
+  <path d="M512 604V759" stroke="#0A6B34" stroke-width="34" stroke-linecap="round"/>
+  <path d="M512 604V759" stroke="#5BFF78" stroke-width="9" stroke-linecap="round"/>
+</g>
+
+<!-- expanding shockwave from first breakthrough -->
+<g fill="none" stroke-linecap="round">
+  <path d="M328 492C352 422 390 380 444 350" stroke="#8BFF80" stroke-width="8"/>
+  <path d="M696 492C672 422 634 380 580 350" stroke="#8BFF80" stroke-width="8"/>
+  <path d="M328 492C352 562 390 604 444 634" stroke="#43EF6D" stroke-width="8"/>
+  <path d="M696 492C672 562 634 604 580 634" stroke="#43EF6D" stroke-width="8"/>
+</g>
+
+<!-- central breakthrough core -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="86" fill="#06150B" stroke="#69FF7D" stroke-width="9"/>
+  <circle cx="512" cy="492" r="56" fill="#0B3A1D" stroke="#CFFFAD" stroke-width="5"/>
+  <path d="M512 438L530 472L567 492L530 512L512 546L494 512L457 492L494 472Z"
+        fill="url(#green)" stroke="#E2FFC8" stroke-width="4"/>
+  <circle cx="512" cy="492" r="12" fill="#F0FFD9"/>
+</g>
+
+<!-- first spark -->
+<g filter="url(#tight)">
+  <path d="M512 292L528 318L512 344L496 318Z" fill="#E4FFC9" stroke="#75FF82" stroke-width="5"/>
+  <circle cx="398" cy="332" r="7" fill="#C9FFAA"/>
+  <circle cx="626" cy="332" r="7" fill="#A6FF91"/>
+  <circle cx="350" cy="494" r="6" fill="#79FF82"/>
+  <circle cx="674" cy="494" r="6" fill="#5BFF78"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corner markers -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<!-- subtle particles -->
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

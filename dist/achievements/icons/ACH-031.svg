@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="300" y1="180" x2="720" y2="790" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/></filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<!-- outer aura -->
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<!-- medallion -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- unbroken streak chain -->
+<g filter="url(#shadow)">
+  <path d="M512 274L692 378V590L512 694L332 590V378Z"
+        fill="#06150B" stroke="#42F26D" stroke-width="10"/>
+  <path d="M512 310L656 394V574L512 658L368 574V394Z"
+        fill="#0A2A16" stroke="#159A47" stroke-width="4"/>
+</g>
+
+<!-- seven connected streak links -->
+<g filter="url(#glow)" stroke-linejoin="round">
+  <path d="M512 334L590 378L590 418L512 462L434 418V378Z"
+        fill="#0A321A" stroke="#CFFFAD" stroke-width="7"/>
+  <path d="M608 390L666 424L666 468L608 502L550 468V424Z"
+        fill="#0A321A" stroke="#A8FF90" stroke-width="7"/>
+  <path d="M608 502L666 536L666 580L608 614L550 580V536Z"
+        fill="#0A321A" stroke="#82FF83" stroke-width="7"/>
+  <path d="M512 558L590 602L590 642L512 686L434 642V602Z"
+        fill="#0A321A" stroke="#65FF7A" stroke-width="7"/>
+  <path d="M416 502L474 536V580L416 614L358 580V536Z"
+        fill="#0A321A" stroke="#65FF7A" stroke-width="7"/>
+  <path d="M416 390L474 424V468L416 502L358 468V424Z"
+        fill="#0A321A" stroke="#82FF83" stroke-width="7"/>
+  <path d="M512 446L550 468V512L512 534L474 512V468Z"
+        fill="#0A321A" stroke="#AFFF92" stroke-width="7"/>
+</g>
+
+<!-- chain connections -->
+<g fill="none" stroke-linecap="round" filter="url(#tight)">
+  <path d="M512 334V274" stroke="#8FFF80" stroke-width="7"/>
+  <path d="M666 446L718 476" stroke="#6EFF7F" stroke-width="7"/>
+  <path d="M666 558L718 528" stroke="#55FF78" stroke-width="7"/>
+  <path d="M512 686V746" stroke="#45EF6D" stroke-width="7"/>
+  <path d="M358 558L306 528" stroke="#45EF6D" stroke-width="7"/>
+  <path d="M358 446L306 476" stroke="#6EFF7F" stroke-width="7"/>
+</g>
+
+<!-- central streak core -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="490" r="94" fill="#06150B" stroke="#72FF80" stroke-width="9"/>
+  <circle cx="512" cy="490" r="62" fill="#0A351B" stroke="#C9FFAA" stroke-width="5"/>
+  <path d="M512 430L532 470L568 490L532 510L512 550L492 510L456 490L492 470Z"
+        fill="url(#green)" stroke="#E2FFC8" stroke-width="4"/>
+  <circle cx="512" cy="490" r="12" fill="#F0FFD9"/>
+</g>
+
+<!-- unbroken signal line -->
+<g filter="url(#tight)" stroke-linecap="round">
+  <path d="M306 490H390" stroke="#7DFF88" stroke-width="7"/>
+  <path d="M634 490H718" stroke="#7DFF88" stroke-width="7"/>
+  <path d="M512 274V358" stroke="#AFFF92" stroke-width="7"/>
+  <path d="M512 622V706" stroke="#55FF78" stroke-width="7"/>
+</g>
+
+<!-- streak sparks -->
+<g filter="url(#glow)">
+  <circle cx="326" cy="488" r="8" fill="#DFFFBE"/>
+  <circle cx="698" cy="488" r="8" fill="#B6FF98"/>
+  <circle cx="512" cy="292" r="8" fill="#C9FFAA"/>
+  <circle cx="512" cy="724" r="8" fill="#75FF82"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corners -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<!-- subtle particles -->
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

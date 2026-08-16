@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="320" y1="180" x2="700" y2="790" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/></filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- milestone marker tower -->
+<g filter="url(#shadow)">
+  <path d="M512 260L686 360V612L512 712L338 612V360Z"
+        fill="#06150B" stroke="#42F26D" stroke-width="10"/>
+  <path d="M512 300L650 380V592L512 672L374 592V380Z"
+        fill="#0A2A16" stroke="#159A47" stroke-width="4"/>
+</g>
+
+<!-- ascending milestone pillars -->
+<g filter="url(#tight)">
+  <path d="M370 548V460L410 438L450 460V548L410 570Z"
+        fill="#0C3B1D" stroke="#57F873" stroke-width="6"/>
+  <path d="M438 548V406L478 384L518 406V548L478 570Z"
+        fill="#0E4822" stroke="#79FF82" stroke-width="7"/>
+  <path d="M506 548V352L546 330L586 352V548L546 570Z"
+        fill="#115526" stroke="#A7FF90" stroke-width="8"/>
+  <path d="M574 548V296L614 274L654 296V548L614 570Z"
+        fill="#143F20" stroke="#CFFFAD" stroke-width="9"/>
+</g>
+
+<!-- marker lights -->
+<g filter="url(#glow)">
+  <circle cx="410" cy="460" r="11" fill="#75FF82"/>
+  <circle cx="478" cy="406" r="11" fill="#9AFF88"/>
+  <circle cx="546" cy="352" r="11" fill="#BFFF9F"/>
+  <circle cx="614" cy="296" r="11" fill="#E2FFC8"/>
+</g>
+
+<!-- summit beacon -->
+<g filter="url(#shadow)">
+  <path d="M614 238L654 286L614 334L574 286Z"
+        fill="url(#green)" stroke="#E1FFC6" stroke-width="6"/>
+  <circle cx="614" cy="286" r="13" fill="#F1FFD9"/>
+</g>
+
+<!-- measured route -->
+<g fill="none" stroke-linecap="round">
+  <path d="M346 590C408 628 474 644 540 628C602 613 650 580 684 532"
+        stroke="#0A6B34" stroke-width="27"/>
+  <path d="M346 590C408 628 474 644 540 628C602 613 650 580 684 532"
+        stroke="#62FF79" stroke-width="7"/>
+</g>
+
+<!-- central marker core -->
+<g filter="url(#glow)">
+  <circle cx="512" cy="552" r="70" fill="#06150B" stroke="#72FF80" stroke-width="8"/>
+  <circle cx="512" cy="552" r="42" fill="#0A351B" stroke="#C9FFAA" stroke-width="5"/>
+  <path d="M512 516L524 540L550 552L524 564L512 590L500 564L474 552L500 540Z"
+        fill="url(#green)" stroke="#E2FFC8" stroke-width="4"/>
+</g>
+
+<!-- measurement ticks -->
+<g stroke="#83FF8B" stroke-linecap="round" opacity=".8">
+  <path d="M346 390H374M346 420H374M650 390H678M650 420H678" stroke-width="5"/>
+  <path d="M346 650H374M650 650H678" stroke-width="5"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corners -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

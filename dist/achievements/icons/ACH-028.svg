@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="300" y1="170" x2="720" y2="790" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/></filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- forge housing -->
+<g filter="url(#shadow)">
+  <path d="M512 266L696 372V594L512 700L328 594V372Z" fill="#06150B" stroke="#42F26D" stroke-width="10"/>
+  <path d="M512 304L660 390V576L512 662L364 576V390Z" fill="#0A2A16" stroke="#159A47" stroke-width="4"/>
+</g>
+
+<!-- forged anvil -->
+<g filter="url(#shadow)">
+  <path d="M390 462H634L666 502L618 528L600 602H424L406 528L358 502Z"
+        fill="#07180D" stroke="#7CFF84" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M424 602H600L620 642H404Z" fill="#0C321A" stroke="#45EF6D" stroke-width="7"/>
+  <path d="M380 462H644L620 430H404Z" fill="#0D3D1F" stroke="#BFFF9F" stroke-width="7"/>
+</g>
+
+<!-- forged progress core -->
+<g filter="url(#glow)">
+  <path d="M512 344L546 414L620 448L546 482L512 556L478 482L404 448L478 414Z"
+        fill="url(#green)" stroke="#E3FFC8" stroke-width="7"/>
+  <circle cx="512" cy="448" r="15" fill="#F0FFD9"/>
+</g>
+
+<!-- hammer / impact -->
+<g filter="url(#shadow)">
+  <path d="M512 252V348" stroke="#BFFF9F" stroke-width="15" stroke-linecap="round"/>
+  <path d="M458 238H566L590 270L566 302H458L434 270Z"
+        fill="#0A351B" stroke="#DFFFBE" stroke-width="8" stroke-linejoin="round"/>
+</g>
+
+<!-- impact energy -->
+<g filter="url(#glow)" stroke-linecap="round">
+  <path d="M438 350L404 318M586 350L620 318M410 386L360 374M614 386L664 374"
+        stroke="#75FF80" stroke-width="8"/>
+</g>
+
+<!-- rising forged sparks -->
+<g filter="url(#tight)">
+  <path d="M390 338L404 362L390 386L376 362Z" fill="#DFFFBE"/>
+  <path d="M634 332L648 356L634 380L620 356Z" fill="#AFFF92"/>
+  <path d="M352 430L364 450L352 470L340 450Z" fill="#70FF7F"/>
+  <path d="M672 430L684 450L672 470L660 450Z" fill="#55FF78"/>
+  <path d="M404 674L418 698L404 722L390 698Z" fill="#63FF79"/>
+  <path d="M620 674L634 698L620 722L606 698Z" fill="#45EF6D"/>
+</g>
+
+<!-- forge energy rails -->
+<g filter="url(#glow)" stroke-linecap="round">
+  <path d="M512 696V750" stroke="#0A6B34" stroke-width="28"/>
+  <path d="M512 696V750" stroke="#63FF79" stroke-width="8"/>
+</g>
+
+<!-- heat rings -->
+<g fill="none" stroke-linecap="round">
+  <circle cx="512" cy="448" r="104" stroke="#55FF78" stroke-width="6" stroke-dasharray="15 12"/>
+  <circle cx="512" cy="448" r="142" stroke="#2AD75A" stroke-width="4" stroke-dasharray="4 20"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

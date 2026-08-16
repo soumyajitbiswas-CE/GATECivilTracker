@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="300" y1="180" x2="730" y2="790" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="15" stdDeviation="16" flood-color="#000" flood-opacity=".8"/></filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- momentum track: slow orbit transitioning into a fast ascent -->
+<g fill="none" stroke-linecap="round" filter="url(#glow)">
+  <path d="M318 600C356 670 438 708 520 698C626 685 706 600 708 492C710 382 630 296 526 282"
+        stroke="#0A5E2F" stroke-width="34"/>
+  <path d="M318 600C356 670 438 708 520 698C626 685 706 600 708 492C710 382 630 296 526 282"
+        stroke="#4CF36F" stroke-width="9"/>
+</g>
+
+<!-- acceleration lanes -->
+<g filter="url(#tight)" stroke-linecap="round">
+  <path d="M340 568C375 625 430 652 492 650" stroke="#BFFF9F" stroke-width="7"/>
+  <path d="M365 520C393 570 438 596 486 598" stroke="#7BFF82" stroke-width="7"/>
+  <path d="M392 472C411 512 442 536 478 542" stroke="#45EF6D" stroke-width="7"/>
+</g>
+
+<!-- central momentum core -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="104" fill="#06150B" stroke="#65FF7A" stroke-width="9"/>
+  <circle cx="512" cy="492" r="72" fill="#0A351B" stroke="#C8FFAA" stroke-width="5"/>
+  <path d="M474 528L498 464L522 500L550 438L548 514L520 478L496 540Z"
+        fill="url(#green)" stroke="#DFFFBE" stroke-width="4" stroke-linejoin="round"/>
+</g>
+
+<!-- directional burst / turning point -->
+<g filter="url(#glow)">
+  <path d="M610 414L666 382L634 438L690 426L618 476Z"
+        fill="#BFFF9F" stroke="#63FF79" stroke-width="5" stroke-linejoin="round"/>
+</g>
+
+<!-- speed nodes -->
+<g filter="url(#tight)">
+  <circle cx="342" cy="606" r="12" fill="#D8FFB8"/>
+  <circle cx="390" cy="650" r="10" fill="#A7FF90"/>
+  <circle cx="452" cy="676" r="9" fill="#7CFF84"/>
+  <circle cx="626" cy="646" r="9" fill="#5BFF78"/>
+  <circle cx="680" cy="570" r="10" fill="#72FF80"/>
+  <circle cx="706" cy="492" r="12" fill="#BFFF9F"/>
+</g>
+
+<!-- acceleration pillars -->
+<g stroke-linecap="round" filter="url(#tight)">
+  <path d="M414 356L440 332" stroke="#A7FF90" stroke-width="7"/>
+  <path d="M438 384L468 350" stroke="#72FF80" stroke-width="7"/>
+  <path d="M568 350L598 384" stroke="#5BFF78" stroke-width="7"/>
+  <path d="M594 332L620 356" stroke="#45EF6D" stroke-width="7"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corner markers -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

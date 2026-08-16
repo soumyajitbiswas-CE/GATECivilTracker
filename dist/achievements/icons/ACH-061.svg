@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="320" y1="190" x2="700" y2="780" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+    <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".8"/>
+  </filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<!-- restrained outer aura -->
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<!-- dark medallion -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- locked focus chamber -->
+<g filter="url(#shadow)">
+  <path d="M512 270L684 370V574L512 674L340 574V370Z"
+        fill="#06150B" stroke="#42F26D" stroke-width="10"/>
+  <path d="M512 302L650 382V562L512 642L374 562V382Z"
+        fill="#0A2B17" stroke="#159A47" stroke-width="4"/>
+</g>
+
+<!-- concentration iris -->
+<g filter="url(#glow)">
+  <ellipse cx="512" cy="488" rx="154" ry="112" fill="#06150B" stroke="#78FF83" stroke-width="9"/>
+  <ellipse cx="512" cy="488" rx="112" ry="78" fill="#0A351B" stroke="#C1FFA0" stroke-width="5"/>
+  <ellipse cx="512" cy="488" rx="62" ry="45" fill="#06150B" stroke="#45F36E" stroke-width="6"/>
+  <ellipse cx="512" cy="488" rx="24" ry="18" fill="#DFFFBE"/>
+</g>
+
+<!-- four focus shutters closing around the core -->
+<g filter="url(#tight)">
+  <path d="M374 390L446 424L420 462L360 434Z" fill="#1A6633" stroke="#8DFF7E" stroke-width="5"/>
+  <path d="M650 390L578 424L604 462L664 434Z" fill="#1A6633" stroke="#8DFF7E" stroke-width="5"/>
+  <path d="M374 586L446 552L420 514L360 542Z" fill="#0F4D28" stroke="#61FF79" stroke-width="5"/>
+  <path d="M650 586L578 552L604 514L664 542Z" fill="#0F4D28" stroke="#61FF79" stroke-width="5"/>
+</g>
+
+<!-- sealed focus bands -->
+<g filter="url(#tight)" fill="none" stroke-linecap="round">
+  <ellipse cx="512" cy="488" rx="184" ry="139" stroke="#1AA84C" stroke-width="5" stroke-dasharray="10 18"/>
+  <ellipse cx="512" cy="488" rx="210" ry="161" stroke="#45F36E" stroke-width="4" stroke-dasharray="2 24"/>
+</g>
+
+<!-- singular forward beam -->
+<g filter="url(#glow)">
+  <path d="M512 238V326" stroke="#0B6B34" stroke-width="28" stroke-linecap="round"/>
+  <path d="M512 238V326" stroke="#8DFF7E" stroke-width="8" stroke-linecap="round"/>
+  <path d="M512 650V742" stroke="#0B6B34" stroke-width="28" stroke-linecap="round"/>
+  <path d="M512 650V742" stroke="#5BFF78" stroke-width="8" stroke-linecap="round"/>
+</g>
+
+<!-- small focus sparks -->
+<g filter="url(#tight)">
+  <circle cx="396" cy="324" r="7" fill="#D8FFB8"/>
+  <circle cx="628" cy="324" r="7" fill="#A8FF91"/>
+  <circle cx="394" cy="656" r="7" fill="#74FF81"/>
+  <circle cx="630" cy="656" r="7" fill="#4CFF72"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corner markers -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<!-- subtle particles -->
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="302" cy="414" r="4"/><circle cx="722" cy="414" r="4"/>
+  <circle cx="324" cy="610" r="3"/><circle cx="700" cy="610" r="4"/>
+  <circle cx="410" cy="756" r="4"/><circle cx="618" cy="756" r="3"/>
+</g>
+</svg>

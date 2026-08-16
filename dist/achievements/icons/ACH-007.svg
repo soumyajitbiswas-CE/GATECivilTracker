@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+<defs>
+  <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 492) rotate(90) scale(405)">
+    <stop stop-color="#173F25"/><stop offset=".5" stop-color="#092113"/><stop offset="1" stop-color="#020805"/>
+  </radialGradient>
+  <linearGradient id="green" x1="330" y1="190" x2="700" y2="780" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E1FFB8"/><stop offset=".22" stop-color="#86FF55"/><stop offset=".6" stop-color="#20D85A"/><stop offset="1" stop-color="#057436"/>
+  </linearGradient>
+  <linearGradient id="page" x1="360" y1="300" x2="670" y2="690" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#183D24"/><stop offset=".5" stop-color="#0A2414"/><stop offset="1" stop-color="#041009"/>
+  </linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="16"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="tight" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+    <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".8"/>
+  </filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M42 0H0V42" stroke="#39E76B" stroke-opacity=".07" stroke-width="2"/>
+    <circle cx="4" cy="4" r="1.5" fill="#A5FF87" fill-opacity=".15"/>
+  </pattern>
+</defs>
+
+<!-- restrained outer technical aura -->
+<g filter="url(#glow)" opacity=".72">
+  <circle cx="512" cy="492" r="350" stroke="#4CFF78" stroke-width="8" stroke-dasharray="3 25" opacity=".42"/>
+  <circle cx="512" cy="492" r="326" stroke="#1CBE50" stroke-width="3" stroke-dasharray="14 18" opacity=".5"/>
+</g>
+
+<!-- dark medallion -->
+<g filter="url(#shadow)">
+  <circle cx="512" cy="492" r="338" fill="url(#bg)" stroke="#0B4A27" stroke-width="8"/>
+  <circle cx="512" cy="492" r="319" stroke="#42FF72" stroke-opacity=".58" stroke-width="3"/>
+  <circle cx="512" cy="492" r="294" stroke="#0A7A3B" stroke-opacity=".6" stroke-width="2"/>
+</g>
+
+<circle cx="512" cy="492" r="286" fill="url(#grid)"/>
+
+<!-- five distinct study pages / milestones -->
+<g filter="url(#shadow)">
+  <!-- rear page -->
+  <path d="M344 330C404 305 459 311 512 342V680C454 649 401 645 344 670Z"
+        fill="#0B2A17" stroke="#28D85D" stroke-width="7"/>
+  <!-- front page -->
+  <path d="M680 330C620 305 565 311 512 342V680C570 649 623 645 680 670Z"
+        fill="url(#page)" stroke="#58FF78" stroke-width="8"/>
+</g>
+
+<!-- page turn ribbons: five completed study-date markers -->
+<g filter="url(#tight)">
+  <path d="M384 375C426 357 467 361 504 383" stroke="#AFFF91" stroke-width="7" stroke-linecap="round"/>
+  <path d="M384 430C426 412 467 416 504 438" stroke="#76FF80" stroke-width="7" stroke-linecap="round"/>
+  <path d="M384 485C426 467 467 471 504 493" stroke="#4CFF72" stroke-width="7" stroke-linecap="round"/>
+  <path d="M384 540C426 522 467 526 504 548" stroke="#36E964" stroke-width="7" stroke-linecap="round"/>
+  <path d="M384 595C426 577 467 581 504 603" stroke="#20D85A" stroke-width="7" stroke-linecap="round"/>
+
+  <path d="M640 375C598 357 557 361 520 383" stroke="#AFFF91" stroke-width="7" stroke-linecap="round"/>
+  <path d="M640 430C598 412 557 416 520 438" stroke="#76FF80" stroke-width="7" stroke-linecap="round"/>
+  <path d="M640 485C598 467 557 471 520 493" stroke="#4CFF72" stroke-width="7" stroke-linecap="round"/>
+  <path d="M640 540C598 522 557 526 520 548" stroke="#36E964" stroke-width="7" stroke-linecap="round"/>
+  <path d="M640 595C598 577 557 581 520 603" stroke="#20D85A" stroke-width="7" stroke-linecap="round"/>
+</g>
+
+<!-- central page spine / knowledge core -->
+<g filter="url(#tight)">
+  <path d="M512 342V680" stroke="#BFFF9F" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="512" cy="512" r="48" fill="#06150B" stroke="#69FF7D" stroke-width="6"/>
+  <circle cx="512" cy="512" r="30" fill="#0A3A1D" stroke="#CFFFAD" stroke-width="4"/>
+  <path d="M512 489L525 505L545 510L529 524L532 545L512 534L492 545L495 524L479 510L499 505Z"
+        fill="url(#green)"/>
+</g>
+
+<!-- five date nodes around the page edges -->
+<g filter="url(#tight)">
+  <circle cx="348" cy="382" r="12" fill="#D6FFB5"/>
+  <circle cx="348" cy="437" r="12" fill="#B2FF96"/>
+  <circle cx="348" cy="492" r="12" fill="#7EFF82"/>
+  <circle cx="348" cy="547" r="12" fill="#4CFF72"/>
+  <circle cx="348" cy="602" r="12" fill="#25D95B"/>
+
+  <circle cx="676" cy="382" r="12" fill="#D6FFB5"/>
+  <circle cx="676" cy="437" r="12" fill="#B2FF96"/>
+  <circle cx="676" cy="492" r="12" fill="#7EFF82"/>
+  <circle cx="676" cy="547" r="12" fill="#4CFF72"/>
+  <circle cx="676" cy="602" r="12" fill="#25D95B"/>
+</g>
+
+<!-- upward page-turn ribbon -->
+<g filter="url(#glow)">
+  <path d="M590 624C646 592 674 540 682 478C688 430 677 382 650 344"
+        stroke="#4CFF72" stroke-width="9" stroke-linecap="round"/>
+  <path d="M650 344L646 375L675 361Z" fill="#A7FF8B"/>
+</g>
+
+<!-- top crystal -->
+<g filter="url(#tight)">
+  <path d="M512 132L541 170L512 206L483 170Z" fill="url(#green)" stroke="#C5FFA5" stroke-width="5"/>
+</g>
+
+<!-- technical corner markers -->
+<g stroke="#71FF87" stroke-width="5" stroke-linecap="round" opacity=".72">
+  <path d="M270 270H340M270 270V340"/>
+  <path d="M754 270H684M754 270V340"/>
+  <path d="M270 714H340M270 714V644"/>
+  <path d="M754 714H684M754 714V644"/>
+</g>
+
+<!-- subtle particles -->
+<g fill="#A2FF88" filter="url(#tight)">
+  <circle cx="300" cy="420" r="4"/><circle cx="724" cy="420" r="4"/>
+  <circle cx="324" cy="620" r="3"/><circle cx="702" cy="620" r="4"/>
+  <circle cx="412" cy="756" r="4"/><circle cx="620" cy="756" r="3"/>
+</g>
+</svg>
