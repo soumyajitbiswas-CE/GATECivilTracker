@@ -392,45 +392,58 @@ const subjectBgClass = {
         </div>
         </div>
     </div>
-
     <script>
         // @ts-nocheck
+        let workingSubjects = [];
+
         // Hydration logic
         function hydrateDashboard() {
             const state = window.getState();
             window.calculateAllMetrics(state);
 
             // Update Hero
-            document.getElementById('hero-progress-text').textContent = window.formatPercent(state.gateReadiness);
-            document.getElementById('hero-progress-circle').style.setProperty('--progress', `${state.gateReadiness}%`);
+            const heroText = document.getElementById('hero-progress-text');
+            const heroCircle = document.getElementById('hero-progress-circle');
+            if (heroText) heroText.textContent = window.formatPercent(state.gateReadiness || 0);
+            if (heroCircle) heroCircle.style.setProperty('--progress', `${state.gateReadiness || 0}%`);
             
-            document.getElementById('metric-syllabus').textContent = window.formatPercent(state.overallSyllabusProgress);
-            document.getElementById('metric-pyqs').textContent = window.formatPercent(state.pyqProgress);
-            document.getElementById('metric-tests').textContent = window.formatPercent(state.testProgress);
-            document.getElementById('metric-mocks').textContent = window.formatPercent(state.mockProgress);
-            document.getElementById('metric-revision').textContent = window.formatPercent(state.revisionProgress);
-            document.getElementById('metric-hours').textContent = window.formatHours(state.totalHours);
+            const metSyllabus = document.getElementById('metric-syllabus');
+            const metPyqs = document.getElementById('metric-pyqs');
+            const metTests = document.getElementById('metric-tests');
+            const metMocks = document.getElementById('metric-mocks');
+            const metRevision = document.getElementById('metric-revision');
+            const metHours = document.getElementById('metric-hours');
+
+            if (metSyllabus) metSyllabus.textContent = window.formatPercent(state.overallSyllabusProgress || 0);
+            if (metPyqs) metPyqs.textContent = window.formatPercent(state.pyqProgress || 0);
+            if (metTests) metTests.textContent = window.formatPercent(state.testProgress || 0);
+            if (metMocks) metMocks.textContent = window.formatPercent(state.mockProgress || 0);
+            if (metRevision) metRevision.textContent = window.formatPercent(state.revisionProgress || 0);
+            if (metHours) metHours.textContent = window.formatHours(state.totalHours || 0);
+
             // Render Subjects Progress
-            state.subjects.forEach(sub => {
-                const bar = document.querySelector(`.subject-progress-bar[data-id="${sub.id}"]`);
-                const text = document.querySelector(`.subject-progress-text[data-id="${sub.id}"]`);
-                const hours = document.querySelector(`.subject-hours-text[data-id="${sub.id}"]`);
-                const weightText = document.querySelector(`.subject-weight-text[data-id="${sub.id}"]`);
-                
-                if(bar) bar.style.width = `${sub.progress}%`;
-                if(text) text.innerHTML = `${window.formatPercent(sub.progress)} <span class="text-xs font-medium text-text-muted ml-1">Complete</span>`;
-                if(hours) hours.textContent = `${window.formatHours(sub.hours)} studied`;
-                if(weightText) weightText.textContent = `${sub.trackerWeight}%`;
-            });
+            if (state.subjects) {
+                state.subjects.forEach(sub => {
+                    const bar = document.querySelector(`.subject-progress-bar[data-id="${sub.id}"]`);
+                    const text = document.querySelector(`.subject-progress-text[data-id="${sub.id}"]`);
+                    const hours = document.querySelector(`.subject-hours-text[data-id="${sub.id}"]`);
+                    const weightText = document.querySelector(`.subject-weight-text[data-id="${sub.id}"]`);
+                    
+                    if(bar) bar.style.width = `${sub.progress}%`;
+                    if(text) text.innerHTML = `${window.formatPercent(sub.progress)} <span class="text-xs font-medium text-text-muted ml-1">Complete</span>`;
+                    if(hours) hours.textContent = `${window.formatHours(sub.hours)} studied`;
+                    if(weightText) weightText.textContent = `${sub.trackerWeight}%`;
+                });
+            }
 
             // Hydrate Practice & Revision inputs
             const inputs = [
-                { id: 'input-tests-topic', value: state.tests.topic.completed, total: state.tests.topic.total },
-                { id: 'input-tests-subject', value: state.tests.subject.completed, total: state.tests.subject.total },
-                { id: 'input-mocks', value: state.mocks.completed, total: state.mocks.total },
-                { id: 'input-rev-1', value: state.revision['1st'], total: state.revision.total },
-                { id: 'input-rev-2', value: state.revision['2nd'], total: state.revision.total },
-                { id: 'input-rev-f', value: state.revision.final, total: state.revision.total }
+                { id: 'input-tests-topic', value: state.tests?.topic?.completed ?? 0, total: state.tests?.topic?.total ?? 40 },
+                { id: 'input-tests-subject', value: state.tests?.subject?.completed ?? 0, total: state.tests?.subject?.total ?? 10 },
+                { id: 'input-mocks', value: state.mocks?.completed ?? 0, total: state.mocks?.total ?? 20 },
+                { id: 'input-rev-1', value: state.revision?.['1st'] ?? 0, total: state.revision?.total ?? 9 },
+                { id: 'input-rev-2', value: state.revision?.['2nd'] ?? 0, total: state.revision?.total ?? 9 },
+                { id: 'input-rev-f', value: state.revision?.final ?? 0, total: state.revision?.total ?? 9 }
             ];
             
             inputs.forEach(item => {
@@ -446,534 +459,600 @@ const subjectBgClass = {
             });
 
             // Hydrate PYQs
-            state.subjects.forEach(sub => {
-                const pyqInput = document.getElementById(`input-pyq-${sub.id}`);
-                const pyqTotal = document.querySelector(`.pyq-total-dash[data-subject="${sub.id}"]`);
-                if (state.pyqs[sub.id]) {
-                    if (pyqInput && document.activeElement !== pyqInput) {
-                        pyqInput.value = state.pyqs[sub.id].solved;
-                        pyqInput.max = state.pyqs[sub.id].total;
+            if (state.subjects && state.pyqs) {
+                state.subjects.forEach(sub => {
+                    const pyqInput = document.getElementById(`input-pyq-${sub.id}`);
+                    const pyqTotal = document.querySelector(`.pyq-total-dash[data-subject="${sub.id}"]`);
+                    if (state.pyqs[sub.id]) {
+                        if (pyqInput && document.activeElement !== pyqInput) {
+                            pyqInput.value = state.pyqs[sub.id].solved;
+                            pyqInput.max = state.pyqs[sub.id].total;
+                        }
+                        if (pyqTotal) {
+                            pyqTotal.textContent = `/ ${state.pyqs[sub.id].total}`;
+                        }
                     }
-                    if (pyqTotal) {
-                        pyqTotal.textContent = `/ ${state.pyqs[sub.id].total}`;
-                    }
-                }
-            });
+                });
+            }
 
             // Hydrate Settings Modal
             const w = state.settings?.weights || { syllabus: 0.60, pyqs: 0.15, tests: 0.10, mocks: 0.10, revision: 0.05 };
-            document.getElementById('set-weight-syllabus').value = Math.round(w.syllabus * 100);
-            document.getElementById('set-weight-pyqs').value = Math.round(w.pyqs * 100);
-            document.getElementById('set-weight-tests').value = Math.round(w.tests * 100);
-            document.getElementById('set-weight-mocks').value = Math.round(w.mocks * 100);
-            document.getElementById('set-weight-revision').value = Math.round(w.revision * 100);
+            const elWeightSyl = document.getElementById('set-weight-syllabus');
+            const elWeightPyq = document.getElementById('set-weight-pyqs');
+            const elWeightTest = document.getElementById('set-weight-tests');
+            const elWeightMock = document.getElementById('set-weight-mocks');
+            const elWeightRev = document.getElementById('set-weight-revision');
 
-            document.getElementById('set-target-topic-tests').value = state.tests.topic.total;
-            document.getElementById('set-target-subject-tests').value = state.tests.subject.total;
-            document.getElementById('set-target-mocks').value = state.mocks.total;
-            document.getElementById('set-target-revision').value = state.revision.total;
+            if (elWeightSyl) elWeightSyl.value = Math.round(w.syllabus * 100);
+            if (elWeightPyq) elWeightPyq.value = Math.round(w.pyqs * 100);
+            if (elWeightTest) elWeightTest.value = Math.round(w.tests * 100);
+            if (elWeightMock) elWeightMock.value = Math.round(w.mocks * 100);
+            if (elWeightRev) elWeightRev.value = Math.round(w.revision * 100);
 
-            state.subjects.forEach(sub => {
-                const pyqSetInput = document.getElementById(`set-target-pyq-${sub.id}`);
-                if (state.pyqs[sub.id] && pyqSetInput) {
-                    pyqSetInput.value = state.pyqs[sub.id].total;
-                }
-            });
+            const setTopTest = document.getElementById('set-target-topic-tests');
+            const setSubTest = document.getElementById('set-target-subject-tests');
+            const setMock = document.getElementById('set-target-mocks');
+            const setRev = document.getElementById('set-target-revision');
+
+            if (setTopTest) setTopTest.value = state.tests?.topic?.total ?? 40;
+            if (setSubTest) setSubTest.value = state.tests?.subject?.total ?? 10;
+            if (setMock) setMock.value = state.mocks?.total ?? 20;
+            if (setRev) setRev.value = state.revision?.total ?? 9;
+
+            if (state.subjects && state.pyqs) {
+                state.subjects.forEach(sub => {
+                    const pyqSetInput = document.getElementById(`set-target-pyq-${sub.id}`);
+                    if (state.pyqs[sub.id] && pyqSetInput) {
+                        pyqSetInput.value = state.pyqs[sub.id].total;
+                    }
+                });
+            }
         }
 
-        // Input Listeners
-        const setupInput = (id, callback) => {
-            const el = document.getElementById(id);
-            if(el) {
-                el.addEventListener('change', (e) => {
+        // Input Listeners & Dashboard Setup
+        function setupDashboardListeners() {
+            const setupInput = (id, callback) => {
+                const el = document.getElementById(id);
+                if(el) {
+                    const handler = (e) => {
+                        const val = parseInt(e.target.value);
+                        if (isNaN(val) || val < 0) return;
+                        const state = window.getState();
+                        const clamped = callback(state, val);
+                        if (clamped !== undefined) {
+                            e.target.value = clamped;
+                        }
+                        window.saveState(state);
+                    };
+                    el.oninput = handler;
+                    el.onchange = handler;
+                }
+            };
+
+            setupInput('input-tests-topic', (s, v) => {
+                if (!s.tests) s.tests = { topic: { completed: 0, total: 40 }, subject: { completed: 0, total: 10 } };
+                if (!s.tests.topic) s.tests.topic = { completed: 0, total: 40 };
+                return s.tests.topic.completed = Math.min(v, s.tests.topic.total || 40);
+            });
+            setupInput('input-tests-subject', (s, v) => {
+                if (!s.tests) s.tests = { topic: { completed: 0, total: 40 }, subject: { completed: 0, total: 10 } };
+                if (!s.tests.subject) s.tests.subject = { completed: 0, total: 10 };
+                return s.tests.subject.completed = Math.min(v, s.tests.subject.total || 10);
+            });
+            setupInput('input-mocks', (s, v) => {
+                if (!s.mocks) s.mocks = { completed: 0, total: 20 };
+                return s.mocks.completed = Math.min(v, s.mocks.total || 20);
+            });
+            setupInput('input-rev-1', (s, v) => {
+                if (!s.revision) s.revision = { '1st': 0, '2nd': 0, final: 0, total: 9 };
+                return s.revision['1st'] = Math.min(v, s.revision.total || 9);
+            });
+            setupInput('input-rev-2', (s, v) => {
+                if (!s.revision) s.revision = { '1st': 0, '2nd': 0, final: 0, total: 9 };
+                return s.revision['2nd'] = Math.min(v, s.revision.total || 9);
+            });
+            setupInput('input-rev-f', (s, v) => {
+                if (!s.revision) s.revision = { '1st': 0, '2nd': 0, final: 0, total: 9 };
+                return s.revision.final = Math.min(v, s.revision.total || 9);
+            });
+
+            document.querySelectorAll('.input-pyq-dash').forEach(input => {
+                const handler = (e) => {
                     const val = parseInt(e.target.value);
                     if (isNaN(val) || val < 0) return;
+                    const subjectId = e.target.dataset.subject;
                     const state = window.getState();
-                    const clamped = callback(state, val);
-                    if (clamped !== undefined) {
-                        e.target.value = clamped;
+                    if (state.pyqs && state.pyqs[subjectId]) {
+                        const max = state.pyqs[subjectId].total;
+                        state.pyqs[subjectId].solved = Math.min(val, max);
+                        e.target.value = state.pyqs[subjectId].solved;
+                        window.saveState(state);
                     }
+                };
+                input.oninput = handler;
+                input.onchange = handler;
+            });
+
+            // Settings Modal Logic
+            const settingsModal = document.getElementById('settings-modal');
+            document.querySelectorAll('.open-settings-btn').forEach(btn => {
+                btn.onclick = () => {
+                    hydrateDashboard(); // ensure it has the latest before showing
+                    if (settingsModal) settingsModal.classList.remove('hidden');
+                };
+            });
+
+            const btnSettingsCancel = document.getElementById('btn-settings-cancel');
+            if (btnSettingsCancel) {
+                btnSettingsCancel.onclick = () => {
+                    if (settingsModal) settingsModal.classList.add('hidden');
+                };
+            }
+
+            const btnSettingsSave = document.getElementById('btn-settings-save');
+            if (btnSettingsSave) {
+                btnSettingsSave.onclick = () => {
+                    const state = window.getState();
+
+                    // Targets
+                    state.tests.topic.total = Math.max(1, parseInt(document.getElementById('set-target-topic-tests').value) || 40);
+                    state.tests.subject.total = Math.max(1, parseInt(document.getElementById('set-target-subject-tests').value) || 10);
+                    state.mocks.total = Math.max(1, parseInt(document.getElementById('set-target-mocks').value) || 20);
+                    state.revision.total = Math.max(1, parseInt(document.getElementById('set-target-revision').value) || 9);
+
+                    document.querySelectorAll('.set-pyq-input').forEach(input => {
+                        const subId = input.dataset.pyqSubject;
+                        const val = Math.max(1, parseInt(input.value) || 100);
+                        if(state.pyqs && state.pyqs[subId]) {
+                            state.pyqs[subId].total = val;
+                            // Cap solved at the new max
+                            state.pyqs[subId].solved = Math.min(state.pyqs[subId].solved, val);
+                        }
+                    });
+                    
+                    // Cap existing values at new maxes
+                    state.tests.topic.completed = Math.min(state.tests.topic.completed, state.tests.topic.total);
+                    state.tests.subject.completed = Math.min(state.tests.subject.completed, state.tests.subject.total);
+                    state.mocks.completed = Math.min(state.mocks.completed, state.mocks.total);
+                    ['1st', '2nd', 'final'].forEach(k => {
+                        state.revision[k] = Math.min(state.revision[k], state.revision.total);
+                    });
+
                     window.saveState(state);
+                    if (settingsModal) settingsModal.classList.add('hidden');
+                };
+            }
+
+            // Syllabus Modal Logic
+            const syllabusModal = document.getElementById('syllabus-settings-modal');
+            const syllabusSelect = document.getElementById('syllabus-subject-select');
+            const topicsList = document.getElementById('topics-edit-list');
+            const btnAddTopic = document.getElementById('btn-add-topic');
+
+            function syncCurrentVisibleTopics() {
+                if (!syllabusSelect || !workingSubjects.length) return;
+                const currentSubjectId = syllabusSelect.value;
+                const currentSubject = workingSubjects.find(s => s.id === currentSubjectId);
+                if (!currentSubject) return;
+
+                if (topicsList) {
+                    topicsList.querySelectorAll('.topic-name-input').forEach(inp => {
+                        const idx = parseInt(inp.dataset.idx);
+                        if (currentSubject.topics[idx]) currentSubject.topics[idx].name = inp.value;
+                    });
+                    topicsList.querySelectorAll('.topic-weight-input').forEach(inp => {
+                        const idx = parseInt(inp.dataset.idx);
+                        if (currentSubject.topics[idx]) {
+                            const val = parseFloat(inp.value);
+                            currentSubject.topics[idx].trackerWeight = isNaN(val) ? 0 : val;
+                        }
+                    });
+                }
+
+                document.querySelectorAll('.set-subject-weight-input').forEach(inp => {
+                    const subId = inp.dataset.subjectId;
+                    const sub = workingSubjects.find(s => s.id === subId);
+                    if (sub) {
+                        const val = parseFloat(inp.value);
+                        sub.trackerWeight = isNaN(val) ? 0 : val;
+                    }
                 });
             }
-        };
 
-        setupInput('input-tests-topic', (s, v) => s.tests.topic.completed = Math.min(v, s.tests.topic.total));
-        setupInput('input-tests-subject', (s, v) => s.tests.subject.completed = Math.min(v, s.tests.subject.total));
-        setupInput('input-mocks', (s, v) => s.mocks.completed = Math.min(v, s.mocks.total));
-        setupInput('input-rev-1', (s, v) => s.revision['1st'] = Math.min(v, 9));
-        setupInput('input-rev-2', (s, v) => s.revision['2nd'] = Math.min(v, 9));
-        setupInput('input-rev-f', (s, v) => s.revision.final = Math.min(v, 9));
+            function renderWorkingTopics(subjectId) {
+                if (!topicsList) return;
+                topicsList.innerHTML = '';
+                const subject = workingSubjects.find(s => s.id === subjectId);
+                if (!subject) return;
 
-        document.querySelectorAll('.input-pyq-dash').forEach(input => {
-            input.addEventListener('change', (e) => {
-                const val = parseInt(e.target.value);
-                if (isNaN(val) || val < 0) return;
-                const subjectId = e.target.dataset.subject;
-                const state = window.getState();
-                if (state.pyqs[subjectId]) {
-                    const max = state.pyqs[subjectId].total;
-                    state.pyqs[subjectId].solved = Math.min(val, max);
-                    e.target.value = state.pyqs[subjectId].solved;
-                    window.saveState(state);
+                const disp = document.getElementById('selected-subject-weight-display');
+                if (disp) disp.textContent = `Weight: ${subject.trackerWeight}%`;
+
+                const totalTopicWeight = subject.topics.reduce((sum, t) => sum + (parseFloat(t.trackerWeight) || 0), 0);
+
+                subject.topics.forEach((topic, idx) => {
+                    const truePct = totalTopicWeight === 0 ? 0 : ((parseFloat(topic.trackerWeight) || 0) / totalTopicWeight) * 100;
+                    const row = document.createElement('div');
+                    row.className = "flex items-center gap-1.5 sm:gap-2 bg-black/30 p-2 rounded-lg border border-panel-border shrink-0 min-w-0";
+                    row.innerHTML = `
+                        <input type="text" class="topic-name-input flex-grow min-w-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm" value="${topic.name}" data-idx="${idx}">
+                        <input type="number" step="0.1" class="topic-weight-input w-16 sm:w-20 shrink-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm text-center font-semibold" value="${topic.trackerWeight}" data-idx="${idx}" title="Relative Weight">
+                        <span class="topic-true-percent w-12 sm:w-16 text-center text-xs text-primary-accent font-semibold shrink-0" data-idx="${idx}">${truePct.toFixed(1)}%</span>
+                        <button class="btn btn-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 btn-delete-topic shrink-0 p-1.5 sm:p-2" data-idx="${idx}" title="Remove Topic">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                        </button>
+                    `;
+                    topicsList.appendChild(row);
+                });
+                
+                const countSpan = document.getElementById('dashboard-topic-count');
+                if (countSpan) countSpan.textContent = subject.topics.length;
+                if (btnAddTopic) {
+                    btnAddTopic.disabled = subject.topics.length >= 40;
+                    btnAddTopic.style.opacity = subject.topics.length >= 40 ? '0.5' : '1';
+                    btnAddTopic.style.cursor = subject.topics.length >= 40 ? 'not-allowed' : 'pointer';
                 }
-            });
-        });
 
-        // Settings Modal Logic
-        const settingsModal = document.getElementById('settings-modal');
-        document.querySelectorAll('.open-settings-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                hydrateDashboard(); // ensure it has the latest before showing
-                settingsModal.classList.remove('hidden');
-            });
-        });
-
-        document.getElementById('btn-settings-cancel')?.addEventListener('click', () => {
-            settingsModal.classList.add('hidden');
-        });
-
-        document.getElementById('btn-settings-save')?.addEventListener('click', () => {
-            const state = window.getState();
-
-            // Targets
-            state.tests.topic.total = Math.max(1, parseInt(document.getElementById('set-target-topic-tests').value) || 40);
-            state.tests.subject.total = Math.max(1, parseInt(document.getElementById('set-target-subject-tests').value) || 10);
-            state.mocks.total = Math.max(1, parseInt(document.getElementById('set-target-mocks').value) || 20);
-            state.revision.total = Math.max(1, parseInt(document.getElementById('set-target-revision').value) || 9);
-
-            document.querySelectorAll('.set-pyq-input').forEach(input => {
-                const subId = input.dataset.pyqSubject;
-                const val = Math.max(1, parseInt(input.value) || 100);
-                if(state.pyqs[subId]) {
-                    state.pyqs[subId].total = val;
-                    // Cap solved at the new max
-                    state.pyqs[subId].solved = Math.min(state.pyqs[subId].solved, val);
-                }
-            });
-            
-            // Cap existing values at new maxes
-            state.tests.topic.completed = Math.min(state.tests.topic.completed, state.tests.topic.total);
-            state.tests.subject.completed = Math.min(state.tests.subject.completed, state.tests.subject.total);
-            state.mocks.completed = Math.min(state.mocks.completed, state.mocks.total);
-            ['1st', '2nd', 'final'].forEach(k => {
-                state.revision[k] = Math.min(state.revision[k], state.revision.total);
-            });
-
-            window.saveState(state);
-            settingsModal.classList.add('hidden');
-        });
-
-        // Syllabus Modal Logic
-        const syllabusModal = document.getElementById('syllabus-settings-modal');
-        const syllabusSelect = document.getElementById('syllabus-subject-select');
-        const topicsList = document.getElementById('topics-edit-list');
-        const btnAddTopic = document.getElementById('btn-add-topic');
-        
-        let workingSubjects = [];
-
-        function syncCurrentVisibleTopics() {
-            if (!syllabusSelect || !workingSubjects.length) return;
-            const currentSubjectId = syllabusSelect.value;
-            const currentSubject = workingSubjects.find(s => s.id === currentSubjectId);
-            if (!currentSubject) return;
-
-            topicsList.querySelectorAll('.topic-name-input').forEach(inp => {
-                const idx = parseInt(inp.dataset.idx);
-                if (currentSubject.topics[idx]) currentSubject.topics[idx].name = inp.value;
-            });
-            topicsList.querySelectorAll('.topic-weight-input').forEach(inp => {
-                const idx = parseInt(inp.dataset.idx);
-                if (currentSubject.topics[idx]) {
-                    const val = parseFloat(inp.value);
-                    currentSubject.topics[idx].trackerWeight = isNaN(val) ? 0 : val;
-                }
-            });
+                topicsList.querySelectorAll('.topic-name-input').forEach(inp => {
+                    const update = (e) => {
+                        const idx = parseInt(e.target.dataset.idx);
+                        if (subject.topics[idx]) subject.topics[idx].name = e.target.value;
+                    };
+                    inp.addEventListener('input', update);
+                    inp.addEventListener('change', update);
+                });
+                topicsList.querySelectorAll('.topic-weight-input').forEach(inp => {
+                    const update = (e) => {
+                        const idx = parseInt(e.target.dataset.idx);
+                        if (subject.topics[idx]) {
+                            let val = parseFloat(e.target.value);
+                            subject.topics[idx].trackerWeight = isNaN(val) ? 0 : val;
+                            
+                            // Dynamically update true percentages without re-rendering everything
+                            const totalTopicWeight = subject.topics.reduce((sum, t) => sum + (parseFloat(t.trackerWeight) || 0), 0);
+                            topicsList.querySelectorAll('.topic-true-percent').forEach(span => {
+                                const i = parseInt(span.dataset.idx);
+                                if (subject.topics[i]) {
+                                    const w = parseFloat(subject.topics[i].trackerWeight) || 0;
+                                    const truePct = totalTopicWeight === 0 ? 0 : (w / totalTopicWeight) * 100;
+                                    span.textContent = `${truePct.toFixed(1)}%`;
+                                }
+                            });
+                        }
+                    };
+                    inp.addEventListener('input', update);
+                    inp.addEventListener('change', update);
+                });
+                topicsList.querySelectorAll('.btn-delete-topic').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        syncCurrentVisibleTopics();
+                        const idx = parseInt(e.currentTarget.dataset.idx);
+                        subject.topics.splice(idx, 1);
+                        renderWorkingTopics(subjectId);
+                    });
+                });
+            }
 
             document.querySelectorAll('.set-subject-weight-input').forEach(inp => {
-                const subId = inp.dataset.subjectId;
-                const sub = workingSubjects.find(s => s.id === subId);
-                if (sub) {
-                    const val = parseFloat(inp.value);
-                    sub.trackerWeight = isNaN(val) ? 0 : val;
-                }
+                const updateSubjectWeight = (e) => {
+                    const subId = e.target.dataset.subjectId;
+                    const sub = workingSubjects.find(s => s.id === subId);
+                    if (sub) {
+                        const val = parseFloat(e.target.value);
+                        sub.trackerWeight = isNaN(val) ? 0 : val;
+                        if (syllabusSelect && syllabusSelect.value === subId) {
+                            const disp = document.getElementById('selected-subject-weight-display');
+                            if (disp) disp.textContent = `Weight: ${sub.trackerWeight}%`;
+                        }
+                    }
+                };
+                inp.addEventListener('input', updateSubjectWeight);
+                inp.addEventListener('change', updateSubjectWeight);
             });
-        }
 
-        function renderWorkingTopics(subjectId) {
-            topicsList.innerHTML = '';
-            const subject = workingSubjects.find(s => s.id === subjectId);
-            if (!subject) return;
-
-            const disp = document.getElementById('selected-subject-weight-display');
-            if (disp) disp.textContent = `Weight: ${subject.trackerWeight}%`;
-
-            const totalTopicWeight = subject.topics.reduce((sum, t) => sum + (parseFloat(t.trackerWeight) || 0), 0);
-
-            subject.topics.forEach((topic, idx) => {
-                const truePct = totalTopicWeight === 0 ? 0 : ((parseFloat(topic.trackerWeight) || 0) / totalTopicWeight) * 100;
-                const row = document.createElement('div');
-                row.className = "flex items-center gap-1.5 sm:gap-2 bg-black/30 p-2 rounded-lg border border-panel-border shrink-0 min-w-0";
-                row.innerHTML = `
-                    <input type="text" class="topic-name-input flex-grow min-w-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm" value="${topic.name}" data-idx="${idx}">
-                    <input type="number" step="0.1" class="topic-weight-input w-16 sm:w-20 shrink-0 bg-white/5 border border-panel-border text-text-main p-1.5 sm:p-2 rounded-md focus:outline-none focus:border-primary-accent text-xs sm:text-sm text-center font-semibold" value="${topic.trackerWeight}" data-idx="${idx}" title="Relative Weight">
-                    <span class="topic-true-percent w-12 sm:w-16 text-center text-xs text-primary-accent font-semibold shrink-0" data-idx="${idx}">${truePct.toFixed(1)}%</span>
-                    <button class="btn btn-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 btn-delete-topic shrink-0 p-1.5 sm:p-2" data-idx="${idx}" title="Remove Topic">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                    </button>
-                `;
-                topicsList.appendChild(row);
+            document.querySelectorAll('.open-syllabus-settings-btn').forEach(btn => {
+                btn.onclick = () => {
+                    workingSubjects = JSON.parse(JSON.stringify(window.getState().subjects));
+                    workingSubjects.forEach(s => {
+                        const inp = document.getElementById(`set-subject-weight-${s.id}`);
+                        if (inp) inp.value = s.trackerWeight;
+                    });
+                    if (syllabusSelect && workingSubjects.length > 0) {
+                        syllabusSelect.value = workingSubjects[0].id;
+                        renderWorkingTopics(syllabusSelect.value);
+                    }
+                    if (syllabusModal) syllabusModal.classList.remove('hidden');
+                };
             });
-            
-            const countSpan = document.getElementById('dashboard-topic-count');
-            if (countSpan) countSpan.textContent = subject.topics.length;
-            if (btnAddTopic) {
-                btnAddTopic.disabled = subject.topics.length >= 40;
-                btnAddTopic.style.opacity = subject.topics.length >= 40 ? '0.5' : '1';
-                btnAddTopic.style.cursor = subject.topics.length >= 40 ? 'not-allowed' : 'pointer';
+
+            if (syllabusSelect) {
+                syllabusSelect.onchange = (e) => {
+                    syncCurrentVisibleTopics();
+                    renderWorkingTopics(e.target.value);
+                };
             }
 
-            topicsList.querySelectorAll('.topic-name-input').forEach(inp => {
-                const update = (e) => {
-                    const idx = parseInt(e.target.dataset.idx);
-                    if (subject.topics[idx]) subject.topics[idx].name = e.target.value;
+            if (btnAddTopic) {
+                btnAddTopic.onclick = () => {
+                    syncCurrentVisibleTopics();
+                    const subjectId = syllabusSelect ? syllabusSelect.value : null;
+                    const subject = workingSubjects.find(s => s.id === subjectId);
+                    if (!subject) return;
+                    
+                    if (subject.topics.length >= 40) {
+                        alert('Maximum of 40 topics allowed per subject.');
+                        return;
+                    }
+                    
+                    subject.topics.push({
+                        id: `custom_${Date.now()}`,
+                        name: "New Topic",
+                        trackerWeight: 1.0,
+                        completed: false
+                    });
+                    renderWorkingTopics(subjectId);
+                    if (topicsList) {
+                        setTimeout(() => { topicsList.scrollTop = topicsList.scrollHeight; }, 10);
+                    }
                 };
-                inp.addEventListener('input', update);
-                inp.addEventListener('change', update);
-            });
-            topicsList.querySelectorAll('.topic-weight-input').forEach(inp => {
-                const update = (e) => {
-                    const idx = parseInt(e.target.dataset.idx);
-                    if (subject.topics[idx]) {
-                        let val = parseFloat(e.target.value);
-                        subject.topics[idx].trackerWeight = isNaN(val) ? 0 : val;
+            }
+
+            const btnSyllabusCancel = document.getElementById('btn-syllabus-cancel');
+            if (btnSyllabusCancel) {
+                btnSyllabusCancel.onclick = () => {
+                    if (syllabusModal) syllabusModal.classList.add('hidden');
+                };
+            }
+
+            const btnSyllabusSave = document.getElementById('btn-syllabus-save');
+            if (btnSyllabusSave) {
+                btnSyllabusSave.onclick = () => {
+                    syncCurrentVisibleTopics();
+                    const state = window.getState();
+                    
+                    // 1. GATE Readiness Weights save logic
+                    const oldW = state.settings?.weights || { syllabus: 0.60, pyqs: 0.15, tests: 0.10, mocks: 0.10, revision: 0.05 };
+                    const inputs = {
+                        syllabus: parseFloat(document.getElementById('set-weight-syllabus').value) || 0,
+                        pyqs: parseFloat(document.getElementById('set-weight-pyqs').value) || 0,
+                        tests: parseFloat(document.getElementById('set-weight-tests').value) || 0,
+                        mocks: parseFloat(document.getElementById('set-weight-mocks').value) || 0,
+                        revision: parseFloat(document.getElementById('set-weight-revision').value) || 0
+                    };
+
+                    let changedKeys = [];
+                    let unchangedKeys = [];
+                    let changedSum = 0;
+
+                    Object.keys(inputs).forEach(k => {
+                        if (Math.round(inputs[k]) !== Math.round(oldW[k] * 100)) {
+                            changedKeys.push(k);
+                            changedSum += inputs[k];
+                        } else {
+                            unchangedKeys.push(k);
+                        }
+                    });
+
+                    if (changedKeys.length > 0) {
+                        let remaining = 100 - changedSum;
+                        if (remaining < 0) {
+                            let total = Object.values(inputs).reduce((a,b)=>a+b, 0);
+                            let currentSum = 0;
+                            let values = Object.keys(inputs).map(k => {
+                                let prop = Math.round((inputs[k] / total) * 100);
+                                currentSum += prop;
+                                return { k, val: prop };
+                            });
+                            let diff = 100 - currentSum;
+                            if(diff !== 0) {
+                                values.sort((a,b) => b.val - a.val);
+                                values[0].val += diff;
+                            }
+                            values.forEach(v => inputs[v.k] = v.val);
+                        } else if (unchangedKeys.length > 0) {
+                            let unchangedOriginalSum = unchangedKeys.reduce((sum, k) => sum + Math.round(oldW[k] * 100), 0);
+                            let currentNewSum = 0;
+                            let values = unchangedKeys.map(k => {
+                                const oldVal = Math.round(oldW[k] * 100);
+                                const propVal = unchangedOriginalSum === 0 
+                                    ? Math.floor(remaining / unchangedKeys.length) 
+                                    : Math.round((oldVal / unchangedOriginalSum) * remaining);
+                                currentNewSum += propVal;
+                                return { k, val: propVal };
+                            });
+                            
+                            let diff = remaining - currentNewSum;
+                            if (diff !== 0 && values.length > 0) {
+                                values.sort((a,b) => b.val - a.val);
+                                values[0].val += diff;
+                            }
+                            
+                            values.forEach(v => {
+                                inputs[v.k] = Math.max(0, v.val);
+                            });
+                        } else if (changedSum !== 100) {
+                            let currentSum = 0;
+                            let values = Object.keys(inputs).map(k => {
+                                let prop = Math.round((inputs[k] / changedSum) * 100);
+                                currentSum += prop;
+                                return { k, val: prop };
+                            });
+                            let diff = 100 - currentSum;
+                            if(diff !== 0) {
+                                values.sort((a,b) => b.val - a.val);
+                                values[0].val += diff;
+                            }
+                            values.forEach(v => inputs[v.k] = v.val);
+                        }
+                    }
+
+                    const finalSum = Object.values(inputs).reduce((a,b)=>a+b, 0);
+                    if (Math.round(finalSum) !== 100) {
+                        alert('GATE Readiness Weights must sum up exactly to 100%!');
+                        return;
+                    }
+                    
+                    if(!state.settings) state.settings = {};
+                    state.settings.weights = {
+                        syllabus: inputs.syllabus / 100,
+                        pyqs: inputs.pyqs / 100,
+                        tests: inputs.tests / 100,
+                        mocks: inputs.mocks / 100,
+                        revision: inputs.revision / 100
+                    };
+                    
+                    // 2. Smart Auto-Balance for Subject Tracker Weights (Must total 100%)
+                    let changedSubIndices = [];
+                    let unchangedSubIndices = [];
+                    let changedSubSum = 0;
+
+                    workingSubjects.forEach((s, i) => {
+                        const origS = state.subjects.find(os => os.id === s.id);
+                        if (!origS || Math.abs(origS.trackerWeight - s.trackerWeight) > 0.01) {
+                            changedSubIndices.push(i);
+                            changedSubSum += s.trackerWeight;
+                        } else {
+                            unchangedSubIndices.push(i);
+                        }
+                    });
+
+                    let currentTotalSub = workingSubjects.reduce((a, b) => a + b.trackerWeight, 0);
+
+                    if (changedSubIndices.length > 0 && unchangedSubIndices.length > 0) {
+                        let remainingSub = 100 - changedSubSum;
+                        if (remainingSub <= 0) {
+                            if (currentTotalSub > 0) {
+                                workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / currentTotalSub) * 100);
+                            } else {
+                                workingSubjects.forEach(s => s.trackerWeight = 100 / workingSubjects.length);
+                            }
+                        } else {
+                            let unchangedSubSum = unchangedSubIndices.reduce((sum, i) => sum + workingSubjects[i].trackerWeight, 0);
+                            unchangedSubIndices.forEach(i => {
+                                const oldVal = workingSubjects[i].trackerWeight;
+                                const propVal = unchangedSubSum === 0 ? (remainingSub / unchangedSubIndices.length) : (oldVal / unchangedSubSum) * remainingSub;
+                                workingSubjects[i].trackerWeight = propVal;
+                            });
+                        }
+                    } else if (changedSubIndices.length > 0 && unchangedSubIndices.length === 0) {
+                        if (changedSubSum > 0 && Math.abs(changedSubSum - 100) > 0.01) {
+                            workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / changedSubSum) * 100);
+                        }
+                    } else if (Math.abs(currentTotalSub - 100) > 0.01) {
+                        if (currentTotalSub > 0) {
+                            workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / currentTotalSub) * 100);
+                        }
+                    }
+
+                    let newSubSum = 0;
+                    workingSubjects.forEach(s => {
+                        s.trackerWeight = Math.round(s.trackerWeight * 10) / 10;
+                        newSubSum += s.trackerWeight;
+                    });
+
+                    let subDiff = Math.round((100 - newSubSum) * 10) / 10;
+                    if (subDiff !== 0 && workingSubjects.length > 0) {
+                        let targetIdx = unchangedSubIndices.length > 0 ? unchangedSubIndices[0] : 0;
+                        workingSubjects[targetIdx].trackerWeight = Math.max(0, Math.round((workingSubjects[targetIdx].trackerWeight + subDiff) * 10) / 10);
+                    }
+
+                    // 3. Smart Auto-Balance for Subtopics on Save (Must total each subject's trackerWeight)
+                    workingSubjects.forEach(workingSub => {
+                        const origSub = state.subjects.find(s => s.id === workingSub.id);
+                        if (!origSub || !workingSub.topics || workingSub.topics.length === 0) return;
                         
-                        // Dynamically update true percentages without re-rendering everything
-                        const totalTopicWeight = subject.topics.reduce((sum, t) => sum + (parseFloat(t.trackerWeight) || 0), 0);
-                        topicsList.querySelectorAll('.topic-true-percent').forEach(span => {
-                            const i = parseInt(span.dataset.idx);
-                            if (subject.topics[i]) {
-                                const w = parseFloat(subject.topics[i].trackerWeight) || 0;
-                                const truePct = totalTopicWeight === 0 ? 0 : (w / totalTopicWeight) * 100;
-                                span.textContent = `${truePct.toFixed(1)}%`;
+                        const totalTarget = workingSub.trackerWeight;
+                        if (workingSub.topics.length === 1) {
+                            workingSub.topics[0].trackerWeight = totalTarget;
+                            return;
+                        }
+
+                        let changedIndices = [];
+                        let unchangedIndices = [];
+                        let changedSum = 0;
+
+                        workingSub.topics.forEach((t, i) => {
+                            const origT = origSub?.topics?.find(ot => ot.id === t.id);
+                            if (!origT || Math.abs(origT.trackerWeight - t.trackerWeight) > 0.01) {
+                                changedIndices.push(i);
+                                changedSum += t.trackerWeight;
+                            } else {
+                                unchangedIndices.push(i);
                             }
                         });
-                    }
+
+                        let currentTotalSum = workingSub.topics.reduce((a, b) => a + b.trackerWeight, 0);
+
+                        if (changedIndices.length > 0 && unchangedIndices.length > 0) {
+                            let remaining = totalTarget - changedSum;
+                            if (remaining <= 0) {
+                                if (currentTotalSum > 0) {
+                                    workingSub.topics.forEach(t => {
+                                        t.trackerWeight = (t.trackerWeight / currentTotalSum) * totalTarget;
+                                    });
+                                } else {
+                                    const eq = totalTarget / workingSub.topics.length;
+                                    workingSub.topics.forEach(t => t.trackerWeight = eq);
+                                }
+                            } else {
+                                let unchangedSum = unchangedIndices.reduce((sum, i) => sum + workingSub.topics[i].trackerWeight, 0);
+                                unchangedIndices.forEach(i => {
+                                    const oldVal = workingSub.topics[i].trackerWeight;
+                                    const propVal = unchangedSum === 0 
+                                        ? remaining / unchangedIndices.length 
+                                        : (oldVal / unchangedSum) * remaining;
+                                    workingSub.topics[i].trackerWeight = propVal;
+                                });
+                            }
+                        } else if (changedIndices.length > 0 && unchangedIndices.length === 0) {
+                            if (changedSum > 0 && Math.abs(changedSum - totalTarget) > 0.01) {
+                                workingSub.topics.forEach(t => {
+                                    t.trackerWeight = (t.trackerWeight / changedSum) * totalTarget;
+                                });
+                            } else if (changedSum === 0) {
+                                const eq = totalTarget / workingSub.topics.length;
+                                workingSub.topics.forEach(t => t.trackerWeight = eq);
+                            }
+                        } else if (Math.abs(currentTotalSum - totalTarget) > 0.01) {
+                            // Triggers if topics were deleted or subject's trackerWeight changed
+                            if (currentTotalSum > 0) {
+                                workingSub.topics.forEach(t => {
+                                    t.trackerWeight = (t.trackerWeight / currentTotalSum) * totalTarget;
+                                });
+                            } else {
+                                const eq = totalTarget / workingSub.topics.length;
+                                workingSub.topics.forEach(t => t.trackerWeight = eq);
+                            }
+                        }
+
+                        // Rounding and diff adjustment to hit exact totalTarget
+                        let newSum = 0;
+                        workingSub.topics.forEach(t => {
+                            t.trackerWeight = Math.round(t.trackerWeight * 10) / 10;
+                            newSum += t.trackerWeight;
+                        });
+
+                        let diff = Math.round((totalTarget - newSum) * 10) / 10;
+                        if (diff !== 0 && workingSub.topics.length > 0) {
+                            let targetIdx = unchangedIndices.length > 0 ? unchangedIndices[0] : 0;
+                            workingSub.topics[targetIdx].trackerWeight = Math.max(0, Math.round((workingSub.topics[targetIdx].trackerWeight + diff) * 10) / 10);
+                        }
+                    });
+
+                    state.subjects = workingSubjects;
+                    window.saveState(state);
+                    if (syllabusModal) syllabusModal.classList.add('hidden');
                 };
-                inp.addEventListener('input', update);
-                inp.addEventListener('change', update);
-            });
-            topicsList.querySelectorAll('.btn-delete-topic').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    syncCurrentVisibleTopics();
-                    const idx = parseInt(e.currentTarget.dataset.idx);
-                    subject.topics.splice(idx, 1);
-                    renderWorkingTopics(subjectId);
-                });
-            });
+            }
         }
 
-        // Setup subject weight input listeners
-        document.querySelectorAll('.set-subject-weight-input').forEach(inp => {
-            const updateSubjectWeight = (e) => {
-                const subId = e.target.dataset.subjectId;
-                const sub = workingSubjects.find(s => s.id === subId);
-                if (sub) {
-                    const val = parseFloat(e.target.value);
-                    sub.trackerWeight = isNaN(val) ? 0 : val;
-                    if (syllabusSelect && syllabusSelect.value === subId) {
-                        const disp = document.getElementById('selected-subject-weight-display');
-                        if (disp) disp.textContent = `Weight: ${sub.trackerWeight}%`;
-                    }
-                }
-            };
-            inp.addEventListener('input', updateSubjectWeight);
-            inp.addEventListener('change', updateSubjectWeight);
-        });
+        // Run on load and on state change
+        function initPage() {
+            hydrateDashboard();
+            setupDashboardListeners();
+        }
 
-        document.querySelectorAll('.open-syllabus-settings-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                workingSubjects = JSON.parse(JSON.stringify(window.getState().subjects));
-                workingSubjects.forEach(s => {
-                    const inp = document.getElementById(`set-subject-weight-${s.id}`);
-                    if (inp) inp.value = s.trackerWeight;
-                });
-                syllabusSelect.value = workingSubjects[0].id;
-                renderWorkingTopics(syllabusSelect.value);
-                syllabusModal.classList.remove('hidden');
-            });
-        });
-
-        syllabusSelect?.addEventListener('change', (e) => {
-            syncCurrentVisibleTopics();
-            renderWorkingTopics(e.target.value);
-        });
-
-        btnAddTopic?.addEventListener('click', () => {
-            syncCurrentVisibleTopics();
-            const subjectId = syllabusSelect.value;
-            const subject = workingSubjects.find(s => s.id === subjectId);
-            if (!subject) return;
-            
-            if (subject.topics.length >= 40) {
-                alert('Maximum of 40 topics allowed per subject.');
-                return;
-            }
-            
-            subject.topics.push({
-                id: `custom_${Date.now()}`,
-                name: "New Topic",
-                trackerWeight: 1.0,
-                completed: false
-            });
-            renderWorkingTopics(subjectId);
-            setTimeout(() => { topicsList.scrollTop = topicsList.scrollHeight; }, 10);
-        });
-
-        document.getElementById('btn-syllabus-cancel')?.addEventListener('click', () => {
-            syllabusModal.classList.add('hidden');
-        });
-
-        document.getElementById('btn-syllabus-save')?.addEventListener('click', () => {
-            syncCurrentVisibleTopics();
-            const state = window.getState();
-            
-            // 1. GATE Readiness Weights save logic
-            const oldW = state.settings?.weights || { syllabus: 0.60, pyqs: 0.15, tests: 0.10, mocks: 0.10, revision: 0.05 };
-            const inputs = {
-                syllabus: parseFloat(document.getElementById('set-weight-syllabus').value) || 0,
-                pyqs: parseFloat(document.getElementById('set-weight-pyqs').value) || 0,
-                tests: parseFloat(document.getElementById('set-weight-tests').value) || 0,
-                mocks: parseFloat(document.getElementById('set-weight-mocks').value) || 0,
-                revision: parseFloat(document.getElementById('set-weight-revision').value) || 0
-            };
-
-            let changedKeys = [];
-            let unchangedKeys = [];
-            let changedSum = 0;
-
-            Object.keys(inputs).forEach(k => {
-                if (Math.round(inputs[k]) !== Math.round(oldW[k] * 100)) {
-                    changedKeys.push(k);
-                    changedSum += inputs[k];
-                } else {
-                    unchangedKeys.push(k);
-                }
-            });
-
-            if (changedKeys.length > 0) {
-                let remaining = 100 - changedSum;
-                if (remaining < 0) {
-                    let total = Object.values(inputs).reduce((a,b)=>a+b, 0);
-                    let currentSum = 0;
-                    let values = Object.keys(inputs).map(k => {
-                        let prop = Math.round((inputs[k] / total) * 100);
-                        currentSum += prop;
-                        return { k, val: prop };
-                    });
-                    let diff = 100 - currentSum;
-                    if(diff !== 0) {
-                        values.sort((a,b) => b.val - a.val);
-                        values[0].val += diff;
-                    }
-                    values.forEach(v => inputs[v.k] = v.val);
-                } else if (unchangedKeys.length > 0) {
-                    let unchangedOriginalSum = unchangedKeys.reduce((sum, k) => sum + Math.round(oldW[k] * 100), 0);
-                    let currentNewSum = 0;
-                    let values = unchangedKeys.map(k => {
-                        const oldVal = Math.round(oldW[k] * 100);
-                        const propVal = unchangedOriginalSum === 0 
-                            ? Math.floor(remaining / unchangedKeys.length) 
-                            : Math.round((oldVal / unchangedOriginalSum) * remaining);
-                        currentNewSum += propVal;
-                        return { k, val: propVal };
-                    });
-                    
-                    let diff = remaining - currentNewSum;
-                    if (diff !== 0 && values.length > 0) {
-                        values.sort((a,b) => b.val - a.val);
-                        values[0].val += diff;
-                    }
-                    
-                    values.forEach(v => {
-                        inputs[v.k] = Math.max(0, v.val);
-                    });
-                } else if (changedSum !== 100) {
-                    let currentSum = 0;
-                    let values = Object.keys(inputs).map(k => {
-                        let prop = Math.round((inputs[k] / changedSum) * 100);
-                        currentSum += prop;
-                        return { k, val: prop };
-                    });
-                    let diff = 100 - currentSum;
-                    if(diff !== 0) {
-                        values.sort((a,b) => b.val - a.val);
-                        values[0].val += diff;
-                    }
-                    values.forEach(v => inputs[v.k] = v.val);
-                }
-            }
-
-            const finalSum = Object.values(inputs).reduce((a,b)=>a+b, 0);
-            if (Math.round(finalSum) !== 100) {
-                alert('GATE Readiness Weights must sum up exactly to 100%!');
-                return;
-            }
-            
-            if(!state.settings) state.settings = {};
-            state.settings.weights = {
-                syllabus: inputs.syllabus / 100,
-                pyqs: inputs.pyqs / 100,
-                tests: inputs.tests / 100,
-                mocks: inputs.mocks / 100,
-                revision: inputs.revision / 100
-            };
-            
-            // 2. Smart Auto-Balance for Subject Tracker Weights (Must total 100%)
-            let changedSubIndices = [];
-            let unchangedSubIndices = [];
-            let changedSubSum = 0;
-
-            workingSubjects.forEach((s, i) => {
-                const origS = state.subjects.find(os => os.id === s.id);
-                if (!origS || Math.abs(origS.trackerWeight - s.trackerWeight) > 0.01) {
-                    changedSubIndices.push(i);
-                    changedSubSum += s.trackerWeight;
-                } else {
-                    unchangedSubIndices.push(i);
-                }
-            });
-
-            let currentTotalSub = workingSubjects.reduce((a, b) => a + b.trackerWeight, 0);
-
-            if (changedSubIndices.length > 0 && unchangedSubIndices.length > 0) {
-                let remainingSub = 100 - changedSubSum;
-                if (remainingSub <= 0) {
-                    if (currentTotalSub > 0) {
-                        workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / currentTotalSub) * 100);
-                    } else {
-                        workingSubjects.forEach(s => s.trackerWeight = 100 / workingSubjects.length);
-                    }
-                } else {
-                    let unchangedSubSum = unchangedSubIndices.reduce((sum, i) => sum + workingSubjects[i].trackerWeight, 0);
-                    unchangedSubIndices.forEach(i => {
-                        const oldVal = workingSubjects[i].trackerWeight;
-                        const propVal = unchangedSubSum === 0 ? (remainingSub / unchangedSubIndices.length) : (oldVal / unchangedSubSum) * remainingSub;
-                        workingSubjects[i].trackerWeight = propVal;
-                    });
-                }
-            } else if (changedSubIndices.length > 0 && unchangedSubIndices.length === 0) {
-                if (changedSubSum > 0 && Math.abs(changedSubSum - 100) > 0.01) {
-                    workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / changedSubSum) * 100);
-                }
-            } else if (Math.abs(currentTotalSub - 100) > 0.01) {
-                if (currentTotalSub > 0) {
-                    workingSubjects.forEach(s => s.trackerWeight = (s.trackerWeight / currentTotalSub) * 100);
-                }
-            }
-
-            let newSubSum = 0;
-            workingSubjects.forEach(s => {
-                s.trackerWeight = Math.round(s.trackerWeight * 10) / 10;
-                newSubSum += s.trackerWeight;
-            });
-
-            let subDiff = Math.round((100 - newSubSum) * 10) / 10;
-            if (subDiff !== 0 && workingSubjects.length > 0) {
-                let targetIdx = unchangedSubIndices.length > 0 ? unchangedSubIndices[0] : 0;
-                workingSubjects[targetIdx].trackerWeight = Math.max(0, Math.round((workingSubjects[targetIdx].trackerWeight + subDiff) * 10) / 10);
-            }
-
-            // 3. Smart Auto-Balance for Subtopics on Save (Must total each subject's trackerWeight)
-            workingSubjects.forEach(workingSub => {
-                const origSub = state.subjects.find(s => s.id === workingSub.id);
-                if (!origSub || !workingSub.topics || workingSub.topics.length === 0) return;
-                
-                const totalTarget = workingSub.trackerWeight;
-                if (workingSub.topics.length === 1) {
-                    workingSub.topics[0].trackerWeight = totalTarget;
-                    return;
-                }
-
-                let changedIndices = [];
-                let unchangedIndices = [];
-                let changedSum = 0;
-
-                workingSub.topics.forEach((t, i) => {
-                    const origT = origSub?.topics?.find(ot => ot.id === t.id);
-                    if (!origT || Math.abs(origT.trackerWeight - t.trackerWeight) > 0.01) {
-                        changedIndices.push(i);
-                        changedSum += t.trackerWeight;
-                    } else {
-                        unchangedIndices.push(i);
-                    }
-                });
-
-                let currentTotalSum = workingSub.topics.reduce((a, b) => a + b.trackerWeight, 0);
-
-                if (changedIndices.length > 0 && unchangedIndices.length > 0) {
-                    let remaining = totalTarget - changedSum;
-                    if (remaining <= 0) {
-                        if (currentTotalSum > 0) {
-                            workingSub.topics.forEach(t => {
-                                t.trackerWeight = (t.trackerWeight / currentTotalSum) * totalTarget;
-                            });
-                        } else {
-                            const eq = totalTarget / workingSub.topics.length;
-                            workingSub.topics.forEach(t => t.trackerWeight = eq);
-                        }
-                    } else {
-                        let unchangedSum = unchangedIndices.reduce((sum, i) => sum + workingSub.topics[i].trackerWeight, 0);
-                        unchangedIndices.forEach(i => {
-                            const oldVal = workingSub.topics[i].trackerWeight;
-                            const propVal = unchangedSum === 0 
-                                ? remaining / unchangedIndices.length 
-                                : (oldVal / unchangedSum) * remaining;
-                            workingSub.topics[i].trackerWeight = propVal;
-                        });
-                    }
-                } else if (changedIndices.length > 0 && unchangedIndices.length === 0) {
-                    if (changedSum > 0 && Math.abs(changedSum - totalTarget) > 0.01) {
-                        workingSub.topics.forEach(t => {
-                            t.trackerWeight = (t.trackerWeight / changedSum) * totalTarget;
-                        });
-                    } else if (changedSum === 0) {
-                        const eq = totalTarget / workingSub.topics.length;
-                        workingSub.topics.forEach(t => t.trackerWeight = eq);
-                    }
-                } else if (Math.abs(currentTotalSum - totalTarget) > 0.01) {
-                    // Triggers if topics were deleted or subject's trackerWeight changed
-                    if (currentTotalSum > 0) {
-                        workingSub.topics.forEach(t => {
-                            t.trackerWeight = (t.trackerWeight / currentTotalSum) * totalTarget;
-                        });
-                    } else {
-                        const eq = totalTarget / workingSub.topics.length;
-                        workingSub.topics.forEach(t => t.trackerWeight = eq);
-                    }
-                }
-
-                // Rounding and diff adjustment to hit exact totalTarget
-                let newSum = 0;
-                workingSub.topics.forEach(t => {
-                    t.trackerWeight = Math.round(t.trackerWeight * 10) / 10;
-                    newSum += t.trackerWeight;
-                });
-
-                let diff = Math.round((totalTarget - newSum) * 10) / 10;
-                if (diff !== 0 && workingSub.topics.length > 0) {
-                    let targetIdx = unchangedIndices.length > 0 ? unchangedIndices[0] : 0;
-                    workingSub.topics[targetIdx].trackerWeight = Math.max(0, Math.round((workingSub.topics[targetIdx].trackerWeight + diff) * 10) / 10);
-                }
-            });
-
-            state.subjects = workingSubjects;
-            window.saveState(state);
-            syllabusModal.classList.add('hidden');
-        });
-
-        // Run on load
-        document.addEventListener('astro:page-load', hydrateDashboard);
+        document.addEventListener('astro:page-load', initPage);
         window.addEventListener('stateChanged', hydrateDashboard);
     </script>
 </Layout>

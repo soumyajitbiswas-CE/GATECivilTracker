@@ -37,16 +37,6 @@
     let queue = [];
     let isPlaying = false;
 
-    const overlay = document.getElementById('achievement-notification-overlay');
-    const card = document.getElementById('achievement-card');
-    const glow = document.getElementById('ach-glow');
-    const title = document.getElementById('ach-title');
-    const icon = document.getElementById('ach-icon');
-    const nameEl = document.getElementById('ach-name');
-    const meta = document.getElementById('ach-meta');
-    const rarityEl = document.getElementById('ach-rarity');
-    const xpEl = document.getElementById('ach-xp');
-
     const rarityStyles = {
         'Common': { color: 'white', bg: 'bg-white', border: 'border-white', glow: 'bg-white/20', shadow: 'drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' },
         'Uncommon': { color: '#86efac', bg: 'bg-[#86efac]', border: 'border-[#86efac]', glow: 'bg-[#86efac]/30', shadow: 'drop-shadow-[0_0_12px_rgba(134,239,172,0.8)]' },
@@ -78,12 +68,27 @@
 
     function showNotification(ach) {
         return new Promise(resolve => {
+            const overlay = document.getElementById('achievement-notification-overlay');
+            const card = document.getElementById('achievement-card');
+            const glow = document.getElementById('ach-glow');
+            const title = document.getElementById('ach-title');
+            const icon = document.getElementById('ach-icon');
+            const nameEl = document.getElementById('ach-name');
+            const meta = document.getElementById('ach-meta');
+            const rarityEl = document.getElementById('ach-rarity');
+            const xpEl = document.getElementById('ach-xp');
+
+            if (!overlay || !card) {
+                console.warn("Achievement popup DOM missing");
+                resolve();
+                return;
+            }
             const style = rarityStyles[ach.rarity] || rarityStyles['Common'];
             
             // Setup content
             const iconSource = document.getElementById('ach-icon-source');
-            if (iconSource) iconSource.srcset = `/achievements/icons/${ach.id}.svg`;
-            icon.src = `/achievements/icons/${ach.id}.png`;
+            if (iconSource) iconSource.srcset = `/achievements/icons_final/${ach.id}.svg`;
+            icon.src = `/achievements/icons_final/${ach.id}.png`;
             nameEl.textContent = ach.name;
             rarityEl.textContent = ach.rarity;
             rarityEl.className = `uppercase text-xs sm:text-sm font-bold tracking-wider px-2 py-0.5 rounded border ${style.border} text-[${style.color}]`;

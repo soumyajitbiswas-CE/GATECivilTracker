@@ -92,9 +92,9 @@ allAchievements.sort((a, b) => {
 
                     <!-- Icon Wrapper -->
                     <div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 mb-3 ach-icon-wrap opacity-40 transition-all duration-200">
-                        <picture class="w-full h-full object-contain flex items-center justify-center">
-                            <source srcset={`/achievements/icons/${ach.id}.svg`} type="image/svg+xml">
-                            <img src={`/achievements/icons/${ach.id}.png`} alt={ach.name} class="w-full h-full object-contain filter grayscale ach-icon-img transition-all duration-200" loading="lazy" decoding="async">
+                        <picture class="w-full h-full object-contain flex items-center justify-center transition-all duration-200">
+                            <source srcset={`/achievements/icons_final/${ach.id}.svg`} type="image/svg+xml">
+                            <img src={`/achievements/icons_final/${ach.id}.png`} alt={ach.name} class="w-full h-full object-contain grayscale ach-icon-img transition-all duration-200" loading="lazy" decoding="async">
                         </picture>
                     </div>
                     
@@ -334,8 +334,8 @@ allAchievements.sort((a, b) => {
                     // Populate Modal
                     const modalIcon = document.getElementById('modal-icon');
                     const modalIconSource = document.getElementById('modal-icon-source');
-                    if (modalIconSource) modalIconSource.srcset = `/achievements/icons/${card.dataset.id}.svg`;
-                    modalIcon.src = `/achievements/icons/${card.dataset.id}.png`;
+                    if (modalIconSource) modalIconSource.srcset = `/achievements/icons_final/${card.dataset.id}.svg`;
+                    modalIcon.src = `/achievements/icons_final/${card.dataset.id}.png`;
                     modalIcon.style.filter = isUnlocked ? `drop-shadow(0 0 18px ${iconColor})` : 'grayscale(100%)';
                     
                     const modalName = document.getElementById('modal-name');

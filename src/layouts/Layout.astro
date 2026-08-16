@@ -83,13 +83,25 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
             window.getState = () => {
                 const saved = localStorage.getItem('gateCivilTracker2027');
                 if (saved) {
-                    const parsed = JSON.parse(saved);
-                    if(!parsed.pyqs) parsed.pyqs = defaultState.pyqs;
-                    if(!parsed.settings) parsed.settings = defaultState.settings;
-                    if(!parsed.settings.weights) parsed.settings.weights = defaultState.settings.weights;
-                    if(!parsed.achievements) parsed.achievements = defaultState.achievements;
-                    if(!parsed.streaks) parsed.streaks = defaultState.streaks;
-                    return parsed;
+                    try {
+                        const parsed = JSON.parse(saved);
+                        if(!parsed.pyqs) parsed.pyqs = JSON.parse(JSON.stringify(defaultState.pyqs));
+                        if(!parsed.tests) parsed.tests = JSON.parse(JSON.stringify(defaultState.tests));
+                        if(!parsed.tests.topic) parsed.tests.topic = { completed: 0, total: 40 };
+                        if(!parsed.tests.subject) parsed.tests.subject = { completed: 0, total: 10 };
+                        if(!parsed.mocks) parsed.mocks = JSON.parse(JSON.stringify(defaultState.mocks));
+                        if(!parsed.revision) parsed.revision = JSON.parse(JSON.stringify(defaultState.revision));
+                        if(!parsed.settings) parsed.settings = JSON.parse(JSON.stringify(defaultState.settings));
+                        if(!parsed.settings.weights) parsed.settings.weights = JSON.parse(JSON.stringify(defaultState.settings.weights));
+                        if(!parsed.achievements) parsed.achievements = JSON.parse(JSON.stringify(defaultState.achievements));
+                        if(!parsed.streaks) parsed.streaks = JSON.parse(JSON.stringify(defaultState.streaks));
+                        if(!parsed.studyHistory) parsed.studyHistory = [];
+                        if(!parsed.mocksHistory) parsed.mocksHistory = [];
+                        if(!parsed.subjects) parsed.subjects = JSON.parse(JSON.stringify(defaultState.subjects));
+                        return parsed;
+                    } catch(e) {
+                        console.error("Error parsing saved state", e);
+                    }
                 }
                 return JSON.parse(JSON.stringify(defaultState));
             };
