@@ -8,7 +8,7 @@
         <!-- Rarity specific background glow -->
         <div id="ach-glow" class="absolute inset-0 rounded-full blur-3xl opacity-0 scale-50 transition-all duration-700"></div>
         
-        <p id="ach-title" class="text-white font-bold tracking-widest uppercase text-sm sm:text-base mb-4 drop-shadow-md opacity-0 -translate-y-4 transition-all duration-500 delay-300">ACHIEVEMENT UNLOCKED</p>
+        <p id="ach-title" class="text-primary-accent font-bold tracking-widest uppercase text-sm sm:text-base mb-4 drop-shadow-[0_0_8px_rgba(74,222,128,0.6)] opacity-0 -translate-y-4 transition-all duration-500 delay-300">ACHIEVEMENT UNLOCKED</p>
         
         <div class="relative group">
             <!-- Icon -->
@@ -32,7 +32,7 @@
 
 <script>
     // @ts-nocheck
-    import { playAchievementSound } from '../utils/audioSystem.js';
+    import { playAchievementSound, resumeAudio } from '../utils/audioSystem.js';
 
     let queue = [];
     let isPlaying = false;
@@ -46,6 +46,7 @@
     };
 
     window.addEventListener('achievementsUnlocked', (e) => {
+        resumeAudio();
         const { detail: newAchievements } = e;
         if (newAchievements && newAchievements.length > 0) {
             queue.push(...newAchievements);

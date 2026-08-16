@@ -55,31 +55,25 @@ export function evaluateAchievements(state, achievementsData) {
         let tempStreak = 1;
         longestStreak = 1;
         for (let i = 1; i < sortedDates.length; i++) {
-            const prevDate = new Date(sortedDates[i-1]);
-            const currDate = new Date(sortedDates[i]);
-            const diffTime = Math.abs(currDate - prevDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            const prevDate = new Date(sortedDates[i-1] + "T00:00:00");
+            const currDate = new Date(sortedDates[i] + "T00:00:00");
+            const diffTime = currDate.getTime() - prevDate.getTime();
+            const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24)); 
             if (diffDays === 1) {
                 tempStreak++;
                 if (tempStreak > longestStreak) longestStreak = tempStreak;
-            } else {
+            } else if (diffDays > 1) {
                 tempStreak = 1;
             }
         }
         
         // Check if current streak is active (today or yesterday)
         const lastDate = sortedDates[sortedDates.length - 1];
-        const diffFromToday = Math.ceil((now - new Date(lastDate)) / (1000 * 60 * 60 * 24));
-        if (diffFromToday <= 1 || (diffFromToday === 2 && new Date(lastDate).toDateString() === new Date(now.getTime() - 86400000).toDateString())) {
-            // Technically it's a bit fuzzy, but for local date strings diffDays=1 means yesterday
-            const todayD = new Date(todayStr);
-            const lastD = new Date(lastDate);
-            const dayDiff = Math.round((todayD - lastD) / 86400000);
-            if (dayDiff <= 1) {
-                currentStreak = tempStreak;
-            } else {
-                currentStreak = 0;
-            }
+        const todayD = new Date(todayStr + "T00:00:00");
+        const lastD = new Date(lastDate + "T00:00:00");
+        const dayDiff = Math.round((todayD.getTime() - lastD.getTime()) / (1000 * 60 * 60 * 24));
+        if (dayDiff === 0 || dayDiff === 1) {
+            currentStreak = tempStreak;
         } else {
             currentStreak = 0;
         }
@@ -181,7 +175,7 @@ export function evaluateAchievements(state, achievementsData) {
     
     const award = (ach) => {
         if (!isUnlocked(ach.id)) {
-            state.achievements.unlocked[ach.id] = { timestamp: Date.now() };
+            state.achievements.unlocked[ach.id] = { timestamp: Date.now(), viewed: false };
             // parse XP from string if needed (e.g., "10" or 10)
             const xpVal = typeof ach.xp === 'string' ? parseInt(ach.xp.replace(/[^0-9]/g, '')) : ach.xp;
             state.achievements.xp += (xpVal || 0);
@@ -248,15 +242,9 @@ export function evaluateAchievements(state, achievementsData) {
             case "ACH-040": conditionMet = mocksDone >= 1; break;
             case "ACH-041": conditionMet = revProgress >= 25; break;
             case "ACH-042": conditionMet = (topicTestsDone > 0); break; // personal best simplified
-            case "ACH-043": 
-                conditionMet = true;
-                if (totalHours < 5) conditionMet = false;
-                break;
-            case "ACH-044": 
-                conditionMet = true;
-                if (totalHours < 5) conditionMet = false;
-                break;
-            case "ACH-045": conditionMet = true; break;
+            case "ACH-043": conditionMet = !!state.exportedOnce; break;
+            case "ACH-044": conditionMet = !!state.importedOnce; break;
+            case "ACH-045": conditionMet = Object.values(dailyStudy).some(d => d.count >= 3); break;
             case "ACH-046": conditionMet = totalSubjects75 >= 1; break;
             case "ACH-047": conditionMet = totalHours >= 100; break;
             case "ACH-048": conditionMet = completedTopicsCount >= 25; break;

@@ -436,6 +436,18 @@ const subjectBgClass = {
                 });
             }
 
+            // Hydrate Achievement Badge
+            const badge = document.getElementById('ach-badge');
+            if (badge && state.achievements && state.achievements.unlocked) {
+                const unviewedCount = Object.values(state.achievements.unlocked).filter(a => a.viewed === false).length;
+                if (unviewedCount > 0) {
+                    badge.textContent = unviewedCount;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+
             // Hydrate Practice & Revision inputs
             const inputs = [
                 { id: 'input-tests-topic', value: state.tests?.topic?.completed ?? 0, total: state.tests?.topic?.total ?? 40 },
@@ -514,15 +526,19 @@ const subjectBgClass = {
             const setupInput = (id, callback) => {
                 const el = document.getElementById(id);
                 if(el) {
+                    const debouncedSave = window.debounce((val) => {
+                        const state = window.getState();
+                        const clamped = callback(state, val);
+                        if (clamped !== undefined && document.activeElement !== el) {
+                            el.value = clamped;
+                        }
+                        window.saveState(state);
+                    }, 300);
+
                     const handler = (e) => {
                         const val = parseInt(e.target.value);
                         if (isNaN(val) || val < 0) return;
-                        const state = window.getState();
-                        const clamped = callback(state, val);
-                        if (clamped !== undefined) {
-                            e.target.value = clamped;
-                        }
-                        window.saveState(state);
+                        debouncedSave(val);
                     };
                     el.oninput = handler;
                     el.onchange = handler;
@@ -557,17 +573,24 @@ const subjectBgClass = {
             });
 
             document.querySelectorAll('.input-pyq-dash').forEach(input => {
-                const handler = (e) => {
-                    const val = parseInt(e.target.value);
-                    if (isNaN(val) || val < 0) return;
-                    const subjectId = e.target.dataset.subject;
+                const subjectId = input.dataset.subject;
+                const debouncedSave = window.debounce((val) => {
                     const state = window.getState();
                     if (state.pyqs && state.pyqs[subjectId]) {
                         const max = state.pyqs[subjectId].total;
-                        state.pyqs[subjectId].solved = Math.min(val, max);
-                        e.target.value = state.pyqs[subjectId].solved;
+                        const clamped = Math.min(val, max);
+                        state.pyqs[subjectId].solved = clamped;
+                        if (document.activeElement !== input) {
+                            input.value = clamped;
+                        }
                         window.saveState(state);
                     }
+                }, 300);
+
+                const handler = (e) => {
+                    const val = parseInt(e.target.value);
+                    if (isNaN(val) || val < 0) return;
+                    debouncedSave(val);
                 };
                 input.oninput = handler;
                 input.onchange = handler;

@@ -11,6 +11,19 @@ export const defaultState = {
     },
     studyHistory: [],
     mocksHistory: [],
+    exportedOnce: false,
+    importedOnce: false,
+    achievements: {
+        unlocked: {},
+        xp: 0,
+        level: 1,
+        lastDailyXPDate: null
+    },
+    streaks: {
+        current: 0,
+        longest: 0,
+        claimedMilestones: []
+    },
     pyqs: {
         'general_aptitude': { solved: 0, total: 100 },
         'engineering_mathematics': { solved: 0, total: 120 },

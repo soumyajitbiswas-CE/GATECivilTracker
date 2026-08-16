@@ -35,15 +35,32 @@ allAchievements.sort((a, b) => {
                 <p class="text-text-muted text-xs sm:text-base font-medium">Track milestones. Build consistency. Earn your rank.</p>
             </div>
             
-            <div class="relative z-10 flex flex-row sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-1 bg-black/30 p-3 sm:p-4 rounded-xl border border-primary-accent/20 min-w-[180px]">
-                <div class="flex flex-col">
-                    <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 sm:mb-1">Current Rank</div>
-                    <div class="text-xl sm:text-3xl font-bold text-white flex items-baseline gap-1" id="player-level-display">
-                        Level <span class="text-primary-accent" id="player-level-val">1</span>
+            <div class="relative z-10 flex flex-wrap sm:flex-nowrap items-stretch gap-3 w-full sm:w-auto">
+                <!-- Streak Status Card -->
+                <div class="flex items-center gap-3 bg-black/30 p-3 sm:p-4 rounded-xl border border-primary-accent/20 flex-1 sm:flex-initial min-w-[155px]">
+                    <div id="streak-icon-wrap" class="p-2.5 rounded-xl bg-primary-accent/10 border border-primary-accent/30 text-primary-accent shrink-0 flex items-center justify-center transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 transition-colors" id="streak-status-label">Daily Streak</div>
+                        <div class="text-lg sm:text-2xl font-bold text-white flex items-baseline gap-1" id="streak-display">
+                            <span class="text-primary-accent font-extrabold" id="streak-count-val">0</span> <span class="text-xs text-text-muted font-normal">days</span>
+                        </div>
+                        <div class="text-[9px] sm:text-[10px] text-text-muted mt-0.5" id="streak-subtitle">Best: <span id="streak-longest-val" class="text-white font-semibold">0</span> days</div>
                     </div>
                 </div>
-                <div class="text-xs sm:text-sm font-medium text-text-muted text-right">
-                    <span id="player-xp-val" class="font-bold text-white sm:font-medium sm:text-text-muted">0</span> <span class="text-[10px] sm:text-xs">XP</span> <span class="hidden sm:inline mx-1 text-panel-border">|</span> <div class="sm:inline block text-[9px] sm:text-[10px]" id="player-xp-next">Next: 250 XP</div>
+
+                <!-- Rank & XP Card -->
+                <div class="flex flex-col justify-between bg-black/30 p-3 sm:p-4 rounded-xl border border-primary-accent/20 flex-1 sm:flex-initial min-w-[165px]">
+                    <div class="flex flex-col mb-1">
+                        <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5">Current Rank</div>
+                        <div class="text-lg sm:text-2xl font-bold text-white flex items-baseline gap-1" id="player-level-display">
+                            Level <span class="text-primary-accent" id="player-level-val">1</span>
+                        </div>
+                    </div>
+                    <div class="text-xs sm:text-sm font-medium text-text-muted">
+                        <span id="player-xp-val" class="font-bold text-white">0</span> <span class="text-[10px] sm:text-xs">XP</span> <span class="mx-1 text-panel-border">|</span> <span class="text-[9px] sm:text-[10px]" id="player-xp-next">Next: 250 XP</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,14 +104,19 @@ allAchievements.sort((a, b) => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
 
+                    <!-- New Indicator Badge (Top Left - hidden by default) -->
+                    <div class="ach-new-badge absolute top-2 left-2 z-20 bg-primary-accent text-[#06140e] text-[9px] font-black tracking-wide px-1.5 py-0.5 rounded shadow-[0_0_8px_rgba(74,222,128,0.7)] hidden">
+                        NEW
+                    </div>
+
                     <!-- Glow Background (Active when unlocked) -->
                     <div class="ach-glow-bg absolute inset-0 opacity-0 blur-xl scale-75 transition-all duration-300 z-0 pointer-events-none"></div>
 
                     <!-- Icon Wrapper -->
-                    <div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 mb-3 ach-icon-wrap opacity-40 transition-all duration-200">
+                    <div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 mb-3 ach-icon-wrap grayscale opacity-40 transition-all duration-200">
                         <picture class="w-full h-full object-contain flex items-center justify-center transition-all duration-200">
                             <source srcset={`/achievements/icons_final/${ach.id}.svg`} type="image/svg+xml">
-                            <img src={`/achievements/icons_final/${ach.id}.png`} alt={ach.name} class="w-full h-full object-contain grayscale ach-icon-img transition-all duration-200" loading="lazy" decoding="async">
+                            <img src={`/achievements/icons_final/${ach.id}.png`} alt={ach.name} class="w-full h-full object-contain ach-icon-img transition-all duration-200" loading="lazy" decoding="async">
                         </picture>
                     </div>
                     
@@ -185,7 +207,7 @@ allAchievements.sort((a, b) => {
             const iconGlowColors = {
                 'Common': '#ffffff',
                 'Uncommon': '#86efac',
-                'Rare': '#86efac',
+                'Rare': '#60a5fa',
                 'Epic': '#c084fc',
                 'Legendary': '#fbbf24'
             };
@@ -223,8 +245,39 @@ allAchievements.sort((a, b) => {
                 if (xpEl) xpEl.textContent = xp;
                 if (xpNextEl) xpNextEl.textContent = `Next: ${level * 250} XP`;
 
+                // Update Streak display
+                const currentStreak = state.streaks?.current || 0;
+                const longestStreak = state.streaks?.longest || 0;
+                const streakCountEl = document.getElementById('streak-count-val');
+                const streakLongestEl = document.getElementById('streak-longest-val');
+                const streakIconWrap = document.getElementById('streak-icon-wrap');
+                const streakStatusLabel = document.getElementById('streak-status-label');
+
+                if (streakCountEl) streakCountEl.textContent = currentStreak;
+                if (streakLongestEl) streakLongestEl.textContent = longestStreak;
+
+                if (currentStreak > 0) {
+                    if (streakIconWrap) {
+                        streakIconWrap.className = 'p-2.5 rounded-xl bg-primary-accent/20 border border-primary-accent/40 text-primary-accent shadow-[0_0_12px_rgba(74,222,128,0.3)] shrink-0 flex items-center justify-center transition-all';
+                    }
+                    if (streakStatusLabel) {
+                        streakStatusLabel.textContent = 'Active Streak 🔥';
+                        streakStatusLabel.className = 'text-[9px] sm:text-xs text-primary-accent uppercase tracking-widest font-bold mb-0.5 transition-colors';
+                    }
+                } else {
+                    if (streakIconWrap) {
+                        streakIconWrap.className = 'p-2.5 rounded-xl bg-white/5 border border-white/10 text-text-muted shrink-0 flex items-center justify-center transition-all';
+                    }
+                    if (streakStatusLabel) {
+                        streakStatusLabel.textContent = 'Daily Streak';
+                        streakStatusLabel.className = 'text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 transition-colors';
+                    }
+                }
+
                 const stats = { total: 0, Common: 0, Uncommon: 0, Rare: 0, Epic: 0, Legendary: 0 };
                 const unlockedIds = Object.keys(unlockedMap);
+
+                let stateModified = false;
 
                 // Fast targeted update for only unlocked cards
                 unlockedIds.forEach(id => {
@@ -246,6 +299,7 @@ allAchievements.sort((a, b) => {
 
                     const lockBadge = card.querySelector('.ach-lock-badge');
                     const unlockedBadge = card.querySelector('.ach-unlocked-badge');
+                    const newBadge = card.querySelector('.ach-new-badge');
                     const iconWrap = card.querySelector('.ach-icon-wrap');
                     const iconImg = card.querySelector('.ach-icon-img');
                     const glowBg = card.querySelector('.ach-glow-bg');
@@ -256,9 +310,17 @@ allAchievements.sort((a, b) => {
                     if (lockBadge) lockBadge.classList.add('hidden');
                     if (unlockedBadge) unlockedBadge.classList.remove('hidden');
 
-                    if (iconWrap) iconWrap.style.opacity = '1';
+                    if (unlockedMap[id].viewed === false) {
+                        if (newBadge) newBadge.classList.remove('hidden');
+                        unlockedMap[id].viewed = true;
+                        stateModified = true;
+                    }
+
+                    if (iconWrap) {
+                        iconWrap.style.opacity = '1';
+                        iconWrap.classList.remove('grayscale');
+                    }
                     if (iconImg) {
-                        iconImg.classList.remove('grayscale');
                         iconImg.style.filter = `drop-shadow(0 0 10px ${iconColor})`;
                     }
                     if (glowBg) {
@@ -285,6 +347,11 @@ allAchievements.sort((a, b) => {
                     const el = document.getElementById(`stat-${r}`);
                     if (el) el.textContent = stats[r] || 0;
                 });
+
+                if (stateModified) {
+                    localStorage.setItem('gateCivilTracker2027', JSON.stringify(state));
+                    window.dispatchEvent(new Event('stateChanged'));
+                }
             }
 
             // Run hydration immediately

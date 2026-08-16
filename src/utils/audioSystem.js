@@ -1,6 +1,12 @@
 // Sound synthesis for achievements
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+export function resumeAudio() {
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+}
+
 function playTone(freq, type, duration, vol, startTime) {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
