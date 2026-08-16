@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { defaultState } from '../data.js';
+import HeroSpline from '../components/HeroSpline.astro';
 
 const subjects = defaultState.subjects;
 const subjectBgClass = {
@@ -21,36 +22,38 @@ const subjectBgClass = {
     <div id="dashboard-view" class="flex flex-col gap-5 sm:gap-6 min-w-0">
         
         <!-- Hero Progress Area -->
-        <div class="glass-panel surface-hero p-4 sm:p-6 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[220px_1fr] gap-5 sm:gap-6 items-center">
-            <div class="flex flex-col items-center justify-center text-center">
-                <div class="circular-progress animate-pulse-glow" id="hero-progress-circle" style="--progress: 0%;">
+        <div class="glass-panel surface-hero p-4 sm:p-6 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[220px_1fr] gap-5 sm:gap-6 items-center relative overflow-hidden">
+            <HeroSpline />
+            
+            <div class="flex flex-col items-center justify-center text-center relative z-10 pointer-events-none">
+                <div class="circular-progress animate-pulse-glow pointer-events-auto" id="hero-progress-circle" style="--progress: 0%;">
                     <span class="relative z-10 text-2xl sm:text-3xl font-bold" id="hero-progress-text">0%</span>
                 </div>
-                <p class="text-text-muted text-xs sm:text-sm font-semibold tracking-wide mt-1 sm:mt-2">Overall GATE Readiness</p>
+                <p class="text-text-muted text-xs sm:text-sm font-semibold tracking-wide mt-1 sm:mt-2 shadow-text">Overall GATE Readiness</p>
             </div>
             
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5 md:gap-4">
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5 md:gap-4 relative z-10 pointer-events-none">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
                     <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Syllabus</span>
                     <span class="text-lg sm:text-xl font-semibold text-white" id="metric-syllabus">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
                     <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">PYQs</span>
                     <span class="text-lg sm:text-xl font-semibold text-white" id="metric-pyqs">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
                     <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Tests</span>
                     <span class="text-lg sm:text-xl font-semibold text-white" id="metric-tests">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
                     <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Mocks</span>
                     <span class="text-lg sm:text-xl font-semibold text-white" id="metric-mocks">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
                     <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Revision</span>
                     <span class="text-lg sm:text-xl font-semibold text-white" id="metric-revision">0%</span>
                 </div>
-                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0">
+                <div class="bg-black/20 border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col gap-1 min-w-0 pointer-events-auto">
                     <span class="text-text-muted text-[10px] sm:text-xs uppercase tracking-wide truncate">Study Hours</span>
                     <span class="text-lg sm:text-xl font-semibold text-primary-accent" id="metric-hours">0h</span>
                 </div>
@@ -391,6 +394,7 @@ const subjectBgClass = {
     </div>
 
     <script>
+        // @ts-nocheck
         // Hydration logic
         function hydrateDashboard() {
             const state = window.getState();

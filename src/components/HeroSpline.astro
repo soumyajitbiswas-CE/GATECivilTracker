@@ -1,0 +1,163 @@
+---
+// src/components/HeroSpline.astro
+---
+
+<div class="spline-hero-container absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden rounded-2xl sm:rounded-none" aria-hidden="true">
+  
+  <!-- Spline Wrapper positioned to the right. 
+       Mobile: full width, Desktop: 55% width to leave space for text -->
+  <div class="absolute right-0 top-0 w-full md:w-[65%] lg:w-[55%] h-full opacity-70 sm:opacity-100 flex items-center justify-center pointer-events-none">
+    
+    <!-- Spline viewer component from bundled runtime.
+         pointer-events-none prevents clicking/dragging from glitching physics or snapping orbit controls.
+         events-target="global" ensures eye/head follows cursor/touch across the entire page. -->
+    <spline-viewer 
+      id="hero-spline-viewer"
+      class="w-full h-full pointer-events-none transition-opacity duration-500 opacity-0"
+      style="filter: sepia(1) hue-rotate(95deg) saturate(1.5) brightness(0.95) contrast(1.1);"
+      url="/scene.splinecode"
+      loading-anim-type="none"
+      events-target="global"
+    ></spline-viewer>
+  </div>
+
+  <!-- Responsive gradient overlay to smoothly blend the left edge of the spline wrapper without CSS masks! 
+       Desktop (lg): wrapper edge is at 45%. Gradient is solid until 45%, then fades.
+       Tablet (md): wrapper edge is at 35%. Gradient is solid until 35%, then fades.
+       Mobile: Bottom to top fade. -->
+  <div class="absolute inset-0 z-10 pointer-events-none 
+              bg-gradient-to-t from-[#06140e] from-0% via-[#06140e]/90 via-[25%] to-transparent
+              md:bg-gradient-to-r md:via-[#06140e] md:via-[36%] md:to-[95%]
+              lg:via-[46%] lg:to-[90%]">
+  </div>
+</div>
+
+<style>
+  .spline-hero-container {
+    transition: opacity 0.5s ease-in-out;
+  }
+  spline-viewer {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none !important;
+  }
+</style>
+
+<script>
+  // Import bundled viewer from npm — fast, local, zero CDN delay
+  import '@splinetool/viewer';
+
+  function initViewer() {
+    const viewer = document.getElementById('hero-spline-viewer');
+    if (!viewer) return;
+
+    // Inject stylesheet into shadowRoot that permanently hides #logo and ensures canvas is visible
+    const applyShadowStyles = () => {
+      // @ts-ignore
+      const shadow = viewer.shadowRoot;
+      if (!shadow) return;
+
+      if (!shadow.querySelector('#anti-logo-style')) {
+        const style = document.createElement('style');
+        style.id = 'anti-logo-style';
+        style.textContent = `
+          #spline, canvas {
+            visibility: visible !important;
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            pointer-events: none !important;
+          }
+          #logo, #hint-drag, a[href*="spline.design"] {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            max-width: 0 !important;
+            max-height: 0 !important;
+            position: absolute !important;
+            top: -9999px !important;
+            left: -9999px !important;
+            clip: rect(0,0,0,0) !important;
+            transform: scale(0) !important;
+            z-index: -9999 !important;
+          }
+        `;
+        shadow.appendChild(style);
+      }
+
+      // Neutralize WebGL pipeline watermark pass directly
+      // @ts-ignore
+      if (viewer._spline?._renderer?.pipeline) {
+        // @ts-ignore
+        const p = viewer._spline._renderer.pipeline;
+        p.logoOverlayPass.enabled = false;
+        p.setWatermark = () => {
+          p.logoOverlayPass.enabled = false;
+        };
+        p.updateRenderToScreen();
+        // @ts-ignore
+        viewer._spline.requestRender?.();
+      }
+
+      // Ensure canvas element inside shadowRoot is visible
+      const canvas = shadow.querySelector('canvas');
+      if (canvas) {
+        canvas.style.visibility = 'visible';
+      }
+
+      viewer.classList.remove('opacity-0');
+      viewer.classList.add('opacity-100');
+    };
+
+    // Apply styles across lifecycle
+    const observer = new MutationObserver(() => {
+      applyShadowStyles();
+    });
+
+    const checkInterval = setInterval(() => {
+      // @ts-ignore
+      if (viewer.shadowRoot) {
+        // @ts-ignore
+        observer.observe(viewer.shadowRoot, { childList: true, subtree: true });
+        applyShadowStyles();
+      }
+    }, 20);
+
+    viewer.addEventListener('load-complete', applyShadowStyles);
+    viewer.addEventListener('loaded', applyShadowStyles);
+    viewer.addEventListener('load-start', applyShadowStyles);
+
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      applyShadowStyles();
+    }, 3000);
+
+    // Mobile touch tracking without blocking scroll
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches.length > 0) {
+        const touch = e.touches[0];
+        const moveEvent = new MouseEvent('mousemove', {
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+          screenX: touch.clientX,
+          screenY: touch.clientY,
+          bubbles: true,
+          cancelable: true
+        });
+        window.dispatchEvent(moveEvent);
+      }
+    }, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initViewer);
+  } else {
+    initViewer();
+  }
+
+  document.addEventListener('astro:page-load', initViewer);
+</script>

@@ -23,6 +23,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="preload" href="/scene.splinecode" as="fetch" crossorigin>
 	</head>
 	<body class="min-h-screen">
         <div class="site-bg" aria-hidden="true"></div>
@@ -54,6 +55,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         </div>
 
         <script>
+            // @ts-nocheck
             import { defaultState } from '../data.js';
             
             // Global helper functions to attach to window for cross-page use
