@@ -1277,11 +1277,16 @@ const isHome = Astro.url.pathname === '/';
             });
         </script>
         {!isHome && (
-            <div style="display: none;" aria-hidden="true">
+            <div class="absolute w-0 h-0 overflow-hidden opacity-0 pointer-events-none" style="top: -9999px; left: -9999px;" aria-hidden="true">
                 <spline-viewer 
                     id="hero-spline-viewer"
                     transition:persist="hero-spline"
+                    class="w-full h-full pointer-events-none transition-opacity duration-500 opacity-0"
+                    style="filter: sepia(1) hue-rotate(95deg) saturate(1.5) brightness(0.95) contrast(1.1);"
                     url="/scene.splinecode"
+                    background="transparent"
+                    loading-anim-type="none"
+                    events-target="global"
                 ></spline-viewer>
             </div>
         )}
