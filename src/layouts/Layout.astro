@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { title, description = "GATE Civil Engineering Preparation Tracker" } = Astro.props;
+const isHome = Astro.url.pathname === '/';
 ---
 
 <!doctype html>
@@ -1275,5 +1276,14 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 reader.readAsText(file);
             });
         </script>
+        {!isHome && (
+            <div style="display: none;" aria-hidden="true">
+                <spline-viewer 
+                    id="hero-spline-viewer"
+                    transition:persist="hero-spline"
+                    url="/scene.splinecode"
+                ></spline-viewer>
+            </div>
+        )}
 	</body>
 </html>

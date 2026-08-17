@@ -10,6 +10,7 @@
     <!-- events-target="global" enables full cursor tracking across the entire window smoothly -->
     <spline-viewer 
       id="hero-spline-viewer"
+      transition:persist="hero-spline"
       class="w-full h-full pointer-events-none transition-opacity duration-500 opacity-0"
       style="filter: sepia(1) hue-rotate(95deg) saturate(1.5) brightness(0.95) contrast(1.1);"
       url="/scene.splinecode"
@@ -49,6 +50,35 @@
   function initViewer() {
     const viewer = document.getElementById('hero-spline-viewer');
     if (!viewer) return;
+
+    // Handle intersection observer across navigations
+    const heroContainer = viewer.closest('.spline-hero-container');
+    if (heroContainer) {
+      if (window._splineHeroObserver) {
+        window._splineHeroObserver.disconnect();
+      }
+      
+      window._splineHeroObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (viewer._spline) {
+            if (entry.isIntersecting) {
+              viewer._spline.play?.();
+            } else {
+              viewer._spline.stop?.();
+            }
+          }
+        });
+      }, { threshold: 0.05 });
+      
+      window._splineHeroObserver.observe(heroContainer);
+    } else if (viewer._spline) {
+      viewer._spline.stop?.();
+    }
+
+    // Only initialize the shadow DOM styles once
+    if (viewer.dataset.initialized) return;
+    viewer.dataset.initialized = 'true';
+
 
     const applyShadowStyles = () => {
       const shadow = viewer.shadowRoot;
@@ -135,22 +165,6 @@
       clearInterval(checkInterval);
       applyShadowStyles();
     }, 2500);
-
-    // Auto-pause 3D WebGL render loop when hero is scrolled off-screen
-    const heroContainer = viewer.closest('.spline-hero-container') || viewer;
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (viewer._spline) {
-          if (entry.isIntersecting) {
-            viewer._spline.play?.();
-          } else {
-            viewer._spline.stop?.();
-          }
-        }
-      });
-    }, { threshold: 0.05 });
-
-    intersectionObserver.observe(heroContainer);
   }
 
   const start = () => {
