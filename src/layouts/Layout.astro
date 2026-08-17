@@ -120,6 +120,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     
                     <div id="log-field-subject" class="flex flex-col gap-1.5">
                         <label class="text-xs text-text-muted font-medium ml-1">Subject</label>
+                        <div id="log-subject-locked" class="hidden text-sm font-semibold text-white px-0.5 py-0.5"></div>
                         <select id="log-subject" class="bg-black/40 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-primary-accent/50 focus:ring-1 focus:ring-primary-accent/30 transition-all custom-scrollbar">
                             <option value="general">General / All</option>
                             <!-- Subject options will be injected here via JS -->
@@ -555,6 +556,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 
                 const typeInput = document.getElementById('log-type');
                 const subjectSelect = document.getElementById('log-subject');
+                const subjectLockedDisplay = document.getElementById('log-subject-locked');
                 const subtypeSelect = document.getElementById('log-subtype');
                 const amountInput = document.getElementById('log-amount');
                 const pyqYearInput = document.getElementById('log-pyq-year');
@@ -826,10 +828,20 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     updateSubjectsList(state);
                     if (preselectedSubject && subjectSelect) {
                         const opt = subjectSelect.querySelector(`option[value="${preselectedSubject}"]`);
-                        if (opt && !opt.disabled) {
+                        if (opt) {
+                            opt.disabled = false;
                             subjectSelect.value = preselectedSubject;
                             updateTopicList(state);
                         }
+                        const subObj = state.subjects ? state.subjects.find(s => s.id === preselectedSubject) : null;
+                        if (subjectLockedDisplay) {
+                            subjectLockedDisplay.textContent = subObj ? subObj.name : preselectedSubject;
+                            subjectLockedDisplay.classList.remove('hidden');
+                        }
+                        subjectSelect.classList.add('hidden');
+                    } else {
+                        if (subjectLockedDisplay) subjectLockedDisplay.classList.add('hidden');
+                        if (subjectSelect) subjectSelect.classList.remove('hidden');
                     }
 
                     hideError();
@@ -846,6 +858,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 
                 const closeLogModal = () => {
                     if (!modal) return;
+                    if (subjectLockedDisplay) subjectLockedDisplay.classList.add('hidden');
+                    if (subjectSelect) subjectSelect.classList.remove('hidden');
                     modal.classList.add('opacity-0');
                     if (content) {
                         content.classList.remove('scale-100');
