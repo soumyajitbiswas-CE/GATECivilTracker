@@ -217,16 +217,29 @@ const { subject } = Astro.props;
                 if (countDisplay) countDisplay.textContent = `${pyqData.solved} / ${pyqData.total} years`;
 
                 if (yearsListEl) {
-                    const loggedYears = state.pyqHistory 
-                        ? state.pyqHistory.filter(h => h.subjectId === subjectId && h.pyqYear).map(h => parseInt(h.pyqYear)).sort((a,b) => b - a)
+                    const loggedEntries = state.pyqHistory 
+                        ? state.pyqHistory.filter(h => h.subjectId === subjectId && h.pyqYear).sort((a,b) => parseInt(b.pyqYear) - parseInt(a.pyqYear))
                         : [];
-                    if (loggedYears.length > 0) {
-                        yearsListEl.innerHTML = loggedYears.map(y => `
-                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-primary-accent/15 text-primary-accent border border-primary-accent/30 tracking-tight">
+                    if (loggedEntries.length > 0) {
+                        yearsListEl.innerHTML = loggedEntries.map(entry => `
+                            <span class="inline-flex items-center gap-1.5 pl-2 pr-1.5 py-0.5 rounded-md text-[11px] font-semibold bg-primary-accent/15 text-primary-accent border border-primary-accent/30 tracking-tight group">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                                GATE ${y}
+                                <span>GATE ${entry.pyqYear}</span>
+                                <button type="button" class="btn-del-pyq text-primary-accent/40 hover:text-red-400 p-0.5 rounded transition-colors cursor-pointer" data-id="${entry.id}" title="Delete this PYQ entry">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                </button>
                             </span>
                         `).join('');
+
+                        yearsListEl.querySelectorAll('.btn-del-pyq').forEach(btn => {
+                            btn.onclick = (e) => {
+                                e.stopPropagation();
+                                const id = e.currentTarget.dataset.id;
+                                const s = window.getState();
+                                s.pyqHistory = (s.pyqHistory || []).filter(h => h.id !== id);
+                                window.saveState(s);
+                            };
+                        });
                     } else {
                         yearsListEl.innerHTML = '<span class="text-xs text-text-muted italic py-1">No PYQ years logged yet for this subject.</span>';
                     }

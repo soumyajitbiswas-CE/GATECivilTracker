@@ -581,8 +581,15 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 const formErrorText = document.getElementById('log-form-error-text');
 
                 const currentYear = new Date().getFullYear();
+                let isSubmitting = false;
 
                 const showError = (msg) => {
+                    isSubmitting = false;
+                    const submitBtn = form?.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
                     if(formError && formErrorText) {
                         formErrorText.textContent = msg;
                         formError.classList.remove('hidden');
@@ -845,6 +852,12 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     }
 
                     hideError();
+                    isSubmitting = false;
+                    const submitBtn = form?.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
 
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
@@ -858,6 +871,12 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 
                 const closeLogModal = () => {
                     if (!modal) return;
+                    isSubmitting = false;
+                    const submitBtn = form?.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
                     if (subjectLockedDisplay) subjectLockedDisplay.classList.add('hidden');
                     if (subjectSelect) subjectSelect.classList.remove('hidden');
                     modal.classList.add('opacity-0');
@@ -894,6 +913,13 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 if (form) {
                     form.onsubmit = (e) => {
                         e.preventDefault();
+                        if (isSubmitting) return;
+                        isSubmitting = true;
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        if (submitBtn) {
+                            submitBtn.disabled = true;
+                            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                        }
                         hideError();
                         const state = window.getState();
                         const type = typeInput.value;
