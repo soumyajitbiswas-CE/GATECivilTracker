@@ -40,6 +40,16 @@ const isHome = Astro.url.pathname === '/';
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || 'https://gateciviltracker.com').href} />
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "WebApplication",
+			"name": title,
+			"description": description,
+			"applicationCategory": "EducationalApplication",
+			"operatingSystem": "Any",
+			"url": Astro.url.href
+		})} />
         <ViewTransitions />
 	</head>
 	<body class="min-h-screen">
@@ -1264,7 +1274,7 @@ const isHome = Astro.url.pathname === '/';
                 const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
                 const dlAnchorElem = document.createElement('a');
                 dlAnchorElem.setAttribute("href", dataStr);
-                dlAnchorElem.setAttribute("download", "gate-civil-tracker-2027.json");
+                dlAnchorElem.setAttribute("download", "gate-civil-tracker.json");
                 dlAnchorElem.click();
             });
 

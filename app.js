@@ -390,7 +390,7 @@ function setupEventListeners() {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
         const dlAnchorElem = document.createElement('a');
         dlAnchorElem.setAttribute("href", dataStr);
-        dlAnchorElem.setAttribute("download", "gate-civil-tracker-2027.json");
+        dlAnchorElem.setAttribute("download", "gate-civil-tracker.json");
         dlAnchorElem.click();
     });
     
