@@ -48,6 +48,27 @@ async function run() {
             .toFile(path.join(publicDir, 'logo.webp'));
         console.log('Created logo.webp');
     }
+
+    // Optimize achievement icons
+    const iconsDir = path.join(publicDir, 'achievements', 'icons_final');
+    if (fs.existsSync(iconsDir)) {
+        const files = fs.readdirSync(iconsDir);
+        const pngFiles = files.filter(f => f.endsWith('.png') && !f.includes('-lg'));
+        for (const pngFile of pngFiles) {
+            const inputPath = path.join(iconsDir, pngFile);
+            const baseName = pngFile.replace('.png', '');
+            const cardWebp = path.join(iconsDir, `${baseName}.webp`);
+            const lgWebp = path.join(iconsDir, `${baseName}-lg.webp`);
+            if (!fs.existsSync(cardWebp)) {
+                await sharp(inputPath).resize(160, 160).webp({ quality: 85 }).toFile(cardWebp);
+            }
+            if (!fs.existsSync(lgWebp)) {
+                await sharp(inputPath).resize(320, 320).webp({ quality: 90 }).toFile(lgWebp);
+            }
+        }
+        console.log(`Verified ${pngFiles.length} achievement icons WebP assets`);
+    }
 }
 
 run().catch(console.error);
+

@@ -498,9 +498,9 @@ button:active, .btn:not(.subject-card):active {
   }
 }
 
-/* Touch devices (Mobile & Tablet): Completely disable transform & shadow shifts on tap/hover to eliminate all glitching */
+/* Touch devices (Mobile & Tablet): Completely disable transform jitter on tap/hover */
 @media (hover: none), (pointer: coarse), (max-width: 1024px) {
-  .glow-card, .subject-card, a.subject-card {
+  .glow-card, .subject-card, a.subject-card, .ach-card:not(.is-unlocked) {
     -webkit-tap-highlight-color: transparent !important;
     -webkit-touch-callout: none !important;
     user-select: none;
@@ -510,10 +510,19 @@ button:active, .btn:not(.subject-card):active {
   }
   .glow-card:hover, .glow-card:active, .glow-card:focus,
   .subject-card:hover, .subject-card:active, .subject-card:focus,
-  a.subject-card:hover, a.subject-card:active, a.subject-card:focus {
-    box-shadow: none !important;
+  a.subject-card:hover, a.subject-card:active, a.subject-card:focus,
+  .ach-card:hover, .ach-card:active, .ach-card:focus {
     transform: none !important;
   }
+}
+
+/* Achievement Card Universal Rendering Containment & GPU Acceleration */
+.ach-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 170px;
+  contain: layout style;
+  will-change: auto;
+  transform: translateZ(0);
 }
 
 /* Fix severe scrolling lag on mobile by disabling heavy backdrop-filters and drop-shadows */
@@ -540,3 +549,4 @@ button:active, .btn:not(.subject-card):active {
 .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.03); border-radius: 6px; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(74, 222, 128, 0.3); border-radius: 6px; }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(74, 222, 128, 0.5); }
+

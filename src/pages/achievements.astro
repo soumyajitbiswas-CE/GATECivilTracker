@@ -18,119 +18,120 @@ allAchievements.sort((a, b) => {
 <Layout title="Achievements | GATE Civil Tracker">
     <div id="achievements-view" class="flex flex-col gap-4 sm:gap-5 min-w-0 pb-10">
         
-        <!-- Back to Dashboard Button -->
-        <div class="mb-1">
-            <a href="/" id="btn-back-dashboard" data-astro-prefetch="hover" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+        <!-- Back to Dashboard Button (Prefetch load for instant transition) -->
+        <div class="mb-0.5">
+            <a href="/" id="btn-back-dashboard" data-astro-prefetch="load" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
                 <span class="pointer-events-none">Back to Dashboard</span>
             </a>
         </div>
         
         <!-- Header -->
-        <div class="surface-hero backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 relative overflow-hidden">
+        <div class="surface-hero backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 relative overflow-hidden">
             <div class="relative z-10 flex flex-col gap-1.5 sm:gap-2">
                 <h1 class="text-2xl sm:text-4xl font-[Outfit] font-bold tracking-tight text-white flex items-center gap-2 sm:gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent sm:w-[28px] sm:h-[28px]"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent sm:w-[28px] sm:h-[28px] shrink-0"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
                     Achievements
                 </h1>
                 <p class="text-text-muted text-xs sm:text-base font-medium">Track milestones. Build consistency. Earn your rank.</p>
             </div>
             
-            <div class="relative z-10 flex flex-wrap sm:flex-nowrap items-stretch gap-3 w-full sm:w-auto">
+            <div class="relative z-10 grid grid-cols-2 sm:flex sm:flex-wrap items-stretch gap-2.5 sm:gap-3 w-full md:w-auto">
                 <!-- Streak Status Card -->
-                <div class="flex items-center gap-3 bg-black/30 p-3 sm:p-4 rounded-xl border border-primary-accent/20 flex-1 sm:flex-initial min-w-[155px]">
-                    <div id="streak-icon-wrap" class="p-2.5 rounded-xl bg-primary-accent/10 border border-primary-accent/30 text-primary-accent shrink-0 flex items-center justify-center transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                <div class="flex items-center gap-2.5 sm:gap-3.5 bg-black/40 p-2.5 sm:p-3.5 rounded-xl border border-primary-accent/20 flex-1 min-w-[130px] sm:min-w-[155px]">
+                    <div id="streak-icon-wrap" class="p-2 sm:p-2.5 rounded-xl bg-primary-accent/10 border border-primary-accent/30 text-primary-accent shrink-0 flex items-center justify-center transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame sm:w-[22px] sm:h-[22px]"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
                     </div>
-                    <div class="flex flex-col justify-center">
-                        <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 transition-colors" id="streak-status-label">Daily Streak</div>
-                        <div class="text-lg sm:text-2xl font-bold text-white flex items-baseline gap-1" id="streak-display">
-                            <span class="text-primary-accent font-extrabold" id="streak-count-val">0</span> <span class="text-xs text-text-muted font-normal">days</span>
+                    <div class="flex flex-col justify-center min-w-0">
+                        <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 truncate transition-colors" id="streak-status-label">Daily Streak</div>
+                        <div class="text-base sm:text-2xl font-bold text-white flex items-baseline gap-1" id="streak-display">
+                            <span class="text-primary-accent font-extrabold" id="streak-count-val">0</span> <span class="text-[10px] sm:text-xs text-text-muted font-normal">days</span>
                         </div>
-                        <div class="text-[9px] sm:text-[10px] text-text-muted mt-0.5" id="streak-subtitle">Best: <span id="streak-longest-val" class="text-white font-semibold">0</span> days</div>
+                        <div class="text-[9px] sm:text-[10px] text-text-muted mt-0.5 truncate" id="streak-subtitle">Best: <span id="streak-longest-val" class="text-white font-semibold">0</span> days</div>
                     </div>
                 </div>
 
                 <!-- Rank & XP Card -->
-                <div class="flex flex-col justify-between bg-black/30 p-3 sm:p-4 rounded-xl border border-primary-accent/20 flex-1 sm:flex-initial min-w-[165px]">
+                <div class="flex flex-col justify-between bg-black/40 p-2.5 sm:p-3.5 rounded-xl border border-primary-accent/20 flex-1 min-w-[130px] sm:min-w-[165px]">
                     <div class="flex flex-col mb-1">
-                        <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5">Current Rank</div>
-                        <div class="text-lg sm:text-2xl font-bold text-white flex items-baseline gap-1" id="player-level-display">
+                        <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 truncate">Current Rank</div>
+                        <div class="text-base sm:text-2xl font-bold text-white flex items-baseline gap-1" id="player-level-display">
                             Level <span class="text-primary-accent" id="player-level-val">1</span>
                         </div>
                     </div>
-                    <div class="text-xs sm:text-sm font-medium text-text-muted">
-                        <span id="player-xp-val" class="font-bold text-white">0</span> <span class="text-[10px] sm:text-xs">XP</span> <span class="mx-1 text-panel-border">|</span> <span class="text-[9px] sm:text-[10px]" id="player-xp-next">Next: 250 XP</span>
+                    <div class="text-[11px] sm:text-sm font-medium text-text-muted truncate">
+                        <span id="player-xp-val" class="font-bold text-white">0</span> <span class="text-[10px] sm:text-xs">XP</span> <span class="mx-0.5 text-panel-border">|</span> <span class="text-[9px] sm:text-[10px]" id="player-xp-next">Next: 250 XP</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Controls & Filters -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-black/20 p-3 rounded-xl border border-panel-border">
-            <div class="flex items-center gap-2 overflow-x-auto w-full no-scrollbar pb-1 sm:pb-0" id="rarity-filters">
-                <button class="filter-btn active text-xs font-semibold px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white whitespace-nowrap transition-all" data-filter="All">All</button>
-                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-white whitespace-nowrap transition-all" data-filter="Common">Common</button>
-                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#86efac] whitespace-nowrap transition-all" data-filter="Uncommon">Uncommon</button>
-                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#60a5fa] whitespace-nowrap transition-all" data-filter="Rare">Rare</button>
-                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#c084fc] whitespace-nowrap transition-all" data-filter="Epic">Epic</button>
-                <button class="filter-btn text-xs font-semibold px-4 py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#fbbf24] whitespace-nowrap transition-all" data-filter="Legendary">Legendary</button>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 bg-black/30 p-2.5 sm:p-3 rounded-xl border border-panel-border">
+            <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto w-full no-scrollbar pb-1 sm:pb-0 touch-pan-x overscroll-contain" id="rarity-filters">
+                <button class="filter-btn active text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-white/10 border border-white/20 text-white whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="All">All</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-white whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Common">Common</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#86efac] whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Uncommon">Uncommon</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#60a5fa] whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Rare">Rare</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#c084fc] whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Epic">Epic</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#fbbf24] whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Legendary">Legendary</button>
             </div>
             
-            <div class="flex flex-wrap items-center gap-3 shrink-0 text-xs font-medium text-text-muted px-2 min-w-0" id="stats-display">
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3 shrink-0 text-[11px] sm:text-xs font-medium text-text-muted px-1 sm:px-2 min-w-0" id="stats-display">
                 <span class="text-white font-semibold flex items-center gap-1"><span id="stat-total">0</span> / 110 <span class="hidden sm:inline font-normal text-text-muted">Unlocked</span></span>
                 <span class="w-1 h-1 rounded-full bg-panel-border"></span>
-                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-white"></div> <span id="stat-Common">0</span>/50</span>
-                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#86efac]"></div> <span id="stat-Uncommon">0</span>/25</span>
-                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#60a5fa]"></div> <span id="stat-Rare">0</span>/18</span>
-                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#c084fc]"></div> <span id="stat-Epic">0</span>/14</span>
-                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#fbbf24]"></div> <span id="stat-Legendary">0</span>/3</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-white inline-block"></span> <span id="stat-Common">0</span>/50</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#86efac] inline-block"></span> <span id="stat-Uncommon">0</span>/25</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#60a5fa] inline-block"></span> <span id="stat-Rare">0</span>/18</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#c084fc] inline-block"></span> <span id="stat-Epic">0</span>/14</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#fbbf24] inline-block"></span> <span id="stat-Legendary">0</span>/3</span>
             </div>
         </div>
 
-        <!-- Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4" id="achievements-grid" data-active-filter="All">
+        <!-- High Performance Achievement Grid -->
+        <div class="grid grid-cols-2 min-[480px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-3.5" id="achievements-grid" data-active-filter="All">
             {allAchievements.map(ach => (
                 <div id={`card-${ach.id}`} 
-                     class="ach-card relative bg-[#06140e] border border-panel-border rounded-xl p-3 sm:p-4 flex flex-col items-center text-center cursor-pointer hover:bg-black/40 transition-all duration-200 group overflow-hidden" 
+                     class="ach-card relative bg-[#06140e] border border-panel-border rounded-xl p-2.5 sm:p-3.5 flex flex-col items-center text-center cursor-pointer transition-colors duration-150 group overflow-hidden select-none" 
                      data-id={ach.id} data-rarity={ach.rarity} data-name={ach.name} data-desc={ach.description} data-cond={ach.unlock_condition} data-xp={ach.xp} data-unlocked="false">
                     
                     <!-- Lock Indicator Badge (Top Right) -->
-                    <div class="ach-lock-badge absolute top-2 right-2 z-20 bg-black/70 border border-white/10 p-1 rounded-md text-white/50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <div class="ach-lock-badge absolute top-1.5 right-1.5 z-10 bg-black/70 border border-white/10 p-1 rounded-md text-white/50 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     </div>
 
                     <!-- Unlocked Indicator Badge (Top Right - hidden by default) -->
-                    <div class="ach-unlocked-badge absolute top-2 right-2 z-20 bg-primary-accent/20 border border-primary-accent/40 p-1 rounded-md text-primary-accent hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div class="ach-unlocked-badge absolute top-1.5 right-1.5 z-10 bg-primary-accent/20 border border-primary-accent/40 p-1 rounded-md text-primary-accent hidden pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
 
                     <!-- New Indicator Badge (Top Left - hidden by default) -->
-                    <div class="ach-new-badge absolute top-2 left-2 z-20 bg-primary-accent text-[#06140e] text-[9px] font-black tracking-wide px-1.5 py-0.5 rounded shadow-[0_0_8px_rgba(74,222,128,0.7)] hidden">
+                    <div class="ach-new-badge absolute top-1.5 left-1.5 z-10 bg-primary-accent text-[#06140e] text-[8px] font-black tracking-wider px-1.5 py-0.5 rounded shadow-[0_0_8px_rgba(74,222,128,0.7)] hidden pointer-events-none">
                         NEW
                     </div>
 
-                    <!-- Glow Background (Active when unlocked) -->
-                    <div class="ach-glow-bg absolute inset-0 opacity-0 blur-xl scale-75 transition-all duration-300 z-0 pointer-events-none"></div>
-
-                    <!-- Icon Wrapper -->
-                    <div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 mb-3 ach-icon-wrap grayscale opacity-40 transition-all duration-200">
-                        <picture class="w-full h-full object-contain flex items-center justify-center transition-all duration-200">
-                            <source srcset={`/achievements/icons_final/${ach.id}.svg`} type="image/svg+xml">
-                            <img src={`/achievements/icons_final/${ach.id}.png`} alt={ach.name} class="w-full h-full object-contain ach-icon-img transition-all duration-200" loading="lazy" decoding="async">
-                        </picture>
+                    <!-- Ultra-Optimized WebP Icon Wrapper with Fixed Dimensions to Eliminate CLS -->
+                    <div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 mb-2 sm:mb-2.5 ach-icon-wrap flex items-center justify-center shrink-0 transition-opacity duration-150">
+                        <div class="ach-icon-glow absolute inset-[-10px] sm:inset-[-14px] rounded-full pointer-events-none transition-opacity duration-200"></div>
+                        <img src={`/achievements/icons_final/${ach.id}.webp`} 
+                             alt={ach.name} 
+                             width="80" 
+                             height="80" 
+                             class="w-full h-full object-contain ach-icon-img relative z-10" 
+                             loading="lazy" 
+                             decoding="async" />
                     </div>
                     
                     <!-- Text Content -->
-                    <div class="relative z-10 flex flex-col w-full">
-                        <h3 class="text-xs sm:text-sm font-bold text-text-muted group-hover:text-white transition-colors line-clamp-2 leading-tight mb-1.5 min-h-[34px] ach-title-text flex items-center justify-center">
+                    <div class="relative z-10 flex flex-col w-full flex-1 justify-between">
+                        <h3 class="text-[11px] sm:text-[13px] font-bold text-text-muted group-hover:text-white transition-colors line-clamp-2 leading-tight mb-1.5 min-h-[28px] sm:min-h-[32px] ach-title-text flex items-center justify-center">
                             {ach.name}
                         </h3>
-                        <div class="flex items-center justify-between w-full mt-auto">
-                            <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border border-white/20 text-text-muted bg-black/40 ach-rarity-badge transition-all">
+                        <div class="flex items-center justify-between w-full mt-auto pt-1">
+                            <span class="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border border-white/15 text-text-muted bg-black/40 ach-rarity-badge transition-colors">
                                 {ach.rarity}
                             </span>
-                            <span class="text-[10px] sm:text-xs font-bold text-text-muted ach-xp-text opacity-70 transition-all">
+                            <span class="text-[9px] sm:text-[11px] font-bold text-text-muted ach-xp-text opacity-70 transition-colors">
                                 +{ach.xp}
                             </span>
                         </div>
@@ -146,20 +147,17 @@ allAchievements.sort((a, b) => {
     <div id="ach-detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[150] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
         <div class="bg-[#06140e] border border-panel-border rounded-2xl w-[calc(100%-2rem)] sm:w-full max-w-[440px] mx-auto shadow-2xl flex flex-col relative scale-95 transition-transform duration-200 transform" id="ach-detail-content">
             
-            <button id="btn-close-modal" aria-label="Close achievement detail" class="absolute top-4 right-4 text-text-muted hover:text-white bg-black/40 p-1.5 rounded-lg z-20 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            <button id="btn-close-modal" aria-label="Close achievement detail" class="absolute top-3.5 right-3.5 text-text-muted hover:text-white bg-black/40 p-1.5 rounded-lg z-20 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
             
-            <div class="p-6 sm:p-8 flex flex-col items-center text-center relative overflow-hidden">
-                <div id="modal-glow" class="absolute inset-0 opacity-20 blur-3xl rounded-full scale-150 z-0 pointer-events-none"></div>
+            <div class="p-5 sm:p-7 flex flex-col items-center text-center relative overflow-hidden">
+                <div id="modal-glow" class="absolute inset-0 opacity-15 rounded-full scale-125 z-0 pointer-events-none"></div>
                 
-                <div class="relative z-10 w-24 h-24 sm:w-32 sm:h-32 mb-5">
-                    <picture class="w-full h-full object-contain flex items-center justify-center">
-                        <source id="modal-icon-source" srcset="" type="image/svg+xml">
-                        <img id="modal-icon" src="" alt="Icon" class="w-full h-full object-contain drop-shadow-xl transition-all duration-200">
-                    </picture>
-                    <div id="modal-lock" class="absolute -bottom-1 -right-1 bg-black/80 border border-white/20 p-2 rounded-full flex items-center justify-center shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/70"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <div class="relative z-10 w-24 h-24 sm:w-32 sm:h-32 mb-4">
+                    <img id="modal-icon" src="" alt="Icon" width="128" height="128" class="w-full h-full object-contain drop-shadow-xl transition-transform duration-200" decoding="async">
+                    <div id="modal-lock" class="absolute -bottom-1 -right-1 bg-black/80 border border-white/20 p-1.5 sm:p-2 rounded-full flex items-center justify-center shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/70"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     </div>
                 </div>
                 
@@ -168,40 +166,164 @@ allAchievements.sort((a, b) => {
                     <span id="modal-xp" class="text-primary-accent font-bold text-xs sm:text-sm">+0 XP</span>
                 </div>
                 
-                <h2 id="modal-name" class="text-xl sm:text-2xl font-bold text-white mb-4 relative z-10">Achievement Name</h2>
+                <h2 id="modal-name" class="text-lg sm:text-2xl font-bold text-white mb-3.5 relative z-10">Achievement Name</h2>
                 
-                <div class="bg-black/40 border border-panel-border rounded-xl p-3.5 w-full mb-4 relative z-10">
+                <div class="bg-black/40 border border-panel-border rounded-xl p-3 w-full mb-3.5 relative z-10">
                     <h4 class="text-[10px] text-primary-accent uppercase tracking-widest font-semibold mb-1 text-left">Unlock Condition</h4>
-                    <p id="modal-cond" class="text-sm font-medium text-white text-left leading-snug">Condition text goes here...</p>
+                    <p id="modal-cond" class="text-xs sm:text-sm font-medium text-white text-left leading-snug">Condition text goes here...</p>
                 </div>
                 
                 <p id="modal-desc" class="text-xs sm:text-sm text-text-muted text-left w-full leading-relaxed relative z-10">Description text goes here.</p>
                 
-                <div id="modal-date" class="mt-4 text-[10px] text-text-muted uppercase tracking-wider font-semibold opacity-0 relative z-10 w-full text-left">
+                <div id="modal-date" class="mt-3.5 text-[10px] text-text-muted uppercase tracking-wider font-semibold opacity-0 relative z-10 w-full text-left">
                     Unlocked: <span id="modal-date-val" class="text-white"></span>
                 </div>
             </div>
         </div>
     </div>
 
-    <style>
+    <style is:inline>
         #achievements-grid[data-active-filter="Common"] .ach-card:not([data-rarity="Common"]) { display: none !important; }
         #achievements-grid[data-active-filter="Uncommon"] .ach-card:not([data-rarity="Uncommon"]) { display: none !important; }
         #achievements-grid[data-active-filter="Rare"] .ach-card:not([data-rarity="Rare"]) { display: none !important; }
         #achievements-grid[data-active-filter="Epic"] .ach-card:not([data-rarity="Epic"]) { display: none !important; }
         #achievements-grid[data-active-filter="Legendary"] .ach-card:not([data-rarity="Legendary"]) { display: none !important; }
 
-        .ach-card.is-unlocked { border-color: rgba(74, 222, 128, 0.4); box-shadow: 0 0 15px rgba(74, 222, 128, 0.08); }
-        .ach-card.is-unlocked[data-rarity="Common"] { border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 0 15px rgba(255, 255, 255, 0.08); }
-        .ach-card.is-unlocked[data-rarity="Uncommon"] { border-color: rgba(134, 239, 172, 0.4); box-shadow: 0 0 15px rgba(134, 239, 172, 0.08); }
-        .ach-card.is-unlocked[data-rarity="Rare"] { border-color: rgba(96, 165, 250, 0.4); box-shadow: 0 0 15px rgba(96, 165, 250, 0.08); }
-        .ach-card.is-unlocked[data-rarity="Epic"] { border-color: rgba(192, 132, 252, 0.4); box-shadow: 0 0 15px rgba(192, 132, 252, 0.08); }
-        .ach-card.is-unlocked[data-rarity="Legendary"] { border-color: rgba(251, 191, 36, 0.4); box-shadow: 0 0 15px rgba(251, 191, 36, 0.08); }
+        /* Locked Card Styling */
+        .ach-card:not(.is-unlocked) .ach-icon-wrap {
+            opacity: 0.35;
+            filter: brightness(0.85);
+        }
+        .ach-card:not(.is-unlocked) .ach-icon-glow {
+            display: none !important;
+        }
+
+        /* Unlocked Card Glow & Rarity Styling */
+        .ach-card.is-unlocked .ach-icon-glow {
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        /* Common (Silver / White Aura) */
+        .ach-card.is-unlocked[data-rarity="Common"] {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(6, 20, 14, 0.95) 100%);
+            border-color: rgba(255, 255, 255, 0.45);
+            box-shadow: 0 0 16px -2px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .ach-card.is-unlocked[data-rarity="Common"] .ach-icon-glow {
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.12) 45%, transparent 72%);
+        }
+        .ach-card.is-unlocked[data-rarity="Common"] .ach-icon-img {
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.45));
+        }
+        .ach-card.is-unlocked[data-rarity="Common"] .ach-unlocked-badge {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            color: #ffffff !important;
+        }
+
+        /* Uncommon (Emerald Green Aura) */
+        .ach-card.is-unlocked[data-rarity="Uncommon"] {
+            background: linear-gradient(180deg, rgba(74, 222, 128, 0.12) 0%, rgba(6, 20, 14, 0.95) 100%);
+            border-color: rgba(134, 239, 172, 0.55);
+            box-shadow: 0 0 18px -2px rgba(74, 222, 128, 0.25), inset 0 1px 0 rgba(134, 239, 172, 0.3);
+        }
+        .ach-card.is-unlocked[data-rarity="Uncommon"] .ach-icon-glow {
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.45) 0%, rgba(74, 222, 128, 0.15) 45%, transparent 72%);
+        }
+        .ach-card.is-unlocked[data-rarity="Uncommon"] .ach-icon-img {
+            filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.55));
+        }
+        .ach-card.is-unlocked[data-rarity="Uncommon"] .ach-unlocked-badge {
+            background-color: rgba(74, 222, 128, 0.2) !important;
+            border-color: rgba(74, 222, 128, 0.5) !important;
+            color: #86efac !important;
+        }
+
+        /* Rare (Azure Blue Aura) */
+        .ach-card.is-unlocked[data-rarity="Rare"] {
+            background: linear-gradient(180deg, rgba(96, 165, 250, 0.14) 0%, rgba(6, 20, 14, 0.95) 100%);
+            border-color: rgba(96, 165, 250, 0.6);
+            box-shadow: 0 0 20px -2px rgba(96, 165, 250, 0.3), inset 0 1px 0 rgba(96, 165, 250, 0.35);
+        }
+        .ach-card.is-unlocked[data-rarity="Rare"] .ach-icon-glow {
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.5) 0%, rgba(96, 165, 250, 0.18) 45%, transparent 72%);
+        }
+        .ach-card.is-unlocked[data-rarity="Rare"] .ach-icon-img {
+            filter: drop-shadow(0 0 12px rgba(96, 165, 250, 0.6));
+        }
+        .ach-card.is-unlocked[data-rarity="Rare"] .ach-unlocked-badge {
+            background-color: rgba(96, 165, 250, 0.2) !important;
+            border-color: rgba(96, 165, 250, 0.5) !important;
+            color: #60a5fa !important;
+        }
+
+        /* Epic (Amethyst Purple Aura) */
+        .ach-card.is-unlocked[data-rarity="Epic"] {
+            background: linear-gradient(180deg, rgba(192, 132, 252, 0.16) 0%, rgba(6, 20, 14, 0.95) 100%);
+            border-color: rgba(192, 132, 252, 0.65);
+            box-shadow: 0 0 24px -2px rgba(192, 132, 252, 0.35), inset 0 1px 0 rgba(192, 132, 252, 0.4);
+        }
+        .ach-card.is-unlocked[data-rarity="Epic"] .ach-icon-glow {
+            background: radial-gradient(circle, rgba(192, 132, 252, 0.55) 0%, rgba(192, 132, 252, 0.2) 45%, transparent 72%);
+        }
+        .ach-card.is-unlocked[data-rarity="Epic"] .ach-icon-img {
+            filter: drop-shadow(0 0 14px rgba(192, 132, 252, 0.7));
+        }
+        .ach-card.is-unlocked[data-rarity="Epic"] .ach-unlocked-badge {
+            background-color: rgba(192, 132, 252, 0.2) !important;
+            border-color: rgba(192, 132, 252, 0.5) !important;
+            color: #c084fc !important;
+        }
+
+        /* Legendary (Solar Gold / Amber Aura) */
+        .ach-card.is-unlocked[data-rarity="Legendary"] {
+            background: linear-gradient(180deg, rgba(251, 191, 36, 0.18) 0%, rgba(6, 20, 14, 0.95) 100%);
+            border-color: rgba(251, 191, 36, 0.75);
+            box-shadow: 0 0 28px -2px rgba(251, 191, 36, 0.45), inset 0 1px 0 rgba(251, 191, 36, 0.5);
+        }
+        .ach-card.is-unlocked[data-rarity="Legendary"] .ach-icon-glow {
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.6) 0%, rgba(251, 191, 36, 0.22) 45%, transparent 72%);
+        }
+        .ach-card.is-unlocked[data-rarity="Legendary"] .ach-icon-img {
+            filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.8));
+        }
+        .ach-card.is-unlocked[data-rarity="Legendary"] .ach-unlocked-badge {
+            background-color: rgba(251, 191, 36, 0.2) !important;
+            border-color: rgba(251, 191, 36, 0.5) !important;
+            color: #fbbf24 !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .ach-card:hover {
+                border-color: rgba(74, 222, 128, 0.5);
+                background-color: rgba(10, 30, 20, 0.8);
+            }
+            .ach-card.is-unlocked[data-rarity="Common"]:hover { 
+                border-color: rgba(255, 255, 255, 0.8);
+                box-shadow: 0 0 22px 0 rgba(255, 255, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            }
+            .ach-card.is-unlocked[data-rarity="Uncommon"]:hover { 
+                border-color: rgba(134, 239, 172, 0.9);
+                box-shadow: 0 0 24px 0 rgba(74, 222, 128, 0.4), inset 0 1px 0 rgba(134, 239, 172, 0.45);
+            }
+            .ach-card.is-unlocked[data-rarity="Rare"]:hover { 
+                border-color: rgba(96, 165, 250, 0.95);
+                box-shadow: 0 0 26px 0 rgba(96, 165, 250, 0.45), inset 0 1px 0 rgba(96, 165, 250, 0.5);
+            }
+            .ach-card.is-unlocked[data-rarity="Epic"]:hover { 
+                border-color: rgba(192, 132, 252, 1);
+                box-shadow: 0 0 30px 0 rgba(192, 132, 252, 0.5), inset 0 1px 0 rgba(192, 132, 252, 0.55);
+            }
+            .ach-card.is-unlocked[data-rarity="Legendary"]:hover { 
+                border-color: rgba(251, 191, 36, 1);
+                box-shadow: 0 0 34px 0 rgba(251, 191, 36, 0.6), inset 0 1px 0 rgba(251, 191, 36, 0.65);
+            }
+        }
 
         .ach-card.is-unlocked .ach-lock-badge { display: none !important; }
         .ach-card.is-unlocked .ach-unlocked-badge { display: block !important; }
         .ach-card.is-unlocked .ach-icon-wrap { opacity: 1 !important; filter: none !important; }
-        .ach-card.is-unlocked .ach-glow-bg { opacity: 0.12 !important; }
         .ach-card.is-unlocked .ach-title-text { color: #ffffff !important; }
         .ach-card.is-unlocked .ach-xp-text { color: #4ade80 !important; opacity: 1 !important; }
         .ach-card.is-unlocked .ach-rarity-badge { background-color: white !important; color: black !important; border-color: transparent !important; opacity: 1 !important; }
@@ -236,7 +358,11 @@ allAchievements.sort((a, b) => {
 
         function hydrateAchievementsPage() {
             if (!document.getElementById('achievements-grid')) return;
-            const state = window.getState ? window.getState() : JSON.parse(localStorage.getItem('gateCivilTracker2027') || '{}');
+            const state = (window.getState && typeof window.getState === 'function') 
+                ? window.getState() 
+                : (window.sanitizeAndRepairState 
+                    ? window.sanitizeAndRepairState(JSON.parse(localStorage.getItem('gateCivilTracker2027') || '{}')) 
+                    : JSON.parse(JSON.stringify(defaultState)));
 
             if (window.calculateAllMetrics) {
                 window.calculateAllMetrics(state);
@@ -268,19 +394,19 @@ allAchievements.sort((a, b) => {
 
             if (currentStreak > 0) {
                 if (streakIconWrap) {
-                    streakIconWrap.className = 'p-2.5 rounded-xl bg-primary-accent/20 border border-primary-accent/40 text-primary-accent shadow-[0_0_12px_rgba(74,222,128,0.3)] shrink-0 flex items-center justify-center transition-all';
+                    streakIconWrap.className = 'p-2 sm:p-2.5 rounded-xl bg-primary-accent/20 border border-primary-accent/40 text-primary-accent shadow-[0_0_12px_rgba(74,222,128,0.3)] shrink-0 flex items-center justify-center transition-colors';
                 }
                 if (streakStatusLabel) {
                     streakStatusLabel.textContent = 'Active Streak 🔥';
-                    streakStatusLabel.className = 'text-[9px] sm:text-xs text-primary-accent uppercase tracking-widest font-bold mb-0.5 transition-colors';
+                    streakStatusLabel.className = 'text-[9px] sm:text-xs text-primary-accent uppercase tracking-widest font-bold mb-0.5 truncate transition-colors';
                 }
             } else {
                 if (streakIconWrap) {
-                    streakIconWrap.className = 'p-2.5 rounded-xl bg-white/5 border border-white/10 text-text-muted shrink-0 flex items-center justify-center transition-all';
+                    streakIconWrap.className = 'p-2 sm:p-2.5 rounded-xl bg-white/5 border border-white/10 text-text-muted shrink-0 flex items-center justify-center transition-colors';
                 }
                 if (streakStatusLabel) {
                     streakStatusLabel.textContent = 'Daily Streak';
-                    streakStatusLabel.className = 'text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 transition-colors';
+                    streakStatusLabel.className = 'text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 truncate transition-colors';
                 }
             }
 
@@ -322,67 +448,76 @@ allAchievements.sort((a, b) => {
         }
 
         function setupAchievementsListeners() {
-            if (!document.getElementById('achievements-grid')) return;
-
-            // Fast Filter using grid data-attribute
             const grid = document.getElementById('achievements-grid');
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            filterBtns.forEach(btn => {
-                btn.onclick = (e) => {
+            const rarityFilters = document.getElementById('rarity-filters');
+            const modal = document.getElementById('ach-detail-modal');
+            const modalContent = document.getElementById('ach-detail-content');
+            const btnClose = document.getElementById('btn-close-modal');
+
+            if (rarityFilters && grid) {
+                rarityFilters.onclick = (e) => {
+                    const btn = e.target.closest('.filter-btn');
+                    if (!btn) return;
+                    
+                    const filterBtns = rarityFilters.querySelectorAll('.filter-btn');
                     filterBtns.forEach(b => {
                         b.classList.remove('active', 'bg-white/10', 'text-white', 'border-white/20');
                         b.classList.add('bg-transparent', 'text-text-muted', 'border-transparent');
                     });
                     
-                    const target = e.currentTarget;
-                    target.classList.remove('bg-transparent', 'text-text-muted', 'border-transparent');
-                    target.classList.add('active', 'bg-white/10', 'text-white', 'border-white/20');
+                    btn.classList.remove('bg-transparent', 'text-text-muted', 'border-transparent');
+                    btn.classList.add('active', 'bg-white/10', 'text-white', 'border-white/20');
                     
-                    if (grid) {
-                        grid.dataset.activeFilter = target.dataset.filter;
-                    }
+                    grid.dataset.activeFilter = btn.dataset.filter;
                 };
-            });
-
-            // Detail Modal using Event Delegation on Grid
-            const modal = document.getElementById('ach-detail-modal');
-            const modalContent = document.getElementById('ach-detail-content');
-            const btnClose = document.getElementById('btn-close-modal');
+            }
 
             if (grid) {
-                grid.addEventListener('click', (e) => {
+                grid.onclick = (e) => {
                     const card = e.target.closest('.ach-card');
                     if (!card) return;
+                    const curModal = document.getElementById('ach-detail-modal');
+                    const curModalContent = document.getElementById('ach-detail-content');
+                    if (!curModal) return;
 
                     const isUnlocked = card.dataset.unlocked === "true";
                     const rarity = card.dataset.rarity;
                     const color = rarityColors[rarity] || '#ffffff';
                     const iconColor = iconGlowColors[rarity] || '#ffffff';
 
-                    // Populate Modal
+                    // Populate Modal with optimized large WebP
                     const modalIcon = document.getElementById('modal-icon');
-                    const modalIconSource = document.getElementById('modal-icon-source');
-                    if (modalIconSource) modalIconSource.srcset = `/achievements/icons_final/${card.dataset.id}.svg`;
-                    modalIcon.src = `/achievements/icons_final/${card.dataset.id}.png`;
-                    modalIcon.style.filter = isUnlocked ? `drop-shadow(0 0 18px ${iconColor})` : 'grayscale(100%)';
+                    if (modalIcon) {
+                        modalIcon.src = `/achievements/icons_final/${card.dataset.id}-lg.webp`;
+                        modalIcon.style.filter = isUnlocked ? `drop-shadow(0 0 16px ${iconColor})` : 'grayscale(100%)';
+                    }
                     
                     const modalName = document.getElementById('modal-name');
-                    modalName.textContent = card.dataset.name;
-                    modalName.style.color = isUnlocked ? color : '#ffffff';
+                    if (modalName) {
+                        modalName.textContent = card.dataset.name;
+                        modalName.style.color = isUnlocked ? color : '#ffffff';
+                    }
                     
-                    document.getElementById('modal-cond').textContent = card.dataset.cond;
-                    document.getElementById('modal-desc').textContent = card.dataset.desc;
-                    document.getElementById('modal-xp').textContent = `+${card.dataset.xp} XP`;
+                    const condEl = document.getElementById('modal-cond');
+                    const descEl = document.getElementById('modal-desc');
+                    const xpModalEl = document.getElementById('modal-xp');
+                    if (condEl) condEl.textContent = card.dataset.cond;
+                    if (descEl) descEl.textContent = card.dataset.desc;
+                    if (xpModalEl) xpModalEl.textContent = `+${card.dataset.xp} XP`;
                     
                     const badge = document.getElementById('modal-rarity');
-                    badge.textContent = rarity;
-                    badge.style.backgroundColor = isUnlocked ? color : 'rgba(0,0,0,0.4)';
-                    badge.style.color = isUnlocked ? '#000000' : color;
-                    badge.style.borderColor = isUnlocked ? 'transparent' : color;
+                    if (badge) {
+                        badge.textContent = rarity;
+                        badge.style.backgroundColor = isUnlocked ? color : 'rgba(0,0,0,0.4)';
+                        badge.style.color = isUnlocked ? '#000000' : color;
+                        badge.style.borderColor = isUnlocked ? 'transparent' : color;
+                    }
 
                     const glow = document.getElementById('modal-glow');
-                    glow.style.backgroundColor = color;
-                    glow.style.opacity = isUnlocked ? '0.25' : '0.05';
+                    if (glow) {
+                        glow.style.backgroundColor = color;
+                        glow.style.opacity = isUnlocked ? '0.2' : '0.05';
+                    }
 
                     const lock = document.getElementById('modal-lock');
                     const dateWrap = document.getElementById('modal-date');
@@ -397,30 +532,38 @@ allAchievements.sort((a, b) => {
                         if (dateWrap) dateWrap.classList.add('opacity-0');
                     }
 
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    void modal.offsetWidth;
-                    modal.classList.remove('opacity-0');
-                    modalContent.classList.remove('scale-95');
-                    modalContent.classList.add('scale-100');
-                });
+                    curModal.classList.remove('hidden');
+                    curModal.classList.add('flex');
+                    void curModal.offsetWidth;
+                    curModal.classList.remove('opacity-0');
+                    if (curModalContent) {
+                        curModalContent.classList.remove('scale-95');
+                        curModalContent.classList.add('scale-100');
+                    }
+                };
             }
 
             const closeModal = () => {
-                if (!modal) return;
-                modal.classList.add('opacity-0');
-                modalContent.classList.remove('scale-100');
-                modalContent.classList.add('scale-95');
+                const curModal = document.getElementById('ach-detail-modal');
+                const curModalContent = document.getElementById('ach-detail-content');
+                if (!curModal) return;
+                curModal.classList.add('opacity-0');
+                if (curModalContent) {
+                    curModalContent.classList.remove('scale-100');
+                    curModalContent.classList.add('scale-95');
+                }
                 setTimeout(() => {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
+                    curModal.classList.add('hidden');
+                    curModal.classList.remove('flex');
                 }, 200);
             };
 
-            if (btnClose) btnClose.addEventListener('click', closeModal);
-            if (modal) modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
+            if (btnClose) btnClose.onclick = closeModal;
+            if (modal) {
+                modal.onclick = (e) => {
+                    if (e.target === modal) closeModal();
+                };
+            }
         }
 
         function initAchievementsPage() {
@@ -428,13 +571,23 @@ allAchievements.sort((a, b) => {
             setupAchievementsListeners();
         }
 
-        initAchievementsPage();
+        // Attach listeners reliably across initial load & Astro ViewTransitions
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAchievementsPage);
+        } else {
+            initAchievementsPage();
+        }
         document.addEventListener('astro:page-load', initAchievementsPage);
         document.addEventListener('astro:after-swap', hydrateAchievementsPage);
 
-        window.removeEventListener('stateChanged', hydrateAchievementsPage);
-        window.removeEventListener('achievementsUnlocked', hydrateAchievementsPage);
+        function cleanupAchievements() {
+            window.removeEventListener('stateChanged', hydrateAchievementsPage);
+            window.removeEventListener('achievementsUnlocked', hydrateAchievementsPage);
+        }
+
+        cleanupAchievements();
         window.addEventListener('stateChanged', hydrateAchievementsPage);
         window.addEventListener('achievementsUnlocked', hydrateAchievementsPage);
+        document.addEventListener('astro:before-swap', cleanupAchievements);
     </script>
 </Layout>

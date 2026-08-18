@@ -4,7 +4,6 @@ const numLeaves = 80; // Reverted back to high density
 const leaves = Array.from({ length: numLeaves }).map((_, i) => {
     // Physics Logic: Tiny leaves fall slower and flutter faster
     const isTiny = Math.random() > 0.6; // 40% of leaves are tiny background leaves
-    const isBlurred = Math.random() > 0.8; // 20% are blurred for depth of field
     
     // Increased minimum sizes so they don't look like dust
     const sizeScale = isTiny ? (0.35 + Math.random() * 0.3) : (0.65 + Math.random() * 0.65);
@@ -18,10 +17,9 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
         fallDuration: fallDuration,
         swayDelay: Math.random() * -5,
         swayDuration: swayDuration,
-        // Bumped opacity so they are clearly visible on the dark background
-        opacity: isTiny ? (0.15 + Math.random() * 0.15) : (0.2 + Math.random() * 0.3),
+        // Depth of field simulated with opacity (0 filter overhead)
+        opacity: isTiny ? (0.12 + Math.random() * 0.12) : (0.2 + Math.random() * 0.25),
         scale: sizeScale,
-        blur: isBlurred ? 'blur(2px)' : 'none',
         swayType: i % 4,
         // Brightened the colors slightly for better contrast
         color: ['text-emerald-600', 'text-emerald-700', 'text-emerald-800', 'text-green-700', 'text-[#0c4a26]'][Math.floor(Math.random() * 5)]
@@ -40,12 +38,11 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
                 animation-duration: ${leaf.fallDuration}s;
             `}
         >
-            {/* 2. Middle Container: Static visual properties (No dynamic filters to save battery) */}
+            {/* 2. Middle Container: Static visual properties */}
             <div 
                 class={`${leaf.color}`}
                 style={`
                     opacity: ${leaf.opacity};
-                    filter: ${leaf.blur};
                     transform: scale(${leaf.scale}) translateZ(0);
                 `}
             >

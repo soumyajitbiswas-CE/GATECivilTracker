@@ -13,7 +13,7 @@
         <div class="relative group">
             <!-- Icon -->
             <div class="w-32 h-32 sm:w-40 sm:h-40 relative z-10 flex items-center justify-center">
-                <img id="ach-icon" src="" alt="Achievement" class="w-full h-full object-contain">
+                <img id="ach-icon" src="" alt="Achievement" width="160" height="160" class="w-full h-full object-contain" decoding="async">
             </div>
             
             <!-- Particles container -->
@@ -56,7 +56,6 @@
     async function processQueue() {
         if (isPlaying || queue.length === 0) return;
         isPlaying = true;
-
         const ach = queue.shift();
         await showNotification(ach);
 
@@ -86,7 +85,7 @@
             const style = rarityStyles[ach.rarity] || rarityStyles['Common'];
             
             // Setup content
-            icon.src = `/achievements/icons_final/${ach.id}.png`;
+            icon.src = `/achievements/icons_final/${ach.id}-lg.webp`;
             nameEl.textContent = ach.name;
             rarityEl.textContent = ach.rarity;
             rarityEl.className = `uppercase text-xs sm:text-sm font-bold tracking-wider px-2 py-0.5 rounded border ${style.border}`;
