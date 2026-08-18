@@ -287,11 +287,119 @@ const subjectBgClass = {
             </button>
         </div>
 
+        <!-- FAQ Section -->
+        <section class="mt-8 mb-10 w-full flex flex-col items-center">
+            <div class="w-full max-w-4xl p-6 sm:p-8 bg-black/20 border border-panel-border rounded-2xl">
+                <h2 class="text-xl sm:text-2xl font-bold text-white/90 mb-6 tracking-tight flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                    Frequently Asked Questions
+                </h2>
+                
+                <div class="flex flex-col gap-3 w-full" id="faq-accordion">
+                    <!-- Q1 -->
+                    <div class="border border-white/5 bg-white/5 rounded-xl overflow-hidden transition-colors hover:border-primary-accent/30">
+                        <button class="w-full text-left px-5 py-4 flex items-center justify-between text-white/90 font-medium focus:outline-none focus:ring-1 focus:ring-primary-accent/50 faq-btn cursor-pointer" aria-expanded="false" aria-controls="faq-answer-1">
+                            <span class="pr-4 text-sm sm:text-base">What is GATE Civil Engineering Tracker?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 faq-icon text-primary-accent"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div id="faq-answer-1" class="grid transition-[grid-template-rows] duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden">
+                                <p class="px-5 pb-4 text-sm sm:text-base text-text-muted leading-relaxed">The GATE Civil Engineering Tracker is a comprehensive, gamified web application designed to help CE aspirants organize their study plan. It tracks syllabus progress, previous year questions (PYQs), mock tests, and revision cycles, providing an overall readiness score.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="border border-white/5 bg-white/5 rounded-xl overflow-hidden transition-colors hover:border-primary-accent/30">
+                        <button class="w-full text-left px-5 py-4 flex items-center justify-between text-white/90 font-medium focus:outline-none focus:ring-1 focus:ring-primary-accent/50 faq-btn cursor-pointer" aria-expanded="false" aria-controls="faq-answer-2">
+                            <span class="pr-4 text-sm sm:text-base">What is the GATE Civil Engineering syllabus?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 faq-icon text-primary-accent"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div id="faq-answer-2" class="grid transition-[grid-template-rows] duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden">
+                                <p class="px-5 pb-4 text-sm sm:text-base text-text-muted leading-relaxed">The GATE Civil Engineering syllabus covers 9 main areas: General Aptitude, Engineering Mathematics, Structural Engineering, Geotechnical Engineering, Water Resources Engineering, Environmental Engineering, Transportation Engineering, Geomatics Engineering, and Construction Materials and Management. Our tracker breaks these down into manageable topics, currently following the official GATE 2027 CE syllabus.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="border border-white/5 bg-white/5 rounded-xl overflow-hidden transition-colors hover:border-primary-accent/30">
+                        <button class="w-full text-left px-5 py-4 flex items-center justify-between text-white/90 font-medium focus:outline-none focus:ring-1 focus:ring-primary-accent/50 faq-btn cursor-pointer" aria-expanded="false" aria-controls="faq-answer-3">
+                            <span class="pr-4 text-sm sm:text-base">How should I prepare for GATE Civil Engineering?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 faq-icon text-primary-accent"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div id="faq-answer-3" class="grid transition-[grid-template-rows] duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden">
+                                <p class="px-5 pb-4 text-sm sm:text-base text-text-muted leading-relaxed">Preparing for GATE Civil Engineering requires a structured study planner. Focus on completing the syllabus systematically, solving PYQs to understand exam patterns, taking regular mock tests to improve time management, and maintaining consistent revision cycles.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="border border-white/5 bg-white/5 rounded-xl overflow-hidden transition-colors hover:border-primary-accent/30">
+                        <button class="w-full text-left px-5 py-4 flex items-center justify-between text-white/90 font-medium focus:outline-none focus:ring-1 focus:ring-primary-accent/50 faq-btn cursor-pointer" aria-expanded="false" aria-controls="faq-answer-4">
+                            <span class="pr-4 text-sm sm:text-base">How important are PYQs for GATE Civil Engineering?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 faq-icon text-primary-accent"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div id="faq-answer-4" class="grid transition-[grid-template-rows] duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden">
+                                <p class="px-5 pb-4 text-sm sm:text-base text-text-muted leading-relaxed">PYQs are absolutely crucial for GATE preparation. They help you understand the difficulty level, recurring concepts, and exam format. The GATE Civil PYQs tracker allows you to set targets and monitor exactly how many years of past papers you have solved for each subject.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q5 -->
+                    <div class="border border-white/5 bg-white/5 rounded-xl overflow-hidden transition-colors hover:border-primary-accent/30">
+                        <button class="w-full text-left px-5 py-4 flex items-center justify-between text-white/90 font-medium focus:outline-none focus:ring-1 focus:ring-primary-accent/50 faq-btn cursor-pointer" aria-expanded="false" aria-controls="faq-answer-5">
+                            <span class="pr-4 text-sm sm:text-base">How many mock tests should I take for GATE CE?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 faq-icon text-primary-accent"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div id="faq-answer-5" class="grid transition-[grid-template-rows] duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden">
+                                <p class="px-5 pb-4 text-sm sm:text-base text-text-muted leading-relaxed">It is highly recommended to take at least 15-20 full-length GATE mock tests before the exam. Our mock test analyzer helps you log your scores, track percentiles, and document weak areas so you can learn from every mistake and optimize your final strategy.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q6 -->
+                    <div class="border border-white/5 bg-white/5 rounded-xl overflow-hidden transition-colors hover:border-primary-accent/30">
+                        <button class="w-full text-left px-5 py-4 flex items-center justify-between text-white/90 font-medium focus:outline-none focus:ring-1 focus:ring-primary-accent/50 faq-btn cursor-pointer" aria-expanded="false" aria-controls="faq-answer-6">
+                            <span class="pr-4 text-sm sm:text-base">How can I track my GATE Civil Engineering syllabus progress?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 faq-icon text-primary-accent"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div id="faq-answer-6" class="grid transition-[grid-template-rows] duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden">
+                                <p class="px-5 pb-4 text-sm sm:text-base text-text-muted leading-relaxed">You can track your progress using our interactive dashboard. As you check off completed topics, the tracker calculates your readiness based on the syllabus and historical topic distribution, replacing messy spreadsheets with a visual, gamified experience.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q7 -->
+                    <div class="border border-white/5 bg-white/5 rounded-xl overflow-hidden transition-colors hover:border-primary-accent/30">
+                        <button class="w-full text-left px-5 py-4 flex items-center justify-between text-white/90 font-medium focus:outline-none focus:ring-1 focus:ring-primary-accent/50 faq-btn cursor-pointer" aria-expanded="false" aria-controls="faq-answer-7">
+                            <span class="pr-4 text-sm sm:text-base">Can I track GATE Civil PYQs, tests, mocks and revisions?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 faq-icon text-primary-accent"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div id="faq-answer-7" class="grid transition-[grid-template-rows] duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden">
+                                <p class="px-5 pb-4 text-sm sm:text-base text-text-muted leading-relaxed">Yes! The application features dedicated tracking modules for PYQs, topic and subject tests, full-length mocks, and a multi-stage revision planner. This ensures you have a complete, organized overview of every aspect of your Civil Engineering GATE preparation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Q8 -->
+                    <div class="border border-white/5 bg-white/5 rounded-xl overflow-hidden transition-colors hover:border-primary-accent/30">
+                        <button class="w-full text-left px-5 py-4 flex items-center justify-between text-white/90 font-medium focus:outline-none focus:ring-1 focus:ring-primary-accent/50 faq-btn cursor-pointer" aria-expanded="false" aria-controls="faq-answer-8">
+                            <span class="pr-4 text-sm sm:text-base">Is my GATE Civil Tracker progress saved?</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 faq-icon text-primary-accent"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div id="faq-answer-8" class="grid transition-[grid-template-rows] duration-300" style="grid-template-rows: 0fr;">
+                            <div class="overflow-hidden">
+                                <p class="px-5 pb-4 text-sm sm:text-base text-text-muted leading-relaxed">Yes, all your progress, unlocked achievements, and logged study hours are automatically saved directly to your browser's local storage. You can also export your data at any time to back it up or seamlessly transfer it to another device.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="mt-8 pt-6 border-t border-panel-border flex flex-col sm:flex-row justify-between items-center gap-4 text-xs sm:text-sm">
             <div class="text-text-muted text-center sm:text-left">
                 Made for GATE CE students by <span class="font-semibold text-primary-accent/90">Soumyajit Biswas</span>
-                <span class="block mt-1.5 sm:mt-0.5 text-[10px] sm:text-[11px] text-text-muted/50">Currently aligned with the official GATE 2027 Civil Engineering syllabus.</span>
             </div>
             <div class="flex items-center gap-4">
                 <a href="https://www.linkedin.com/in/soumyajitbiswas-ce/" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-primary-accent transition-colors" aria-label="LinkedIn">
@@ -1114,9 +1222,106 @@ const subjectBgClass = {
             hydrateDashboard();
             setupDashboardListeners();
             setupSeoToggle();
+            setupFaqAccordion();
+        }
+
+        function setupFaqAccordion() {
+            const btns = document.querySelectorAll('.faq-btn');
+            btns.forEach(btn => {
+                btn.onclick = () => {
+                    const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                    
+                    // Close all
+                    btns.forEach(b => {
+                        b.setAttribute('aria-expanded', 'false');
+                        b.nextElementSibling.style.gridTemplateRows = '0fr';
+                        b.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                    });
+                    
+                    // Open clicked if it wasn't expanded
+                    if (!isExpanded) {
+                        btn.setAttribute('aria-expanded', 'true');
+                        btn.nextElementSibling.style.gridTemplateRows = '1fr';
+                        btn.querySelector('.faq-icon').style.transform = 'rotate(180deg)';
+                    }
+                };
+            });
         }
 
         document.addEventListener('astro:page-load', initPage);
         window.addEventListener('stateChanged', hydrateDashboard);
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is GATE Civil Engineering Tracker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The GATE Civil Engineering Tracker is a comprehensive, gamified web application designed to help CE aspirants organize their study plan. It tracks syllabus progress, previous year questions (PYQs), mock tests, and revision cycles, providing an overall readiness score."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the GATE Civil Engineering syllabus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The GATE Civil Engineering syllabus covers 9 main areas: General Aptitude, Engineering Mathematics, Structural Engineering, Geotechnical Engineering, Water Resources Engineering, Environmental Engineering, Transportation Engineering, Geomatics Engineering, and Construction Materials and Management. Our tracker breaks these down into manageable topics, currently following the official GATE 2027 CE syllabus."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should I prepare for GATE Civil Engineering?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Preparing for GATE Civil Engineering requires a structured study planner. Focus on completing the syllabus systematically, solving PYQs to understand exam patterns, taking regular mock tests to improve time management, and maintaining consistent revision cycles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How important are PYQs for GATE Civil Engineering?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PYQs are absolutely crucial for GATE preparation. They help you understand the difficulty level, recurring concepts, and exam format. The GATE Civil PYQs tracker allows you to set targets and monitor exactly how many years of past papers you have solved for each subject."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many mock tests should I take for GATE CE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is highly recommended to take at least 15-20 full-length GATE mock tests before the exam. Our mock test analyzer helps you log your scores, track percentiles, and document weak areas so you can learn from every mistake and optimize your final strategy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I track my GATE Civil Engineering syllabus progress?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can track your progress using our interactive dashboard. As you check off completed topics, the tracker calculates your readiness based on the syllabus and historical topic distribution, replacing messy spreadsheets with a visual, gamified experience."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I track GATE Civil PYQs, tests, mocks and revisions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! The application features dedicated tracking modules for PYQs, topic and subject tests, full-length mocks, and a multi-stage revision planner. This ensures you have a complete, organized overview of every aspect of your Civil Engineering GATE preparation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my GATE Civil Tracker progress saved?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, all your progress, unlocked achievements, and logged study hours are automatically saved directly to your browser's local storage. You can also export your data at any time to back it up or seamlessly transfer it to another device."
+          }
+        }
+      ]
+    }
     </script>
 </Layout>
