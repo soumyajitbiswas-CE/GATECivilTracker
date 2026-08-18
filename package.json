@@ -10,6 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@splinetool/runtime": "^1.12.98",
     "@splinetool/viewer": "^1.12.98",
     "@tailwindcss/vite": "^4.0.0",

@@ -46,6 +46,7 @@ const isHome = Astro.url.pathname === '/';
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || 'https://gateciviltracker.com').href} />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<script type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@type": "WebApplication",

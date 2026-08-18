@@ -1,4 +1,17 @@
+# https://www.robotstxt.org/robotstxt.html
+# Robots.txt for GATE Civil Tracker (https://gateciviltracker.com)
+
 User-agent: *
 Allow: /
 
-Sitemap: https://gateciviltracker.com/sitemap.xml
+# Disallow error pages
+Disallow: /404
+Disallow: /404.html
+Disallow: /500
+Disallow: /500.html
+
+# Host
+Host: https://gateciviltracker.com
+
+# Sitemaps
+Sitemap: https://gateciviltracker.com/sitemap-index.xml
