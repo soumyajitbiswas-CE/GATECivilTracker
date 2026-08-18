@@ -1,10 +1,10 @@
 ---
 // Achievement Notification Component
 ---
-<div id="achievement-notification-overlay" class="fixed inset-0 pointer-events-none z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] notification-backdrop transition-opacity duration-300"></div>
+<div id="achievement-notification-overlay" class="fixed inset-0 pointer-events-none z-[300] flex items-center justify-center hidden opacity-0 transition-opacity duration-300 select-none" role="dialog" aria-modal="true" aria-label="Achievement Unlocked">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-[4px] notification-backdrop transition-opacity duration-300"></div>
     
-    <div id="achievement-card" class="relative z-10 flex flex-col items-center scale-90 opacity-0 transition-all duration-500 ease-out">
+    <div id="achievement-card" class="relative z-10 flex flex-col items-center scale-90 opacity-0 transition-all duration-500 ease-out cursor-pointer" title="Click anywhere to dismiss">
         <!-- Rarity specific background glow -->
         <div id="ach-glow" class="absolute inset-0 rounded-full blur-3xl opacity-0 scale-50 transition-all duration-700"></div>
         
@@ -62,7 +62,7 @@
 
         isPlaying = false;
         if (queue.length > 0) {
-            setTimeout(processQueue, 500);
+            setTimeout(processQueue, 300);
         }
     }
 
@@ -96,41 +96,21 @@
             glow.className = `absolute inset-0 rounded-full blur-3xl opacity-0 scale-50 transition-all duration-700 ${style.glow}`;
             icon.className = `w-full h-full object-contain z-10 relative transition-transform duration-500 ${style.shadow}`;
 
-            // Reset animations
-            overlay.classList.remove('hidden');
-            // Force reflow
-            void overlay.offsetWidth;
+            // DISABLE BACKGROUND ACTIONS: enable pointer-events on overlay to block all background interactions
+            overlay.classList.remove('pointer-events-none', 'hidden');
+            overlay.classList.add('pointer-events-auto');
 
-            // 0.0 - 0.3 sec: overlay fade in
-            overlay.classList.remove('opacity-0');
-            
-            setTimeout(() => {
-                // 0.3 sec: Card and icon scale in, play sound
-                playAchievementSound(ach.rarity);
-                card.classList.remove('scale-90', 'opacity-0');
-                card.classList.add('scale-100', 'opacity-100');
-                icon.classList.add('scale-110');
-            }, 300);
+            let isDismissed = false;
+            let timer1, timer2, timer3, timer4;
 
-            setTimeout(() => {
-                // 0.7 sec: Text appears, glow expands
-                title.classList.remove('opacity-0', '-translate-y-4');
-                nameEl.classList.remove('opacity-0', 'translate-y-2');
-                meta.classList.remove('opacity-0', 'translate-y-2');
-                
-                glow.classList.remove('opacity-0', 'scale-50');
-                glow.classList.add('opacity-100', 'scale-150');
-            }, 700);
+            const cleanup = () => {
+                if (isDismissed) return;
+                isDismissed = true;
+                clearTimeout(timer1);
+                clearTimeout(timer2);
+                clearTimeout(timer3);
+                clearTimeout(timer4);
 
-            setTimeout(() => {
-                // 1.8 sec: Settle
-                icon.classList.remove('scale-110');
-                glow.classList.remove('scale-150');
-                glow.classList.add('scale-125');
-            }, 1800);
-
-            setTimeout(() => {
-                // 2.7 sec: Fade away smoothly
                 overlay.classList.add('opacity-0');
                 card.classList.remove('scale-100', 'opacity-100');
                 card.classList.add('scale-90', 'opacity-0');
@@ -140,13 +120,59 @@
                 meta.classList.add('opacity-0', 'translate-y-2');
                 glow.classList.add('opacity-0', 'scale-50');
                 glow.classList.remove('opacity-100', 'scale-125');
-            }, 2700);
 
-            setTimeout(() => {
-                // 3.0 sec: Cleanup
-                overlay.classList.add('hidden');
-                resolve();
-            }, 3000);
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('pointer-events-auto');
+                    overlay.classList.add('pointer-events-none');
+                    overlay.onclick = null;
+                    resolve();
+                }, 300);
+            };
+
+            // Block clicks from reaching background and allow tap-to-dismiss
+            overlay.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                cleanup();
+            };
+
+            // Force reflow
+            void overlay.offsetWidth;
+
+            // 0.0 - 0.3 sec: overlay fade in
+            overlay.classList.remove('opacity-0');
+            
+            timer1 = setTimeout(() => {
+                // 0.3 sec: Card and icon scale in, play sound
+                playAchievementSound(ach.rarity);
+                card.classList.remove('scale-90', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+                icon.classList.add('scale-110');
+            }, 300);
+
+            timer2 = setTimeout(() => {
+                // 0.7 sec: Text appears, glow expands
+                title.classList.remove('opacity-0', '-translate-y-4');
+                nameEl.classList.remove('opacity-0', 'translate-y-2');
+                meta.classList.remove('opacity-0', 'translate-y-2');
+                
+                glow.classList.remove('opacity-0', 'scale-50');
+                glow.classList.add('opacity-100', 'scale-150');
+            }, 700);
+
+            timer3 = setTimeout(() => {
+                // 1.8 sec: Settle
+                icon.classList.remove('scale-110');
+                glow.classList.remove('scale-150');
+                glow.classList.add('scale-125');
+            }, 1800);
+
+            timer4 = setTimeout(() => {
+                // 2.8 sec: Auto fade away smoothly
+                cleanup();
+            }, 2800);
         });
     }
 </script>
+

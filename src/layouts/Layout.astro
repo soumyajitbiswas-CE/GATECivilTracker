@@ -56,10 +56,28 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 			"url": Astro.url.href
 		})} />
         <style is:inline>
+            ::view-transition-group(root) {
+                animation-duration: 120ms;
+            }
             ::view-transition-old(root),
             ::view-transition-new(root) {
-                animation-duration: 140ms;
-                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+                animation-duration: 120ms;
+                animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+                mix-blend-mode: normal !important;
+            }
+            ::view-transition-old(root) {
+                animation-name: astroFadeOut;
+            }
+            ::view-transition-new(root) {
+                animation-name: astroFadeIn;
+            }
+            @keyframes astroFadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+            @keyframes astroFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
             }
             @media (prefers-reduced-motion: reduce) {
                 ::view-transition-group(*),

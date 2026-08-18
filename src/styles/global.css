@@ -414,8 +414,8 @@ img, svg, video, canvas, audio, iframe, embed, object {
   }
 }
 
-/* Button Active Scale (Micro-interaction) */
-.btn:active, button:active, a:active {
+/* Button Active Scale (Micro-interaction for buttons only) */
+button:active, .btn:not(.subject-card):active {
   transform: scale(0.97);
   transition: transform 0.1s ease;
 }
@@ -475,23 +475,44 @@ img, svg, video, canvas, audio, iframe, embed, object {
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
-/* Card Glow Effects (Pure CSS) - Optimized for touch & desktop */
+/* Card Glow Effects (Pure CSS) - Desktop Mouse Only */
 .glow-card {
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.glow-card:active {
-  border-color: rgba(74, 222, 128, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
-              inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .glow-card {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+  }
   .glow-card:hover {
     transform: translateY(-4px);
     border-color: rgba(74, 222, 128, 0.4);
     box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
                 inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
+  }
+  .glow-card:active {
+    transform: translateY(-2px);
+    border-color: rgba(74, 222, 128, 0.4);
+    box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
+                inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
+  }
+}
+
+/* Touch devices (Mobile & Tablet): Completely disable transform & shadow shifts on tap/hover to eliminate all glitching */
+@media (hover: none), (pointer: coarse), (max-width: 1024px) {
+  .glow-card, .subject-card, a.subject-card {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    user-select: none;
+    box-shadow: none !important;
+    transform: none !important;
+    transition: border-color 0.15s ease !important;
+  }
+  .glow-card:hover, .glow-card:active, .glow-card:focus,
+  .subject-card:hover, .subject-card:active, .subject-card:focus,
+  a.subject-card:hover, a.subject-card:active, a.subject-card:focus {
+    box-shadow: none !important;
+    transform: none !important;
   }
 }
 

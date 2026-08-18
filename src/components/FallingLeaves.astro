@@ -124,4 +124,25 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
         0% { transform: translate3d(15px, 0, 0) rotateZ(45deg) rotateX(-20deg); }
         100% { transform: translate3d(-40px, 0, 0) rotateZ(-55deg) rotateX(40deg); }
     }
+
+    /* TABLET OPTIMIZATION (641px to 1024px): Moderately reduce quantity */
+    @media (min-width: 641px) and (max-width: 1024px) {
+        .leaf-fall:nth-child(3n) {
+            display: none !important;
+        }
+    }
+
+    /* MOBILE OPTIMIZATION (<= 640px): Significantly reduce quantity for clean view & maximum battery saving */
+    @media (max-width: 640px) {
+        .leaf-fall:nth-child(3n),
+        .leaf-fall:nth-child(3n + 1) {
+            display: none !important;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .leaf-fall, .leaf-sway {
+            animation: none !important;
+        }
+    }
 </style>
