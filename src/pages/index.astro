@@ -73,7 +73,7 @@ const subjectBgClass = {
             </button>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" style="transform: translateZ(0);">
             {subjects.map((sub, index) => (
                 <div class={`${subjectBgClass[sub.id] || 'surface-syllabus'} backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group relative overflow-hidden`} data-id={sub.id}>
                     <!-- Top section: Title and Weight -->
@@ -135,7 +135,7 @@ const subjectBgClass = {
                         <button class="btn-log-activity text-[10px] sm:text-xs font-semibold px-2 py-1 rounded bg-primary-accent/10 text-primary-accent border border-primary-accent/30 hover:bg-primary-accent/20 transition-colors whitespace-nowrap" data-type="pyq">+ Log</button>
                     </div>
                 </div>
-                <div class="flex flex-col gap-2 overflow-y-auto max-h-[170px] pr-1 sm:pr-2 custom-scrollbar mt-1">
+                <div class="flex flex-col gap-2 overflow-y-auto max-h-[180px] sm:max-h-[220px] pr-1 sm:pr-2 custom-scrollbar overscroll-contain pb-2 mt-1">
                     {subjects.map(sub => (
                         <div class="flex justify-between items-center bg-black/20 p-2 sm:p-2.5 rounded-xl border border-panel-border shrink-0 min-w-0 gap-2">
                             <span class="text-xs sm:text-sm font-medium text-text-muted truncate flex-1 min-w-0" title={sub.name}>{sub.name}</span>

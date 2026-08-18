@@ -177,6 +177,26 @@
     } else {
       initViewer();
     }
+    
+    // Make 3D spline asset look down/track fingers on mobile touch (Heavily Throttled for Scroll Performance)
+    if (!window._splineTouchMapped) {
+      window._splineTouchMapped = true;
+      let lastTime = 0;
+      window.addEventListener('touchmove', (e) => {
+        const now = Date.now();
+        if (now - lastTime < 100) return; // Only process once every 100ms
+        
+        if (e.touches && e.touches.length > 0) {
+          lastTime = now;
+          const touch = e.touches[0];
+          window.dispatchEvent(new MouseEvent('mousemove', {
+            clientX: touch.clientX,
+            clientY: touch.clientY,
+            bubbles: true
+          }));
+        }
+      }, { passive: true });
+    }
   };
 
   document.addEventListener('astro:page-load', start);

@@ -66,6 +66,17 @@ body {
   display: none;
 }
 
+/* Hide scrollbars on mobile for cleaner lists */
+@media (max-width: 640px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .custom-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 /* Global Responsive App Container */
 .app-container {
   width: 100%;
@@ -111,7 +122,6 @@ body {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  will-change: transform;
 }
 
 /* Custom Scrollbar */
@@ -467,8 +477,12 @@ img, svg, video, canvas, audio, iframe, embed, object {
 /* Card Glow Effects (Pure CSS) - Optimized for touch & desktop */
 .glow-card {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+}
+
+.glow-card:active {
+  border-color: rgba(74, 222, 128, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
+              inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -480,25 +494,20 @@ img, svg, video, canvas, audio, iframe, embed, object {
   }
 }
 
-/* Off-screen Content Visibility Optimization for Ultra-Smooth Mobile/Tablet Scroll */
-.subject-card {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 180px;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+/* Fix severe scrolling lag on mobile by disabling heavy backdrop-filters and drop-shadows */
+@media (max-width: 768px) {
+  .backdrop-blur-md, .backdrop-blur-sm, .glass-panel, .subject-card, .surface-practice, .surface-summary, .ach-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  .animate-pulse-glow {
+    animation: none !important;
+    filter: none !important;
+  }
+  
+  /* Give the main glass panel a slightly more opaque background since blur is gone */
+  .glass-panel {
+    background-color: rgba(6, 20, 14, 0.85) !important;
+  }
 }
-
-.surface-practice, .surface-summary {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 220px;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-.ach-card {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 160px;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-

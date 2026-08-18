@@ -1,11 +1,22 @@
 {
-  "extends": "astro/tsconfigs/base",
-  "compilerOptions": {
-    "strict": false,
-    "noImplicitAny": false,
-    "allowJs": true,
-    "checkJs": false
-  },
-  "include": [".astro/types.d.ts", "src/**/*"],
-  "exclude": ["node_modules", "dist", "magical-motion", "major-iron", "terrestrial-telescope", "scratch_spline_skill"]
+	"extends": "astro/tsconfigs/base",
+	"compilerOptions": {
+		"strict": false,
+		"noImplicitAny": false,
+		"allowJs": true,
+		"checkJs": false
+	},
+	"include": [
+		".astro/types.d.ts",
+		"src/**/*",
+		"./worker-configuration.d.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"magical-motion",
+		"major-iron",
+		"terrestrial-telescope",
+		"scratch_spline_skill"
+	]
 }
