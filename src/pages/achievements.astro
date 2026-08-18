@@ -198,24 +198,24 @@ allAchievements.sort((a, b) => {
         import { evaluateAchievements } from '../utils/achievementEngine.js';
         import achievementsData from '../data/achievements.json';
 
-        document.addEventListener('astro:page-load', () => {
-            const rarityColors = {
-                'Common': '#ffffff',
-                'Uncommon': '#86efac',
-                'Rare': '#60a5fa',
-                'Epic': '#c084fc',
-                'Legendary': '#fbbf24'
-            };
+        const rarityColors = {
+            'Common': '#ffffff',
+            'Uncommon': '#86efac',
+            'Rare': '#60a5fa',
+            'Epic': '#c084fc',
+            'Legendary': '#fbbf24'
+        };
 
-            const iconGlowColors = {
-                'Common': '#ffffff',
-                'Uncommon': '#86efac',
-                'Rare': '#60a5fa',
-                'Epic': '#c084fc',
-                'Legendary': '#fbbf24'
-            };
+        const iconGlowColors = {
+            'Common': '#ffffff',
+            'Uncommon': '#86efac',
+            'Rare': '#60a5fa',
+            'Epic': '#c084fc',
+            'Legendary': '#fbbf24'
+        };
 
-            function hydrateAchievementsPage() {
+        function hydrateAchievementsPage() {
+            if (!document.getElementById('achievements-grid')) return;
                 let state;
                 try {
                     const saved = localStorage.getItem('gateCivilTracker2027');
@@ -357,16 +357,10 @@ allAchievements.sort((a, b) => {
                 }
             }
 
-            // Run hydration immediately
-            hydrateAchievementsPage();
+            function setupAchievementsListeners() {
+                if (!document.getElementById('achievements-grid')) return;
 
-            // Clear old listeners before adding new ones to prevent duplication across SPA navigations
-            window.removeEventListener('stateChanged', hydrateAchievementsPage);
-            window.removeEventListener('achievementsUnlocked', hydrateAchievementsPage);
-            window.addEventListener('stateChanged', hydrateAchievementsPage);
-            window.addEventListener('achievementsUnlocked', hydrateAchievementsPage);
-
-            // Fast Filter using grid data-attribute
+                // Fast Filter using grid data-attribute
             const grid = document.getElementById('achievements-grid');
             const filterBtns = document.querySelectorAll('.filter-btn');
             filterBtns.forEach(btn => {
@@ -472,6 +466,15 @@ allAchievements.sort((a, b) => {
                     window.location.href = '/';
                 }, { passive: false });
             }
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', hydrateAchievementsPage);
+        document.addEventListener('astro:after-swap', hydrateAchievementsPage);
+        document.addEventListener('astro:page-load', setupAchievementsListeners);
+
+        window.removeEventListener('stateChanged', hydrateAchievementsPage);
+        window.removeEventListener('achievementsUnlocked', hydrateAchievementsPage);
+        window.addEventListener('stateChanged', hydrateAchievementsPage);
+        window.addEventListener('achievementsUnlocked', hydrateAchievementsPage);
     </script>
 </Layout>

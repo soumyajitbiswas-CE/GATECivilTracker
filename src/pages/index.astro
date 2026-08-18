@@ -555,6 +555,7 @@ const subjectBgClass = {
 
         // Hydration logic
         function hydrateDashboard() {
+            if (!document.getElementById('dashboard-view')) return;
             const state = window.getState();
             window.calculateAllMetrics(state);
 
@@ -691,6 +692,7 @@ const subjectBgClass = {
 
         // Input Listeners & Dashboard Setup
         function setupDashboardListeners() {
+            if (!document.getElementById('dashboard-view')) return;
             const setupInput = (id, callback) => {
                 const el = document.getElementById(id);
                 if(el) {
@@ -1256,7 +1258,10 @@ const subjectBgClass = {
             });
         }
 
-        document.addEventListener('astro:page-load', initPage);
+        document.addEventListener('DOMContentLoaded', initPage);
+        document.addEventListener('astro:after-swap', initPage);
+        
+        window.removeEventListener('stateChanged', hydrateDashboard);
         window.addEventListener('stateChanged', hydrateDashboard);
     </script>
 

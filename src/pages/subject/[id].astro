@@ -16,7 +16,7 @@ const { subject } = Astro.props;
 
 <Layout title={`${subject.name} - GATE Civil Tracker`} description={`Track your preparation for ${subject.name} in the GATE Civil Engineering syllabus.`}>
     <!-- Detail View -->
-    <div id="detail-view" class="flex flex-col gap-4 sm:gap-5 min-w-0">
+    <div id="detail-view" class="flex flex-col gap-4 sm:gap-5 min-w-0" data-subject-id={subject.id}>
         <div class="mb-1">
             <a href="/" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
@@ -192,8 +192,12 @@ const { subject } = Astro.props;
         </div>
     </div>
 
-    <script define:vars={{ subjectId: subject.id }}>
+    <script>
+        // @ts-nocheck
         function hydrateDetail() {
+            const detailView = document.getElementById('detail-view');
+            if (!detailView) return;
+            const subjectId = detailView.dataset.subjectId;
             const state = window.getState();
             window.calculateAllMetrics(state);
             
@@ -452,7 +456,12 @@ const { subject } = Astro.props;
         }
 
         // Modal Logic
-        const modal = document.getElementById('log-modal');
+        function setupDetailListeners() {
+            const detailView = document.getElementById('detail-view');
+            if (!detailView) return;
+            const subjectId = detailView.dataset.subjectId;
+
+            const modal = document.getElementById('log-modal');
         document.getElementById('btn-log-hours').addEventListener('click', () => {
             modal.classList.remove('hidden');
             const { min, max } = getDateLimits();
@@ -690,8 +699,14 @@ const { subject } = Astro.props;
             editTopicsModal.classList.add('hidden');
         });
 
+        }
+
         // Run on load and state changes
-        document.addEventListener('astro:page-load', hydrateDetail);
+        document.addEventListener('DOMContentLoaded', hydrateDetail);
+        document.addEventListener('astro:after-swap', hydrateDetail);
+        document.addEventListener('astro:page-load', setupDetailListeners);
+        
+        window.removeEventListener('stateChanged', hydrateDetail);
         window.addEventListener('stateChanged', hydrateDetail);
     </script>
 </Layout>

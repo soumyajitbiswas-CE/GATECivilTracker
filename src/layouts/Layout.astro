@@ -57,7 +57,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 		})} />
         <ViewTransitions />
 	</head>
-	<body class="min-h-screen" transition:animate="none">
+	<body class="min-h-screen">
         <div class="site-bg" aria-hidden="true"></div>
         <FallingLeaves />
         <AchievementNotification />
@@ -582,8 +582,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 }
             }
 
-            initResetModal();
-            document.addEventListener('astro:page-load', initResetModal);
+            document.addEventListener('DOMContentLoaded', initResetModal);
+            document.addEventListener('astro:after-swap', initResetModal);
 
             // Activity Logging Modal Logic
             function initActivityLogging() {
@@ -1281,10 +1281,10 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 }
             }
 
-            initActivityLogging();
-            document.addEventListener('astro:page-load', initActivityLogging);
-            initActivityHistory();
-            document.addEventListener('astro:page-load', initActivityHistory);
+            document.addEventListener('DOMContentLoaded', initActivityLogging);
+            document.addEventListener('astro:after-swap', initActivityLogging);
+            document.addEventListener('DOMContentLoaded', initActivityHistory);
+            document.addEventListener('astro:after-swap', initActivityHistory);
 
             function initSettingsModals() {
                 const btnExport = document.getElementById('btn-export');
@@ -1331,8 +1331,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 }
             }
 
-            initSettingsModals();
-            document.addEventListener('astro:page-load', initSettingsModals);
+            document.addEventListener('DOMContentLoaded', initSettingsModals);
+            document.addEventListener('astro:after-swap', initSettingsModals);
         </script>
 	</body>
 </html>
