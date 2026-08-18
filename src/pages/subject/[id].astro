@@ -10,7 +10,6 @@ export function getStaticPaths() {
   }));
 }
 
-const { id } = Astro.params;
 const { subject } = Astro.props;
 ---
 
@@ -132,10 +131,10 @@ const { subject } = Astro.props;
     </div>
 
     <!-- Modal for Logging Hours -->
-    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 overflow-y-auto" id="log-modal">
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 overflow-y-auto" id="log-modal" role="dialog" aria-modal="true" aria-labelledby="log-hours-modal-title">
         <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
             <div class="bg-[#06140e] border border-panel-border rounded-2xl p-4 sm:p-6 md:p-8 w-[calc(100%-2rem)] sm:w-full max-w-[420px] mx-auto shadow-2xl flex flex-col overflow-hidden relative">
-                <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-5 shrink-0">Log Study Hours</h3>
+                <h3 id="log-hours-modal-title" class="text-lg sm:text-xl font-semibold mb-4 sm:mb-5 shrink-0">Log Study Hours</h3>
                 
                 <div class="flex flex-col gap-4 overflow-y-auto pr-1 custom-scrollbar flex-grow min-w-0">
                     <div class="flex flex-col gap-1.5 min-w-0">
@@ -173,11 +172,11 @@ const { subject } = Astro.props;
     </div>
 
     <!-- Modal for Editing Subject Topics -->
-    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 overflow-y-auto" id="edit-topics-modal">
+    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 overflow-y-auto" id="edit-topics-modal" role="dialog" aria-modal="true" aria-labelledby="edit-topics-modal-title">
         <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
             <div class="bg-[#06140e] border border-panel-border rounded-2xl p-4 sm:p-6 md:p-8 w-[calc(100%-2rem)] sm:w-full max-w-[540px] mx-auto shadow-2xl flex flex-col overflow-hidden relative max-h-[85vh]">
                 <div class="flex justify-between items-center mb-4 shrink-0">
-                    <h3 class="text-lg sm:text-xl font-semibold flex items-center gap-2">
+                    <h3 id="edit-topics-modal-title" class="text-lg sm:text-xl font-semibold flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                         Edit Sub-Topics
                     </h3>
@@ -376,7 +375,7 @@ const { subject } = Astro.props;
 
             // Update History
             const historyContainer = document.getElementById('history-container');
-            const subjectHistory = state.studyHistory.filter(h => h.subjectId === subjectId).sort((a,b) => new Date(b.date) - new Date(a.date));
+            const subjectHistory = (state.studyHistory || []).filter(h => h.subjectId === subjectId).sort((a,b) => new Date(b.date + "T00:00:00") - new Date(a.date + "T00:00:00"));
             const newHistoryIds = subjectHistory.map(h => h.id).join(',');
             
             if (historyContainer.dataset.renderedIds !== newHistoryIds) {
@@ -388,8 +387,10 @@ const { subject } = Astro.props;
                 } else {
                     const fragment = document.createDocumentFragment();
                     subjectHistory.forEach(entry => {
-                        const dateObj = new Date(entry.date);
-                        const dateStr = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+                        const dateObj = new Date(entry.date + "T00:00:00");
+                        const dateStr = !isNaN(dateObj.getTime()) 
+                            ? dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+                            : entry.date;
                         
                         const el = document.createElement('div');
                         el.className = 'flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-black/20 rounded-lg gap-2 sm:gap-4 min-w-0';

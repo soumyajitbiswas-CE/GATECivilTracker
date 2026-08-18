@@ -46,7 +46,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=optional" rel="stylesheet">
 		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || 'https://gateciviltracker.com').href} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		<script type="application/ld+json" set:html={JSON.stringify({
+		<script type="application/ld+json" is:inline set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@type": "WebApplication",
 			"name": title,
@@ -121,14 +121,14 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         </div>
 
         <!-- Reset Confirmation Warning Modal -->
-        <div id="reset-confirm-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
+        <div id="reset-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
             <div class="bg-[#06140e] border border-red-500/30 rounded-2xl w-[calc(100%-2rem)] sm:w-full max-w-md mx-auto shadow-2xl p-5 sm:p-6 flex flex-col gap-4 relative scale-95 transition-transform duration-200 transform" id="reset-modal-content">
                 <div class="flex items-center gap-3">
                     <div class="p-2.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                     </div>
                     <div>
-                        <h3 class="text-base sm:text-lg font-bold text-white">Reset All Progress?</h3>
+                        <h3 id="reset-modal-title" class="text-base sm:text-lg font-bold text-white">Reset All Progress?</h3>
                         <p class="text-[11px] sm:text-xs text-text-muted mt-0.5">This action is permanent and cannot be undone.</p>
                     </div>
                 </div>
@@ -149,14 +149,14 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         </div>
 
         <!-- Activity Logging Modal -->
-        <div id="log-activity-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
+        <div id="log-activity-modal" role="dialog" aria-modal="true" aria-labelledby="log-modal-title" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
             <div class="bg-[#06140e] border border-primary-accent/30 rounded-2xl w-[calc(100%-2rem)] sm:w-full max-w-md mx-auto shadow-2xl p-5 sm:p-6 flex flex-col gap-4 relative scale-95 transition-transform duration-200 transform" id="log-modal-content">
                 <div class="flex items-center justify-between mb-2">
-                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                    <h3 id="log-modal-title" class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                         Log Activity
                     </h3>
-                    <button type="button" class="btn-close-log text-text-muted hover:text-white transition-colors">
+                    <button type="button" class="btn-close-log text-text-muted hover:text-white transition-colors" aria-label="Close modal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                     </button>
                 </div>
@@ -246,14 +246,14 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         </div>
 
         <!-- Activity History Modal -->
-        <div id="activity-history-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
+        <div id="activity-history-modal" role="dialog" aria-modal="true" aria-labelledby="history-modal-title" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-200">
             <div class="bg-[#06140e] border border-panel-border rounded-2xl w-[calc(100%-2rem)] sm:w-full max-w-lg mx-auto shadow-2xl p-4 sm:p-6 flex flex-col gap-4 relative scale-95 transition-transform duration-200 transform max-h-[85vh]" id="history-modal-content">
                 <div class="flex items-center justify-between mb-1 pb-3 border-b border-white/5 shrink-0">
-                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                    <h3 id="history-modal-title" class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
                         Activity History
                     </h3>
-                    <button type="button" class="btn-close-history text-text-muted hover:text-white transition-colors">
+                    <button type="button" class="btn-close-history text-text-muted hover:text-white transition-colors" aria-label="Close modal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                     </button>
                 </div>
@@ -263,19 +263,21 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 </div>
             </div>
         </div>
-
         <script>
             // @ts-nocheck
             import { defaultState } from '../data.js';
             import { evaluateAchievements } from '../utils/achievementEngine.js';
             import achievementsData from '../data/achievements.json';
             
-            // Global helper functions to attach to window for cross-page use
+            // Hardened HTML and Attribute Entity Escaper
             window.escapeHtml = (str) => {
-                if (!str) return '';
-                const div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
+                if (str === null || str === undefined) return '';
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
             };
 
             window.debounce = (func, wait) => {
@@ -288,6 +290,208 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
             
             let cachedState = null;
             window.addEventListener('storage', () => { cachedState = null; });
+
+            // Robust state sanitizer & self-healing recovery engine
+            window.sanitizeAndRepairState = (raw) => {
+                const fallback = JSON.parse(JSON.stringify(defaultState));
+                if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+                    return fallback;
+                }
+
+                const state = {};
+
+                // 1. Settings
+                state.settings = {
+                    theme: 'dark',
+                    weights: {
+                        syllabus: (raw.settings?.weights?.syllabus !== undefined && !isNaN(Number(raw.settings.weights.syllabus))) ? Number(raw.settings.weights.syllabus) : 0.60,
+                        pyqs: (raw.settings?.weights?.pyqs !== undefined && !isNaN(Number(raw.settings.weights.pyqs))) ? Number(raw.settings.weights.pyqs) : 0.15,
+                        tests: (raw.settings?.weights?.tests !== undefined && !isNaN(Number(raw.settings.weights.tests))) ? Number(raw.settings.weights.tests) : 0.10,
+                        mocks: (raw.settings?.weights?.mocks !== undefined && !isNaN(Number(raw.settings.weights.mocks))) ? Number(raw.settings.weights.mocks) : 0.10,
+                        revision: (raw.settings?.weights?.revision !== undefined && !isNaN(Number(raw.settings.weights.revision))) ? Number(raw.settings.weights.revision) : 0.05
+                    }
+                };
+
+                // 2. Flags
+                state.exportedOnce = Boolean(raw.exportedOnce);
+                state.importedOnce = Boolean(raw.importedOnce);
+
+                // 3. Achievements
+                state.achievements = {
+                    unlocked: (raw.achievements?.unlocked && typeof raw.achievements.unlocked === 'object' && !Array.isArray(raw.achievements.unlocked)) ? raw.achievements.unlocked : {},
+                    xp: Math.max(0, parseInt(raw.achievements?.xp) || 0),
+                    level: Math.max(1, parseInt(raw.achievements?.level) || 1),
+                    lastDailyXPDate: (typeof raw.achievements?.lastDailyXPDate === 'string') ? raw.achievements.lastDailyXPDate : null
+                };
+
+                // 4. Streaks
+                state.streaks = {
+                    current: Math.max(0, parseInt(raw.streaks?.current) || 0),
+                    longest: Math.max(0, parseInt(raw.streaks?.longest) || 0),
+                    claimedMilestones: Array.isArray(raw.streaks?.claimedMilestones) ? raw.streaks.claimedMilestones.filter(m => typeof m === 'number') : []
+                };
+
+                // 5. Subjects
+                if (Array.isArray(raw.subjects) && raw.subjects.length > 0) {
+                    state.subjects = raw.subjects.map(rawSub => {
+                        const defSub = fallback.subjects.find(s => s.id === rawSub.id) || fallback.subjects[0];
+                        const sub = {
+                            id: typeof rawSub.id === 'string' ? rawSub.id : defSub.id,
+                            name: typeof rawSub.name === 'string' ? rawSub.name : defSub.name,
+                            trackerWeight: (!isNaN(Number(rawSub.trackerWeight)) && Number(rawSub.trackerWeight) >= 0) ? Number(rawSub.trackerWeight) : defSub.trackerWeight,
+                            icon: defSub.icon || '',
+                            topics: []
+                        };
+
+                        if (Array.isArray(rawSub.topics) && rawSub.topics.length > 0) {
+                            sub.topics = rawSub.topics.map((t, idx) => ({
+                                id: typeof t.id === 'string' ? t.id : `topic_${idx}`,
+                                name: typeof t.name === 'string' ? t.name : `Topic ${idx + 1}`,
+                                trackerWeight: (!isNaN(Number(t.trackerWeight)) && Number(t.trackerWeight) >= 0) ? Number(t.trackerWeight) : 1.0,
+                                completed: Boolean(t.completed)
+                            }));
+                        } else {
+                            sub.topics = JSON.parse(JSON.stringify(defSub.topics || []));
+                        }
+                        return sub;
+                    });
+
+                    // Ensure all 9 default subjects exist
+                    fallback.subjects.forEach(defSub => {
+                        if (!state.subjects.some(s => s.id === defSub.id)) {
+                            state.subjects.push(JSON.parse(JSON.stringify(defSub)));
+                        }
+                    });
+                } else {
+                    state.subjects = JSON.parse(JSON.stringify(fallback.subjects));
+                }
+
+                // 6. PYQs
+                state.pyqs = {};
+                Object.keys(fallback.pyqs).forEach(subId => {
+                    const rawPyq = raw.pyqs?.[subId];
+                    const defTotal = fallback.pyqs[subId].total;
+                    state.pyqs[subId] = {
+                        solved: Math.max(0, parseInt(rawPyq?.solved) || 0),
+                        total: Math.max(1, parseInt(rawPyq?.total) || defTotal)
+                    };
+                    // Normalize legacy totals
+                    if ((subId === 'geomatics_engineering' || subId === 'construction_materials') && state.pyqs[subId].total === 80) {
+                        state.pyqs[subId].total = 100;
+                    }
+                });
+
+                // 7. Tests
+                state.tests = {
+                    topic: {
+                        completed: Math.max(0, parseInt(raw.tests?.topic?.completed) || 0),
+                        total: Math.max(1, parseInt(raw.tests?.topic?.total) || 40)
+                    },
+                    subject: {
+                        completed: Math.max(0, parseInt(raw.tests?.subject?.completed) || 0),
+                        total: Math.max(1, parseInt(raw.tests?.subject?.total) || 10)
+                    }
+                };
+
+                // 8. Mocks
+                state.mocks = {
+                    completed: Math.max(0, parseInt(raw.mocks?.completed) || 0),
+                    total: Math.max(1, parseInt(raw.mocks?.total) || 20)
+                };
+
+                // 9. Revision
+                state.revision = {
+                    '1st': Math.max(0, parseInt(raw.revision?.['1st']) || 0),
+                    '2nd': Math.max(0, parseInt(raw.revision?.['2nd']) || 0),
+                    final: Math.max(0, parseInt(raw.revision?.final) || 0),
+                    total: Math.max(1, parseInt(raw.revision?.total) || 9)
+                };
+
+                // 10. Histories
+                const sanitizeHistoryArray = (arr) => {
+                    if (!Array.isArray(arr)) return [];
+                    return arr.filter(item => item && typeof item === 'object' && item.id);
+                };
+
+                state.studyHistory = sanitizeHistoryArray(raw.studyHistory);
+                state.pyqHistory = sanitizeHistoryArray(raw.pyqHistory);
+                state.testHistory = sanitizeHistoryArray(raw.testHistory);
+                state.mocksHistory = sanitizeHistoryArray(raw.mocksHistory);
+                state.revisionHistory = sanitizeHistoryArray(raw.revisionHistory);
+
+                // 11. Legacy Data Migrations
+                const today = new Date().toISOString().split('T')[0];
+
+                if (!raw.pyqHistory && state.pyqHistory.length === 0) {
+                    Object.entries(state.pyqs).forEach(([subId, data]) => {
+                        if (data.solved > 0) {
+                            state.pyqHistory.push({
+                                id: 'mig_pyq_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                                subjectId: subId,
+                                date: today,
+                                solved: data.solved,
+                                notes: 'Legacy migration'
+                            });
+                        }
+                    });
+                }
+
+                if (!raw.testHistory && state.testHistory.length === 0) {
+                    if (state.tests.topic.completed > 0) {
+                        for (let i = 0; i < state.tests.topic.completed; i++) {
+                            state.testHistory.push({
+                                id: 'mig_tt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9) + '_' + i,
+                                testType: 'topic',
+                                subjectId: 'general',
+                                date: today,
+                                notes: 'Legacy migration'
+                            });
+                        }
+                    }
+                    if (state.tests.subject.completed > 0) {
+                        for (let i = 0; i < state.tests.subject.completed; i++) {
+                            state.testHistory.push({
+                                id: 'mig_st_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9) + '_' + i,
+                                testType: 'subject',
+                                subjectId: 'general',
+                                date: today,
+                                notes: 'Legacy migration'
+                            });
+                        }
+                    }
+                }
+
+                if (!raw.mocksHistory && state.mocksHistory.length === 0) {
+                    if (state.mocks.completed > 0) {
+                        for (let i = 0; i < state.mocks.completed; i++) {
+                            state.mocksHistory.push({
+                                id: 'mig_mk_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9) + '_' + i,
+                                name: `Legacy Mock ${i + 1}`,
+                                date: today,
+                                notes: 'Legacy migration'
+                            });
+                        }
+                    }
+                }
+
+                if (!raw.revisionHistory && state.revisionHistory.length === 0) {
+                    ['1st', '2nd', 'final'].forEach(revType => {
+                        if (state.revision[revType] > 0) {
+                            for (let i = 0; i < state.revision[revType]; i++) {
+                                state.revisionHistory.push({
+                                    id: 'mig_rev_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9) + '_' + i,
+                                    subjectId: 'general',
+                                    revisionType: revType,
+                                    date: today,
+                                    notes: 'Legacy migration'
+                                });
+                            }
+                        }
+                    });
+                }
+
+                return state;
+            };
             
             window.getState = () => {
                 if (cachedState) return cachedState;
@@ -295,123 +499,27 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 if (saved) {
                     try {
                         const parsed = JSON.parse(saved);
-                        let modified = false;
-                        if(!parsed.pyqs) {
-                            parsed.pyqs = JSON.parse(JSON.stringify(defaultState.pyqs));
-                            modified = true;
-                        } else {
-                            if (parsed.pyqs['geomatics_engineering'] && parsed.pyqs['geomatics_engineering'].total === 80) {
-                                parsed.pyqs['geomatics_engineering'].total = 100;
-                                modified = true;
-                            }
-                            if (parsed.pyqs['construction_materials'] && parsed.pyqs['construction_materials'].total === 80) {
-                                parsed.pyqs['construction_materials'].total = 100;
-                                modified = true;
-                            }
-                        }
-                        if(!parsed.tests) { parsed.tests = JSON.parse(JSON.stringify(defaultState.tests)); modified = true; }
-                        if(!parsed.tests.topic) { parsed.tests.topic = { completed: 0, total: 40 }; modified = true; }
-                        if(!parsed.tests.subject) { parsed.tests.subject = { completed: 0, total: 10 }; modified = true; }
-                        if(!parsed.mocks) { parsed.mocks = JSON.parse(JSON.stringify(defaultState.mocks)); modified = true; }
-                        if(!parsed.revision) { parsed.revision = JSON.parse(JSON.stringify(defaultState.revision)); modified = true; }
-                        if(!parsed.settings) { parsed.settings = JSON.parse(JSON.stringify(defaultState.settings)); modified = true; }
-                        if(!parsed.settings.weights) { parsed.settings.weights = JSON.parse(JSON.stringify(defaultState.settings.weights)); modified = true; }
-                        if(!parsed.achievements) { parsed.achievements = JSON.parse(JSON.stringify(defaultState.achievements)); modified = true; }
-                        if(!parsed.streaks) { parsed.streaks = JSON.parse(JSON.stringify(defaultState.streaks)); modified = true; }
-                        if(!parsed.studyHistory) { parsed.studyHistory = []; modified = true; }
-                        if(!parsed.mocksHistory) { parsed.mocksHistory = []; modified = true; }
-                        if(!parsed.subjects) { parsed.subjects = JSON.parse(JSON.stringify(defaultState.subjects)); modified = true; }
-                        
-                        // --- Data Migration Logic for Activity Records ---
-                        const today = new Date().toISOString().split('T')[0];
-                        
-                        if(!parsed.pyqHistory) {
-                            parsed.pyqHistory = [];
-                            Object.entries(parsed.pyqs || {}).forEach(([subId, data]) => {
-                                if (data.solved > 0) {
-                                    parsed.pyqHistory.push({
-                                        id: 'mig_pyq_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                                        subjectId: subId,
-                                        date: today,
-                                        solved: data.solved,
-                                        notes: 'Legacy migration'
-                                    });
-                                }
-                            });
-                            modified = true;
-                        }
-                        
-                        if(!parsed.testHistory) {
-                            parsed.testHistory = [];
-                            if (parsed.tests?.topic?.completed > 0) {
-                                for (let i = 0; i < parsed.tests.topic.completed; i++) {
-                                    parsed.testHistory.push({
-                                        id: 'mig_tt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                                        testType: 'topic',
-                                        subjectId: 'general',
-                                        date: today,
-                                        notes: 'Legacy migration'
-                                    });
-                                }
-                            }
-                            if (parsed.tests?.subject?.completed > 0) {
-                                for (let i = 0; i < parsed.tests.subject.completed; i++) {
-                                    parsed.testHistory.push({
-                                        id: 'mig_st_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                                        testType: 'subject',
-                                        subjectId: 'general',
-                                        date: today,
-                                        notes: 'Legacy migration'
-                                    });
-                                }
-                            }
-                            modified = true;
-                        }
-                        
-                        if(!parsed.mocksHistory || parsed.mocksHistory.length === 0) {
-                            parsed.mocksHistory = [];
-                            if (parsed.mocks?.completed > 0) {
-                                for (let i = 0; i < parsed.mocks.completed; i++) {
-                                    parsed.mocksHistory.push({
-                                        id: 'mig_mk_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                                        name: `Legacy Mock ${i+1}`,
-                                        date: today,
-                                        notes: 'Legacy migration'
-                                    });
-                                }
-                            }
-                            modified = true;
-                        }
-                        
-                        if(!parsed.revisionHistory) {
-                            parsed.revisionHistory = [];
-                            ['1st', '2nd', 'final'].forEach(revType => {
-                                if (parsed.revision?.[revType] > 0) {
-                                    for (let i = 0; i < parsed.revision[revType]; i++) {
-                                        parsed.revisionHistory.push({
-                                            id: 'mig_rev_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                                            subjectId: 'general',
-                                            revisionType: revType,
-                                            date: today,
-                                            notes: 'Legacy migration'
-                                        });
-                                    }
-                                }
-                            });
-                            modified = true;
-                        }
-                        
-                        if (modified) {
-                            localStorage.setItem('gateCivilTracker2027', JSON.stringify(parsed));
-                        }
-                        cachedState = parsed;
+                        cachedState = window.sanitizeAndRepairState(parsed);
                         return cachedState;
                     } catch(e) {
-                        console.error("Error parsing saved state", e);
+                        console.error("Error parsing saved state, recovering gracefully", e);
                     }
                 }
                 cachedState = JSON.parse(JSON.stringify(defaultState));
                 return cachedState;
+            };
+
+            window.updateHeaderBadge = (state) => {
+                const badge = document.getElementById('ach-badge');
+                if (!badge) return;
+                const unlockedMap = state?.achievements?.unlocked || {};
+                const unviewedCount = Object.values(unlockedMap).filter(a => a && a.viewed === false).length;
+                if (unviewedCount > 0) {
+                    badge.textContent = unviewedCount;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
             };
 
             window.saveState = (state) => {
@@ -422,6 +530,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 const newUnlocks = evaluateAchievements(state, achievementsData.achievements);
                 
                 localStorage.setItem('gateCivilTracker2027', JSON.stringify(state));
+                window.updateHeaderBadge(state);
                 
                 if (newUnlocks && newUnlocks.length > 0) {
                     window.dispatchEvent(new CustomEvent('achievementsUnlocked', { detail: newUnlocks }));
@@ -440,22 +549,22 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     if (state.pyqHistory) {
                         state.pyqHistory.forEach(h => {
                             if (state.pyqs[h.subjectId]) {
-                                state.pyqs[h.subjectId].solved += (h.solved !== undefined ? (h.solved || 1) : 1);
+                                state.pyqs[h.subjectId].solved += (h.solved !== undefined ? (parseInt(h.solved) || 1) : 1);
                             }
                         });
                     }
                 }
                 
-                if (state.testHistory) {
-                    state.tests.topic.completed = state.testHistory.filter(t => t.testType === 'topic').length;
-                    state.tests.subject.completed = state.testHistory.filter(t => t.testType === 'subject').length;
+                if (state.testHistory && state.tests) {
+                    if (state.tests.topic) state.tests.topic.completed = state.testHistory.filter(t => t.testType === 'topic').length;
+                    if (state.tests.subject) state.tests.subject.completed = state.testHistory.filter(t => t.testType === 'subject').length;
                 }
                 
-                if (state.mocksHistory) {
+                if (state.mocksHistory && state.mocks) {
                     state.mocks.completed = state.mocksHistory.length;
                 }
                 
-                if (state.revisionHistory) {
+                if (state.revisionHistory && state.revision) {
                     state.revision['1st'] = state.revisionHistory.filter(r => r.revisionType === '1st').length;
                     state.revision['2nd'] = state.revisionHistory.filter(r => r.revisionType === '2nd').length;
                     state.revision.final = state.revisionHistory.filter(r => r.revisionType === 'final').length;
@@ -483,52 +592,57 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 }
                 // --- End capping ---
                 
-                // --- End derived counts ---
-                
                 let overallSyllabusWeightCompleted = 0;
                 let totalSubjectTrackerWeight = 0;
                 
-                state.subjects.forEach(subject => {
-                    let subjectTotalWeight = 0;
-                    let subjectCompletedWeight = 0;
-                    let subjectHours = 0;
-                    
-                    subject.topics.forEach(t => {
-                        subjectTotalWeight += (t.trackerWeight || 0);
-                        if (t.completed) {
-                            subjectCompletedWeight += (t.trackerWeight || 0);
-                        }
-                    });
-                    
-                    [state.studyHistory, state.pyqHistory, state.testHistory, state.revisionHistory].forEach(history => {
-                        if (history) {
-                            history.forEach(entry => {
-                                if (entry.subjectId === subject.id && entry.hours) {
-                                    subjectHours += entry.hours;
+                if (Array.isArray(state.subjects)) {
+                    state.subjects.forEach(subject => {
+                        let subjectTotalWeight = 0;
+                        let subjectCompletedWeight = 0;
+                        let subjectHours = 0;
+                        
+                        if (Array.isArray(subject.topics)) {
+                            subject.topics.forEach(t => {
+                                const tw = parseFloat(t.trackerWeight) || 0;
+                                subjectTotalWeight += tw;
+                                if (t.completed) {
+                                    subjectCompletedWeight += tw;
                                 }
                             });
                         }
+                        
+                        [state.studyHistory, state.pyqHistory, state.testHistory, state.revisionHistory].forEach(history => {
+                            if (history) {
+                                history.forEach(entry => {
+                                    if (entry.subjectId === subject.id && entry.hours) {
+                                        subjectHours += (parseFloat(entry.hours) || 0);
+                                    }
+                                });
+                            }
+                        });
+                        
+                        subject.progress = subjectTotalWeight === 0 ? 0 : (subjectCompletedWeight / subjectTotalWeight) * 100;
+                        subject.hours = subjectHours;
+                        overallSyllabusWeightCompleted += (subject.progress / 100) * (parseFloat(subject.trackerWeight) || 0);
+                        totalSubjectTrackerWeight += (parseFloat(subject.trackerWeight) || 0);
                     });
-                    
-                    subject.progress = subjectTotalWeight === 0 ? 0 : (subjectCompletedWeight / subjectTotalWeight) * 100;
-                    subject.hours = subjectHours;
-                    overallSyllabusWeightCompleted += (subject.progress / 100) * (subject.trackerWeight || 0);
-                    totalSubjectTrackerWeight += (subject.trackerWeight || 0);
-                });
+                }
                 
                 // 1. Syllabus Progress: 0% to 100% based on all subject sub-topic completions
                 state.overallSyllabusProgress = totalSubjectTrackerWeight === 0 ? 0 : (overallSyllabusWeightCompleted / totalSubjectTrackerWeight) * 100;
                 let addedHours = 0;
                 [state.pyqHistory, state.testHistory, state.mocksHistory, state.revisionHistory].forEach(history => {
                     if (history) {
-                        addedHours += history.reduce((acc, curr) => acc + (curr.hours || 0), 0);
+                        addedHours += history.reduce((acc, curr) => acc + (parseFloat(curr.hours) || 0), 0);
                     }
                 });
-                state.totalHours = (state.studyHistory ? state.studyHistory.reduce((acc, curr) => acc + (curr.hours || 0), 0) : 0) + addedHours;
+                state.totalHours = (state.studyHistory ? state.studyHistory.reduce((acc, curr) => acc + (parseFloat(curr.hours) || 0), 0) : 0) + addedHours;
                 
                 // 2. PYQs Progress: 0% to 100% based on questions solved vs total across all subjects
                 let pyqTotal = 0, pyqSolved = 0;
-                Object.values(state.pyqs).forEach(p => { pyqTotal += (p.total || 0); pyqSolved += (p.solved || 0); });
+                if (state.pyqs) {
+                    Object.values(state.pyqs).forEach(p => { pyqTotal += (p.total || 0); pyqSolved += (p.solved || 0); });
+                }
                 state.pyqProgress = pyqTotal === 0 ? 0 : (pyqSolved / pyqTotal) * 100;
                 
                 // 3. Tests Progress: 0% to 100% based on topic + subject tests completed vs targets
@@ -555,15 +669,17 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
             };
 
             window.formatHours = (hours) => {
-                const h = Math.floor(hours);
-                const m = Math.round((hours - h) * 60);
+                const safeHours = Math.max(0, parseFloat(hours) || 0);
+                const h = Math.floor(safeHours);
+                const m = Math.round((safeHours - h) * 60);
                 if (m === 0) return `${h}h`;
                 if (h === 0) return `${m}m`;
                 return `${h}h ${m}m`;
             };
 
             window.formatPercent = (value) => {
-                return value.toFixed(1) + '%';
+                const safeVal = Math.max(0, Math.min(100, parseFloat(value) || 0));
+                return safeVal.toFixed(1) + '%';
             };
 
             // Global reset modal logic
@@ -676,6 +792,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 };
 
                 const updateTopicList = (state) => {
+                    if (!typeInput || !subtypeSelect || !subjectSelect || !fieldTopic || !topicSelect) return;
                     const currentType = typeInput.value;
                     const currentSubtype = subtypeSelect.value;
                     const subjectId = subjectSelect.value;
@@ -689,7 +806,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                     ? '<option value="" selected>Full Subject (Optional Topic)</option>' 
                                     : '<option value="" disabled selected>Select a Topic</option>';
                                 sub.topics.forEach((t) => {
-                                    html += `<option value="${t.name}">${t.name}</option>`;
+                                    html += `<option value="${window.escapeHtml(t.name)}">${window.escapeHtml(t.name)}</option>`;
                                 });
                                 topicSelect.innerHTML = html;
                             } else {
@@ -710,6 +827,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 };
 
                 const updateSubjectsList = (state) => {
+                    if (!typeInput || !subtypeSelect || !subjectSelect) return;
                     const currentType = typeInput.value;
                     const currentSubtype = subtypeSelect.value;
                     let html = '<option value="" disabled selected>Select a Subject</option>';
@@ -752,7 +870,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                 }
                             }
                             
-                            html += `<option value="${sub.id}"${disabledStr}>${labelStr}</option>`;
+                            html += `<option value="${window.escapeHtml(sub.id)}"${disabledStr}>${window.escapeHtml(labelStr)}</option>`;
                         });
                     }
                     
@@ -771,18 +889,22 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     updateTopicList(state);
                 };
 
-                subtypeSelect.removeEventListener('change', subtypeSelect._subtypeChangeHandler);
-                subtypeSelect._subtypeChangeHandler = () => {
-                    updateSubjectsList(window.getState());
-                    updateTopicList(window.getState());
-                };
-                subtypeSelect.addEventListener('change', subtypeSelect._subtypeChangeHandler);
+                if (subtypeSelect) {
+                    subtypeSelect.removeEventListener('change', subtypeSelect._subtypeChangeHandler);
+                    subtypeSelect._subtypeChangeHandler = () => {
+                        updateSubjectsList(window.getState());
+                        updateTopicList(window.getState());
+                    };
+                    subtypeSelect.addEventListener('change', subtypeSelect._subtypeChangeHandler);
+                }
 
-                subjectSelect.removeEventListener('change', subjectSelect._subjectChangeHandler);
-                subjectSelect._subjectChangeHandler = () => {
-                    updateTopicList(window.getState());
-                };
-                subjectSelect.addEventListener('change', subjectSelect._subjectChangeHandler);
+                if (subjectSelect) {
+                    subjectSelect.removeEventListener('change', subjectSelect._subjectChangeHandler);
+                    subjectSelect._subjectChangeHandler = () => {
+                        updateTopicList(window.getState());
+                    };
+                    subjectSelect.addEventListener('change', subjectSelect._subjectChangeHandler);
+                }
 
                 [amountInput, pyqYearInput, mockMarksInput, mockPercentileInput, hoursInput].forEach(input => {
                     if (input) {
@@ -1047,6 +1169,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                 return;
                             }
 
+
+
                             const currentSolved = state.pyqHistory 
                                 ? state.pyqHistory.filter(h => h.subjectId === subjectId).length 
                                 : (pyqData.solved || 0);
@@ -1077,14 +1201,11 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                     showError('Please select a specific topic for this test.');
                                     return;
                                 }
-                                // Topic tests: multiple allowed per subject, only total cap matters
                                 if (topicCompleted >= topicTotal) {
                                     showError(`You have reached the Topic Test target of ${topicTotal}. Well done!`);
                                     return;
                                 }
-                                // No per-subject restriction for topic tests
                             } else if (testType === 'subject') {
-                                // Subject tests: 1 per subject, plus total cap
                                 if (subjectCompleted >= subjectTotal) {
                                     showError(`You have reached the Subject Test target of ${subjectTotal}. Well done!`);
                                     return;
@@ -1280,7 +1401,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                     <span>${window.escapeHtml(r.date)}</span>
                                 </div>
                             </div>
-                            <button class="btn-delete-record p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors shrink-0 ml-3" data-id="${window.escapeHtml(r.id)}" data-type="${window.escapeHtml(r._type)}">
+                            <button class="btn-delete-record p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors shrink-0 ml-3" data-id="${window.escapeHtml(r.id)}" data-type="${window.escapeHtml(r._type)}" aria-label="Delete activity record">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
                             </button>
                         </div>
@@ -1307,11 +1428,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     if (type === 'Revision') state.revisionHistory = (state.revisionHistory || []).filter(r => r.id !== id);
                     
                     window.saveState(state);
-                    // Re-render with the same filter that was active when history was opened
+                    // Re-render with the same filter smoothly without page reload
                     renderHistoryList(_currentHistoryFilter);
-                    if (window.location.pathname === '/') {
-                        window.location.reload();
-                    }
                 }
             }
 
@@ -1319,6 +1437,33 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
             document.addEventListener('astro:after-swap', initActivityLogging);
             document.addEventListener('DOMContentLoaded', initActivityHistory);
             document.addEventListener('astro:after-swap', initActivityHistory);
+
+            // Global modal escape dismissal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' || e.key === 'Esc') {
+                    const openModals = [
+                        document.getElementById('reset-confirm-modal'),
+                        document.getElementById('log-activity-modal'),
+                        document.getElementById('activity-history-modal'),
+                        document.getElementById('ach-detail-modal'),
+                        document.getElementById('settings-modal'),
+                        document.getElementById('syllabus-settings-modal'),
+                        document.getElementById('edit-topics-modal'),
+                        document.getElementById('log-modal')
+                    ];
+                    openModals.forEach(m => {
+                        if (m && !m.classList.contains('hidden')) {
+                            const closeBtn = m.querySelector('#btn-cancel-reset, .btn-close-log, .btn-close-history, #btn-close-modal, #btn-settings-cancel, #btn-syllabus-cancel, #btn-edit-topics-cancel, #btn-modal-cancel');
+                            if (closeBtn) {
+                                closeBtn.click();
+                            } else {
+                                m.classList.add('hidden');
+                                m.classList.remove('flex');
+                            }
+                        }
+                    });
+                }
+            });
 
             function initSettingsModals() {
                 const btnExport = document.getElementById('btn-export');
@@ -1345,15 +1490,15 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                         const reader = new FileReader();
                         reader.onload = (event) => {
                             try {
-                                const importedState = JSON.parse(event.target.result);
-                                if(importedState && Array.isArray(importedState.subjects) && importedState.subjects.length > 0
-                                    && importedState.subjects.every(s => typeof s.id === 'string' && typeof s.name === 'string' && Array.isArray(s.topics))) {
-                                    importedState.importedOnce = true;
-                                    window.saveState(importedState);
-                                    alert('Progress imported successfully!');
+                                const raw = JSON.parse(event.target.result);
+                                if (raw && typeof raw === 'object' && !Array.isArray(raw)) {
+                                    const sanitized = window.sanitizeAndRepairState(raw);
+                                    sanitized.importedOnce = true;
+                                    window.saveState(sanitized);
+                                    alert('Progress imported and verified successfully!');
                                     window.location.reload();
                                 } else {
-                                    alert('Invalid file format. The file must be a valid GATE Civil Tracker export.');
+                                    alert('Invalid file format. The file must be a valid GATE Civil Tracker JSON export.');
                                 }
                             } catch(err) {
                                 alert('Error parsing file. Please ensure it is a valid JSON export.');
@@ -1363,6 +1508,10 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                         e.target.value = '';
                     };
                 }
+
+                // Synchronize header badge on initial and cross-page visits
+                const state = window.getState();
+                window.updateHeaderBadge(state);
             }
 
             initSettingsModals();
