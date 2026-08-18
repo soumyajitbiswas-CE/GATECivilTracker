@@ -1,0 +1,164 @@
+﻿---
+// 500 — Something Went Wrong | GATE Civil Tracker
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#030a07" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <title>500 — Something Went Wrong | GATE Civil Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { color-scheme: dark; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: hidden; }
+      body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background-color: #020403;
+        color: #f8fafc;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        position: relative;
+        overflow-x: hidden;
+        padding: 24px 20px;
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background-color: #020403;
+        background-image:
+          radial-gradient(ellipse at 50% 50%, rgba(2,4,3,0.2) 0%, rgba(2,4,3,0.6) 75%, rgba(2,4,3,0.95) 100%),
+          url('/bg.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        pointer-events: none;
+      }
+      .error-page {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        max-width: 440px;
+        animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 52px;
+        text-decoration: none;
+        color: #f8fafc;
+        font-family: 'Outfit', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        opacity: 0.9;
+        transition: opacity 0.2s ease;
+      }
+      .brand:hover { opacity: 1; }
+      .brand img {
+        width: 28px; height: 28px;
+        border-radius: 6px;
+        border: 1px solid rgba(74,222,128,0.25);
+        object-fit: cover;
+      }
+      .brand-accent { color: #4ade80; }
+      .error-code {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(72px, 18vw, 96px);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        background: linear-gradient(135deg, #ffffff 0%, rgba(74,222,128,0.7) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 20px;
+      }
+      .divider {
+        width: 32px; height: 1px;
+        background-color: rgba(74,222,128,0.4);
+        margin: 0 auto 20px;
+      }
+      .error-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(18px, 5vw, 22px);
+        font-weight: 600;
+        color: #f8fafc;
+        letter-spacing: -0.01em;
+        margin-bottom: 12px;
+      }
+      .error-desc {
+        font-size: 14px;
+        color: #94a3b8;
+        line-height: 1.65;
+        max-width: 300px;
+        margin: 0 auto 40px;
+      }
+      .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(74,222,128,0.08);
+        border: 1px solid rgba(74,222,128,0.25);
+        color: #4ade80;
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 11px 24px;
+        border-radius: 10px;
+        text-decoration: none;
+        letter-spacing: 0.01em;
+        transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+        -webkit-tap-highlight-color: transparent;
+        cursor: pointer;
+      }
+      .btn-back:hover { background: rgba(74,222,128,0.14); border-color: rgba(74,222,128,0.4); transform: translateY(-1px); }
+      .btn-back:active { transform: scale(0.97); transition: transform 0.1s ease; }
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @media (max-width: 360px) {
+        .brand { font-size: 16px; margin-bottom: 40px; }
+        .error-desc { font-size: 13px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="error-page">
+      <a href="/" class="brand" aria-label="GATE Civil Tracker — Go to Dashboard">
+        <img src="/favicon.svg" alt="" aria-hidden="true" />
+        <span>GATE Civil <span class="brand-accent">Tracker</span></span>
+      </a>
+
+      <div class="error-code" aria-label="Error 500">500</div>
+      <div class="divider" aria-hidden="true"></div>
+      <h1 class="error-title">Something Went Wrong</h1>
+      <p class="error-desc">Something went wrong while loading this page. Please try again.</p>
+
+      <a href="/" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 5-7 7 7 7"/></svg>
+        Back to Dashboard
+      </a>
+    </main>
+  </body>
+</html>
