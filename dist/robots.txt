@@ -14,4 +14,4 @@ Disallow: /500.html
 Host: https://gateciviltracker.com
 
 # Sitemaps
-Sitemap: https://gateciviltracker.com/sitemap.xml
+Sitemap: https://gateciviltracker.com/sitemap-index.xml
