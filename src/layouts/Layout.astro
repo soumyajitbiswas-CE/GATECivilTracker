@@ -20,7 +20,12 @@ const isHome = Astro.url.pathname === '/';
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 		<meta name="theme-color" content="#030a07" />
 		<meta name="mobile-web-app-capable" content="yes" />
-		<link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<meta name="apple-mobile-web-app-title" content="GATECivilTracker" />
+		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
@@ -29,14 +34,14 @@ const isHome = Astro.url.pathname === '/';
 		<meta property="og:url" content={Astro.url} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={new URL('/favicon.jpg', Astro.site || Astro.url)} />
+		<meta property="og:image" content={new URL('/web-app-manifest-512x512.png', Astro.site || Astro.url)} />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={Astro.url} />
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content={new URL('/favicon.jpg', Astro.site || Astro.url)} />
+		<meta property="twitter:image" content={new URL('/web-app-manifest-512x512.png', Astro.site || Astro.url)} />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -62,7 +67,7 @@ const isHome = Astro.url.pathname === '/';
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3.5 sm:gap-4 min-w-0">
                     <div class="flex flex-col min-w-0 flex-1">
                         <a href="/" class="text-2xl sm:text-[28px] font-[Outfit] font-semibold flex items-center gap-2.5 text-white tracking-tight break-words leading-none hover:opacity-90 transition-opacity w-fit" style="letter-spacing: -0.01em;">
-                            <img src="/favicon.jpg" alt="Logo" class="w-7 h-7 sm:w-8 sm:h-8 rounded object-cover border border-primary-accent/30 shrink-0 drop-shadow-[0_0_8px_rgba(74,222,128,0.3)]" />
+                            <img src="/favicon.svg" alt="Logo" class="w-7 h-7 sm:w-8 sm:h-8 rounded object-cover border border-primary-accent/30 shrink-0 drop-shadow-[0_0_8px_rgba(74,222,128,0.3)]" />
                             <span class="truncate mt-0.5 text-[0.95em]">GATE Civil <span class="text-primary-accent">Tracker</span></span>
                         </a>
                         <p class="text-text-muted text-xs sm:text-[13.5px] mt-2 leading-relaxed break-words max-w-3xl pr-4">Track your syllabus, PYQs, tests, full-length mocks & revisions — progress automatically saved to your browser.</p>
