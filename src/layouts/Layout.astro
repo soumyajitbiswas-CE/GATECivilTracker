@@ -9,7 +9,6 @@ interface Props {
 }
 
 const { title, description = "GATE Civil Engineering Preparation Tracker" } = Astro.props;
-const isHome = Astro.url.pathname === '/';
 ---
 
 <!doctype html>
@@ -17,7 +16,7 @@ const isHome = Astro.url.pathname === '/';
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="theme-color" content="#030a07" />
 		<meta name="mobile-web-app-capable" content="yes" />
 		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -58,7 +57,7 @@ const isHome = Astro.url.pathname === '/';
 		})} />
         <ViewTransitions />
 	</head>
-	<body class="min-h-screen">
+	<body class="min-h-screen" transition:animate="none">
         <div class="site-bg" aria-hidden="true"></div>
         <FallingLeaves />
         <AchievementNotification />
@@ -1335,19 +1334,5 @@ const isHome = Astro.url.pathname === '/';
             initSettingsModals();
             document.addEventListener('astro:page-load', initSettingsModals);
         </script>
-        {!isHome && (
-            <div class="absolute w-0 h-0 overflow-hidden opacity-0 pointer-events-none" style="top: -9999px; left: -9999px;" aria-hidden="true">
-                <spline-viewer 
-                    id="hero-spline-viewer"
-                    transition:persist="hero-spline"
-                    class="w-full h-full pointer-events-none transition-opacity duration-500 opacity-0"
-                    style="filter: sepia(1) hue-rotate(95deg) saturate(1.5) brightness(0.95) contrast(1.1);"
-                    url="/scene.splinecode"
-                    background="transparent"
-                    loading-anim-type="none"
-                    events-target="global"
-                ></spline-viewer>
-            </div>
-        )}
 	</body>
 </html>

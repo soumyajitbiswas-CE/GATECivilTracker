@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { defaultState } from '../data.js';
-import HeroSpline from '../components/HeroSpline.astro';
 import Footer from '../components/Footer.astro';
 
 const subjects = defaultState.subjects;
@@ -27,7 +26,6 @@ const subjectBgClass = {
         
         <!-- Hero Progress Area -->
         <div class="glass-panel surface-hero p-3.5 sm:p-6 grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[220px_1fr] gap-4 sm:gap-6 items-center relative overflow-hidden">
-            <HeroSpline />
             
             <div class="flex flex-col items-center justify-center text-center relative z-10 pointer-events-none py-2 sm:py-0">
                 <div class="circular-progress animate-pulse-glow pointer-events-auto" id="hero-progress-circle" style="--progress: 0%;">
@@ -75,7 +73,7 @@ const subjectBgClass = {
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" style="transform: translateZ(0);">
             {subjects.map((sub, index) => (
-                <div class={`${subjectBgClass[sub.id] || 'surface-syllabus'} backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group relative overflow-hidden`} data-id={sub.id}>
+                <div class={`${subjectBgClass[sub.id] || 'surface-syllabus'} backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group relative overflow-hidden transition-transform active:scale-[0.98] focus-within:ring-2 focus-within:ring-primary-accent cursor-pointer`} data-id={sub.id} onclick={`window.location.href='/subject/${sub.id}'`}>
                     <!-- Top section: Title and Weight -->
                     <div class="flex flex-col gap-1 min-w-0">
                         <div class="flex items-start gap-3 min-w-0">
@@ -98,12 +96,12 @@ const subjectBgClass = {
                     </div>
                     
                     <!-- Bottom section: Hours and Action -->
-                    <div class="flex justify-between items-center gap-2 mt-auto pt-3 border-t border-panel-border">
+                    <div class="flex justify-between items-center gap-2 mt-auto pt-3 border-t border-panel-border relative z-10">
                         <div class="text-[12px] sm:text-[13px] flex items-center gap-1.5 text-text-muted font-medium pb-0.5 truncate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                             <span class="subject-hours-text truncate" data-id={sub.id}>0h studied</span>
                         </div>
-                        <a href={`/subject/${sub.id}`} class="btn text-[11px] sm:text-[12px] px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0">OPEN →</a>
+                        <a href={`/subject/${sub.id}`} class="btn text-[11px] sm:text-[12px] px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0" aria-label={`Open ${sub.name}`} onclick="event.stopPropagation()">OPEN →</a>
                     </div>
                 </div>
             ))}
@@ -403,7 +401,7 @@ const subjectBgClass = {
     <!-- Global Settings Modal -->
     <div class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 overflow-y-auto" id="settings-modal">
         <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
-            <div class="bg-[#06140e] border border-panel-border rounded-2xl p-4 sm:p-6 w-[calc(100%-2rem)] sm:w-full max-w-[540px] mx-auto shadow-2xl flex flex-col overflow-hidden relative">
+            <div class="bg-[#06140e] border border-panel-border rounded-2xl p-4 sm:p-6 w-[calc(100%-2rem)] sm:w-full max-w-[540px] mx-auto max-h-[90vh] shadow-2xl flex flex-col overflow-hidden relative">
             <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-5 flex items-center gap-2 shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent shrink-0"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 Tracker Settings & Targets
@@ -458,7 +456,7 @@ const subjectBgClass = {
     <!-- Syllabus Settings Modal -->
     <div class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 overflow-y-auto" id="syllabus-settings-modal">
         <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
-            <div class="bg-[#06140e] border border-panel-border rounded-2xl p-4 sm:p-6 w-[calc(100%-2rem)] sm:w-full max-w-[650px] mx-auto shadow-2xl flex flex-col overflow-hidden relative">
+            <div class="bg-[#06140e] border border-panel-border rounded-2xl p-4 sm:p-6 w-[calc(100%-2rem)] sm:w-full max-w-[650px] mx-auto max-h-[90vh] shadow-2xl flex flex-col overflow-hidden relative">
             <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-5 flex items-center gap-2 shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent shrink-0"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                 Edit Syllabus Topics
@@ -561,10 +559,11 @@ const subjectBgClass = {
             window.calculateAllMetrics(state);
 
             // Update Hero
+            const newHeroPercent = window.formatPercent(state.gateReadiness || 0);
             const heroText = document.getElementById('hero-progress-text');
             const heroCircle = document.getElementById('hero-progress-circle');
-            if (heroText) heroText.textContent = window.formatPercent(state.gateReadiness || 0);
-            if (heroCircle) heroCircle.style.setProperty('--progress', `${state.gateReadiness || 0}%`);
+            if (heroText && heroText.textContent !== newHeroPercent) heroText.textContent = newHeroPercent;
+            if (heroCircle && heroCircle.style.getPropertyValue('--progress') !== `${state.gateReadiness || 0}%`) heroCircle.style.setProperty('--progress', `${state.gateReadiness || 0}%`);
             
             const metSyllabus = document.getElementById('metric-syllabus');
             const metPyqs = document.getElementById('metric-pyqs');
@@ -573,12 +572,19 @@ const subjectBgClass = {
             const metRevision = document.getElementById('metric-revision');
             const metHours = document.getElementById('metric-hours');
 
-            if (metSyllabus) metSyllabus.textContent = window.formatPercent(state.overallSyllabusProgress || 0);
-            if (metPyqs) metPyqs.textContent = window.formatPercent(state.pyqProgress || 0);
-            if (metTests) metTests.textContent = window.formatPercent(state.testProgress || 0);
-            if (metMocks) metMocks.textContent = window.formatPercent(state.mockProgress || 0);
-            if (metRevision) metRevision.textContent = window.formatPercent(state.revisionProgress || 0);
-            if (metHours) metHours.textContent = window.formatHours(state.totalHours || 0);
+            const newSyllabusStr = window.formatPercent(state.overallSyllabusProgress || 0);
+            const newPyqsStr = window.formatPercent(state.pyqProgress || 0);
+            const newTestsStr = window.formatPercent(state.testProgress || 0);
+            const newMocksStr = window.formatPercent(state.mockProgress || 0);
+            const newRevisionStr = window.formatPercent(state.revisionProgress || 0);
+            const newHoursStr = window.formatHours(state.totalHours || 0);
+
+            if (metSyllabus && metSyllabus.textContent !== newSyllabusStr) metSyllabus.textContent = newSyllabusStr;
+            if (metPyqs && metPyqs.textContent !== newPyqsStr) metPyqs.textContent = newPyqsStr;
+            if (metTests && metTests.textContent !== newTestsStr) metTests.textContent = newTestsStr;
+            if (metMocks && metMocks.textContent !== newMocksStr) metMocks.textContent = newMocksStr;
+            if (metRevision && metRevision.textContent !== newRevisionStr) metRevision.textContent = newRevisionStr;
+            if (metHours && metHours.textContent !== newHoursStr) metHours.textContent = newHoursStr;
 
             // Render Subjects Progress
             if (state.subjects) {
@@ -588,10 +594,15 @@ const subjectBgClass = {
                     const hours = document.querySelector(`.subject-hours-text[data-id="${sub.id}"]`);
                     const weightText = document.querySelector(`.subject-weight-text[data-id="${sub.id}"]`);
                     
-                    if(bar) bar.style.width = `${sub.progress}%`;
-                    if(text) text.innerHTML = `${window.formatPercent(sub.progress)} <span class="text-xs font-medium text-text-muted ml-1">Complete</span>`;
-                    if(hours) hours.textContent = `${window.formatHours(sub.hours)} studied`;
-                    if(weightText) weightText.textContent = `${sub.trackerWeight}%`;
+                    const newWidth = `${sub.progress}%`;
+                    const newTextHtml = `${window.formatPercent(sub.progress)} <span class="text-xs font-medium text-text-muted ml-1">Complete</span>`;
+                    const newHoursStr = `${window.formatHours(sub.hours)} studied`;
+                    const newWeightStr = `${sub.trackerWeight}%`;
+
+                    if(bar && bar.style.width !== newWidth) bar.style.width = newWidth;
+                    if(text && text.innerHTML !== newTextHtml) text.innerHTML = newTextHtml;
+                    if(hours && hours.textContent !== newHoursStr) hours.textContent = newHoursStr;
+                    if(weightText && weightText.textContent !== newWeightStr) weightText.textContent = newWeightStr;
                 });
             }
 
@@ -619,10 +630,12 @@ const subjectBgClass = {
             
             derivedVals.forEach(item => {
                 const el = document.getElementById(item.id);
-                if (el) {
+                if (el && el.textContent !== String(item.value)) {
                     el.textContent = item.value;
-                    const totalSpan = document.getElementById(item.id.replace('val-', 'total-'));
-                    if (totalSpan) totalSpan.textContent = `/ ${item.total}`;
+                }
+                const totalSpan = document.getElementById(item.id.replace('val-', 'total-'));
+                if (totalSpan && totalSpan.textContent !== `/ ${item.total}`) {
+                    totalSpan.textContent = `/ ${item.total}`;
                 }
             });
 
@@ -632,10 +645,10 @@ const subjectBgClass = {
                     const pyqVal = document.getElementById(`val-pyq-${sub.id}`);
                     const pyqTotal = document.querySelector(`.pyq-total-dash[data-subject="${sub.id}"]`);
                     if (state.pyqs[sub.id]) {
-                        if (pyqVal) {
+                        if (pyqVal && pyqVal.textContent !== String(state.pyqs[sub.id].solved)) {
                             pyqVal.textContent = state.pyqs[sub.id].solved;
                         }
-                        if (pyqTotal) {
+                        if (pyqTotal && pyqTotal.textContent !== `/ ${state.pyqs[sub.id].total}`) {
                             pyqTotal.textContent = `/ ${state.pyqs[sub.id].total}`;
                         }
                     }

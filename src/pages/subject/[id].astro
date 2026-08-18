@@ -201,10 +201,17 @@ const { subject } = Astro.props;
             if(!subjectData) return;
 
             // Update Header Stats
-            document.querySelector('.subject-progress-val').textContent = window.formatPercent(subjectData.progress);
+            const progressValEl = document.querySelector('.subject-progress-val');
+            const progressStr = window.formatPercent(subjectData.progress);
+            if (progressValEl && progressValEl.textContent !== progressStr) progressValEl.textContent = progressStr;
+            
             const weightValEl = document.querySelector('.subject-weight-val');
-            if (weightValEl) weightValEl.textContent = `${subjectData.trackerWeight}%`;
-            document.querySelector('.subject-hours-val').textContent = window.formatHours(subjectData.hours);
+            const weightStr = `${subjectData.trackerWeight}%`;
+            if (weightValEl && weightValEl.textContent !== weightStr) weightValEl.textContent = weightStr;
+            
+            const hoursValEl = document.querySelector('.subject-hours-val');
+            const hoursStr = window.formatHours(subjectData.hours);
+            if (hoursValEl && hoursValEl.textContent !== hoursStr) hoursValEl.textContent = hoursStr;
 
             // Update PYQs
             const pyqData = state.pyqs[subjectId];
@@ -223,111 +230,203 @@ const { subject } = Astro.props;
                     const loggedEntries = state.pyqHistory 
                         ? state.pyqHistory.filter(h => h.subjectId === subjectId && h.pyqYear).sort((a,b) => parseInt(b.pyqYear) - parseInt(a.pyqYear))
                         : [];
-                    if (loggedEntries.length > 0) {
-                        yearsListEl.innerHTML = loggedEntries.map(entry => `
-                            <span class="inline-flex items-center gap-1.5 pl-2 pr-1.5 py-0.5 rounded-md text-[11px] font-semibold bg-primary-accent/15 text-primary-accent border border-primary-accent/30 tracking-tight group">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                                <span>GATE ${entry.pyqYear}</span>
-                                <button type="button" class="btn-del-pyq text-primary-accent/40 hover:text-red-400 p-0.5 rounded transition-colors cursor-pointer" data-id="${entry.id}" title="Delete this PYQ entry">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                                </button>
-                            </span>
-                        `).join('');
+                    
+                    const newIds = loggedEntries.map(e => e.id).join(',');
+                    if (yearsListEl.dataset.renderedIds !== newIds) {
+                        yearsListEl.dataset.renderedIds = newIds;
+                        if (loggedEntries.length > 0) {
+                            yearsListEl.innerHTML = loggedEntries.map(entry => `
+                                <span class="inline-flex items-center gap-1.5 pl-2 pr-1.5 py-0.5 rounded-md text-[11px] font-semibold bg-primary-accent/15 text-primary-accent border border-primary-accent/30 tracking-tight group">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                    <span>GATE ${entry.pyqYear}</span>
+                                    <button type="button" class="btn-del-pyq text-primary-accent/40 hover:text-red-400 p-0.5 rounded transition-colors cursor-pointer" data-id="${entry.id}" title="Delete this PYQ entry">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                    </button>
+                                </span>
+                            `).join('');
 
-                        yearsListEl.querySelectorAll('.btn-del-pyq').forEach(btn => {
-                            btn.onclick = (e) => {
-                                e.stopPropagation();
-                                const id = e.currentTarget.dataset.id;
-                                const s = window.getState();
-                                s.pyqHistory = (s.pyqHistory || []).filter(h => h.id !== id);
-                                window.saveState(s);
-                            };
-                        });
-                    } else {
-                        yearsListEl.innerHTML = '<span class="text-xs text-text-muted italic py-1">No PYQ years logged yet for this subject.</span>';
+                            yearsListEl.querySelectorAll('.btn-del-pyq').forEach(btn => {
+                                btn.onclick = (e) => {
+                                    e.stopPropagation();
+                                    const id = e.currentTarget.dataset.id;
+                                    const s = window.getState();
+                                    s.pyqHistory = (s.pyqHistory || []).filter(h => h.id !== id);
+                                    window.saveState(s);
+                                };
+                            });
+                        } else {
+                            yearsListEl.innerHTML = '<span class="text-xs text-text-muted italic py-1">No PYQ years logged yet for this subject.</span>';
+                        }
                     }
                 }
             }
 
             // Update Topics Dynamically
             const topicsContainer = document.getElementById('topics-container');
-            topicsContainer.innerHTML = ''; // Clear out old topics
-
+            
             if (subjectData.topics && subjectData.topics.length > 0) {
                 const totalTopicWeight = subjectData.topics.reduce((sum, t) => sum + (t.trackerWeight || 0), 0);
                 
-                subjectData.topics.forEach((topicData, index) => {
-                    const isCompleted = topicData.completed;
-                    const truePercent = totalTopicWeight === 0 ? 0 : ((topicData.trackerWeight || 0) / totalTopicWeight) * 100;
+                if (topicsContainer.children.length !== subjectData.topics.length) {
+                    topicsContainer.innerHTML = ''; // Clear out old topics only if length mismatch
+                    const fragment = document.createDocumentFragment();
                     
-                    const item = document.createElement('div');
-                    item.className = `topic-item grid grid-cols-[auto_1fr_auto] gap-3 sm:gap-4 items-center p-3 sm:p-3.5 mb-2.5 rounded-xl cursor-pointer transition-all hover:border-white/20 border w-full min-w-0 ${isCompleted ? 'bg-[#0d2719]/40 border-primary-accent/30' : 'bg-black/20 border-panel-border'}`;
-                    item.dataset.topicId = topicData.id;
-                    item.dataset.index = index;
+                    subjectData.topics.forEach((topicData, index) => {
+                        const isCompleted = topicData.completed;
+                        const truePercent = totalTopicWeight === 0 ? 0 : ((topicData.trackerWeight || 0) / totalTopicWeight) * 100;
+                        
+                        const item = document.createElement('div');
+                        item.className = `topic-item grid grid-cols-[auto_1fr_auto] gap-3 sm:gap-4 items-center p-3 sm:p-3.5 mb-2.5 rounded-xl cursor-pointer transition-all hover:border-white/20 border w-full min-w-0 ${isCompleted ? 'bg-[#0d2719]/40 border-primary-accent/30' : 'bg-black/20 border-panel-border'}`;
+                        item.dataset.topicId = topicData.id;
+                        item.dataset.index = index;
 
-                    item.innerHTML = `
-                        <div class="checkbox w-5 h-5 shrink-0 border-2 rounded flex items-center justify-center transition-all ${isCompleted ? 'bg-primary-accent border-primary-accent' : 'bg-transparent border-panel-border'}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-bg-dark ${isCompleted ? '' : 'hidden'} w-3.5 h-3.5"><polyline points="20 6 9 17 4 12"/></svg>
-                        </div>
-                        <div class="topic-name text-[13.5px] sm:text-[14.5px] leading-snug font-medium transition-all break-words pr-2 min-w-0 ${isCompleted ? 'line-through decoration-2 decoration-primary-accent/70 text-primary-accent/80' : 'text-text-main'}">
-                            ${window.escapeHtml(topicData.name)}
-                        </div>
-                        <div class="w-[48px] sm:w-[52px] text-right shrink-0">
-                            <span class="text-xs sm:text-[13px] font-semibold text-text-muted">${truePercent.toFixed(1)}%</span>
-                        </div>
-                    `;
+                        item.innerHTML = `
+                            <div class="checkbox w-5 h-5 shrink-0 border-2 rounded flex items-center justify-center transition-all ${isCompleted ? 'bg-primary-accent border-primary-accent' : 'bg-transparent border-panel-border'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-bg-dark ${isCompleted ? '' : 'hidden'} w-3.5 h-3.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div class="topic-name text-[13.5px] sm:text-[14.5px] leading-snug font-medium transition-all break-words pr-2 min-w-0 ${isCompleted ? 'line-through decoration-2 decoration-primary-accent/70 text-primary-accent/80' : 'text-text-main'}">
+                                ${window.escapeHtml(topicData.name)}
+                            </div>
+                            <div class="w-[48px] sm:w-[52px] text-right shrink-0">
+                                <span class="text-xs sm:text-[13px] font-semibold text-text-muted topic-percent">${truePercent.toFixed(1)}%</span>
+                            </div>
+                        `;
 
-                    // Attach click listener for completion toggle
-                    item.addEventListener('click', () => {
-                        const s = window.getState();
-                        const subD = s.subjects.find(x => x.id === subjectId);
-                        const topD = subD.topics.find(t => t.id === topicData.id);
-                        if (topD) {
-                            topD.completed = !topD.completed;
-                            window.saveState(s);
+                        // Attach click listener for completion toggle
+                        item.addEventListener('click', () => {
+                            // Optimistic UI update
+                            const checkbox = item.querySelector('.checkbox');
+                            const topicName = item.querySelector('.topic-name');
+                            const svg = checkbox.querySelector('svg');
+                            
+                            const currentlyCompleted = item.classList.contains('bg-[#0d2719]/40');
+                            const willComplete = !currentlyCompleted;
+                            
+                            // Update item classes
+                            if (willComplete) {
+                                item.classList.replace('bg-black/20', 'bg-[#0d2719]/40');
+                                item.classList.replace('border-panel-border', 'border-primary-accent/30');
+                                checkbox.classList.replace('bg-transparent', 'bg-primary-accent');
+                                checkbox.classList.replace('border-panel-border', 'border-primary-accent');
+                                svg.classList.remove('hidden');
+                                topicName.classList.remove('text-text-main');
+                                topicName.classList.add('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                            } else {
+                                item.classList.replace('bg-[#0d2719]/40', 'bg-black/20');
+                                item.classList.replace('border-primary-accent/30', 'border-panel-border');
+                                checkbox.classList.replace('bg-primary-accent', 'bg-transparent');
+                                checkbox.classList.replace('border-primary-accent', 'border-panel-border');
+                                svg.classList.add('hidden');
+                                topicName.classList.remove('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                                topicName.classList.add('text-text-main');
+                            }
+
+                            // Save state asynchronously to not block UI
+                            setTimeout(() => {
+                                const s = window.getState();
+                                const subD = s.subjects.find(x => x.id === subjectId);
+                                const topD = subD.topics.find(t => t.id === topicData.id);
+                                if (topD) {
+                                    topD.completed = willComplete;
+                                    window.saveState(s);
+                                }
+                            }, 0);
+                        });
+
+                        fragment.appendChild(item);
+                    });
+                    topicsContainer.appendChild(fragment);
+                } else {
+                    // Fast update of existing items
+                    subjectData.topics.forEach((topicData, index) => {
+                        const item = topicsContainer.children[index];
+                        if (!item) return;
+                        
+                        const isCompleted = topicData.completed;
+                        const truePercent = totalTopicWeight === 0 ? 0 : ((topicData.trackerWeight || 0) / totalTopicWeight) * 100;
+                        
+                        const pctSpan = item.querySelector('.topic-percent');
+                        if (pctSpan && pctSpan.textContent !== `${truePercent.toFixed(1)}%`) {
+                            pctSpan.textContent = `${truePercent.toFixed(1)}%`;
+                        }
+
+                        const nameDiv = item.querySelector('.topic-name');
+                        const currentName = window.escapeHtml(topicData.name);
+                        if (nameDiv && nameDiv.innerHTML.trim() !== currentName) {
+                            nameDiv.innerHTML = currentName;
+                        }
+
+                        const currentlyCompleted = item.classList.contains('bg-[#0d2719]/40');
+                        if (currentlyCompleted !== isCompleted) {
+                            const checkbox = item.querySelector('.checkbox');
+                            const svg = checkbox.querySelector('svg');
+                            
+                            if (isCompleted) {
+                                item.classList.replace('bg-black/20', 'bg-[#0d2719]/40');
+                                item.classList.replace('border-panel-border', 'border-primary-accent/30');
+                                checkbox.classList.replace('bg-transparent', 'bg-primary-accent');
+                                checkbox.classList.replace('border-panel-border', 'border-primary-accent');
+                                svg.classList.remove('hidden');
+                                nameDiv.classList.remove('text-text-main');
+                                nameDiv.classList.add('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                            } else {
+                                item.classList.replace('bg-[#0d2719]/40', 'bg-black/20');
+                                item.classList.replace('border-primary-accent/30', 'border-panel-border');
+                                checkbox.classList.replace('bg-primary-accent', 'bg-transparent');
+                                checkbox.classList.replace('border-primary-accent', 'border-panel-border');
+                                svg.classList.add('hidden');
+                                nameDiv.classList.remove('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                                nameDiv.classList.add('text-text-main');
+                            }
                         }
                     });
-
-                    topicsContainer.appendChild(item);
-                });
+                }
             } else {
                 topicsContainer.innerHTML = '<div class="text-text-muted text-sm py-4">No topics found for this subject. Add topics via Dashboard Settings.</div>';
             }
 
             // Update History
             const historyContainer = document.getElementById('history-container');
-            historyContainer.innerHTML = '';
             const subjectHistory = state.studyHistory.filter(h => h.subjectId === subjectId).sort((a,b) => new Date(b.date) - new Date(a.date));
+            const newHistoryIds = subjectHistory.map(h => h.id).join(',');
             
-            if(subjectHistory.length === 0) {
-                historyContainer.innerHTML = '<div class="text-text-muted text-sm py-4">No study hours logged yet.</div>';
-            } else {
-                subjectHistory.forEach(entry => {
-                    const dateObj = new Date(entry.date);
-                    const dateStr = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-                    
-                    const el = document.createElement('div');
-                    el.className = 'flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-black/20 rounded-lg gap-2 sm:gap-4 min-w-0';
-                    el.innerHTML = `
-                        <div class="flex flex-col gap-1 min-w-0 flex-1">
-                            <span class="text-xs text-text-muted">${window.escapeHtml(dateStr)}</span>
-                            ${entry.note ? `<span class="text-xs sm:text-sm text-text-main break-words">${window.escapeHtml(entry.note)}</span>` : ''}
-                        </div>
-                        <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end shrink-0">
-                            <div class="font-semibold text-primary-accent text-sm sm:text-base">${window.formatHours(entry.hours)}</div>
-                            <button class="btn-delete-history px-2 py-1 border border-red-500/30 text-red-300 text-xs rounded hover:bg-red-500/10 transition-colors" data-id="${window.escapeHtml(entry.id)}">Delete</button>
-                        </div>
-                    `;
-                    historyContainer.appendChild(el);
-                });
-
-                document.querySelectorAll('.btn-delete-history').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.target.dataset.id;
-                        state.studyHistory = state.studyHistory.filter(h => h.id !== id);
-                        window.saveState(state);
+            if (historyContainer.dataset.renderedIds !== newHistoryIds) {
+                historyContainer.dataset.renderedIds = newHistoryIds;
+                historyContainer.innerHTML = '';
+                
+                if(subjectHistory.length === 0) {
+                    historyContainer.innerHTML = '<div class="text-text-muted text-sm py-4">No study hours logged yet.</div>';
+                } else {
+                    const fragment = document.createDocumentFragment();
+                    subjectHistory.forEach(entry => {
+                        const dateObj = new Date(entry.date);
+                        const dateStr = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+                        
+                        const el = document.createElement('div');
+                        el.className = 'flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-black/20 rounded-lg gap-2 sm:gap-4 min-w-0';
+                        el.innerHTML = `
+                            <div class="flex flex-col gap-1 min-w-0 flex-1">
+                                <span class="text-xs text-text-muted">${window.escapeHtml(dateStr)}</span>
+                                ${entry.note ? `<span class="text-xs sm:text-sm text-text-main break-words">${window.escapeHtml(entry.note)}</span>` : ''}
+                            </div>
+                            <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end shrink-0">
+                                <div class="font-semibold text-primary-accent text-sm sm:text-base">${window.formatHours(entry.hours)}</div>
+                                <button class="btn-delete-history px-2 py-1 border border-red-500/30 text-red-300 text-xs rounded hover:bg-red-500/10 transition-colors" data-id="${window.escapeHtml(entry.id)}">Delete</button>
+                            </div>
+                        `;
+                        fragment.appendChild(el);
                     });
-                });
+                    historyContainer.appendChild(fragment);
+
+                    document.querySelectorAll('.btn-delete-history').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.target.dataset.id;
+                            const s = window.getState();
+                            s.studyHistory = s.studyHistory.filter(h => h.id !== id);
+                            window.saveState(s);
+                        });
+                    });
+                }
             }
         }
 
