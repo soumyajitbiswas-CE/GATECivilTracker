@@ -18,7 +18,7 @@ const { subject } = Astro.props;
     <!-- Detail View -->
     <div id="detail-view" class="flex flex-col gap-4 sm:gap-5 min-w-0" data-subject-id={subject.id}>
         <div class="mb-1">
-            <a href="/" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+            <a href="/" data-astro-prefetch="hover" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
                 <span class="pointer-events-none">Back to Dashboard</span>
             </a>
@@ -64,7 +64,26 @@ const { subject } = Astro.props;
             <div class="glass-panel surface-summary p-4 sm:p-6 md:p-8 min-w-0">
                 <h2 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Syllabus Topics</h2>
                 <div class="flex flex-col gap-0" id="topics-container">
-                    <!-- Topics Hydrated dynamically via JS -->
+                    {subject.topics && subject.topics.map((topic, index) => {
+                        const totalTopicWeight = subject.topics.reduce((sum, t) => sum + (t.trackerWeight || 0), 0);
+                        const truePercent = totalTopicWeight === 0 ? 0 : ((topic.trackerWeight || 0) / totalTopicWeight) * 100;
+                        const isCompleted = topic.completed;
+                        return (
+                            <div class={`topic-item grid grid-cols-[auto_1fr_auto] gap-3 sm:gap-4 items-center p-3 sm:p-3.5 mb-2.5 rounded-xl cursor-pointer transition-all hover:border-white/20 border w-full min-w-0 ${isCompleted ? 'bg-[#0d2719]/40 border-primary-accent/30 is-completed' : 'bg-black/20 border-panel-border'}`}
+                                 data-topic-id={topic.id}
+                                 data-index={index}>
+                                <div class={`checkbox w-5 h-5 shrink-0 border-2 rounded flex items-center justify-center transition-all ${isCompleted ? 'bg-primary-accent border-primary-accent' : 'bg-transparent border-panel-border'}`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class={`text-bg-dark ${isCompleted ? '' : 'hidden'} w-3.5 h-3.5`}><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                                <div class={`topic-name text-[13.5px] sm:text-[14.5px] leading-snug font-medium transition-all break-words pr-2 min-w-0 ${isCompleted ? 'line-through decoration-2 decoration-primary-accent/70 text-primary-accent/80' : 'text-text-main'}`}>
+                                    {topic.name}
+                                </div>
+                                <div class="w-[48px] sm:w-[52px] text-right shrink-0">
+                                    <span class="text-xs sm:text-[13px] font-semibold text-text-muted topic-percent">{truePercent.toFixed(1)}%</span>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -272,7 +291,7 @@ const { subject } = Astro.props;
                 const totalTopicWeight = subjectData.topics.reduce((sum, t) => sum + (t.trackerWeight || 0), 0);
                 
                 if (topicsContainer.children.length !== subjectData.topics.length) {
-                    topicsContainer.innerHTML = ''; // Clear out old topics only if length mismatch
+                    topicsContainer.innerHTML = ''; // Rebuild only if count changed due to syllabus edit
                     const fragment = document.createDocumentFragment();
                     
                     subjectData.topics.forEach((topicData, index) => {
@@ -280,7 +299,7 @@ const { subject } = Astro.props;
                         const truePercent = totalTopicWeight === 0 ? 0 : ((topicData.trackerWeight || 0) / totalTopicWeight) * 100;
                         
                         const item = document.createElement('div');
-                        item.className = `topic-item grid grid-cols-[auto_1fr_auto] gap-3 sm:gap-4 items-center p-3 sm:p-3.5 mb-2.5 rounded-xl cursor-pointer transition-all hover:border-white/20 border w-full min-w-0 ${isCompleted ? 'bg-[#0d2719]/40 border-primary-accent/30' : 'bg-black/20 border-panel-border'}`;
+                        item.className = `topic-item grid grid-cols-[auto_1fr_auto] gap-3 sm:gap-4 items-center p-3 sm:p-3.5 mb-2.5 rounded-xl cursor-pointer transition-all hover:border-white/20 border w-full min-w-0 ${isCompleted ? 'bg-[#0d2719]/40 border-primary-accent/30 is-completed' : 'bg-black/20 border-panel-border'}`;
                         item.dataset.topicId = topicData.id;
                         item.dataset.index = index;
 
@@ -295,53 +314,11 @@ const { subject } = Astro.props;
                                 <span class="text-xs sm:text-[13px] font-semibold text-text-muted topic-percent">${truePercent.toFixed(1)}%</span>
                             </div>
                         `;
-
-                        // Attach click listener for completion toggle
-                        item.addEventListener('click', () => {
-                            // Optimistic UI update
-                            const checkbox = item.querySelector('.checkbox');
-                            const topicName = item.querySelector('.topic-name');
-                            const svg = checkbox.querySelector('svg');
-                            
-                            const currentlyCompleted = item.classList.contains('bg-[#0d2719]/40');
-                            const willComplete = !currentlyCompleted;
-                            
-                            // Update item classes
-                            if (willComplete) {
-                                item.classList.replace('bg-black/20', 'bg-[#0d2719]/40');
-                                item.classList.replace('border-panel-border', 'border-primary-accent/30');
-                                checkbox.classList.replace('bg-transparent', 'bg-primary-accent');
-                                checkbox.classList.replace('border-panel-border', 'border-primary-accent');
-                                svg.classList.remove('hidden');
-                                topicName.classList.remove('text-text-main');
-                                topicName.classList.add('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
-                            } else {
-                                item.classList.replace('bg-[#0d2719]/40', 'bg-black/20');
-                                item.classList.replace('border-primary-accent/30', 'border-panel-border');
-                                checkbox.classList.replace('bg-primary-accent', 'bg-transparent');
-                                checkbox.classList.replace('border-primary-accent', 'border-panel-border');
-                                svg.classList.add('hidden');
-                                topicName.classList.remove('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
-                                topicName.classList.add('text-text-main');
-                            }
-
-                            // Save state asynchronously to not block UI
-                            setTimeout(() => {
-                                const s = window.getState();
-                                const subD = s.subjects.find(x => x.id === subjectId);
-                                const topD = subD.topics.find(t => t.id === topicData.id);
-                                if (topD) {
-                                    topD.completed = willComplete;
-                                    window.saveState(s);
-                                }
-                            }, 0);
-                        });
-
                         fragment.appendChild(item);
                     });
                     topicsContainer.appendChild(fragment);
                 } else {
-                    // Fast update of existing items
+                    // Fast update of existing items in place
                     subjectData.topics.forEach((topicData, index) => {
                         const item = topicsContainer.children[index];
                         if (!item) return;
@@ -360,27 +337,35 @@ const { subject } = Astro.props;
                             nameDiv.innerHTML = currentName;
                         }
 
-                        const currentlyCompleted = item.classList.contains('bg-[#0d2719]/40');
+                        const currentlyCompleted = item.classList.contains('is-completed');
                         if (currentlyCompleted !== isCompleted) {
                             const checkbox = item.querySelector('.checkbox');
-                            const svg = checkbox.querySelector('svg');
+                            const svg = checkbox?.querySelector('svg');
                             
                             if (isCompleted) {
-                                item.classList.replace('bg-black/20', 'bg-[#0d2719]/40');
-                                item.classList.replace('border-panel-border', 'border-primary-accent/30');
-                                checkbox.classList.replace('bg-transparent', 'bg-primary-accent');
-                                checkbox.classList.replace('border-panel-border', 'border-primary-accent');
-                                svg.classList.remove('hidden');
-                                nameDiv.classList.remove('text-text-main');
-                                nameDiv.classList.add('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                                item.classList.add('bg-[#0d2719]/40', 'border-primary-accent/30', 'is-completed');
+                                item.classList.remove('bg-black/20', 'border-panel-border');
+                                if (checkbox) {
+                                    checkbox.classList.add('bg-primary-accent', 'border-primary-accent');
+                                    checkbox.classList.remove('bg-transparent', 'border-panel-border');
+                                }
+                                if (svg) svg.classList.remove('hidden');
+                                if (nameDiv) {
+                                    nameDiv.classList.remove('text-text-main');
+                                    nameDiv.classList.add('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                                }
                             } else {
-                                item.classList.replace('bg-[#0d2719]/40', 'bg-black/20');
-                                item.classList.replace('border-primary-accent/30', 'border-panel-border');
-                                checkbox.classList.replace('bg-primary-accent', 'bg-transparent');
-                                checkbox.classList.replace('border-primary-accent', 'border-panel-border');
-                                svg.classList.add('hidden');
-                                nameDiv.classList.remove('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
-                                nameDiv.classList.add('text-text-main');
+                                item.classList.remove('bg-[#0d2719]/40', 'border-primary-accent/30', 'is-completed');
+                                item.classList.add('bg-black/20', 'border-panel-border');
+                                if (checkbox) {
+                                    checkbox.classList.remove('bg-primary-accent', 'border-primary-accent');
+                                    checkbox.classList.add('bg-transparent', 'border-panel-border');
+                                }
+                                if (svg) svg.classList.add('hidden');
+                                if (nameDiv) {
+                                    nameDiv.classList.remove('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                                    nameDiv.classList.add('text-text-main');
+                                }
                             }
                         }
                     });
@@ -423,18 +408,16 @@ const { subject } = Astro.props;
                     historyContainer.appendChild(fragment);
 
                     document.querySelectorAll('.btn-delete-history').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
+                        btn.onclick = (e) => {
                             const id = e.target.dataset.id;
                             const s = window.getState();
                             s.studyHistory = s.studyHistory.filter(h => h.id !== id);
                             window.saveState(s);
-                        });
+                        };
                     });
                 }
             }
         }
-
-        // Topic clicks are now initialized dynamically inside hydrateDetail()
 
         // Date helpers for study log limits (up to today, max past 1 year)
         function getLocalDateString(d = new Date()) {
@@ -455,11 +438,65 @@ const { subject } = Astro.props;
             return { min: minDateStr, max: todayStr };
         }
 
-        // Modal Logic
+        // Modal & Topic Click Logic
         function setupDetailListeners() {
             const detailView = document.getElementById('detail-view');
             if (!detailView) return;
             const subjectId = detailView.dataset.subjectId;
+
+            // Delegated click on topics container
+            const topicsContainer = document.getElementById('topics-container');
+            if (topicsContainer) {
+                topicsContainer.onclick = (e) => {
+                    const item = e.target.closest('.topic-item');
+                    if (!item) return;
+                    const topicId = item.dataset.topicId;
+                    if (!topicId) return;
+
+                    const checkbox = item.querySelector('.checkbox');
+                    const topicName = item.querySelector('.topic-name');
+                    const svg = checkbox?.querySelector('svg');
+                    
+                    const currentlyCompleted = item.classList.contains('is-completed');
+                    const willComplete = !currentlyCompleted;
+                    
+                    if (willComplete) {
+                        item.classList.add('bg-[#0d2719]/40', 'border-primary-accent/30', 'is-completed');
+                        item.classList.remove('bg-black/20', 'border-panel-border');
+                        if (checkbox) {
+                            checkbox.classList.add('bg-primary-accent', 'border-primary-accent');
+                            checkbox.classList.remove('bg-transparent', 'border-panel-border');
+                        }
+                        if (svg) svg.classList.remove('hidden');
+                        if (topicName) {
+                            topicName.classList.remove('text-text-main');
+                            topicName.classList.add('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                        }
+                    } else {
+                        item.classList.remove('bg-[#0d2719]/40', 'border-primary-accent/30', 'is-completed');
+                        item.classList.add('bg-black/20', 'border-panel-border');
+                        if (checkbox) {
+                            checkbox.classList.remove('bg-primary-accent', 'border-primary-accent');
+                            checkbox.classList.add('bg-transparent', 'border-panel-border');
+                        }
+                        if (svg) svg.classList.add('hidden');
+                        if (topicName) {
+                            topicName.classList.remove('line-through', 'decoration-2', 'decoration-primary-accent/70', 'text-primary-accent/80');
+                            topicName.classList.add('text-text-main');
+                        }
+                    }
+
+                    const s = window.getState();
+                    const subD = s.subjects.find(x => x.id === subjectId);
+                    if (subD && subD.topics) {
+                        const topD = subD.topics.find(t => t.id === topicId);
+                        if (topD) {
+                            topD.completed = willComplete;
+                            window.saveState(s);
+                        }
+                    }
+                };
+            }
 
             const modal = document.getElementById('log-modal');
         document.getElementById('btn-log-hours').addEventListener('click', () => {
@@ -702,9 +739,14 @@ const { subject } = Astro.props;
         }
 
         // Run on load and state changes
-        document.addEventListener('DOMContentLoaded', hydrateDetail);
+        function initSubjectPage() {
+            hydrateDetail();
+            setupDetailListeners();
+        }
+
+        initSubjectPage();
+        document.addEventListener('astro:page-load', initSubjectPage);
         document.addEventListener('astro:after-swap', hydrateDetail);
-        document.addEventListener('astro:page-load', setupDetailListeners);
         
         window.removeEventListener('stateChanged', hydrateDetail);
         window.addEventListener('stateChanged', hydrateDetail);

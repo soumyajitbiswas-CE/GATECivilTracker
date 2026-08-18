@@ -16,11 +16,11 @@ allAchievements.sort((a, b) => {
 ---
 
 <Layout title="Achievements | GATE Civil Tracker">
-    <div class="flex flex-col gap-4 sm:gap-5 min-w-0 pb-10">
+    <div id="achievements-view" class="flex flex-col gap-4 sm:gap-5 min-w-0 pb-10">
         
         <!-- Back to Dashboard Button -->
         <div class="mb-1">
-            <a href="/" id="btn-back-dashboard" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+            <a href="/" id="btn-back-dashboard" data-astro-prefetch="hover" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
                 <span class="pointer-events-none">Back to Dashboard</span>
             </a>
@@ -190,6 +190,26 @@ allAchievements.sort((a, b) => {
         #achievements-grid[data-active-filter="Rare"] .ach-card:not([data-rarity="Rare"]) { display: none !important; }
         #achievements-grid[data-active-filter="Epic"] .ach-card:not([data-rarity="Epic"]) { display: none !important; }
         #achievements-grid[data-active-filter="Legendary"] .ach-card:not([data-rarity="Legendary"]) { display: none !important; }
+
+        .ach-card.is-unlocked { border-color: rgba(74, 222, 128, 0.4); box-shadow: 0 0 15px rgba(74, 222, 128, 0.08); }
+        .ach-card.is-unlocked[data-rarity="Common"] { border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 0 15px rgba(255, 255, 255, 0.08); }
+        .ach-card.is-unlocked[data-rarity="Uncommon"] { border-color: rgba(134, 239, 172, 0.4); box-shadow: 0 0 15px rgba(134, 239, 172, 0.08); }
+        .ach-card.is-unlocked[data-rarity="Rare"] { border-color: rgba(96, 165, 250, 0.4); box-shadow: 0 0 15px rgba(96, 165, 250, 0.08); }
+        .ach-card.is-unlocked[data-rarity="Epic"] { border-color: rgba(192, 132, 252, 0.4); box-shadow: 0 0 15px rgba(192, 132, 252, 0.08); }
+        .ach-card.is-unlocked[data-rarity="Legendary"] { border-color: rgba(251, 191, 36, 0.4); box-shadow: 0 0 15px rgba(251, 191, 36, 0.08); }
+
+        .ach-card.is-unlocked .ach-lock-badge { display: none !important; }
+        .ach-card.is-unlocked .ach-unlocked-badge { display: block !important; }
+        .ach-card.is-unlocked .ach-icon-wrap { opacity: 1 !important; filter: none !important; }
+        .ach-card.is-unlocked .ach-glow-bg { opacity: 0.12 !important; }
+        .ach-card.is-unlocked .ach-title-text { color: #ffffff !important; }
+        .ach-card.is-unlocked .ach-xp-text { color: #4ade80 !important; opacity: 1 !important; }
+        .ach-card.is-unlocked .ach-rarity-badge { background-color: white !important; color: black !important; border-color: transparent !important; opacity: 1 !important; }
+        .ach-card.is-unlocked[data-rarity="Uncommon"] .ach-rarity-badge { background-color: #86efac !important; color: black !important; }
+        .ach-card.is-unlocked[data-rarity="Rare"] .ach-rarity-badge { background-color: #60a5fa !important; color: black !important; }
+        .ach-card.is-unlocked[data-rarity="Epic"] .ach-rarity-badge { background-color: #c084fc !important; color: black !important; }
+        .ach-card.is-unlocked[data-rarity="Legendary"] .ach-rarity-badge { background-color: #fbbf24 !important; color: black !important; }
+        .ach-card.is-new .ach-new-badge { display: block !important; }
     </style>
 
     <script>
@@ -216,155 +236,99 @@ allAchievements.sort((a, b) => {
 
         function hydrateAchievementsPage() {
             if (!document.getElementById('achievements-grid')) return;
-                let state;
-                try {
-                    const saved = localStorage.getItem('gateCivilTracker2027');
-                    if (saved) {
-                        state = JSON.parse(saved);
-                        if (!state.achievements) state.achievements = defaultState.achievements;
-                        if (!state.streaks) state.streaks = defaultState.streaks;
-                    }
-                } catch(e) {
-                    console.error("Error loading state", e);
+            const state = window.getState ? window.getState() : JSON.parse(localStorage.getItem('gateCivilTracker2027') || '{}');
+
+            if (window.calculateAllMetrics) {
+                window.calculateAllMetrics(state);
+            }
+            evaluateAchievements(state, achievementsData.achievements);
+
+            const unlockedMap = state.achievements?.unlocked || {};
+            
+            // Update Rank / XP
+            const level = state.achievements?.level || 1;
+            const xp = state.achievements?.xp || 0;
+            const levelEl = document.getElementById('player-level-val');
+            const xpEl = document.getElementById('player-xp-val');
+            const xpNextEl = document.getElementById('player-xp-next');
+            if (levelEl && levelEl.textContent !== String(level)) levelEl.textContent = level;
+            if (xpEl && xpEl.textContent !== String(xp)) xpEl.textContent = xp;
+            if (xpNextEl && xpNextEl.textContent !== `Next: ${level * 250} XP`) xpNextEl.textContent = `Next: ${level * 250} XP`;
+
+            // Update Streak display
+            const currentStreak = state.streaks?.current || 0;
+            const longestStreak = state.streaks?.longest || 0;
+            const streakCountEl = document.getElementById('streak-count-val');
+            const streakLongestEl = document.getElementById('streak-longest-val');
+            const streakIconWrap = document.getElementById('streak-icon-wrap');
+            const streakStatusLabel = document.getElementById('streak-status-label');
+
+            if (streakCountEl && streakCountEl.textContent !== String(currentStreak)) streakCountEl.textContent = currentStreak;
+            if (streakLongestEl && streakLongestEl.textContent !== String(longestStreak)) streakLongestEl.textContent = longestStreak;
+
+            if (currentStreak > 0) {
+                if (streakIconWrap) {
+                    streakIconWrap.className = 'p-2.5 rounded-xl bg-primary-accent/20 border border-primary-accent/40 text-primary-accent shadow-[0_0_12px_rgba(74,222,128,0.3)] shrink-0 flex items-center justify-center transition-all';
                 }
-                if (!state) state = JSON.parse(JSON.stringify(defaultState));
-
-                if (window.calculateAllMetrics) {
-                    window.calculateAllMetrics(state);
+                if (streakStatusLabel) {
+                    streakStatusLabel.textContent = 'Active Streak 🔥';
+                    streakStatusLabel.className = 'text-[9px] sm:text-xs text-primary-accent uppercase tracking-widest font-bold mb-0.5 transition-colors';
                 }
-                evaluateAchievements(state, achievementsData.achievements);
-                
-                localStorage.setItem('gateCivilTracker2027', JSON.stringify(state));
-
-                const unlockedMap = state.achievements?.unlocked || {};
-                
-                // Update Rank / XP
-                const level = state.achievements?.level || 1;
-                const xp = state.achievements?.xp || 0;
-                const levelEl = document.getElementById('player-level-val');
-                const xpEl = document.getElementById('player-xp-val');
-                const xpNextEl = document.getElementById('player-xp-next');
-                if (levelEl) levelEl.textContent = level;
-                if (xpEl) xpEl.textContent = xp;
-                if (xpNextEl) xpNextEl.textContent = `Next: ${level * 250} XP`;
-
-                // Update Streak display
-                const currentStreak = state.streaks?.current || 0;
-                const longestStreak = state.streaks?.longest || 0;
-                const streakCountEl = document.getElementById('streak-count-val');
-                const streakLongestEl = document.getElementById('streak-longest-val');
-                const streakIconWrap = document.getElementById('streak-icon-wrap');
-                const streakStatusLabel = document.getElementById('streak-status-label');
-
-                if (streakCountEl) streakCountEl.textContent = currentStreak;
-                if (streakLongestEl) streakLongestEl.textContent = longestStreak;
-
-                if (currentStreak > 0) {
-                    if (streakIconWrap) {
-                        streakIconWrap.className = 'p-2.5 rounded-xl bg-primary-accent/20 border border-primary-accent/40 text-primary-accent shadow-[0_0_12px_rgba(74,222,128,0.3)] shrink-0 flex items-center justify-center transition-all';
-                    }
-                    if (streakStatusLabel) {
-                        streakStatusLabel.textContent = 'Active Streak 🔥';
-                        streakStatusLabel.className = 'text-[9px] sm:text-xs text-primary-accent uppercase tracking-widest font-bold mb-0.5 transition-colors';
-                    }
-                } else {
-                    if (streakIconWrap) {
-                        streakIconWrap.className = 'p-2.5 rounded-xl bg-white/5 border border-white/10 text-text-muted shrink-0 flex items-center justify-center transition-all';
-                    }
-                    if (streakStatusLabel) {
-                        streakStatusLabel.textContent = 'Daily Streak';
-                        streakStatusLabel.className = 'text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 transition-colors';
-                    }
+            } else {
+                if (streakIconWrap) {
+                    streakIconWrap.className = 'p-2.5 rounded-xl bg-white/5 border border-white/10 text-text-muted shrink-0 flex items-center justify-center transition-all';
                 }
-
-                const stats = { total: 0, Common: 0, Uncommon: 0, Rare: 0, Epic: 0, Legendary: 0 };
-                const unlockedIds = Object.keys(unlockedMap);
-
-                let stateModified = false;
-
-                // Fast targeted update for only unlocked cards
-                unlockedIds.forEach(id => {
-                    const card = document.getElementById(`card-${id}`);
-                    if (!card) return;
-                    
-                    const rarity = card.dataset.rarity;
-                    const color = rarityColors[rarity] || '#ffffff';
-                    const iconColor = iconGlowColors[rarity] || '#ffffff';
-
-                    stats.total++;
-                    stats[rarity] = (stats[rarity] || 0) + 1;
-                    
-                    card.dataset.unlocked = "true";
-                    card.dataset.date = new Date(unlockedMap[id].timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-                    
-                    card.style.borderColor = color + '60';
-                    card.style.boxShadow = `0 0 15px ${color}15`;
-
-                    const lockBadge = card.querySelector('.ach-lock-badge');
-                    const unlockedBadge = card.querySelector('.ach-unlocked-badge');
-                    const newBadge = card.querySelector('.ach-new-badge');
-                    const iconWrap = card.querySelector('.ach-icon-wrap');
-                    const iconImg = card.querySelector('.ach-icon-img');
-                    const glowBg = card.querySelector('.ach-glow-bg');
-                    const titleText = card.querySelector('.ach-title-text');
-                    const rarityBadge = card.querySelector('.ach-rarity-badge');
-                    const xpText = card.querySelector('.ach-xp-text');
-
-                    if (lockBadge) lockBadge.classList.add('hidden');
-                    if (unlockedBadge) unlockedBadge.classList.remove('hidden');
-
-                    if (unlockedMap[id].viewed === false) {
-                        if (newBadge) newBadge.classList.remove('hidden');
-                        unlockedMap[id].viewed = true;
-                        stateModified = true;
-                    }
-
-                    if (iconWrap) {
-                        iconWrap.style.opacity = '1';
-                        iconWrap.classList.remove('grayscale');
-                    }
-                    if (iconImg) {
-                        iconImg.style.filter = `drop-shadow(0 0 10px ${iconColor})`;
-                    }
-                    if (glowBg) {
-                        glowBg.style.backgroundColor = color;
-                        glowBg.style.opacity = '0.12';
-                    }
-                    if (titleText) titleText.style.color = '#ffffff';
-                    if (rarityBadge) {
-                        rarityBadge.style.backgroundColor = color;
-                        rarityBadge.style.color = '#000000';
-                        rarityBadge.style.borderColor = 'transparent';
-                        rarityBadge.style.opacity = '1';
-                    }
-                    if (xpText) {
-                        xpText.style.color = '#4ade80';
-                        xpText.style.opacity = '1';
-                    }
-                });
-
-                // Update stats counts
-                const statTotal = document.getElementById('stat-total');
-                if (statTotal) statTotal.textContent = stats.total;
-                ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'].forEach(r => {
-                    const el = document.getElementById(`stat-${r}`);
-                    if (el) el.textContent = stats[r] || 0;
-                });
-
-                if (stateModified) {
-                    localStorage.setItem('gateCivilTracker2027', JSON.stringify(state));
-                    window.dispatchEvent(new Event('stateChanged'));
+                if (streakStatusLabel) {
+                    streakStatusLabel.textContent = 'Daily Streak';
+                    streakStatusLabel.className = 'text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 transition-colors';
                 }
             }
 
-            function setupAchievementsListeners() {
-                if (!document.getElementById('achievements-grid')) return;
+            const stats = { total: 0, Common: 0, Uncommon: 0, Rare: 0, Epic: 0, Legendary: 0 };
+            const unlockedIds = Object.keys(unlockedMap);
+            let stateModified = false;
 
-                // Fast Filter using grid data-attribute
+            // Ultra-fast targeted update using CSS classes
+            unlockedIds.forEach(id => {
+                const card = document.getElementById(`card-${id}`);
+                if (!card) return;
+                
+                const rarity = card.dataset.rarity;
+                stats.total++;
+                stats[rarity] = (stats[rarity] || 0) + 1;
+                
+                card.classList.add('is-unlocked');
+                card.dataset.unlocked = "true";
+                card.dataset.date = new Date(unlockedMap[id].timestamp).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                
+                if (unlockedMap[id].viewed === false) {
+                    card.classList.add('is-new');
+                    unlockedMap[id].viewed = true;
+                    stateModified = true;
+                }
+            });
+
+            // Update stats counts
+            const statTotal = document.getElementById('stat-total');
+            if (statTotal && statTotal.textContent !== String(stats.total)) statTotal.textContent = stats.total;
+            ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'].forEach(r => {
+                const el = document.getElementById(`stat-${r}`);
+                if (el && el.textContent !== String(stats[r] || 0)) el.textContent = stats[r] || 0;
+            });
+
+            if (stateModified && window.saveState) {
+                localStorage.setItem('gateCivilTracker2027', JSON.stringify(state));
+            }
+        }
+
+        function setupAchievementsListeners() {
+            if (!document.getElementById('achievements-grid')) return;
+
+            // Fast Filter using grid data-attribute
             const grid = document.getElementById('achievements-grid');
             const filterBtns = document.querySelectorAll('.filter-btn');
             filterBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                btn.onclick = (e) => {
                     filterBtns.forEach(b => {
                         b.classList.remove('active', 'bg-white/10', 'text-white', 'border-white/20');
                         b.classList.add('bg-transparent', 'text-text-muted', 'border-transparent');
@@ -377,7 +341,7 @@ allAchievements.sort((a, b) => {
                     if (grid) {
                         grid.dataset.activeFilter = target.dataset.filter;
                     }
-                });
+                };
             });
 
             // Detail Modal using Event Delegation on Grid
@@ -457,20 +421,16 @@ allAchievements.sort((a, b) => {
             if (modal) modal.addEventListener('click', (e) => {
                 if (e.target === modal) closeModal();
             });
-
-            // Instant Single-Tap Back Navigation
-            const backBtn = document.getElementById('btn-back-dashboard');
-            if (backBtn) {
-                backBtn.addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    window.location.href = '/';
-                }, { passive: false });
-            }
         }
 
-        document.addEventListener('DOMContentLoaded', hydrateAchievementsPage);
+        function initAchievementsPage() {
+            hydrateAchievementsPage();
+            setupAchievementsListeners();
+        }
+
+        initAchievementsPage();
+        document.addEventListener('astro:page-load', initAchievementsPage);
         document.addEventListener('astro:after-swap', hydrateAchievementsPage);
-        document.addEventListener('astro:page-load', setupAchievementsListeners);
 
         window.removeEventListener('stateChanged', hydrateAchievementsPage);
         window.removeEventListener('achievementsUnlocked', hydrateAchievementsPage);

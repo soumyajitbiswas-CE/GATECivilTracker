@@ -1,15 +1,28 @@
 // Sound synthesis for achievements
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let audioCtx = null;
+
+function getAudioCtx() {
+    if (!audioCtx && typeof window !== 'undefined') {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioClass) {
+            audioCtx = new AudioClass();
+        }
+    }
+    return audioCtx;
+}
 
 export function resumeAudio() {
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume().catch(e => console.warn('AudioContext resume failed:', e));
+    const ctx = getAudioCtx();
+    if (ctx && ctx.state === 'suspended') {
+        ctx.resume().catch(e => console.warn('AudioContext resume failed:', e));
     }
 }
 
 function playTone(freq, type, duration, vol, startTime) {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
     osc.type = type;
     osc.frequency.setValueAtTime(freq, startTime);
     
@@ -19,18 +32,20 @@ function playTone(freq, type, duration, vol, startTime) {
     gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
     
     osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    gain.connect(ctx.destination);
     
     osc.start(startTime);
     osc.stop(startTime + duration);
 }
 
 export function playAchievementSound(rarity) {
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume().catch(e => console.warn('AudioContext resume failed:', e));
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') {
+        ctx.resume().catch(e => console.warn('AudioContext resume failed:', e));
     }
     
-    const now = audioCtx.currentTime;
+    const now = ctx.currentTime;
 
     if (rarity === 'Common') {
         // Short clean chime

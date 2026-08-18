@@ -12,7 +12,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -43,7 +43,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 		<meta property="twitter:image" content={new URL('/web-app-manifest-512x512.png', Astro.site || Astro.url)} />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=optional" rel="stylesheet">
 		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || 'https://gateciviltracker.com').href} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<script type="application/ld+json" set:html={JSON.stringify({
@@ -55,18 +55,32 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 			"operatingSystem": "Any",
 			"url": Astro.url.href
 		})} />
+        <style is:inline>
+            ::view-transition-old(root),
+            ::view-transition-new(root) {
+                animation-duration: 140ms;
+                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            }
+            @media (prefers-reduced-motion: reduce) {
+                ::view-transition-group(*),
+                ::view-transition-old(*),
+                ::view-transition-new(*) {
+                    animation: none !important;
+                }
+            }
+        </style>
         <ViewTransitions />
 	</head>
 	<body class="min-h-screen">
-        <div class="site-bg" aria-hidden="true"></div>
-        <FallingLeaves />
-        <AchievementNotification />
+        <div class="site-bg" aria-hidden="true" transition:persist="site-bg"></div>
+        <FallingLeaves transition:persist="falling-leaves" />
+        <AchievementNotification transition:persist="ach-notification" />
         <div class="app-container flex flex-col gap-5 sm:gap-6 relative z-0">
             <!-- Header -->
-            <header class="flex flex-col gap-3 pb-4 border-b border-panel-border min-w-0">
+            <header class="flex flex-col gap-3 pb-4 border-b border-panel-border min-w-0" transition:persist="app-header">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3.5 sm:gap-4 min-w-0">
                     <div class="flex flex-col min-w-0 flex-1">
-                        <a href="/" class="text-2xl sm:text-[28px] font-[Outfit] font-semibold flex items-center gap-2.5 text-white tracking-tight break-words leading-none hover:opacity-90 transition-opacity w-fit" style="letter-spacing: -0.01em;">
+                        <a href="/" data-astro-prefetch="hover" class="text-2xl sm:text-[28px] font-[Outfit] font-semibold flex items-center gap-2.5 text-white tracking-tight break-words leading-none hover:opacity-90 transition-opacity w-fit" style="letter-spacing: -0.01em;">
                             <img src="/favicon.svg" alt="Logo" class="w-7 h-7 sm:w-8 sm:h-8 rounded object-cover border border-primary-accent/30 shrink-0 drop-shadow-[0_0_8px_rgba(74,222,128,0.3)]" />
                             <span class="truncate mt-0.5 text-[0.95em]">GATE Civil <span class="text-primary-accent">Tracker</span></span>
                         </a>
@@ -75,7 +89,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                     
                     <!-- Buttons Wrapper -->
                     <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-2.5 md:gap-3 w-full sm:w-auto shrink-0">
-                        <a href="/achievements" class="btn relative hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center flex items-center gap-1.5 border-primary-accent/30 bg-primary-accent/5 hover:bg-primary-accent/20">
+                        <a href="/achievements" data-astro-prefetch="hover" class="btn relative hover:text-white text-xs sm:text-sm px-3 sm:px-4 py-2 justify-center flex items-center gap-1.5 border-primary-accent/30 bg-primary-accent/5 hover:bg-primary-accent/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
                             Achievements
                             <span id="ach-badge" class="absolute -top-2 -right-2 min-w-[20px] h-[20px] px-1 bg-primary-accent text-[#06140e] text-[10px] font-extrabold rounded-full shadow-[0_0_10px_rgba(74,222,128,0.8)] border-2 border-[#06140e] flex items-center justify-center pointer-events-none z-20 leading-none hidden">0</span>
@@ -101,7 +115,9 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 </div>
             </header>
             
-		    <slot />
+		    <main id="main-content" class="min-w-0 flex-1 flex flex-col">
+                <slot />
+            </main>
         </div>
 
         <!-- Reset Confirmation Warning Modal -->
@@ -270,33 +286,41 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 };
             };
             
+            let cachedState = null;
+            window.addEventListener('storage', () => { cachedState = null; });
+            
             window.getState = () => {
+                if (cachedState) return cachedState;
                 const saved = localStorage.getItem('gateCivilTracker2027');
                 if (saved) {
                     try {
                         const parsed = JSON.parse(saved);
+                        let modified = false;
                         if(!parsed.pyqs) {
                             parsed.pyqs = JSON.parse(JSON.stringify(defaultState.pyqs));
+                            modified = true;
                         } else {
                             if (parsed.pyqs['geomatics_engineering'] && parsed.pyqs['geomatics_engineering'].total === 80) {
                                 parsed.pyqs['geomatics_engineering'].total = 100;
+                                modified = true;
                             }
                             if (parsed.pyqs['construction_materials'] && parsed.pyqs['construction_materials'].total === 80) {
                                 parsed.pyqs['construction_materials'].total = 100;
+                                modified = true;
                             }
                         }
-                        if(!parsed.tests) parsed.tests = JSON.parse(JSON.stringify(defaultState.tests));
-                        if(!parsed.tests.topic) parsed.tests.topic = { completed: 0, total: 40 };
-                        if(!parsed.tests.subject) parsed.tests.subject = { completed: 0, total: 10 };
-                        if(!parsed.mocks) parsed.mocks = JSON.parse(JSON.stringify(defaultState.mocks));
-                        if(!parsed.revision) parsed.revision = JSON.parse(JSON.stringify(defaultState.revision));
-                        if(!parsed.settings) parsed.settings = JSON.parse(JSON.stringify(defaultState.settings));
-                        if(!parsed.settings.weights) parsed.settings.weights = JSON.parse(JSON.stringify(defaultState.settings.weights));
-                        if(!parsed.achievements) parsed.achievements = JSON.parse(JSON.stringify(defaultState.achievements));
-                        if(!parsed.streaks) parsed.streaks = JSON.parse(JSON.stringify(defaultState.streaks));
-                        if(!parsed.studyHistory) parsed.studyHistory = [];
-                        if(!parsed.mocksHistory) parsed.mocksHistory = [];
-                        if(!parsed.subjects) parsed.subjects = JSON.parse(JSON.stringify(defaultState.subjects));
+                        if(!parsed.tests) { parsed.tests = JSON.parse(JSON.stringify(defaultState.tests)); modified = true; }
+                        if(!parsed.tests.topic) { parsed.tests.topic = { completed: 0, total: 40 }; modified = true; }
+                        if(!parsed.tests.subject) { parsed.tests.subject = { completed: 0, total: 10 }; modified = true; }
+                        if(!parsed.mocks) { parsed.mocks = JSON.parse(JSON.stringify(defaultState.mocks)); modified = true; }
+                        if(!parsed.revision) { parsed.revision = JSON.parse(JSON.stringify(defaultState.revision)); modified = true; }
+                        if(!parsed.settings) { parsed.settings = JSON.parse(JSON.stringify(defaultState.settings)); modified = true; }
+                        if(!parsed.settings.weights) { parsed.settings.weights = JSON.parse(JSON.stringify(defaultState.settings.weights)); modified = true; }
+                        if(!parsed.achievements) { parsed.achievements = JSON.parse(JSON.stringify(defaultState.achievements)); modified = true; }
+                        if(!parsed.streaks) { parsed.streaks = JSON.parse(JSON.stringify(defaultState.streaks)); modified = true; }
+                        if(!parsed.studyHistory) { parsed.studyHistory = []; modified = true; }
+                        if(!parsed.mocksHistory) { parsed.mocksHistory = []; modified = true; }
+                        if(!parsed.subjects) { parsed.subjects = JSON.parse(JSON.stringify(defaultState.subjects)); modified = true; }
                         
                         // --- Data Migration Logic for Activity Records ---
                         const today = new Date().toISOString().split('T')[0];
@@ -314,6 +338,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                     });
                                 }
                             });
+                            modified = true;
                         }
                         
                         if(!parsed.testHistory) {
@@ -340,6 +365,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                     });
                                 }
                             }
+                            modified = true;
                         }
                         
                         if(!parsed.mocksHistory || parsed.mocksHistory.length === 0) {
@@ -354,6 +380,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                     });
                                 }
                             }
+                            modified = true;
                         }
                         
                         if(!parsed.revisionHistory) {
@@ -371,17 +398,24 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                                     }
                                 }
                             });
+                            modified = true;
                         }
                         
-                        return parsed;
+                        if (modified) {
+                            localStorage.setItem('gateCivilTracker2027', JSON.stringify(parsed));
+                        }
+                        cachedState = parsed;
+                        return cachedState;
                     } catch(e) {
                         console.error("Error parsing saved state", e);
                     }
                 }
-                return JSON.parse(JSON.stringify(defaultState));
+                cachedState = JSON.parse(JSON.stringify(defaultState));
+                return cachedState;
             };
 
             window.saveState = (state) => {
+                cachedState = state;
                 // Ensure metrics are calculated before evaluating achievements
                 window.calculateAllMetrics(state);
                 
@@ -1331,7 +1365,8 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 }
             }
 
-            document.addEventListener('DOMContentLoaded', initSettingsModals);
+            initSettingsModals();
+            document.addEventListener('astro:page-load', initSettingsModals);
             document.addEventListener('astro:after-swap', initSettingsModals);
         </script>
 	</body>

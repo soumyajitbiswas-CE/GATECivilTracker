@@ -72,8 +72,8 @@ const subjectBgClass = {
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" style="transform: translateZ(0);">
-            {subjects.map((sub, index) => (
-                <div class={`${subjectBgClass[sub.id] || 'surface-syllabus'} backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group relative overflow-hidden transition-transform active:scale-[0.98] focus-within:ring-2 focus-within:ring-primary-accent cursor-pointer`} data-id={sub.id} onclick={`window.location.href='/subject/${sub.id}'`}>
+            {subjects.map((sub) => (
+                <a href={`/subject/${sub.id}`} data-astro-prefetch="hover" class={`${subjectBgClass[sub.id] || 'surface-syllabus'} backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group relative overflow-hidden transition-transform active:scale-[0.98] focus-within:ring-2 focus-within:ring-primary-accent cursor-pointer block no-underline text-inherit`} data-id={sub.id}>
                     <!-- Top section: Title and Weight -->
                     <div class="flex flex-col gap-1 min-w-0">
                         <div class="flex items-start gap-3 min-w-0">
@@ -101,9 +101,9 @@ const subjectBgClass = {
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                             <span class="subject-hours-text truncate" data-id={sub.id}>0h studied</span>
                         </div>
-                        <a href={`/subject/${sub.id}`} class="btn text-[11px] sm:text-[12px] px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0" aria-label={`Open ${sub.name}`} onclick="event.stopPropagation()">OPEN →</a>
+                        <span class="btn text-[11px] sm:text-[12px] px-2.5 sm:px-3 py-1 sm:py-1.5 shrink-0 group-hover:bg-primary-accent group-hover:text-bg-dark transition-colors" aria-label={`Open ${sub.name}`}>OPEN →</span>
                     </div>
-                </div>
+                </a>
             ))}
         </div>
 
@@ -1258,8 +1258,9 @@ const subjectBgClass = {
             });
         }
 
-        document.addEventListener('DOMContentLoaded', initPage);
-        document.addEventListener('astro:after-swap', initPage);
+        initPage();
+        document.addEventListener('astro:page-load', initPage);
+        document.addEventListener('astro:after-swap', hydrateDashboard);
         
         window.removeEventListener('stateChanged', hydrateDashboard);
         window.addEventListener('stateChanged', hydrateDashboard);

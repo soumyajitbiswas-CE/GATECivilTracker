@@ -13,7 +13,7 @@ const { class: className = '' } = Astro.props;
             
             <!-- Left: Brand & Tagline -->
             <div class="flex flex-col gap-1.5 shrink-0 max-w-sm">
-                <a href="/" class="text-lg font-[Outfit] font-semibold flex items-center gap-2 text-white hover:text-primary-accent transition-colors w-fit group">
+                <a href="/" data-astro-prefetch="hover" class="text-lg font-[Outfit] font-semibold flex items-center gap-2 text-white hover:text-primary-accent transition-colors w-fit group">
                     <img src="/favicon.svg" alt="Logo" class="w-5 h-5 rounded object-cover border border-white/10 group-hover:border-primary-accent/30 transition-colors" />
                     <span>GATE Civil <span class="text-primary-accent">Tracker</span></span>
                 </a>
@@ -24,13 +24,13 @@ const { class: className = '' } = Astro.props;
 
             <!-- Right: Links -->
             <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-[12px] sm:text-[13px]">
-                <a href="/about" class="text-white/90 font-medium hover:text-primary-accent transition-colors">About</a>
+                <a href="/about" data-astro-prefetch="hover" class="text-white/90 font-medium hover:text-primary-accent transition-colors">About</a>
                 <span class="text-white/20 select-none">&middot;</span>
-                <a href="/contact" class="text-white/90 font-medium hover:text-primary-accent transition-colors">Contact</a>
+                <a href="/contact" data-astro-prefetch="hover" class="text-white/90 font-medium hover:text-primary-accent transition-colors">Contact</a>
                 <span class="text-white/20 select-none">&middot;</span>
-                <a href="/privacy-policy" class="text-text-muted/70 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="/privacy-policy" data-astro-prefetch="hover" class="text-text-muted/70 hover:text-white transition-colors">Privacy Policy</a>
                 <span class="text-white/20 select-none">&middot;</span>
-                <a href="/terms" class="text-text-muted/70 hover:text-white transition-colors">Terms & Conditions</a>
+                <a href="/terms" data-astro-prefetch="hover" class="text-text-muted/70 hover:text-white transition-colors">Terms & Conditions</a>
             </div>
         </div>
 
