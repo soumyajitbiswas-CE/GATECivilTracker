@@ -1287,42 +1287,53 @@ const isHome = Astro.url.pathname === '/';
             initActivityHistory();
             document.addEventListener('astro:page-load', initActivityHistory);
 
-            // Global listeners
+            function initSettingsModals() {
+                const btnExport = document.getElementById('btn-export');
+                if (btnExport) {
+                    btnExport.onclick = () => {
+                        const state = window.getState();
+                        state.exportedOnce = true;
+                        window.saveState(state);
+                        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+                        const dlAnchorElem = document.createElement('a');
+                        dlAnchorElem.setAttribute("href", dataStr);
+                        dlAnchorElem.setAttribute("download", "gate-civil-tracker.json");
+                        document.body.appendChild(dlAnchorElem);
+                        dlAnchorElem.click();
+                        document.body.removeChild(dlAnchorElem);
+                    };
+                }
 
-            document.getElementById('btn-export')?.addEventListener('click', () => {
-                const state = window.getState();
-                state.exportedOnce = true;
-                window.saveState(state);
-                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-                const dlAnchorElem = document.createElement('a');
-                dlAnchorElem.setAttribute("href", dataStr);
-                dlAnchorElem.setAttribute("download", "gate-civil-tracker.json");
-                dlAnchorElem.click();
-            });
+                const importFile = document.getElementById('import-file');
+                if (importFile) {
+                    importFile.onchange = (e) => {
+                        const file = e.target.files[0];
+                        if(!file) return;
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            try {
+                                const importedState = JSON.parse(event.target.result);
+                                if(importedState && Array.isArray(importedState.subjects) && importedState.subjects.length > 0
+                                    && importedState.subjects.every(s => typeof s.id === 'string' && typeof s.name === 'string' && Array.isArray(s.topics))) {
+                                    importedState.importedOnce = true;
+                                    window.saveState(importedState);
+                                    alert('Progress imported successfully!');
+                                    window.location.reload();
+                                } else {
+                                    alert('Invalid file format. The file must be a valid GATE Civil Tracker export.');
+                                }
+                            } catch(err) {
+                                alert('Error parsing file. Please ensure it is a valid JSON export.');
+                            }
+                        };
+                        reader.readAsText(file);
+                        e.target.value = '';
+                    };
+                }
+            }
 
-            document.getElementById('import-file')?.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if(!file) return;
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    try {
-                        const importedState = JSON.parse(event.target.result);
-                        if(importedState && Array.isArray(importedState.subjects) && importedState.subjects.length > 0
-                            && importedState.subjects.every(s => typeof s.id === 'string' && typeof s.name === 'string' && Array.isArray(s.topics))) {
-                            importedState.importedOnce = true;
-                            window.saveState(importedState);
-                            alert('Progress imported successfully!');
-                            window.location.reload();
-                        } else {
-                            alert('Invalid file format. The file must be a valid GATE Civil Tracker export.');
-                        }
-                    } catch(err) {
-                        alert('Error parsing file. Please ensure it is a valid JSON export.');
-                    }
-                };
-                reader.readAsText(file);
-                e.target.value = '';
-            });
+            initSettingsModals();
+            document.addEventListener('astro:page-load', initSettingsModals);
         </script>
         {!isHome && (
             <div class="absolute w-0 h-0 overflow-hidden opacity-0 pointer-events-none" style="top: -9999px; left: -9999px;" aria-hidden="true">
