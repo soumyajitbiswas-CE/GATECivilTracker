@@ -7,43 +7,47 @@ const { class: className = '' } = Astro.props;
 ---
 
 <footer class={`mt-16 w-full ${className}`}>
-    <div class="border-t border-white/5 py-10 flex flex-col items-center justify-center gap-5 text-center">
-        
-        <!-- Brand & Tagline -->
-        <div class="flex flex-col items-center gap-2 mb-2">
-            <a href="/" class="text-lg font-[Outfit] font-semibold flex items-center gap-2 text-white hover:text-primary-accent transition-colors group">
-                <img src="/favicon.svg" alt="Logo" class="w-5 h-5 rounded object-cover border border-white/10 group-hover:border-primary-accent/30 transition-colors" />
-                <span>GATE Civil <span class="text-primary-accent">Tracker</span></span>
-            </a>
-            <p class="text-text-muted text-[13px] leading-relaxed max-w-xs sm:max-w-sm">
-                Free, privacy-first GATE Civil Engineering preparation & progress tracking.
-            </p>
+    <div class="border-t border-white/5 pt-8 pb-6 flex flex-col gap-6 md:gap-8">
+        <!-- Top Row: Brand & Links -->
+        <div class="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6">
+            
+            <!-- Left: Brand & Tagline -->
+            <div class="flex flex-col gap-1.5 shrink-0 max-w-sm">
+                <a href="/" class="text-lg font-[Outfit] font-semibold flex items-center gap-2 text-white hover:text-primary-accent transition-colors w-fit group">
+                    <img src="/favicon.svg" alt="Logo" class="w-5 h-5 rounded object-cover border border-white/10 group-hover:border-primary-accent/30 transition-colors" />
+                    <span>GATE Civil <span class="text-primary-accent">Tracker</span></span>
+                </a>
+                <p class="text-text-muted text-[12px] leading-relaxed">
+                    Free, privacy-first GATE Civil Engineering progress tracker.
+                </p>
+            </div>
+
+            <!-- Right: Links -->
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-[12px] sm:text-[13px]">
+                <a href="/about" class="text-white/90 font-medium hover:text-primary-accent transition-colors">About</a>
+                <span class="text-white/20 select-none">&middot;</span>
+                <a href="/contact" class="text-white/90 font-medium hover:text-primary-accent transition-colors">Contact</a>
+                <span class="text-white/20 select-none">&middot;</span>
+                <a href="/privacy-policy" class="text-text-muted/70 hover:text-white transition-colors">Privacy Policy</a>
+                <span class="text-white/20 select-none">&middot;</span>
+                <a href="/terms" class="text-text-muted/70 hover:text-white transition-colors">Terms & Conditions</a>
+            </div>
         </div>
 
-        <!-- Links Row 1 -->
-        <nav aria-label="Footer Navigation" class="flex flex-wrap justify-center items-center gap-3 text-[13px] font-medium text-white/90">
-            <a href="/about" class="hover:text-primary-accent transition-colors">About</a>
-            <span class="text-white/20">&middot;</span>
-            <a href="/contact" class="hover:text-primary-accent transition-colors">Contact</a>
-        </nav>
-        
-        <!-- Links Row 2 -->
-        <nav aria-label="Legal Navigation" class="flex flex-wrap justify-center items-center gap-3 text-[12px] text-text-muted/60">
-            <a href="/privacy-policy" class="hover:text-white transition-colors">Privacy Policy</a>
-            <span class="text-white/10">&middot;</span>
-            <a href="/terms" class="hover:text-white transition-colors">Terms & Conditions</a>
-        </nav>
-        
-        <!-- Links Row 3 (Socials) -->
-        <div class="flex flex-wrap justify-center items-center gap-3 text-[12px] text-text-muted/60">
-            <a href="https://www.linkedin.com/in/soumyajitbiswas-ce/" target="_blank" rel="noopener noreferrer" class="hover:text-primary-accent transition-colors">LinkedIn</a>
-            <span class="text-white/10">&middot;</span>
-            <a href="https://github.com/soumyajitbiswas-CE" target="_blank" rel="noopener noreferrer" class="hover:text-primary-accent transition-colors">GitHub</a>
-        </div>
-
-        <!-- Copyright -->
-        <div class="text-[11px] text-text-muted/50 mt-4">
-            Made for GATE CE students by <span class="text-text-muted/70">Soumyajit Biswas</span> &copy; 2026
+        <!-- Bottom Row: Copyright & Socials -->
+        <div class="flex flex-row justify-between items-center gap-4 text-[11px] text-text-muted/50 border-t border-white/5 pt-6">
+            <div class="text-left leading-relaxed">
+                Made for GATE CE students by <span class="text-text-muted/70 whitespace-nowrap">Soumyajit Biswas &copy; 2026</span>
+            </div>
+            
+            <div class="flex items-center gap-4 shrink-0">
+                <a href="https://www.linkedin.com/in/soumyajitbiswas-ce/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn Profile" class="text-text-muted/60 hover:text-primary-accent transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://github.com/soumyajitbiswas-CE" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub Profile" class="text-text-muted/60 hover:text-primary-accent transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                </a>
+            </div>
         </div>
     </div>
 </footer>
