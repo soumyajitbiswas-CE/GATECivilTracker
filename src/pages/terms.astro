@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+
+const lastUpdated = "August 18, 2026";
+---
+
+<Layout 
+    title="Terms & Conditions | GATE Civil Tracker" 
+    description="Terms and Conditions of use for GATE Civil Tracker — understand our educational usage policy, non-affiliation disclaimer, and data guidelines."
+>
+    <div class="flex flex-col gap-6 sm:gap-8 min-w-0 pb-6">
+        <!-- Back Navigation -->
+        <div class="mb-1">
+            <a href="/" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                <span>Back to Dashboard</span>
+            </a>
+        </div>
+
+        <!-- Hero Header -->
+        <div class="surface-hero backdrop-blur-md border border-panel-border rounded-2xl p-6 sm:p-10 flex flex-col gap-3 relative overflow-hidden">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-accent/10 border border-primary-accent/30 text-primary-accent text-xs font-semibold w-fit tracking-wide uppercase">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                Legal Terms of Use
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl font-[Outfit] font-bold tracking-tight text-white leading-tight">
+                Terms & Conditions
+            </h1>
+
+            <p class="text-text-muted text-xs sm:text-sm">
+                Last updated: <span class="text-white font-medium">{lastUpdated}</span>
+            </p>
+        </div>
+
+        <!-- Terms Content Sections -->
+        <div class="bg-black/20 border border-panel-border rounded-2xl p-6 sm:p-8 flex flex-col gap-8 text-xs sm:text-sm text-text-muted leading-relaxed">
+            
+            <!-- Section 1 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">1.</span> Acceptance of Terms
+                </h2>
+                <p>
+                    By accessing and using <strong class="text-white">GATE Civil Tracker</strong> (<a href="/" class="text-primary-accent hover:underline">gateciviltracker.com</a>), you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please discontinue use of the platform.
+                </p>
+            </section>
+
+            <!-- Section 2 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">2.</span> Official Examination Non-Affiliation Disclaimer
+                </h2>
+                <div class="p-4 rounded-xl bg-white/5 border border-white/10 text-text-muted text-xs sm:text-sm space-y-2">
+                    <p>
+                        <strong class="text-white">Important Notice:</strong> The Graduate Aptitude Test in Engineering (GATE) is an official national examination conducted jointly by the Indian Institute of Science (IISc) and seven Indian Institutes of Technology (IIT Bombay, IIT Delhi, IIT Guwahati, IIT Kanpur, IIT Kharagpur, IIT Madras, and IIT Roorkee) on behalf of the National Coordination Board (NCB) - GATE, Department of Higher Education, Ministry of Education, Government of India.
+                    </p>
+                    <p>
+                        <strong class="text-white">GATE Civil Tracker</strong> is an independent educational tool developed by <span class="text-white">Soumyajit Biswas</span> for student preparation and self-management. It is <strong class="text-white">not</strong> affiliated with, associated with, authorized by, endorsed by, or in any way officially connected with the official GATE committee, IITs, IISc, or any government body.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 3 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">3.</span> Educational Purpose & Syllabus Accuracy
+                </h2>
+                <p>
+                    The subject breakdowns, sub-topic lists, and historical tracker weightages provided in this tool are curated to assist Civil Engineering aspirants with structured study planning.
+                </p>
+                <p>
+                    While we strive to keep syllabus details and previous year question structures aligned with recent GATE CE trends, aspirants must always consult the official GATE information brochure issued by the conducting IIT/IISc for final authoritative syllabus updates, eligibility criteria, and examination formats.
+                </p>
+            </section>
+
+            <!-- Section 4 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">4.</span> User Responsibility for Local Data Backups
+                </h2>
+                <p>
+                    All preparation data (checked syllabus topics, PYQs, mock test logs, notes, achievements) is saved strictly in your client-side browser storage (<code class="text-primary-accent font-mono text-xs">localStorage</code>).
+                </p>
+                <p>
+                    Because we do not store your data on remote servers, clearing your browser cache, using private/incognito mode, or resetting your device will erase your local records. We strongly advise users to regularly use the <strong class="text-white">Export</strong> function on the top header to save their study progress to a local <code class="text-primary-accent font-mono">.json</code> file.
+                </p>
+            </section>
+
+            <!-- Section 5 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">5.</span> Intellectual Property & Fair Use
+                </h2>
+                <p>
+                    The application software, user interface design, visual theme, gamification engine, and custom badge assets are the intellectual property of Soumyajit Biswas. You may use this tracker for personal, non-commercial educational study. Reproduction or commercial resale without explicit permission is strictly prohibited.
+                </p>
+            </section>
+
+            <!-- Section 6 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">6.</span> Disclaimer of Warranties & Limitation of Liability
+                </h2>
+                <p>
+                    This application is provided on an "as-is" and "as-available" basis without warranties of any kind. The creators do not guarantee specific scores, ranks, or examination results from using the tracker. In no event shall the platform creators be liable for any data loss, study interruption, or consequential damages resulting from website downtime or browser storage clearing.
+                </p>
+            </section>
+
+            <!-- Section 7 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">7.</span> Contact & Inquiries
+                </h2>
+                <p>
+                    For inquiries regarding these Terms and Conditions, or to report an issue, please visit our <a href="/contact" class="text-primary-accent hover:underline">Contact Us page</a> or reach out via <a href="https://www.linkedin.com/in/soumyajitbiswas-ce/" target="_blank" rel="noopener noreferrer" class="text-primary-accent hover:underline">LinkedIn</a>.
+                </p>
+            </section>
+        </div>
+
+        <Footer />
+    </div>
+</Layout>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { defaultState } from '../../data.js';
+import Footer from '../../components/Footer.astro';
 
 export function getStaticPaths() {
   return defaultState.subjects.map(subject => ({
@@ -107,6 +108,8 @@ const { subject } = Astro.props;
                 </div>
             </div>
         </div>
+
+        <Footer />
     </div>
 
     <!-- Modal for Logging Hours -->

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import achievementsData from '../data/achievements.json';
+import Footer from '../components/Footer.astro';
 
 const allAchievements = achievementsData.achievements;
 
@@ -137,6 +138,8 @@ allAchievements.sort((a, b) => {
                 </div>
             ))}
         </div>
+
+        <Footer />
     </div>
 
     <!-- Detail Modal -->

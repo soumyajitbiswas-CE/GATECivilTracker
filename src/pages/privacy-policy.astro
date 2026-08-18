@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+
+const lastUpdated = "August 18, 2026";
+---
+
+<Layout 
+    title="Privacy Policy | GATE Civil Tracker" 
+    description="Privacy Policy for GATE Civil Tracker. Learn how our local-first architecture keeps your GATE preparation data 100% private on your own device."
+>
+    <div class="flex flex-col gap-6 sm:gap-8 min-w-0 pb-6">
+        <!-- Back Navigation -->
+        <div class="mb-1">
+            <a href="/" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                <span>Back to Dashboard</span>
+            </a>
+        </div>
+
+        <!-- Hero Header -->
+        <div class="surface-hero backdrop-blur-md border border-panel-border rounded-2xl p-6 sm:p-10 flex flex-col gap-3 relative overflow-hidden">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-accent/10 border border-primary-accent/30 text-primary-accent text-xs font-semibold w-fit tracking-wide uppercase">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Privacy & Data Policy
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl font-[Outfit] font-bold tracking-tight text-white leading-tight">
+                Privacy Policy
+            </h1>
+
+            <p class="text-text-muted text-xs sm:text-sm">
+                Last updated: <span class="text-white font-medium">{lastUpdated}</span>
+            </p>
+        </div>
+
+        <!-- Privacy Quick Guarantee Banner -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-primary-accent/[0.07] border border-primary-accent/30 flex items-start gap-3.5 backdrop-blur-sm">
+            <div class="p-2 rounded-xl bg-primary-accent/20 text-primary-accent shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <div class="flex flex-col gap-1">
+                <h2 class="text-sm sm:text-base font-semibold text-white">Our 100% Local-First Promise</h2>
+                <p class="text-xs sm:text-sm text-text-muted leading-relaxed">
+                    GATE Civil Tracker does <strong class="text-white">not</strong> transmit your study hours, mock test marks, weak area notes, or syllabus progress to any backend server. Everything stays securely on your browser device.
+                </p>
+            </div>
+        </div>
+
+        <!-- Policy Content Sections -->
+        <div class="bg-black/20 border border-panel-border rounded-2xl p-6 sm:p-8 flex flex-col gap-8 text-xs sm:text-sm text-text-muted leading-relaxed">
+            
+            <!-- Section 1 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">1.</span> Information We Store
+                </h2>
+                <p>
+                    When you use GATE Civil Tracker, the application stores your preparation metrics locally in your web browser via standard HTML5 <code class="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-primary-accent font-mono text-xs">localStorage</code>. This data includes:
+                </p>
+                <ul class="list-disc pl-5 space-y-1.5 mt-1 text-text-muted">
+                    <li>Syllabus checklist completion states (sub-topic checkboxes).</li>
+                    <li>PYQ practice counts, years, and optional topics logged.</li>
+                    <li>Topic test, subject test, and full-length mock test scores, percentiles, and notes.</li>
+                    <li>Revision stage counters (1st, 2nd, and Final revision records).</li>
+                    <li>Daily study streaks and unlocked gamification achievement badges.</li>
+                    <li>Custom tracker target settings and subject weight configurations.</li>
+                </ul>
+            </section>
+
+            <!-- Section 2 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">2.</span> Zero Server Storage & No User Accounts
+                </h2>
+                <p>
+                    Unlike traditional cloud services, we do not require you to create an account, enter an email address, or provide a password. There is no central database or user profile system on our servers storing your study habits or test series scores.
+                </p>
+            </section>
+
+            <!-- Section 3 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">3.</span> Data Export, Import & Complete Ownership
+                </h2>
+                <p>
+                    Because your data lives in your browser, you maintain total ownership over your records:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-1.5">
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-3.5 flex flex-col gap-1.5">
+                        <strong class="text-white text-xs sm:text-sm">Export Data</strong>
+                        <p class="text-[11px] sm:text-xs">Download your full tracker progress at any time as an unencrypted <code class="text-primary-accent font-mono">.json</code> file for safe offline backups.</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-3.5 flex flex-col gap-1.5">
+                        <strong class="text-white text-xs sm:text-sm">Import Data</strong>
+                        <p class="text-[11px] sm:text-xs">Restore your progress on a new laptop, desktop, or mobile phone by simply importing your backup file.</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-3.5 flex flex-col gap-1.5">
+                        <strong class="text-white text-xs sm:text-sm">Reset / Erase</strong>
+                        <p class="text-[11px] sm:text-xs">Use the "Reset" button on the header to immediately wipe all stored records from your browser cache.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">4.</span> Cookies & Tracking Technologies
+                </h2>
+                <p>
+                    GATE Civil Tracker does not use advertising cookies, marketing pixels, or invasive session-recording trackers. We believe students should be able to focus purely on their preparation without commercial tracking or distraction.
+                </p>
+            </section>
+
+            <!-- Section 5 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">5.</span> Third-Party CDN Assets
+                </h2>
+                <p>
+                    Our website serves static web assets through modern CDN providers to deliver rapid page loads:
+                </p>
+                <ul class="list-disc pl-5 space-y-1.5 mt-1 text-text-muted">
+                    <li><strong class="text-white">Google Fonts:</strong> For high-legibility typography (Outfit & Inter fonts).</li>
+                    <li><strong class="text-white">Spline 3D:</strong> To render the interactive animated background graphic.</li>
+                </ul>
+                <p class="mt-1">
+                    These external services process standard HTTP request headers (e.g. IP address, browser user-agent) strictly for delivering font and graphical assets securely.
+                </p>
+            </section>
+
+            <!-- Section 6 -->
+            <section class="flex flex-col gap-2.5">
+                <h2 class="text-base sm:text-lg font-semibold text-white font-[Outfit] flex items-center gap-2">
+                    <span class="text-primary-accent">6.</span> Contact Us About Privacy
+                </h2>
+                <p>
+                    If you have any questions or feedback regarding this Privacy Policy, please contact developer Soumyajit Biswas directly via our <a href="/contact" class="text-primary-accent hover:underline">Contact Page</a> or on <a href="https://www.linkedin.com/in/soumyajitbiswas-ce/" target="_blank" rel="noopener noreferrer" class="text-primary-accent hover:underline">LinkedIn</a>.
+                </p>
+            </section>
+        </div>
+
+        <Footer />
+    </div>
+</Layout>

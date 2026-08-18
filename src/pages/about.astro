@@ -1,0 +1,164 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+    title="About Us | GATE Civil Tracker" 
+    description="Learn more about GATE Civil Tracker — a free, privacy-first, gamified preparation & syllabus tracking platform built specifically for GATE Civil Engineering aspirants."
+>
+    <div class="flex flex-col gap-6 sm:gap-8 min-w-0 pb-6">
+        <!-- Back to Dashboard Navigation -->
+        <div class="mb-1">
+            <a href="/" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                <span>Back to Dashboard</span>
+            </a>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="surface-hero backdrop-blur-md border border-panel-border rounded-2xl p-6 sm:p-10 flex flex-col gap-4 relative overflow-hidden">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-accent/10 border border-primary-accent/30 text-primary-accent text-xs font-semibold w-fit tracking-wide uppercase">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-accent animate-pulse"></span>
+                About the Platform
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl font-[Outfit] font-bold tracking-tight text-white max-w-3xl leading-tight">
+                Empowering Civil Engineers to Crack <span class="text-primary-accent">GATE</span> with Precision & Consistency
+            </h1>
+
+            <p class="text-text-muted text-sm sm:text-base leading-relaxed max-w-2xl">
+                GATE Civil Tracker was engineered to solve one critical problem: managing the vast, complex GATE Civil Engineering syllabus without falling into spreadsheet chaos or losing study momentum.
+            </p>
+        </div>
+
+        <!-- The Vision & Origin Story -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            <div class="bg-black/20 border border-panel-border rounded-2xl p-6 flex flex-col gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-primary-accent/10 border border-primary-accent/20 flex items-center justify-center text-primary-accent shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                </div>
+                <h2 class="text-lg sm:text-xl font-semibold text-white font-[Outfit]">Why We Built This</h2>
+                <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                    Preparing for GATE Civil Engineering involves 9 multifaceted subjects spanning over 60 granular topics — from Soil Mechanics and Environmental Engineering to Hydrology, Steel Structures, and Transportation.
+                </p>
+                <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                    Standard spreadsheets lack dynamic progress weighting, PYQ year tracking, and mock test reflection loops. GATE Civil Tracker integrates these into a unified, interactive workspace.
+                </p>
+            </div>
+
+            <div class="bg-black/20 border border-panel-border rounded-2xl p-6 flex flex-col gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-primary-accent/10 border border-primary-accent/20 flex items-center justify-center text-primary-accent shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h2 class="text-lg sm:text-xl font-semibold text-white font-[Outfit]">Privacy & Local-First Freedom</h2>
+                <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                    Your preparation data belongs solely to you. There are no mandatory sign-ups, no cloud databases tracking your mock test scores, and zero paywalls.
+                </p>
+                <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                    All your progress is securely stored inside your browser's local storage, with one-click JSON export and import capabilities to backup or switch devices instantly.
+                </p>
+            </div>
+        </div>
+
+        <!-- Core Pillars / Features -->
+        <div class="flex flex-col gap-4 mt-2">
+            <h2 class="text-xl sm:text-2xl font-bold text-white font-[Outfit] tracking-tight flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Key Architecture & Features
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- 1. Weighted Syllabus -->
+                <div class="bg-[#06140e] border border-panel-border rounded-xl p-5 flex flex-col gap-2.5 hover:border-primary-accent/30 transition-colors">
+                    <div class="text-primary-accent font-semibold text-sm flex items-center gap-2">
+                        <span class="p-1.5 rounded-lg bg-primary-accent/10 border border-primary-accent/20">01</span>
+                        Weighted Syllabus Engine
+                    </div>
+                    <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                        Evaluates overall readiness based on the historical mark distribution of GATE CE papers, ensuring you prioritize high-yield subjects.
+                    </p>
+                </div>
+
+                <!-- 2. PYQ Practice Logging -->
+                <div class="bg-[#06140e] border border-panel-border rounded-xl p-5 flex flex-col gap-2.5 hover:border-primary-accent/30 transition-colors">
+                    <div class="text-primary-accent font-semibold text-sm flex items-center gap-2">
+                        <span class="p-1.5 rounded-lg bg-primary-accent/10 border border-primary-accent/20">02</span>
+                        Granular PYQ Tracker
+                    </div>
+                    <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                        Log year-by-year past questions with optional topic selection, recording study hours and specific concepts needing reinforcement.
+                    </p>
+                </div>
+
+                <!-- 3. Mock Test Analyzer -->
+                <div class="bg-[#06140e] border border-panel-border rounded-xl p-5 flex flex-col gap-2.5 hover:border-primary-accent/30 transition-colors">
+                    <div class="text-primary-accent font-semibold text-sm flex items-center gap-2">
+                        <span class="p-1.5 rounded-lg bg-primary-accent/10 border border-primary-accent/20">03</span>
+                        Mock Test Analyzer
+                    </div>
+                    <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                        Record test series scores, percentiles, and mistake notes. Identify recurring errors before sitting for the real examination.
+                    </p>
+                </div>
+
+                <!-- 4. 3-Stage Revision Planner -->
+                <div class="bg-[#06140e] border border-panel-border rounded-xl p-5 flex flex-col gap-2.5 hover:border-primary-accent/30 transition-colors">
+                    <div class="text-primary-accent font-semibold text-sm flex items-center gap-2">
+                        <span class="p-1.5 rounded-lg bg-primary-accent/10 border border-primary-accent/20">04</span>
+                        3-Stage Revision Engine
+                    </div>
+                    <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                        Beat the forgetting curve through systematically enforced 1st, 2nd, and Final revision stages across every subject.
+                    </p>
+                </div>
+
+                <!-- 5. Gamification & Achievements -->
+                <div class="bg-[#06140e] border border-panel-border rounded-xl p-5 flex flex-col gap-2.5 hover:border-primary-accent/30 transition-colors">
+                    <div class="text-primary-accent font-semibold text-sm flex items-center gap-2">
+                        <span class="p-1.5 rounded-lg bg-primary-accent/10 border border-primary-accent/20">05</span>
+                        Gamified XP & Badges
+                    </div>
+                    <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                        Stay motivated with 110 unique unlockable achievements, daily study streaks, and rank leveling systems that celebrate small wins.
+                    </p>
+                </div>
+
+                <!-- 6. Ultra-Fast & Responsive -->
+                <div class="bg-[#06140e] border border-panel-border rounded-xl p-5 flex flex-col gap-2.5 hover:border-primary-accent/30 transition-colors">
+                    <div class="text-primary-accent font-semibold text-sm flex items-center gap-2">
+                        <span class="p-1.5 rounded-lg bg-primary-accent/10 border border-primary-accent/20">06</span>
+                        Astro + Tailwind v4 Speed
+                    </div>
+                    <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                        Instant static load times, smooth view transitions, and zero layout shift on desktop, tablet, and mobile smartphones.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Creator Profile Card -->
+        <div class="bg-black/20 border border-panel-border rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mt-2">
+            <div class="flex flex-col gap-2 max-w-xl">
+                <div class="text-xs text-primary-accent uppercase font-bold tracking-wider">Meet the Creator</div>
+                <h3 class="text-xl sm:text-2xl font-bold text-white font-[Outfit]">Soumyajit Biswas</h3>
+                <p class="text-text-muted text-xs sm:text-sm leading-relaxed">
+                    Civil Engineering aspirant and passionate developer building high-utility, aesthetic tools for students. If you have suggestions, questions, or ideas for improving the tracker, feel free to connect!
+                </p>
+            </div>
+            
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="https://www.linkedin.com/in/soumyajitbiswas-ce/" target="_blank" rel="noopener noreferrer" class="btn text-xs sm:text-sm px-4 py-2.5 flex items-center gap-2 border-primary-accent/30 bg-primary-accent/10 text-primary-accent hover:bg-primary-accent/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/soumyajitbiswas-CE" target="_blank" rel="noopener noreferrer" class="btn text-xs sm:text-sm px-4 py-2.5 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+
+        <Footer />
+    </div>
+</Layout>
