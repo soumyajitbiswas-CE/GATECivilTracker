@@ -639,21 +639,28 @@ const isHome = Astro.url.pathname === '/';
                     const currentSubtype = subtypeSelect.value;
                     const subjectId = subjectSelect.value;
                     
-                    if (currentType === 'test' && currentSubtype === 'topic') {
+                    if ((currentType === 'test' && currentSubtype === 'topic') || currentType === 'pyq') {
                         fieldTopic.classList.remove('hidden');
                         if (subjectId && subjectId !== 'general') {
                             const sub = state.subjects?.find(s => s.id === subjectId);
                             if (sub && sub.topics) {
-                                let html = '<option value="" disabled selected>Select a Topic</option>';
+                                let html = currentType === 'pyq' 
+                                    ? '<option value="" selected>Full Subject (Optional Topic)</option>' 
+                                    : '<option value="" disabled selected>Select a Topic</option>';
                                 sub.topics.forEach((t) => {
                                     html += `<option value="${t.name}">${t.name}</option>`;
                                 });
                                 topicSelect.innerHTML = html;
                             } else {
-                                topicSelect.innerHTML = '<option value="" disabled selected>No topics available</option>';
+                                topicSelect.innerHTML = currentType === 'pyq' 
+                                    ? '<option value="" selected>Full Subject (Optional Topic)</option>' 
+                                    : '<option value="" disabled selected>No topics available</option>';
                             }
                         } else {
                             topicSelect.innerHTML = '<option value="" disabled selected>Select a subject first</option>';
+                            if (currentType === 'pyq') {
+                                fieldTopic.classList.add('hidden');
+                            }
                         }
                     } else {
                         fieldTopic.classList.add('hidden');
@@ -907,14 +914,15 @@ const isHome = Astro.url.pathname === '/';
                         submitBtn.disabled = false;
                         submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                     }
-                    if (subjectLockedDisplay) subjectLockedDisplay.classList.add('hidden');
-                    if (subjectSelect) subjectSelect.classList.remove('hidden');
+                    
                     modal.classList.add('opacity-0');
                     if (content) {
                         content.classList.remove('scale-100');
                         content.classList.add('scale-95');
                     }
                     setTimeout(() => {
+                        if (subjectLockedDisplay) subjectLockedDisplay.classList.add('hidden');
+                        if (subjectSelect) subjectSelect.classList.remove('hidden');
                         modal.classList.add('hidden');
                         modal.classList.remove('flex');
                     }, 200);
@@ -1009,7 +1017,8 @@ const isHome = Astro.url.pathname === '/';
                             }
 
                             if(!state.pyqHistory) state.pyqHistory = [];
-                            state.pyqHistory.push({ id, subjectId, pyqYear: yearVal, date: today, hours, notes });
+                            const pyqTopic = topicSelect && topicSelect.value ? topicSelect.value : null;
+                            state.pyqHistory.push({ id, subjectId, pyqYear: yearVal, topicName: pyqTopic, date: today, hours, notes });
                         } else if (type === 'test') {
                             const testType = subtypeSelect.value;
                             if (!subjectId) {
@@ -1189,8 +1198,8 @@ const isHome = Astro.url.pathname === '/';
                             ...r,
                             _type: 'PYQ',
                             _title: r.pyqYear 
-                                ? `GATE ${r.pyqYear} PYQ (${subName(r.subjectId)})` 
-                                : `${r.solved || 1} PYQs Solved (${subName(r.subjectId)})`,
+                                ? `GATE ${r.pyqYear} PYQ${r.topicName ? ` - ${r.topicName}` : ''} (${subName(r.subjectId)})` 
+                                : `${r.solved || 1} PYQs Solved${r.topicName ? ` - ${r.topicName}` : ''} (${subName(r.subjectId)})`,
                             _extras: r.hours ? `${r.hours} hrs` : null
                         })));
                     }
