@@ -41,9 +41,16 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={new URL('/web-app-manifest-512x512.png', Astro.site || Astro.url)} />
+		<!-- Resource Preloads for Instant First Paint Artwork -->
+		<link rel="preload" as="image" href="/bg.webp" type="image/webp" fetchpriority="high" />
+		<link rel="preload" as="image" href="/logo.webp" type="image/webp" fetchpriority="high" />
+		<link rel="preload" as="image" href="/general-aptitude-bg.webp" type="image/webp" />
+		<link rel="preload" as="image" href="/engineering-mathematics-bg.webp" type="image/webp" />
+		<link rel="preload" as="image" href="/structural-engineering-bg.webp" type="image/webp" />
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=optional" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || 'https://gateciviltracker.com').href} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<script type="application/ld+json" is:inline set:html={JSON.stringify({
@@ -99,7 +106,7 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3.5 sm:gap-4 min-w-0">
                     <div class="flex flex-col min-w-0 flex-1">
                         <a href="/" data-astro-prefetch="hover" class="text-2xl sm:text-[28px] font-[Outfit] font-semibold flex items-center gap-2.5 text-white tracking-tight break-words leading-none hover:opacity-90 transition-opacity w-fit" style="letter-spacing: -0.01em;">
-                            <img src="/favicon.svg" alt="Logo" class="w-7 h-7 sm:w-8 sm:h-8 rounded object-cover border border-primary-accent/30 shrink-0 drop-shadow-[0_0_8px_rgba(74,222,128,0.3)]" />
+                            <img src="/logo.webp" alt="Logo" width="32" height="32" class="w-7 h-7 sm:w-8 sm:h-8 rounded object-cover border border-primary-accent/30 shrink-0 drop-shadow-[0_0_8px_rgba(74,222,128,0.3)]" />
                             <span class="truncate mt-0.5 text-[0.95em]">GATE Civil <span class="text-primary-accent">Tracker</span></span>
                         </a>
                         <p class="text-text-muted text-xs sm:text-[13.5px] mt-2 leading-relaxed break-words max-w-3xl pr-4">Track your syllabus, PYQs, tests, full-length mocks & revisions — progress automatically saved to your browser.</p>

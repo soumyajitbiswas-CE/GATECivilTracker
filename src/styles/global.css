@@ -119,7 +119,7 @@ body {
   background-color: #020403;
   background-image: 
     radial-gradient(ellipse at 50% 50%, rgba(2, 4, 3, 0.2) 0%, rgba(2, 4, 3, 0.6) 75%, rgba(2, 4, 3, 0.95) 100%),
-    url('/bg.png');
+    url('/bg.webp');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -209,7 +209,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/general-aptitude-bg.png');
+      url('/general-aptitude-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -219,7 +219,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/general-aptitude-bg.png');
+      url('/general-aptitude-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -229,7 +229,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/engineering-mathematics-bg.png');
+      url('/engineering-mathematics-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -239,7 +239,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/engineering-mathematics-bg.png');
+      url('/engineering-mathematics-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -249,7 +249,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/structural-engineering-bg.png');
+      url('/structural-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -259,7 +259,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/structural-engineering-bg.png');
+      url('/structural-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -269,7 +269,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/geotechnical-engineering-bg.png');
+      url('/geotechnical-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -279,7 +279,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/geotechnical-engineering-bg.png');
+      url('/geotechnical-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -289,7 +289,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/water-resources-engineering-bg.png');
+      url('/water-resources-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -299,7 +299,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/water-resources-engineering-bg.png');
+      url('/water-resources-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -309,7 +309,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/environmental-engineering-bg.png');
+      url('/environmental-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -319,7 +319,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/environmental-engineering-bg.png');
+      url('/environmental-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -329,7 +329,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/transportation-engineering-bg.png');
+      url('/transportation-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -339,7 +339,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/transportation-engineering-bg.png');
+      url('/transportation-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -349,7 +349,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/geomatics-engineering-bg.png');
+      url('/geomatics-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -359,7 +359,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/geomatics-engineering-bg.png');
+      url('/geomatics-engineering-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -369,7 +369,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/construction-materials-bg.png');
+      url('/construction-materials-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
@@ -379,7 +379,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
     background-color: #06150e;
     background-image: 
       linear-gradient(135deg, rgba(6, 21, 14, 0.88) 0%, rgba(6, 21, 14, 0.72) 45%, rgba(6, 21, 14, 0.35) 100%),
-      url('/construction-materials-bg.png');
+      url('/construction-materials-bg.webp');
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
