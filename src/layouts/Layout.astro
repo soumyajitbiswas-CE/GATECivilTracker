@@ -256,6 +256,13 @@ const isHome = Astro.url.pathname === '/';
             import achievementsData from '../data/achievements.json';
             
             // Global helper functions to attach to window for cross-page use
+            window.escapeHtml = (str) => {
+                if (!str) return '';
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            };
+
             window.debounce = (func, wait) => {
                 let timeout;
                 return function(...args) {
@@ -1231,16 +1238,16 @@ const isHome = Astro.url.pathname === '/';
                         <div class="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl p-3 hover:bg-white/10 transition-colors">
                             <div class="flex flex-col min-w-0 flex-1">
                                 <div class="text-sm font-semibold text-white">
-                                    <div class="truncate">${r._title}</div>
-                                    ${r._extras ? `<div class="text-xs text-primary-accent/80 font-medium mt-0.5">${r._extras}</div>` : ''}
-                                    ${r.notes ? `<div class="text-xs text-text-muted mt-1.5 bg-black/20 p-2 rounded-lg border border-white/5 break-words whitespace-pre-wrap font-normal leading-relaxed">${r.notes}</div>` : ''}
+                                    <div class="truncate">${window.escapeHtml(r._title)}</div>
+                                    ${r._extras ? `<div class="text-xs text-primary-accent/80 font-medium mt-0.5">${window.escapeHtml(r._extras)}</div>` : ''}
+                                    ${r.notes ? `<div class="text-xs text-text-muted mt-1.5 bg-black/20 p-2 rounded-lg border border-white/5 break-words whitespace-pre-wrap font-normal leading-relaxed">${window.escapeHtml(r.notes)}</div>` : ''}
                                 </div>
                                 <div class="flex items-center gap-2 text-xs text-text-muted mt-2">
-                                    <span class="px-1.5 py-0.5 rounded bg-black/40 text-[10px] uppercase font-bold tracking-wider border border-white/5">${r._type}</span>
-                                    <span>${r.date}</span>
+                                    <span class="px-1.5 py-0.5 rounded bg-black/40 text-[10px] uppercase font-bold tracking-wider border border-white/5">${window.escapeHtml(r._type)}</span>
+                                    <span>${window.escapeHtml(r.date)}</span>
                                 </div>
                             </div>
-                            <button class="btn-delete-record p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors shrink-0 ml-3" data-id="${r.id}" data-type="${r._type}">
+                            <button class="btn-delete-record p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors shrink-0 ml-3" data-id="${window.escapeHtml(r.id)}" data-type="${window.escapeHtml(r._type)}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
                             </button>
                         </div>
@@ -1300,19 +1307,21 @@ const isHome = Astro.url.pathname === '/';
                 reader.onload = (event) => {
                     try {
                         const importedState = JSON.parse(event.target.result);
-                        if(importedState && importedState.subjects) {
+                        if(importedState && Array.isArray(importedState.subjects) && importedState.subjects.length > 0
+                            && importedState.subjects.every(s => typeof s.id === 'string' && typeof s.name === 'string' && Array.isArray(s.topics))) {
                             importedState.importedOnce = true;
                             window.saveState(importedState);
                             alert('Progress imported successfully!');
                             window.location.reload();
                         } else {
-                            alert('Invalid file format.');
+                            alert('Invalid file format. The file must be a valid GATE Civil Tracker export.');
                         }
                     } catch(err) {
-                        alert('Error parsing file.');
+                        alert('Error parsing file. Please ensure it is a valid JSON export.');
                     }
                 };
                 reader.readAsText(file);
+                e.target.value = '';
             });
         </script>
         {!isHome && (
