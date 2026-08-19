@@ -489,39 +489,60 @@ img, svg, video, canvas, audio, iframe, embed, object {
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
-/* Card Glow Effects (Pure CSS) - Desktop Mouse Only */
-.glow-card {
+/* Card Glow Effects - Desktop Mouse & Universal Touch Pass */
+.glow-card, .subject-card, a.subject-card, .touch-glow-card {
   -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.25s ease, box-shadow 0.3s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .glow-card {
+  .glow-card, .subject-card, a.subject-card {
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .glow-card:hover {
+  .glow-card:hover, .subject-card:hover, a.subject-card:hover {
     transform: translateY(-4px);
     border-color: rgba(74, 222, 128, 0.4);
-    box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
+    box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.25), 
                 inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
   }
-  .glow-card:active {
+  .glow-card:active, .subject-card:active, a.subject-card:active {
     transform: translateY(-2px);
-    border-color: rgba(74, 222, 128, 0.4);
-    box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.2), 
+    border-color: rgba(74, 222, 128, 0.5);
+    box-shadow: 0 10px 30px -10px rgba(74, 222, 128, 0.25), 
                 inset 0 0 20px -10px rgba(74, 222, 128, 0.1);
   }
 }
 
-/* Touch devices (Mobile & Tablet): Completely disable transform jitter on tap/hover */
+/* Universal Touch-Pass Glow State (Mobile & Tablet Touchscreens) */
+.glow-card.is-touch-glowing,
+.subject-card.is-touch-glowing,
+a.subject-card.is-touch-glowing,
+.glass-panel.is-touch-glowing,
+.touch-glow-card.is-touch-glowing {
+  border-color: rgba(74, 222, 128, 0.55) !important;
+  box-shadow: 0 0 22px -2px rgba(74, 222, 128, 0.35), 
+              inset 0 0 16px -3px rgba(74, 222, 128, 0.12) !important;
+  transform: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.2s ease !important;
+}
+
+/* Touch devices (Mobile & Tablet): Disable transform jitter on tap/hover, preserve touch glow */
 @media (hover: none), (pointer: coarse), (max-width: 1024px) {
   .glow-card, .subject-card, a.subject-card, .ach-card:not(.is-unlocked) {
     -webkit-tap-highlight-color: transparent !important;
     -webkit-touch-callout: none !important;
     user-select: none;
-    box-shadow: none !important;
     transform: none !important;
-    transition: border-color 0.15s ease !important;
   }
+  
+  .glow-card:not(.is-touch-glowing), 
+  .subject-card:not(.is-touch-glowing), 
+  a.subject-card:not(.is-touch-glowing), 
+  .ach-card:not(.is-unlocked):not(.is-touch-glowing) {
+    box-shadow: none;
+    transition: border-color 0.25s ease, box-shadow 0.3s ease !important;
+  }
+
   .glow-card:hover, .glow-card:active, .glow-card:focus,
   .subject-card:hover, .subject-card:active, .subject-card:focus,
   a.subject-card:hover, a.subject-card:active, a.subject-card:focus,

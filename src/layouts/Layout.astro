@@ -1121,6 +1121,110 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
                 window.updateHeaderBadge(state);
             }
 
+            // -------------------------------------------------------------
+            // Universal Touch-Pass Glow Engine (Mobile & Tablet)
+            // Hardware accelerated, passive, and 100% non-blocking (rAF throttled)
+            // -------------------------------------------------------------
+            (function initUniversalTouchGlow() {
+                if (window.__touchGlowInitialized) return;
+                window.__touchGlowInitialized = true;
+
+                const CARD_SELECTOR = '.glow-card, .subject-card, a.subject-card, .ach-card, .touch-glow-card, .surface-hero, .surface-practice, .surface-summary';
+                let activeCard = null;
+                let isTouching = false;
+                let lastX = 0;
+                let lastY = 0;
+                let rafId = null;
+                let fadeTimer = null;
+
+                function updateGlowUnderPoint() {
+                    rafId = null;
+                    if (!isTouching && !fadeTimer) return;
+                    
+                    const el = document.elementFromPoint(lastX, lastY);
+                    const targetCard = el ? el.closest(CARD_SELECTOR) : null;
+
+                    if (targetCard !== activeCard) {
+                        if (activeCard) {
+                            activeCard.classList.remove('is-touch-glowing');
+                        }
+                        if (targetCard && isTouching) {
+                            targetCard.classList.add('is-touch-glowing');
+                        }
+                        activeCard = isTouching ? targetCard : null;
+                    }
+                }
+
+                function handleTouchStart(e) {
+                    if (fadeTimer) {
+                        clearTimeout(fadeTimer);
+                        fadeTimer = null;
+                    }
+                    if (!e.touches || e.touches.length === 0) return;
+                    isTouching = true;
+                    lastX = e.touches[0].clientX;
+                    lastY = e.touches[0].clientY;
+
+                    const el = document.elementFromPoint(lastX, lastY);
+                    const targetCard = el ? el.closest(CARD_SELECTOR) : null;
+                    if (activeCard && activeCard !== targetCard) {
+                        activeCard.classList.remove('is-touch-glowing');
+                    }
+                    if (targetCard) {
+                        targetCard.classList.add('is-touch-glowing');
+                    }
+                    activeCard = targetCard;
+                }
+
+                function handleTouchMove(e) {
+                    if (!e.touches || e.touches.length === 0) return;
+                    isTouching = true;
+                    lastX = e.touches[0].clientX;
+                    lastY = e.touches[0].clientY;
+
+                    if (!rafId) {
+                        rafId = requestAnimationFrame(updateGlowUnderPoint);
+                    }
+                }
+
+                function clearActiveGlow(immediate = false) {
+                    isTouching = false;
+                    if (rafId) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                    }
+                    if (fadeTimer) {
+                        clearTimeout(fadeTimer);
+                        fadeTimer = null;
+                    }
+
+                    if (immediate) {
+                        if (activeCard) {
+                            activeCard.classList.remove('is-touch-glowing');
+                            activeCard = null;
+                        }
+                    } else {
+                        fadeTimer = setTimeout(() => {
+                            if (activeCard) {
+                                activeCard.classList.remove('is-touch-glowing');
+                                activeCard = null;
+                            }
+                            fadeTimer = null;
+                        }, 220);
+                    }
+                }
+
+                window.addEventListener('touchstart', handleTouchStart, { passive: true });
+                window.addEventListener('touchmove', handleTouchMove, { passive: true });
+                window.addEventListener('touchend', () => clearActiveGlow(false), { passive: true });
+                window.addEventListener('touchcancel', () => clearActiveGlow(true), { passive: true });
+                window.addEventListener('blur', () => clearActiveGlow(true));
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) clearActiveGlow(true);
+                });
+                document.addEventListener('astro:before-swap', () => clearActiveGlow(true));
+            })();
+
             function initLayoutUI() {
                 initResetModal();
                 initActivityLogging();

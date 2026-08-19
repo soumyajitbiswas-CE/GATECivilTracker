@@ -27,7 +27,7 @@ allAchievements.sort((a, b) => {
         </div>
         
         <!-- Header -->
-        <div class="surface-hero backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 relative overflow-hidden">
+        <div class="surface-hero backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 relative overflow-hidden glow-card">
             <div class="relative z-10 flex flex-col gap-1.5 sm:gap-2">
                 <h1 class="text-2xl sm:text-4xl font-[Outfit] font-bold tracking-tight text-white flex items-center gap-2 sm:gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-accent sm:w-[28px] sm:h-[28px] shrink-0"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
@@ -38,7 +38,7 @@ allAchievements.sort((a, b) => {
             
             <div class="relative z-10 grid grid-cols-2 sm:flex sm:flex-wrap items-stretch gap-2.5 sm:gap-3 w-full md:w-auto">
                 <!-- Streak Status Card -->
-                <div class="flex items-center gap-2.5 sm:gap-3.5 bg-black/40 p-2.5 sm:p-3.5 rounded-xl border border-primary-accent/20 flex-1 min-w-[130px] sm:min-w-[155px]">
+                <div class="flex items-center gap-2.5 sm:gap-3.5 bg-black/40 p-2.5 sm:p-3.5 rounded-xl border border-primary-accent/20 flex-1 min-w-[130px] sm:min-w-[155px] glow-card">
                     <div id="streak-icon-wrap" class="p-2 sm:p-2.5 rounded-xl bg-primary-accent/10 border border-primary-accent/30 text-primary-accent shrink-0 flex items-center justify-center transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame sm:w-[22px] sm:h-[22px]"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
                     </div>
@@ -52,7 +52,7 @@ allAchievements.sort((a, b) => {
                 </div>
 
                 <!-- Rank & XP Card -->
-                <div class="flex flex-col justify-between bg-black/40 p-2.5 sm:p-3.5 rounded-xl border border-primary-accent/20 flex-1 min-w-[130px] sm:min-w-[165px]">
+                <div class="flex flex-col justify-between bg-black/40 p-2.5 sm:p-3.5 rounded-xl border border-primary-accent/20 flex-1 min-w-[130px] sm:min-w-[165px] glow-card">
                     <div class="flex flex-col mb-1">
                         <div class="text-[9px] sm:text-xs text-text-muted uppercase tracking-widest font-bold mb-0.5 truncate">Current Rank</div>
                         <div class="text-base sm:text-2xl font-bold text-white flex items-baseline gap-1" id="player-level-display">
@@ -319,6 +319,34 @@ allAchievements.sort((a, b) => {
                 border-color: rgba(251, 191, 36, 1);
                 box-shadow: 0 0 34px 0 rgba(251, 191, 36, 0.6), inset 0 1px 0 rgba(251, 191, 36, 0.65);
             }
+        }
+
+        /* Mobile and Tablet Touch-Pass Glow for Achievement Cards */
+        .ach-card.is-touch-glowing {
+            border-color: rgba(74, 222, 128, 0.55) !important;
+            background-color: rgba(10, 30, 20, 0.8) !important;
+            box-shadow: 0 0 18px -2px rgba(74, 222, 128, 0.35) !important;
+            transition: border-color 0.15s ease, box-shadow 0.2s ease !important;
+        }
+        .ach-card.is-unlocked[data-rarity="Common"].is-touch-glowing { 
+            border-color: rgba(255, 255, 255, 0.85) !important;
+            box-shadow: 0 0 22px 0 rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+        }
+        .ach-card.is-unlocked[data-rarity="Uncommon"].is-touch-glowing { 
+            border-color: rgba(134, 239, 172, 0.9) !important;
+            box-shadow: 0 0 24px 0 rgba(74, 222, 128, 0.4), inset 0 1px 0 rgba(134, 239, 172, 0.45) !important;
+        }
+        .ach-card.is-unlocked[data-rarity="Rare"].is-touch-glowing { 
+            border-color: rgba(96, 165, 250, 0.95) !important;
+            box-shadow: 0 0 26px 0 rgba(96, 165, 250, 0.45), inset 0 1px 0 rgba(96, 165, 250, 0.5) !important;
+        }
+        .ach-card.is-unlocked[data-rarity="Epic"].is-touch-glowing { 
+            border-color: rgba(192, 132, 252, 1) !important;
+            box-shadow: 0 0 30px 0 rgba(192, 132, 252, 0.5), inset 0 1px 0 rgba(192, 132, 252, 0.55) !important;
+        }
+        .ach-card.is-unlocked[data-rarity="Legendary"].is-touch-glowing { 
+            border-color: rgba(251, 191, 36, 1) !important;
+            box-shadow: 0 0 34px 0 rgba(251, 191, 36, 0.6), inset 0 1px 0 rgba(251, 191, 36, 0.65) !important;
         }
 
         .ach-card.is-unlocked .ach-lock-badge { display: none !important; }

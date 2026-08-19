@@ -24,7 +24,7 @@ const { subject } = Astro.props;
         </div>
         
         <!-- Header Card -->
-        <div class="glass-panel p-4 sm:p-6 md:p-8 min-w-0 mb-4 sm:mb-6 surface-hero">
+        <div class="glass-panel p-4 sm:p-6 md:p-8 min-w-0 mb-4 sm:mb-6 surface-hero glow-card">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 min-w-0">
                 <div class="flex flex-col min-w-0 flex-1">
                     <p class="text-text-muted text-xs sm:text-sm tracking-wide uppercase mb-1">Subject Detail</p>
@@ -60,7 +60,7 @@ const { subject } = Astro.props;
         <!-- Vertical Layout for Topics, PYQs, History -->
         <div class="flex flex-col gap-4 sm:gap-6">
             <!-- Topics Card -->
-            <div class="glass-panel surface-summary p-4 sm:p-6 md:p-8 min-w-0">
+            <div class="glass-panel surface-summary p-4 sm:p-6 md:p-8 min-w-0 glow-card">
                 <h2 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Syllabus Topics</h2>
                 <div class="flex flex-col gap-0" id="topics-container">
                     {subject.topics && subject.topics.map((topic, index) => {
@@ -87,7 +87,7 @@ const { subject } = Astro.props;
             </div>
 
             <!-- PYQ Card -->
-            <div class="glass-panel surface-summary p-4 sm:p-5 min-w-0">
+            <div class="glass-panel surface-summary p-4 sm:p-5 min-w-0 glow-card">
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col gap-2 min-w-0">
                         <div class="flex items-center justify-between gap-2">
@@ -117,7 +117,7 @@ const { subject } = Astro.props;
             </div>
 
             <!-- History Card -->
-            <div class="glass-panel surface-summary p-4 sm:p-5 min-w-0">
+            <div class="glass-panel surface-summary p-4 sm:p-5 min-w-0 glow-card">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-base sm:text-lg font-semibold">Study History</h2>
                 </div>
