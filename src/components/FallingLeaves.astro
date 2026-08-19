@@ -1,145 +1,376 @@
 ---
-// Optimized for Universal Device Performance & Smooth Realistic Physics
-const numLeaves = 80; // Reverted back to high density
-const leaves = Array.from({ length: numLeaves }).map((_, i) => {
-    // Physics Logic: Tiny leaves fall slower and flutter faster
-    const isTiny = Math.random() > 0.6; // 40% of leaves are tiny background leaves
-    
-    // Increased minimum sizes so they don't look like dust
-    const sizeScale = isTiny ? (0.35 + Math.random() * 0.3) : (0.65 + Math.random() * 0.65);
-    const fallDuration = isTiny ? (20 + Math.random() * 20) : (12 + Math.random() * 15);
-    const swayDuration = isTiny ? (3 + Math.random() * 3) : (4 + Math.random() * 5);
-    
-    return {
-        id: i,
-        left: Math.random() * 100, // random horizontal start
-        fallDelay: Math.random() * -45, // huge negative delay spread so screen is instantly full
-        fallDuration: fallDuration,
-        swayDelay: Math.random() * -5,
-        swayDuration: swayDuration,
-        // Depth of field simulated with opacity (0 filter overhead)
-        opacity: isTiny ? (0.12 + Math.random() * 0.12) : (0.2 + Math.random() * 0.25),
-        scale: sizeScale,
-        swayType: i % 4,
-        // Brightened the colors slightly for better contrast
-        color: ['text-emerald-600', 'text-emerald-700', 'text-emerald-800', 'text-green-700', 'text-[#0c4a26]'][Math.floor(Math.random() * 5)]
-    };
-});
+// Canvas 2D Highly Optimized Falling Leaves
+// Based on "falling-leaves" skill guidelines
 ---
 
-<div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-    {leaves.map((leaf) => (
-        /* 1. Outer Container: Hardware-accelerated Linear Gravity */
-        <div 
-            class="absolute top-[-10vh] leaf-fall"
-            style={`
-                left: ${leaf.left}%;
-                animation-delay: ${leaf.fallDelay}s;
-                animation-duration: ${leaf.fallDuration}s;
-            `}
-        >
-            {/* 2. Middle Container: Static visual properties */}
-            <div 
-                class={`${leaf.color}`}
-                style={`
-                    opacity: ${leaf.opacity};
-                    transform: scale(${leaf.scale}) translateZ(0);
-                `}
-            >
-                {/* 3. Inner Element: Organic Pendulum Physics & 3D Tumble */}
-                {/* Removed drop-shadow to guarantee 60fps on all devices; shadows make no sense for dark silhouettes anyway! */}
-                <svg 
-                    viewBox="0 0 24 24" 
-                    fill="currentColor" 
-                    class={`w-8 h-8 leaf-sway sway-${leaf.swayType}`}
-                    style={`
-                        animation-delay: ${leaf.swayDelay}s;
-                        animation-duration: ${leaf.swayDuration}s;
-                    `}
-                >
-                    <!-- Beautiful smooth leaf silhouette -->
-                    <path d="M17.5,3C13.5,3 10.5,5.5 8.5,8.5C6.5,11.5 5.5,15.5 5,20C8.5,20 13.5,18.5 16.5,14.5C19.5,10.5 20,6 20,3L17.5,3Z"/>
-                </svg>
-            </div>
-        </div>
-    ))}
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true" id="falling-leaves-container" style="contain: strict; will-change: transform; transform: translateZ(0);">
+    <canvas id="falling-leaves-canvas" class="w-full h-full"></canvas>
 </div>
 
-<style>
-    /* 
-      GPU HARDWARE ACCELERATION:
-      will-change and backface-visibility force the browser to composite these smoothly on the GPU.
-    */
-    .leaf-fall {
-        will-change: transform;
-        backface-visibility: hidden;
-        animation-name: fallDown;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-    }
+<script>
+    // 1. Single unified harmonious color tone with minimal non-distracting detailing
+    const LEAF_COLOR = {
+        main: '#047857',      // Balanced calming emerald
+        deep: '#064e3b',      // Subtle deep green tone
+        stem: '#022c22'       // Minimal stem tone
+    };
 
-    @keyframes fallDown {
-        0% { transform: translate3d(0, 0, 0); }
-        100% { transform: translate3d(0, 120vh, 0); } 
-    }
+    // Minimalist, ambient leaf artwork (soft, natural, non-distracting)
+    function drawLeafArt(octx: CanvasRenderingContext2D, size: number, isBack: boolean) {
+        const half = size / 2;
+        octx.save();
+        octx.translate(half, half);
 
-    .leaf-sway {
-        will-change: transform;
-        backface-visibility: hidden;
-        animation-timing-function: ease-in-out;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-        transform-origin: center center;
-    }
-
-    /* 4 DISTINCT PHYSICS PATTERNS for maximum realism */
-    .sway-0 { animation-name: sway0; }
-    .sway-1 { animation-name: sway1; }
-    .sway-2 { animation-name: sway2; }
-    .sway-3 { animation-name: sway3; }
-
-    /* Sway 0: Gentle, wide drift */
-    @keyframes sway0 {
-        0% { transform: translate3d(-35px, 0, 0) rotateZ(-25deg); }
-        100% { transform: translate3d(35px, 0, 0) rotateZ(35deg); }
-    }
-    
-    /* Sway 1: Tighter, faster fluttering with 3D Y-axis flip */
-    @keyframes sway1 {
-        0% { transform: translate3d(25px, 0, 0) rotateZ(15deg) rotateY(0deg); }
-        100% { transform: translate3d(-25px, 0, 0) rotateZ(-40deg) rotateY(60deg); }
-    }
-
-    /* Sway 2: Aggressive sideways sweeping */
-    @keyframes sway2 {
-        0% { transform: translate3d(-50px, 0, 0) rotateZ(-60deg); }
-        100% { transform: translate3d(30px, 0, 0) rotateZ(20deg); }
-    }
-
-    /* Sway 3: Chaotic tumbling in 3D space */
-    @keyframes sway3 {
-        0% { transform: translate3d(15px, 0, 0) rotateZ(45deg) rotateX(-20deg); }
-        100% { transform: translate3d(-40px, 0, 0) rotateZ(-55deg) rotateX(40deg); }
-    }
-
-    /* TABLET OPTIMIZATION (641px to 1024px): Moderately reduce quantity */
-    @media (min-width: 641px) and (max-width: 1024px) {
-        .leaf-fall:nth-child(3n) {
-            display: none !important;
+        // Smooth subtle gradient (no harsh highlights)
+        const grad = octx.createLinearGradient(0, -36, 0, 34);
+        if (isBack) {
+            grad.addColorStop(0, '#059669');
+            grad.addColorStop(1, '#064e3b');
+        } else {
+            grad.addColorStop(0, LEAF_COLOR.main);
+            grad.addColorStop(1, LEAF_COLOR.deep);
         }
+
+        // Clean, stylized organic silhouette
+        octx.beginPath();
+        octx.moveTo(0, -36); // Tip
+        octx.bezierCurveTo(-15, -28, -24, -10, -22, 10);
+        octx.bezierCurveTo(-20, 24, -8, 32, 0, 34); // Base
+        octx.bezierCurveTo(8, 32, 20, 24, 22, 10);
+        octx.bezierCurveTo(24, -10, 15, -28, 0, -36);
+        octx.closePath();
+
+        octx.fillStyle = grad;
+        if (isBack) octx.globalAlpha = 0.65; // Matte underside
+        octx.fill();
+
+        // Minimal, subtle stem
+        octx.beginPath();
+        octx.moveTo(0, 33);
+        octx.quadraticCurveTo(-0.8, 38, -2, 42);
+        octx.strokeStyle = LEAF_COLOR.stem;
+        octx.lineWidth = 1.8;
+        octx.lineCap = 'round';
+        octx.globalAlpha = isBack ? 0.5 : 0.75;
+        octx.stroke();
+
+        // Soft, minimal midrib crease (subtle, non-eye-catchy)
+        octx.beginPath();
+        octx.moveTo(0, -32);
+        octx.lineTo(0, 32);
+        octx.strokeStyle = isBack ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.12)';
+        octx.lineWidth = 1.0;
+        octx.stroke();
+
+        octx.restore();
     }
 
-    /* MOBILE OPTIMIZATION (<= 640px): Significantly reduce quantity for clean view & maximum battery saving */
-    @media (max-width: 640px) {
-        .leaf-fall:nth-child(3n),
-        .leaf-fall:nth-child(3n + 1) {
-            display: none !important;
+    function bakeSprite(isBack: boolean) {
+        const size = 96;
+        const offCanvas = document.createElement('canvas');
+        offCanvas.width = size;
+        offCanvas.height = size;
+        const octx = offCanvas.getContext('2d');
+        if (octx) {
+            drawLeafArt(octx, size, isBack);
         }
+        return offCanvas;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-        .leaf-fall, .leaf-sway {
-            animation: none !important;
+    // Pre-bake blurred sprite once for ZERO runtime performance cost on mobile
+    function bakeBlurredSprite(sourceCanvas: HTMLCanvasElement) {
+        const size = sourceCanvas.width;
+        const offCanvas = document.createElement('canvas');
+        offCanvas.width = size;
+        offCanvas.height = size;
+        const octx = offCanvas.getContext('2d');
+        if (octx) {
+            octx.filter = 'blur(2.5px)';
+            octx.drawImage(sourceCanvas, 0, 0);
         }
+        return offCanvas;
     }
-</style>
+
+    const faceSprite = bakeSprite(false);
+    const backSprite = bakeSprite(true);
+    const unifiedSprite = {
+        face: faceSprite,
+        back: backSprite,
+        faceBlurred: bakeBlurredSprite(faceSprite),
+        backBlurred: bakeBlurredSprite(backSprite)
+    };
+
+    // Target counts per device profile
+    function getTargetLeafCount(width: number): number {
+        if (width <= 640) return 25;      // Mobile
+        if (width <= 1024) return 40;     // Tablets / iPads
+        if (width >= 2560) return 120;    // Large 4K Desktops
+        return 90;                        // Normal Desktop
+    }
+
+    // Setup function to run on every page load
+    function initFallingLeaves() {
+        const container = document.getElementById('falling-leaves-container');
+        const canvas = document.getElementById('falling-leaves-canvas') as HTMLCanvasElement | null;
+        if (!canvas || !container) return;
+
+        // Prevent double initialization
+        if ((canvas as any)._initialized) return;
+        (canvas as any)._initialized = true;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // State
+        let W = 0, H = 0;
+        let leaves: any[] = [];
+        let isPaused = false;
+        let prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let lastTime = 0;
+        let animId: number;
+
+        // 2. Initialize leaves with lane-stratified distribution (eliminates clusters & empty voids)
+        function initLeaves() {
+            if (!W || !H) return;
+            const numLeaves = getTargetLeafCount(W);
+            const laneWidth = W / numLeaves;
+
+            // Generate shuffled vertical order so lanes have staggered vertical heights
+            const yIndices = Array.from({ length: numLeaves }, (_, i) => i);
+            for (let i = yIndices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [yIndices[i], yIndices[j]] = [yIndices[j], yIndices[i]];
+            }
+
+            leaves = Array.from({ length: numLeaves }).map((_, i) => {
+                const startX = (i + 0.5 + (Math.random() - 0.5) * 0.65) * laneWidth;
+                const startY = (yIndices[i] / numLeaves) * (H + 100) - 50;
+                return createLeaf(i, startX, startY);
+            });
+        }
+
+        function createLeaf(laneIndex: number, customX?: number, customY?: number) {
+            const rand = Math.random();
+            const isMacro = rand > 0.60; // 40% Macro Foreground, 60% Main Near
+            const isBlurred = isMacro && (rand > 0.80); // 20% Macro Blurred, 20% Macro Sharp
+            let scale: number, fallBase: number, opacity: number;
+            
+            // Subtle, non-distracting ambient opacity (-10% size, -10% opacity applied)
+            if (isMacro) {
+                // Macro Foreground Layer: ~1.08x to 1.55x
+                scale = 1.08 + Math.random() * 0.47;
+                fallBase = 37.0 + Math.random() * 20.8; // 37.0 - 57.8 px/s
+                opacity = 0.36 + Math.random() * 0.18; // Soft ambient opacity (36% – 54%)
+            } else {
+                // Main Near Layer: ~0.64x to 0.95x
+                scale = 0.64 + Math.random() * 0.31;
+                fallBase = 23.1 + Math.random() * 16.2; // 23.1 - 39.3 px/s
+                opacity = 0.27 + Math.random() * 0.20; // Gentle backdrop opacity (27% – 47%)
+            }
+
+            const laneWidth = W > 0 ? W / (leaves.length || getTargetLeafCount(W)) : 20;
+            const x = customX !== undefined ? customX : (laneIndex + 0.5 + (Math.random() - 0.5) * 0.65) * laneWidth;
+            const y = customY !== undefined ? customY : -35 - Math.random() * 45;
+
+            // Sway harmonic properties
+            const swayAmp = 14 + Math.random() * 18;
+            const swayFreq = 0.45 + Math.random() * 0.45;
+            const swayPhase = Math.random() * Math.PI * 2;
+
+            // Only 18% of leaves do full 3D flips; 82% remain face-forward with gentle surface tilt
+            const canFullFlip = Math.random() < 0.18;
+
+            return {
+                laneIndex,
+                x,
+                baseX: x,
+                y,
+                sprite: unifiedSprite,
+                scale,
+                fallBase,
+                opacity,
+                isBlurred,
+                canFullFlip,
+
+                swayAmp,
+                swayFreq,
+                swayPhase,
+
+                // Very slow, calm in-plane orientation drift
+                roll: Math.random() * Math.PI * 2,
+                rollRate: (Math.random() - 0.5) * 0.35,
+                
+                // Gentle tilt / tumble rate
+                spin: Math.random() * Math.PI * 2,
+                spinRate: canFullFlip ? (Math.random() - 0.5) * 0.75 : (Math.random() - 0.5) * 0.5,
+                
+                // Gentle aerodynamic glide in calm normal air (+5% speed)
+                slipBase: 13.9 + Math.random() * 20.8
+            };
+        }
+
+        // 3. Animation loop
+        function update(time: number) {
+            if (isPaused) {
+                lastTime = time;
+                animId = requestAnimationFrame(update);
+                return;
+            }
+
+            if (lastTime === 0) lastTime = time;
+            // Clamp dt to about 1/30s to prevent teleporting after lag
+            const dt = Math.min((time - lastTime) / 1000, 1 / 30);
+            lastTime = time;
+
+            ctx.clearRect(0, 0, W, H);
+
+            if (prefersReducedMotion) {
+                // Respect reader: draw a still frame
+                drawLeaves(0);
+            } else {
+                drawLeaves(dt);
+            }
+
+            animId = requestAnimationFrame(update);
+        }
+
+        function drawLeaves(dt: number) {
+            const laneWidth = W / leaves.length;
+
+            for (let i = 0; i < leaves.length; i++) {
+                const l = leaves[i];
+                
+                if (dt > 0) {
+                    l.spin += l.spinRate * dt;
+                    l.roll += l.rollRate * dt;
+                    l.swayPhase += l.swayFreq * dt;
+                    
+                    // Couple slip to tumble
+                    l.baseX += Math.sin(l.spin) * l.slipBase * l.scale * dt;
+                    l.y += l.fallBase * dt;
+                    
+                    // Wrap horizontal smoothly across viewport
+                    if (l.baseX > W + 60) l.baseX -= (W + 120);
+                    else if (l.baseX < -60) l.baseX += (W + 120);
+
+                    // Recycle at bottom back to its designated lane (prevents grouping & voids)
+                    if (l.y > H + 60) {
+                        l.baseX = (l.laneIndex + 0.5 + (Math.random() - 0.5) * 0.65) * laneWidth;
+                        l.y = -35 - Math.random() * 45;
+                        l.spin = Math.random() * Math.PI * 2;
+                        l.roll = Math.random() * Math.PI * 2;
+                    }
+                }
+
+                // Smooth S-curve rendered position
+                const renderX = l.baseX + Math.sin(l.swayPhase) * l.swayAmp;
+
+                // Compute horizontal scaling: 82% of leaves stay face-up, 18% flip with clamped width
+                let scaleX: number;
+                let isBack = false;
+
+                if (l.canFullFlip) {
+                    const rawCos = Math.cos(l.spin);
+                    isBack = rawCos < 0;
+                    // Clamp minimum edge-on width to 0.20 to avoid squished line artifacts
+                    const clampedCos = Math.sign(rawCos) * Math.max(0.20, Math.abs(rawCos));
+                    scaleX = clampedCos * l.scale;
+                } else {
+                    // 82% of leaves remain face-forward with a gentle surface tilt (width: 85%–100%)
+                    scaleX = (0.85 + 0.15 * Math.cos(l.spin)) * l.scale;
+                    isBack = false;
+                }
+
+                // Draw
+                ctx.save();
+                ctx.translate(renderX, l.y);
+                ctx.rotate(l.roll);              
+                ctx.scale(scaleX, l.scale);
+                
+                ctx.globalAlpha = l.opacity;
+                
+                // Pick face based on tumble sign & pre-baked parallax blur
+                const img = l.isBlurred
+                    ? (isBack ? l.sprite.backBlurred : l.sprite.faceBlurred)
+                    : (isBack ? l.sprite.back : l.sprite.face);
+                
+                // 96x96 super-sampled high-res sprite centered crisply
+                ctx.drawImage(img, -24, -24, 48, 48);
+                ctx.restore();
+            }
+        }
+
+        // 4. Resize & Low-End Device Performance Handling
+        const resizeObserver = new ResizeObserver(entries => {
+            if (!entries || !entries.length) return;
+            const rect = entries[0].contentRect;
+            if (rect.width === 0 || rect.height === 0) return;
+
+            W = rect.width;
+            H = rect.height;
+
+            // Strict DPR optimization for low-end mobile & tablets:
+            // Mobile (<=640px) uses DPR 1.0 (saves 75% memory and 4x fill-rate compared to DPR 2.0)
+            // Tablets/Desktops cap at DPR 1.25
+            const maxDpr = W <= 640 ? 1.0 : 1.25;
+            const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+
+            canvas.width = Math.round(W * dpr);
+            canvas.height = Math.round(H * dpr);
+            canvas.style.width = `${W}px`;
+            canvas.style.height = `${H}px`;
+            ctx.scale(dpr, dpr);
+
+            const targetCount = getTargetLeafCount(W);
+            if (leaves.length === 0 || Math.abs(leaves.length - targetCount) > 8) {
+                initLeaves();
+            }
+
+            // Ensure one frame is drawn if paused/reduced motion
+            if (prefersReducedMotion || isPaused) {
+                ctx.clearRect(0, 0, W, H);
+                drawLeaves(0);
+            }
+        });
+
+        resizeObserver.observe(container);
+
+        // 5. Visibility and Motion Preferences
+        const io = new IntersectionObserver(entries => {
+            isPaused = !entries[0].isIntersecting || document.hidden;
+            if (!isPaused) lastTime = performance.now();
+        });
+        io.observe(container);
+
+        const handleVisibilityChange = () => {
+            isPaused = document.hidden;
+            if (!isPaused) lastTime = performance.now();
+        };
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        const handleMotionChange = (e: MediaQueryListEvent) => {
+            prefersReducedMotion = e.matches;
+            if (prefersReducedMotion) {
+                ctx.clearRect(0, 0, W, H);
+                drawLeaves(0);
+            }
+        };
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        motionQuery.addEventListener('change', handleMotionChange);
+
+        // Cleanup on navigation
+        document.addEventListener('astro:before-swap', () => {
+            cancelAnimationFrame(animId);
+            resizeObserver.disconnect();
+            io.disconnect();
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            motionQuery.removeEventListener('change', handleMotionChange);
+        }, { once: true });
+
+        // Start
+        animId = requestAnimationFrame(update);
+    }
+
+    // Initialize on first load and subsequent view transitions
+    document.addEventListener('astro:page-load', initFallingLeaves);
+</script>
