@@ -47,17 +47,12 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
                 `}
             >
                 {/* 3. Inner Element: Organic Pendulum Physics & 3D Tumble */}
+                {/* Removed drop-shadow to guarantee 60fps on all devices; shadows make no sense for dark silhouettes anyway! */}
                 <svg 
-                    width="32"
-                    height="32"
                     viewBox="0 0 24 24" 
                     fill="currentColor" 
                     class={`w-8 h-8 leaf-sway sway-${leaf.swayType}`}
                     style={`
-                        width: 32px;
-                        height: 32px;
-                        max-width: 32px;
-                        max-height: 32px;
                         animation-delay: ${leaf.swayDelay}s;
                         animation-duration: ${leaf.swayDuration}s;
                     `}
@@ -95,10 +90,6 @@ const leaves = Array.from({ length: numLeaves }).map((_, i) => {
         animation-iteration-count: infinite;
         animation-direction: alternate;
         transform-origin: center center;
-        width: 32px;
-        height: 32px;
-        max-width: 32px;
-        max-height: 32px;
     }
 
     /* 4 DISTINCT PHYSICS PATTERNS for maximum realism */
