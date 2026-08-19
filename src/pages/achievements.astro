@@ -376,14 +376,20 @@ allAchievements.sort((a, b) => {
             escapeHtml 
         } from '../utils/state.js';
 
-        const tierColors = {
-            'Bronze': '#f97316',
-            'Silver': '#94a3b8',
-            'Gold': '#eab308',
-            'Platinum': '#38bdf8',
-            'Diamond': '#818cf8',
+        const rarityColors = {
+            'Common': '#ffffff',
+            'Uncommon': '#86efac',
+            'Rare': '#60a5fa',
             'Epic': '#c084fc',
             'Legendary': '#fbbf24'
+        };
+
+        const iconGlowColors = {
+            'Common': 'rgba(255, 255, 255, 0.4)',
+            'Uncommon': 'rgba(134, 239, 172, 0.5)',
+            'Rare': 'rgba(96, 165, 250, 0.5)',
+            'Epic': 'rgba(192, 132, 252, 0.6)',
+            'Legendary': 'rgba(251, 191, 36, 0.8)'
         };
 
         function hydrateAchievementsPage() {

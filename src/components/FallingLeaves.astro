@@ -7,22 +7,23 @@
     <canvas id="falling-leaves-canvas" class="w-full h-full"></canvas>
 </div>
 
-<script>
+<script is:inline>
+(function() {
     // 1. Single unified harmonious color tone with minimal non-distracting detailing
-    const LEAF_COLOR = {
+    var LEAF_COLOR = {
         main: '#047857',      // Balanced calming emerald
         deep: '#064e3b',      // Subtle deep green tone
         stem: '#022c22'       // Minimal stem tone
     };
 
     // Minimalist, ambient leaf artwork (soft, natural, non-distracting)
-    function drawLeafArt(octx: CanvasRenderingContext2D, size: number, isBack: boolean) {
-        const half = size / 2;
+    function drawLeafArt(octx, size, isBack) {
+        var half = size / 2;
         octx.save();
         octx.translate(half, half);
 
         // Smooth subtle gradient (no harsh highlights)
-        const grad = octx.createLinearGradient(0, -36, 0, 34);
+        var grad = octx.createLinearGradient(0, -36, 0, 34);
         if (isBack) {
             grad.addColorStop(0, '#059669');
             grad.addColorStop(1, '#064e3b');
@@ -65,12 +66,12 @@
         octx.restore();
     }
 
-    function bakeSprite(isBack: boolean) {
-        const size = 96;
-        const offCanvas = document.createElement('canvas');
+    function bakeSprite(isBack) {
+        var size = 96;
+        var offCanvas = document.createElement('canvas');
         offCanvas.width = size;
         offCanvas.height = size;
-        const octx = offCanvas.getContext('2d');
+        var octx = offCanvas.getContext('2d');
         if (octx) {
             drawLeafArt(octx, size, isBack);
         }
@@ -78,12 +79,12 @@
     }
 
     // Pre-bake blurred sprite once for ZERO runtime performance cost on mobile
-    function bakeBlurredSprite(sourceCanvas: HTMLCanvasElement) {
-        const size = sourceCanvas.width;
-        const offCanvas = document.createElement('canvas');
+    function bakeBlurredSprite(sourceCanvas) {
+        var size = sourceCanvas.width;
+        var offCanvas = document.createElement('canvas');
         offCanvas.width = size;
         offCanvas.height = size;
-        const octx = offCanvas.getContext('2d');
+        var octx = offCanvas.getContext('2d');
         if (octx) {
             octx.filter = 'blur(2.5px)';
             octx.drawImage(sourceCanvas, 0, 0);
@@ -91,126 +92,168 @@
         return offCanvas;
     }
 
-    const faceSprite = bakeSprite(false);
-    const backSprite = bakeSprite(true);
-    const unifiedSprite = {
+    var faceSprite = bakeSprite(false);
+    var backSprite = bakeSprite(true);
+    var unifiedSprite = {
         face: faceSprite,
         back: backSprite,
         faceBlurred: bakeBlurredSprite(faceSprite),
         backBlurred: bakeBlurredSprite(backSprite)
     };
 
-    // Target counts per device profile
-    function getTargetLeafCount(width: number): number {
-        if (width <= 640) return 25;      // Mobile
-        if (width <= 1024) return 40;     // Tablets / iPads
-        if (width >= 2560) return 120;    // Large 4K Desktops
-        return 90;                        // Normal Desktop
+    // Target counts per device profile (+5% quantity increase applied)
+    function getTargetLeafCount(width) {
+        if (width <= 640) return 23;      // Mobile (+5% -> 23)
+        if (width <= 1024) return 38;     // Tablets / iPads (+5% -> 38)
+        if (width >= 2560) return 113;    // Large 4K Desktops (+5% -> 113)
+        return 85;                        // Normal Desktop (+5% -> 85)
     }
 
-    // Setup function to run on every page load
+    // Setup function to run immediately and on every page load
     function initFallingLeaves() {
-        const container = document.getElementById('falling-leaves-container');
-        const canvas = document.getElementById('falling-leaves-canvas') as HTMLCanvasElement | null;
+        var container = document.getElementById('falling-leaves-container');
+        var canvas = document.getElementById('falling-leaves-canvas');
         if (!canvas || !container) return;
 
         // Prevent double initialization
-        if ((canvas as any)._initialized) return;
-        (canvas as any)._initialized = true;
+        if (canvas._initialized) return;
+        canvas._initialized = true;
 
-        const ctx = canvas.getContext('2d');
+        var ctx = canvas.getContext('2d');
         if (!ctx) return;
 
         // State
-        let W = 0, H = 0;
-        let leaves: any[] = [];
-        let isPaused = false;
-        let prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let lastTime = 0;
-        let animId: number;
+        var leaves = [];
+        var isPaused = false;
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var lastTime = 0;
+        var animId;
 
-        // 2. Initialize leaves with lane-stratified distribution (eliminates clusters & empty voids)
-        function initLeaves() {
-            if (!W || !H) return;
-            const numLeaves = getTargetLeafCount(W);
-            const laneWidth = W / numLeaves;
+        // Synchronous initial dimension measurement for instantaneous frame 0 rendering
+        var W = container.clientWidth || window.innerWidth || document.documentElement.clientWidth || 800;
+        var H = container.clientHeight || window.innerHeight || document.documentElement.clientHeight || 600;
 
-            // Generate shuffled vertical order so lanes have staggered vertical heights
-            const yIndices = Array.from({ length: numLeaves }, (_, i) => i);
-            for (let i = yIndices.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [yIndices[i], yIndices[j]] = [yIndices[j], yIndices[i]];
+        var maxDpr = W <= 640 ? 1.0 : 1.25;
+        var dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.scale(dpr, dpr);
+
+        // Spatial distribution per device profile:
+        // - Mobile & Tablets (<= 1024px): Uniform across screen
+        // - Standard Desktop & 4K Ultra-Wide (> 1024px): 37% Left | 26% Center UI | 37% Right
+        function getLaneBaseX(laneIndex, totalLeaves, width) {
+            if (width <= 1024 || totalLeaves <= 0) {
+                // Mobile & Tablets: Uniform lane distribution across entire screen
+                var laneW = width / Math.max(1, totalLeaves);
+                return (laneIndex + 0.5 + (Math.random() - 0.5) * 0.65) * laneW;
             }
 
-            leaves = Array.from({ length: numLeaves }).map((_, i) => {
-                const startX = (i + 0.5 + (Math.random() - 0.5) * 0.65) * laneWidth;
-                const startY = (yIndices[i] / numLeaves) * (H + 100) - 50;
+            // Desktop & 4K Ultra-Wide (> 1024px): 37% Left | 26% Center UI | 37% Right
+            var u = (laneIndex + 0.5) / totalLeaves;
+            var flankWidth = Math.max(width * 0.28, (width - Math.min(1150, width - 48)) / 2 + 100);
+            var leftEnd = flankWidth;
+            var rightStart = width - flankWidth;
+
+            if (u < 0.37) {
+                // Left Flank (37% of leaves)
+                var t = u / 0.37;
+                var localSpan = (leftEnd + 10) / Math.max(1, totalLeaves * 0.37);
+                return -10 + t * (leftEnd + 10) + (Math.random() - 0.5) * localSpan * 0.6;
+            } else if (u < 0.63) {
+                // Center UI (26% of leaves)
+                var t = (u - 0.37) / 0.26;
+                var centerWidth = Math.max(10, rightStart - leftEnd);
+                var localSpan = centerWidth / Math.max(1, totalLeaves * 0.26);
+                return leftEnd + t * centerWidth + (Math.random() - 0.5) * localSpan * 0.6;
+            } else {
+                // Right Flank (37% of leaves)
+                var t = (u - 0.63) / 0.37;
+                var rightWidth = width + 10 - rightStart;
+                var localSpan = rightWidth / Math.max(1, totalLeaves * 0.37);
+                return rightStart + t * rightWidth + (Math.random() - 0.5) * localSpan * 0.6;
+            }
+        }
+
+        // 2. Initialize leaves with lane-stratified distribution
+        function initLeaves() {
+            if (!W || !H) return;
+            var numLeaves = getTargetLeafCount(W);
+
+            var yIndices = Array.from({ length: numLeaves }, function(_, i) { return i; });
+            for (var i = yIndices.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = yIndices[i];
+                yIndices[i] = yIndices[j];
+                yIndices[j] = temp;
+            }
+
+            leaves = Array.from({ length: numLeaves }).map(function(_, i) {
+                var startX = getLaneBaseX(i, numLeaves, W);
+                var startY = (yIndices[i] / numLeaves) * (H + 100) - 50;
                 return createLeaf(i, startX, startY);
             });
         }
 
-        function createLeaf(laneIndex: number, customX?: number, customY?: number) {
-            const rand = Math.random();
-            const isMacro = rand > 0.60; // 40% Macro Foreground, 60% Main Near
-            const isBlurred = isMacro && (rand > 0.80); // 20% Macro Blurred, 20% Macro Sharp
-            let scale: number, fallBase: number, opacity: number;
+        function createLeaf(laneIndex, customX, customY) {
+            var rand = Math.random();
+            var isMacro = rand > 0.60;
+            var isBlurred = isMacro && (rand > 0.80);
+            var scale, fallBase, opacity;
             
-            // Subtle, non-distracting ambient opacity (-10% size, -10% opacity applied)
+            // Applied adjustments: +5% size, -10% opacity, +5% speed
             if (isMacro) {
-                // Macro Foreground Layer: ~1.08x to 1.55x
-                scale = 1.08 + Math.random() * 0.47;
-                fallBase = 37.0 + Math.random() * 20.8; // 37.0 - 57.8 px/s
-                opacity = 0.36 + Math.random() * 0.18; // Soft ambient opacity (36% – 54%)
+                // Macro Foreground Layer: ~0.87x to 1.25x (5% size increase)
+                scale = 0.87 + Math.random() * 0.38;
+                fallBase = 36.91 + Math.random() * 20.75; // 36.91 - 57.66 px/s (5% faster)
+                opacity = 0.27 + Math.random() * 0.14; // Soft ambient opacity: 27% – 41%
             } else {
-                // Main Near Layer: ~0.64x to 0.95x
-                scale = 0.64 + Math.random() * 0.31;
-                fallBase = 23.1 + Math.random() * 16.2; // 23.1 - 39.3 px/s
-                opacity = 0.27 + Math.random() * 0.20; // Gentle backdrop opacity (27% – 47%)
+                // Main Near Layer: ~0.53x to 0.78x (5% size increase)
+                scale = 0.53 + Math.random() * 0.25;
+                fallBase = 23.05 + Math.random() * 16.16; // 23.05 - 39.21 px/s (5% faster)
+                opacity = 0.21 + Math.random() * 0.15; // Gentle backdrop opacity: 21% – 36%
             }
 
-            const laneWidth = W > 0 ? W / (leaves.length || getTargetLeafCount(W)) : 20;
-            const x = customX !== undefined ? customX : (laneIndex + 0.5 + (Math.random() - 0.5) * 0.65) * laneWidth;
-            const y = customY !== undefined ? customY : -35 - Math.random() * 45;
+            var anchorX = customX !== undefined ? customX : getLaneBaseX(laneIndex, leaves.length || getTargetLeafCount(W), W);
+            var y = customY !== undefined ? customY : -35 - Math.random() * 45;
 
-            // Sway harmonic properties
-            const swayAmp = 14 + Math.random() * 18;
-            const swayFreq = 0.45 + Math.random() * 0.45;
-            const swayPhase = Math.random() * Math.PI * 2;
+            // Sway harmonic properties (5% faster frequency)
+            var swayAmp = 12 + Math.random() * 16;
+            var swayFreq = 0.45 + Math.random() * 0.45;
+            var swayPhase = Math.random() * Math.PI * 2;
 
-            // Only 18% of leaves do full 3D flips; 82% remain face-forward with gentle surface tilt
-            const canFullFlip = Math.random() < 0.18;
+            var canFullFlip = Math.random() < 0.18;
 
             return {
-                laneIndex,
-                x,
-                baseX: x,
-                y,
+                laneIndex: laneIndex,
+                anchorX: anchorX,
+                y: y,
                 sprite: unifiedSprite,
-                scale,
-                fallBase,
-                opacity,
-                isBlurred,
-                canFullFlip,
+                scale: scale,
+                fallBase: fallBase,
+                opacity: opacity,
+                isBlurred: isBlurred,
+                canFullFlip: canFullFlip,
 
-                swayAmp,
-                swayFreq,
-                swayPhase,
+                swayAmp: swayAmp,
+                swayFreq: swayFreq,
+                swayPhase: swayPhase,
 
-                // Very slow, calm in-plane orientation drift
                 roll: Math.random() * Math.PI * 2,
                 rollRate: (Math.random() - 0.5) * 0.35,
                 
-                // Gentle tilt / tumble rate
                 spin: Math.random() * Math.PI * 2,
-                spinRate: canFullFlip ? (Math.random() - 0.5) * 0.75 : (Math.random() - 0.5) * 0.5,
+                spinRate: canFullFlip ? (Math.random() - 0.5) * 0.75 : (Math.random() - 0.5) * 0.50,
                 
-                // Gentle aerodynamic glide in calm normal air (+5% speed)
-                slipBase: 13.9 + Math.random() * 20.8
+                slipBase: 13.86 + Math.random() * 20.75
             };
         }
 
         // 3. Animation loop
-        function update(time: number) {
+        function update(time) {
             if (isPaused) {
                 lastTime = time;
                 animId = requestAnimationFrame(update);
@@ -218,14 +261,12 @@
             }
 
             if (lastTime === 0) lastTime = time;
-            // Clamp dt to about 1/30s to prevent teleporting after lag
-            const dt = Math.min((time - lastTime) / 1000, 1 / 30);
+            var dt = Math.min((time - lastTime) / 1000, 1 / 30);
             lastTime = time;
 
             ctx.clearRect(0, 0, W, H);
 
             if (prefersReducedMotion) {
-                // Respect reader: draw a still frame
                 drawLeaves(0);
             } else {
                 drawLeaves(dt);
@@ -234,54 +275,43 @@
             animId = requestAnimationFrame(update);
         }
 
-        function drawLeaves(dt: number) {
-            const laneWidth = W / leaves.length;
+        function drawLeaves(dt) {
+            if (!leaves.length) return;
 
-            for (let i = 0; i < leaves.length; i++) {
-                const l = leaves[i];
+            for (var i = 0; i < leaves.length; i++) {
+                var l = leaves[i];
                 
                 if (dt > 0) {
                     l.spin += l.spinRate * dt;
                     l.roll += l.rollRate * dt;
                     l.swayPhase += l.swayFreq * dt;
-                    
-                    // Couple slip to tumble
-                    l.baseX += Math.sin(l.spin) * l.slipBase * l.scale * dt;
                     l.y += l.fallBase * dt;
-                    
-                    // Wrap horizontal smoothly across viewport
-                    if (l.baseX > W + 60) l.baseX -= (W + 120);
-                    else if (l.baseX < -60) l.baseX += (W + 120);
 
-                    // Recycle at bottom back to its designated lane (prevents grouping & voids)
                     if (l.y > H + 60) {
-                        l.baseX = (l.laneIndex + 0.5 + (Math.random() - 0.5) * 0.65) * laneWidth;
+                        l.anchorX = getLaneBaseX(l.laneIndex, leaves.length, W);
                         l.y = -35 - Math.random() * 45;
                         l.spin = Math.random() * Math.PI * 2;
                         l.roll = Math.random() * Math.PI * 2;
                     }
                 }
 
-                // Smooth S-curve rendered position
-                const renderX = l.baseX + Math.sin(l.swayPhase) * l.swayAmp;
+                var slipOffset = Math.sin(l.spin) * (l.slipBase * 0.8 * l.scale);
+                var swayOffset = Math.sin(l.swayPhase) * l.swayAmp;
+                var renderX = l.anchorX + slipOffset + swayOffset;
 
-                // Compute horizontal scaling: 82% of leaves stay face-up, 18% flip with clamped width
-                let scaleX: number;
-                let isBack = false;
+                var scaleX;
+                var isBack = false;
 
                 if (l.canFullFlip) {
-                    const rawCos = Math.cos(l.spin);
+                    var rawCos = Math.cos(l.spin);
                     isBack = rawCos < 0;
-                    // Clamp minimum edge-on width to 0.20 to avoid squished line artifacts
-                    const clampedCos = Math.sign(rawCos) * Math.max(0.20, Math.abs(rawCos));
+                    var clampedCos = Math.sign(rawCos) * Math.max(0.20, Math.abs(rawCos));
                     scaleX = clampedCos * l.scale;
                 } else {
-                    // 82% of leaves remain face-forward with a gentle surface tilt (width: 85%–100%)
                     scaleX = (0.85 + 0.15 * Math.cos(l.spin)) * l.scale;
                     isBack = false;
                 }
 
-                // Draw
                 ctx.save();
                 ctx.translate(renderX, l.y);
                 ctx.rotate(l.roll);              
@@ -289,88 +319,104 @@
                 
                 ctx.globalAlpha = l.opacity;
                 
-                // Pick face based on tumble sign & pre-baked parallax blur
-                const img = l.isBlurred
+                var img = l.isBlurred
                     ? (isBack ? l.sprite.backBlurred : l.sprite.faceBlurred)
                     : (isBack ? l.sprite.back : l.sprite.face);
                 
-                // 96x96 super-sampled high-res sprite centered crisply
                 ctx.drawImage(img, -24, -24, 48, 48);
                 ctx.restore();
             }
         }
 
-        // 4. Resize & Low-End Device Performance Handling
-        const resizeObserver = new ResizeObserver(entries => {
-            if (!entries || !entries.length) return;
-            const rect = entries[0].contentRect;
-            if (rect.width === 0 || rect.height === 0) return;
+        // 4. Synchronous frame 0 paint — INSTANT ZERO-LATENCY PAINT
+        initLeaves();
+        drawLeaves(0);
 
-            W = rect.width;
-            H = rect.height;
+        // 5. Resize & Multi-Device Handling
+        var resizeObserver;
+        if (typeof ResizeObserver !== 'undefined') {
+            resizeObserver = new ResizeObserver(function(entries) {
+                if (!entries || !entries.length) return;
+                var rect = entries[0].contentRect;
+                if (rect.width === 0 || rect.height === 0) return;
 
-            // Strict DPR optimization for low-end mobile & tablets:
-            // Mobile (<=640px) uses DPR 1.0 (saves 75% memory and 4x fill-rate compared to DPR 2.0)
-            // Tablets/Desktops cap at DPR 1.25
-            const maxDpr = W <= 640 ? 1.0 : 1.25;
-            const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+                if (Math.abs(W - rect.width) < 2 && Math.abs(H - rect.height) < 2) return;
 
-            canvas.width = Math.round(W * dpr);
-            canvas.height = Math.round(H * dpr);
-            canvas.style.width = `${W}px`;
-            canvas.style.height = `${H}px`;
-            ctx.scale(dpr, dpr);
+                W = rect.width;
+                H = rect.height;
 
-            const targetCount = getTargetLeafCount(W);
-            if (leaves.length === 0 || Math.abs(leaves.length - targetCount) > 8) {
-                initLeaves();
-            }
+                var maxDpr = W <= 640 ? 1.0 : 1.25;
+                var dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
 
-            // Ensure one frame is drawn if paused/reduced motion
-            if (prefersReducedMotion || isPaused) {
-                ctx.clearRect(0, 0, W, H);
-                drawLeaves(0);
-            }
-        });
+                canvas.width = Math.round(W * dpr);
+                canvas.height = Math.round(H * dpr);
+                canvas.style.width = W + 'px';
+                canvas.style.height = H + 'px';
+                ctx.scale(dpr, dpr);
 
-        resizeObserver.observe(container);
+                var targetCount = getTargetLeafCount(W);
+                if (leaves.length === 0 || Math.abs(leaves.length - targetCount) > 8) {
+                    initLeaves();
+                }
 
-        // 5. Visibility and Motion Preferences
-        const io = new IntersectionObserver(entries => {
-            isPaused = !entries[0].isIntersecting || document.hidden;
-            if (!isPaused) lastTime = performance.now();
-        });
-        io.observe(container);
+                if (prefersReducedMotion || isPaused) {
+                    ctx.clearRect(0, 0, W, H);
+                    drawLeaves(0);
+                }
+            });
 
-        const handleVisibilityChange = () => {
+            resizeObserver.observe(container);
+        }
+
+        // 6. Visibility and Motion Preferences
+        var io;
+        if (typeof IntersectionObserver !== 'undefined') {
+            io = new IntersectionObserver(function(entries) {
+                isPaused = !entries[0].isIntersecting || document.hidden;
+                if (!isPaused) lastTime = performance.now();
+            });
+            io.observe(container);
+        }
+
+        function handleVisibilityChange() {
             isPaused = document.hidden;
             if (!isPaused) lastTime = performance.now();
-        };
+        }
         document.addEventListener('visibilitychange', handleVisibilityChange);
 
-        const handleMotionChange = (e: MediaQueryListEvent) => {
+        function handleMotionChange(e) {
             prefersReducedMotion = e.matches;
             if (prefersReducedMotion) {
                 ctx.clearRect(0, 0, W, H);
                 drawLeaves(0);
             }
-        };
-        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        motionQuery.addEventListener('change', handleMotionChange);
+        }
+        var motionQuery = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (motionQuery && motionQuery.addEventListener) {
+            motionQuery.addEventListener('change', handleMotionChange);
+        }
 
         // Cleanup on navigation
-        document.addEventListener('astro:before-swap', () => {
+        document.addEventListener('astro:before-swap', function() {
             cancelAnimationFrame(animId);
-            resizeObserver.disconnect();
-            io.disconnect();
+            if (resizeObserver) resizeObserver.disconnect();
+            if (io) io.disconnect();
             document.removeEventListener('visibilitychange', handleVisibilityChange);
-            motionQuery.removeEventListener('change', handleMotionChange);
+            if (motionQuery && motionQuery.removeEventListener) {
+                motionQuery.removeEventListener('change', handleMotionChange);
+            }
+            if (canvas) {
+                canvas._initialized = false;
+            }
         }, { once: true });
 
-        // Start
+        // Start animation immediately
+        lastTime = performance.now();
         animId = requestAnimationFrame(update);
     }
 
-    // Initialize on first load and subsequent view transitions
+    // Run IMMEDIATELY synchronous on HTML parse (zero milliseconds delay)
+    initFallingLeaves();
     document.addEventListener('astro:page-load', initFallingLeaves);
+})();
 </script>

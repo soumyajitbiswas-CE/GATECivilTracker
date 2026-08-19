@@ -13,10 +13,6 @@
 	],
 	"exclude": [
 		"node_modules",
-		"dist",
-		"magical-motion",
-		"major-iron",
-		"terrestrial-telescope",
-		"scratch_spline_skill"
+		"dist"
 	]
 }

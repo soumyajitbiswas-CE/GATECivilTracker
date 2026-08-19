@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { defaultState } from '../data.js';
 import { evaluateAchievements } from './achievementEngine.js';
-import achievementsData from '../data/achievements.json';
+import achievementsData from '../data/achievements.json' with { type: 'json' };
 
 // Hardened HTML and Attribute Entity Escaper
 export const escapeHtml = (str) => {
