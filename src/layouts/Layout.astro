@@ -1,7 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
-import FallingLeaves from '../components/FallingLeaves.astro';
 import AchievementNotification from '../components/AchievementNotification.astro';
 interface Props {
 	title: string;
@@ -96,7 +95,6 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 	</head>
 	<body class="min-h-screen relative">
         <div class="site-bg" aria-hidden="true" transition:persist="site-bg"></div>
-        <FallingLeaves transition:persist="falling-leaves" />
         <AchievementNotification transition:persist="ach-notification" />
         <div class="app-container flex flex-col gap-5 sm:gap-6 relative z-10">
             <!-- Header -->

@@ -7,12 +7,6 @@
       "skillPath": "skills/astro/SKILL.md",
       "computedHash": "3a70f9666e7b6a03efb939b7e62938f4d3a6a5d956b2cc3c10011fda6ba27e9b"
     },
-    "falling-leaves": {
-      "source": "devinilabs/pro-skill",
-      "sourceType": "github",
-      "skillPath": "agent-skills/web-design/falling-leaves/SKILL.md",
-      "computedHash": "b40c7c743a8cc0a5bcdafd0dc8b555c78147c2129863f7615f470c89ced1dd19"
-    },
     "tailwind-4-docs": {
       "source": "lombiq/tailwind-agent-skills",
       "sourceType": "github",
