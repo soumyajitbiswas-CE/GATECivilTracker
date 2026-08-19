@@ -73,7 +73,7 @@ const subjectBgClass = {
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" style="transform: translateZ(0);">
             {subjects.map((sub) => (
-                <a href={`/subject/${sub.id}`} data-astro-prefetch="hover" class={`${subjectBgClass[sub.id] || 'surface-syllabus'} backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group relative overflow-hidden focus-visible:ring-2 focus-visible:ring-primary-accent focus:outline-none cursor-pointer block no-underline text-inherit`} data-id={sub.id}>
+                <a href={`/subject/${sub.id}`} data-astro-prefetch="viewport" class={`${subjectBgClass[sub.id] || 'surface-syllabus'} backdrop-blur-md border border-panel-border rounded-2xl p-4 sm:p-5 flex flex-col justify-between subject-card min-w-0 glow-card group relative overflow-hidden focus-visible:ring-2 focus-visible:ring-primary-accent focus:outline-none cursor-pointer block no-underline text-inherit`} data-id={sub.id}>
                     <!-- Top section: Title and Weight -->
                     <div class="flex flex-col gap-1 min-w-0">
                         <div class="flex items-start gap-3 min-w-0">

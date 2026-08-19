@@ -81,35 +81,11 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
             ::view-transition {
                 background-color: #020403;
             }
-            ::view-transition-group(root) {
-                animation-duration: 90ms;
-                background-color: #020403;
-            }
+            ::view-transition-group(root),
             ::view-transition-old(root),
             ::view-transition-new(root) {
-                animation-duration: 90ms;
-                animation-timing-function: ease-out;
-            }
-            ::view-transition-old(root) {
-                animation-name: astroFadeOut;
-            }
-            ::view-transition-new(root) {
-                animation-name: astroFadeIn;
-            }
-            @keyframes astroFadeOut {
-                from { opacity: 1; }
-                to { opacity: 0; }
-            }
-            @keyframes astroFadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @media (prefers-reduced-motion: reduce) {
-                ::view-transition-group(*),
-                ::view-transition-old(*),
-                ::view-transition-new(*) {
-                    animation: none !important;
-                }
+                animation: none !important;
+                background-color: #020403;
             }
         </style>
         <ViewTransitions />
