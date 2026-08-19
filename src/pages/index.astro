@@ -551,13 +551,23 @@ const subjectBgClass = {
     </div>
     <script>
         // @ts-nocheck
+        import { 
+            getState, 
+            saveState, 
+            calculateAllMetrics, 
+            formatPercent, 
+            formatHours, 
+            debounce, 
+            escapeHtml 
+        } from '../utils/state.js';
+
         let workingSubjects = [];
 
         // Hydration logic
         function hydrateDashboard() {
             if (!document.getElementById('dashboard-view')) return;
-            const state = window.getState();
-            window.calculateAllMetrics(state);
+            const state = getState();
+            calculateAllMetrics(state);
 
             // Update Hero
             const newHeroPercent = window.formatPercent(state.gateReadiness || 0);
@@ -1258,9 +1268,7 @@ const subjectBgClass = {
             });
         }
 
-        initPage();
         document.addEventListener('astro:page-load', initPage);
-        document.addEventListener('astro:after-swap', hydrateDashboard);
         
         window.removeEventListener('stateChanged', hydrateDashboard);
         window.addEventListener('stateChanged', hydrateDashboard);

@@ -18,9 +18,9 @@ allAchievements.sort((a, b) => {
 <Layout title="Achievements | GATE Civil Tracker">
     <div id="achievements-view" class="flex flex-col gap-4 sm:gap-5 min-w-0 pb-10">
         
-        <!-- Back to Dashboard Button (Prefetch load for instant transition) -->
+        <!-- Back to Dashboard Button -->
         <div class="mb-0.5">
-            <a href="/" id="btn-back-dashboard" data-astro-prefetch="load" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+            <a href="/" id="btn-back-dashboard" data-astro-prefetch="hover" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 hover:border-primary-accent/40 hover:bg-white/10 transition-colors touch-manipulation cursor-pointer select-none group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
                 <span class="pointer-events-none">Back to Dashboard</span>
             </a>
@@ -69,12 +69,12 @@ allAchievements.sort((a, b) => {
         <!-- Controls & Filters -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4 bg-black/30 p-2.5 sm:p-3 rounded-xl border border-panel-border">
             <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto w-full no-scrollbar pb-1 sm:pb-0 touch-pan-x overscroll-contain" id="rarity-filters">
-                <button class="filter-btn active text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-white/10 border border-white/20 text-white whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="All">All</button>
-                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-white whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Common">Common</button>
-                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#86efac] whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Uncommon">Uncommon</button>
-                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#60a5fa] whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Rare">Rare</button>
-                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#c084fc] whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Epic">Epic</button>
-                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#fbbf24] whitespace-nowrap transition-colors touch-manipulation select-none active:scale-95" data-filter="Legendary">Legendary</button>
+                <button class="filter-btn active text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-white/10 border border-white/20 text-white whitespace-nowrap transition-colors touch-manipulation select-none cursor-pointer" data-filter="All">All</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-white whitespace-nowrap transition-colors touch-manipulation select-none cursor-pointer" data-filter="Common">Common</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#86efac] whitespace-nowrap transition-colors touch-manipulation select-none cursor-pointer" data-filter="Uncommon">Uncommon</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#60a5fa] whitespace-nowrap transition-colors touch-manipulation select-none cursor-pointer" data-filter="Rare">Rare</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#c084fc] whitespace-nowrap transition-colors touch-manipulation select-none cursor-pointer" data-filter="Epic">Epic</button>
+                <button class="filter-btn text-xs font-semibold px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-transparent border border-transparent text-text-muted hover:text-[#fbbf24] whitespace-nowrap transition-colors touch-manipulation select-none cursor-pointer" data-filter="Legendary">Legendary</button>
             </div>
             
             <div class="flex flex-wrap items-center gap-2 sm:gap-3 shrink-0 text-[11px] sm:text-xs font-medium text-text-muted px-1 sm:px-2 min-w-0" id="stats-display">
@@ -339,34 +339,29 @@ allAchievements.sort((a, b) => {
         import { defaultState } from '../data.js';
         import { evaluateAchievements } from '../utils/achievementEngine.js';
         import achievementsData from '../data/achievements.json';
+        import { 
+            getState, 
+            saveState, 
+            calculateAllMetrics, 
+            formatPercent, 
+            formatHours, 
+            escapeHtml 
+        } from '../utils/state.js';
 
-        const rarityColors = {
-            'Common': '#ffffff',
-            'Uncommon': '#86efac',
-            'Rare': '#60a5fa',
-            'Epic': '#c084fc',
-            'Legendary': '#fbbf24'
-        };
-
-        const iconGlowColors = {
-            'Common': '#ffffff',
-            'Uncommon': '#86efac',
-            'Rare': '#60a5fa',
+        const tierColors = {
+            'Bronze': '#f97316',
+            'Silver': '#94a3b8',
+            'Gold': '#eab308',
+            'Platinum': '#38bdf8',
+            'Diamond': '#818cf8',
             'Epic': '#c084fc',
             'Legendary': '#fbbf24'
         };
 
         function hydrateAchievementsPage() {
             if (!document.getElementById('achievements-grid')) return;
-            const state = (window.getState && typeof window.getState === 'function') 
-                ? window.getState() 
-                : (window.sanitizeAndRepairState 
-                    ? window.sanitizeAndRepairState(JSON.parse(localStorage.getItem('gateCivilTracker2027') || '{}')) 
-                    : JSON.parse(JSON.stringify(defaultState)));
-
-            if (window.calculateAllMetrics) {
-                window.calculateAllMetrics(state);
-            }
+            const state = getState();
+            calculateAllMetrics(state);
             evaluateAchievements(state, achievementsData.achievements);
 
             const unlockedMap = state.achievements?.unlocked || {};
@@ -571,14 +566,7 @@ allAchievements.sort((a, b) => {
             setupAchievementsListeners();
         }
 
-        // Attach listeners reliably across initial load & Astro ViewTransitions
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initAchievementsPage);
-        } else {
-            initAchievementsPage();
-        }
         document.addEventListener('astro:page-load', initAchievementsPage);
-        document.addEventListener('astro:after-swap', hydrateAchievementsPage);
 
         function cleanupAchievements() {
             window.removeEventListener('stateChanged', hydrateAchievementsPage);

@@ -13,11 +13,16 @@
 }
 
 html {
+  background-color: #020403;
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   overflow-x: hidden;
   max-width: 100vw;
+}
+
+::view-transition {
+  background-color: #020403;
 }
 
 *, *::before, *::after {
@@ -114,11 +119,11 @@ body {
 .site-bg {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   background-color: #020403;
   background-image: 
-    radial-gradient(ellipse at 50% 50%, rgba(2, 4, 3, 0.2) 0%, rgba(2, 4, 3, 0.6) 75%, rgba(2, 4, 3, 0.95) 100%),
+    radial-gradient(ellipse at 50% 20%, rgba(13, 43, 29, 0.5) 0%, rgba(6, 20, 14, 0.7) 50%, rgba(2, 4, 3, 0.95) 100%),
     url('/bg.webp');
   background-size: cover;
   background-position: center center;
@@ -414,10 +419,19 @@ img, svg, video, canvas, audio, iframe, embed, object {
   }
 }
 
-/* Button Active Scale (Micro-interaction for buttons only) */
-button:active, .btn:not(.subject-card):active {
-  transform: scale(0.97);
-  transition: transform 0.1s ease;
+/* Button Active Feedback (Desktop scale; touch-safe opacity to prevent tap cancellation) */
+@media (hover: hover) and (pointer: fine) {
+  button:active, .btn:not(.subject-card):active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+}
+
+@media (hover: none), (pointer: coarse), (max-width: 1024px) {
+  button:active, .btn:active, .subject-card:active, a:active {
+    opacity: 0.85;
+    transform: none !important;
+  }
 }
 
 /* -------------------------------------------------------------

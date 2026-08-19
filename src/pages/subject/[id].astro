@@ -17,7 +17,7 @@ const { subject } = Astro.props;
     <!-- Detail View -->
     <div id="detail-view" class="flex flex-col gap-4 sm:gap-5 min-w-0" data-subject-id={subject.id}>
         <div class="mb-1">
-            <a href="/" data-astro-prefetch="hover" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 active:scale-95 touch-manipulation cursor-pointer select-none group">
+            <a href="/" data-astro-prefetch="hover" class="btn text-xs sm:text-sm px-3.5 sm:px-4 py-2 inline-flex items-center gap-2 border border-white/15 bg-white/5 hover:border-primary-accent/40 hover:bg-white/10 transition-colors touch-manipulation cursor-pointer select-none group">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left shrink-0 text-primary-accent group-hover:-translate-x-0.5 transition-transform pointer-events-none"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
                 <span class="pointer-events-none">Back to Dashboard</span>
             </a>
@@ -212,12 +212,22 @@ const { subject } = Astro.props;
 
     <script>
         // @ts-nocheck
+        import { 
+            getState, 
+            saveState, 
+            calculateAllMetrics, 
+            formatPercent, 
+            formatHours, 
+            escapeHtml, 
+            debounce 
+        } from '../../utils/state.js';
+
         function hydrateDetail() {
             const detailView = document.getElementById('detail-view');
             if (!detailView) return;
             const subjectId = detailView.dataset.subjectId;
-            const state = window.getState();
-            window.calculateAllMetrics(state);
+            const state = getState();
+            calculateAllMetrics(state);
             
             const subjectData = state.subjects.find(s => s.id === subjectId);
             if(!subjectData) return;
@@ -745,9 +755,7 @@ const { subject } = Astro.props;
             setupDetailListeners();
         }
 
-        initSubjectPage();
         document.addEventListener('astro:page-load', initSubjectPage);
-        document.addEventListener('astro:after-swap', hydrateDetail);
         
         window.removeEventListener('stateChanged', hydrateDetail);
         window.addEventListener('stateChanged', hydrateDetail);
