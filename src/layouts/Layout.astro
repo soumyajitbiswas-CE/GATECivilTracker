@@ -8,6 +8,9 @@ interface Props {
 }
 
 const { title, description = "GATE Civil Engineering Preparation Tracker" } = Astro.props;
+const siteUrl = Astro.site || 'https://gateciviltracker.com';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const isHomePage = Astro.url.pathname === '/' || Astro.url.pathname === '';
 ---
 
 <!doctype html>
@@ -27,28 +30,30 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="theme-color" content="#030a07" />
 		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="application-name" content="GATE Civil Tracker" />
+		<meta name="apple-mobile-web-app-title" content="GATE Civil Tracker" />
 		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<meta name="apple-mobile-web-app-title" content="GATECivilTracker" />
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url} />
+		<meta property="og:site_name" content="GATE Civil Tracker" />
+		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={new URL('/web-app-manifest-512x512.png', Astro.site || Astro.url)} />
+		<meta property="og:image" content={new URL('/web-app-manifest-512x512.png', siteUrl).href} />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:url" content={canonicalUrl} />
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content={new URL('/web-app-manifest-512x512.png', Astro.site || Astro.url)} />
+		<meta property="twitter:image" content={new URL('/web-app-manifest-512x512.png', siteUrl).href} />
 		<!-- Resource Preloads for Instant First Paint Artwork -->
 		<link rel="preload" as="image" href="/bg.webp" type="image/webp" fetchpriority="high" />
 		<link rel="preload" as="image" href="/logo.webp" type="image/webp" fetchpriority="high" />
@@ -65,16 +70,25 @@ const { title, description = "GATE Civil Engineering Preparation Tracker" } = As
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
-		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || 'https://gateciviltracker.com').href} />
+		<link rel="canonical" href={canonicalUrl} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		{isHomePage && (
+			<script type="application/ld+json" is:inline set:html={JSON.stringify({
+				"@context": "https://schema.org",
+				"@type": "WebSite",
+				"name": "GATE Civil Tracker",
+				"alternateName": "GATECivilTracker",
+				"url": "https://gateciviltracker.com/"
+			})} />
+		)}
 		<script type="application/ld+json" is:inline set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@type": "WebApplication",
-			"name": title,
+			"name": isHomePage ? "GATE Civil Tracker" : title,
 			"description": description,
 			"applicationCategory": "EducationalApplication",
 			"operatingSystem": "Any",
-			"url": Astro.url.href
+			"url": canonicalUrl
 		})} />
         <style is:inline>
             html, body {
